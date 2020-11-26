@@ -1,0 +1,43 @@
+.alert-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.alert {
+  padding: 16px;
+  text-align: center;
+  width: 50%;
+  border-radius: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.alert-bg-color-success {
+  background-color: var(--success-color);
+  color: var(--light-color);
+}
+.alert-bg-color-warning {
+  background-color: var(--warning-color);
+  color: var(--light-dark-color);
+}
+.alert-bg-color-fail {
+  background-color: var(--danger-color);
+  color: var(--light-color);
+}
+
+@media only screen and (min-width: 426px) and (max-width: 768px) {
+  .alert {
+    width: 70%;
+    padding: 12px;
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .alert {
+    width: 80%;
+    padding: 10px;
+    font-size: 1.1rem;
+  }
+}
