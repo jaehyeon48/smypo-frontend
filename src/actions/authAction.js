@@ -7,12 +7,11 @@ import {
   LOGOUT,
   AUTH_FAIL
 } from './actionTypes';
-import SERVER_URL from './serverURL';
 import axios from 'axios';
 
 export const loadUser = () => async dispatch => {
   try {
-    const loadResponse = await axios.get(`${SERVER_URL}/api/auth`, { withCredentials: true });
+    const loadResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/auth`, { withCredentials: true });
 
     dispatch({
       type: USER_LOADED,
@@ -34,7 +33,7 @@ export const login = (formData) => async (dispatch) => {
   const reqBody = JSON.stringify(formData);
 
   try {
-    await axios.post(`${SERVER_URL}/api/auth/login`, reqBody, config);
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, reqBody, config);
 
     dispatch({ type: LOGIN_SUCCESS });
     dispatch(loadUser());
@@ -56,7 +55,7 @@ export const signUp = (formData) => async (dispatch) => {
   const reqBody = JSON.stringify(formData);
 
   try {
-    await axios.post(`${SERVER_URL}/api/auth/signup`, reqBody, config);
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, reqBody, config);
 
     dispatch({ type: SIGNUP_SUCCESS });
     dispatch(loadUser());
@@ -70,7 +69,7 @@ export const signUp = (formData) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`${SERVER_URL}/api/auth/logout`, { withCredentials: true });
+    await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/auth/logout`, { withCredentials: true });
     dispatch({ type: LOGOUT });
   } catch (error) {
     console.error(error);
