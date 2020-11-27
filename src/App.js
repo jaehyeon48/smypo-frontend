@@ -16,7 +16,9 @@ import ManagePortfolio from './components/user/ManagePortfolio';
 import Profile from './components/user/Profile';
 import Alert from './components/alert/Alert';
 import PositionDetail from './components/position/PositionDetail';
+import Footer from './components/footer/Footer';
 import './app.css';
+import './styles/index.scss';
 
 import { loadUser } from './actions/authAction';
 
@@ -43,6 +45,7 @@ export default function App() {
               <Route path="/profile" component={Profile} exact={true} />
               <Route path="/position/:portfolioId/:ticker" component={PositionDetail} exact={true} />
             </MainTheme>
+            <Footer />
           </Navbar>
         </Switch>
       </Router>

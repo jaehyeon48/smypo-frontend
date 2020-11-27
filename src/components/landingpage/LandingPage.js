@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
+import Footer from '../footer/Footer';
 
 import './landingpage.css';
 
@@ -27,7 +28,7 @@ const LandingPage = ({
     <React.Fragment>
       {!loading &&
         <main className="landing-background">
-          <header className="landing-header-filter">
+          <div className="landing-header-filter">
             <div className="landing-header-title">
               <h1>Manage & Track your portfolio with <span>TYROS</span></h1>
             </div>
@@ -46,13 +47,9 @@ const LandingPage = ({
                 >Login</button>
               </div>
             </div>
-          </header>
-          <footer class="footer">
-            <span class="footer-copyright">&#169; Jae Hyeon Kim</span>
-            <span class="footer-contact">Contact: imjaehyeon48@gmail.com</span>
-          </footer>
+          </div>
         </main>}
-
+      <Footer />
     </React.Fragment>
   );
 }
