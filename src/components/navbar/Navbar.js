@@ -5,7 +5,7 @@ import { withRouter, useHistory } from 'react-router-dom';
 
 import './navbar.css';
 import AvatarImage from '../avatar/AvatarImage';
-import mainLogoWhite from '../../images/tyros_logo_white.png';
+import mainLogo from '../../images/main-logo.png';
 
 /* Import SVG Icon Components */
 import SignUpIcon from '../icons/SignUpIcon';
@@ -267,7 +267,7 @@ const Navbar = ({
     <React.Fragment>
       {!loading && (
         <nav className={`navbar ${theme === 'light' ? 'navbar--light-theme' : 'navbar--dark-theme'}`}>
-          <img src={mainLogoWhite} alt="main logo" className="main-logo" onClick={handleClickLogo} />
+          <img src={mainLogo} alt="main logo" className="main-logo" onClick={handleClickLogo} />
           {isAuthenticated ? navAuth : navGuest}
         </nav>
       )}
