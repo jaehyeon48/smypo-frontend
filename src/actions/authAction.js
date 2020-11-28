@@ -11,7 +11,7 @@ import axios from 'axios';
 
 export const loadUser = () => async dispatch => {
   try {
-    const loadResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/auth`, { withCredentials: true });
+    const loadResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth`, { withCredentials: true });
 
     dispatch({
       type: USER_LOADED,
@@ -69,7 +69,7 @@ export const signUp = (formData) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/auth/logout`, { withCredentials: true });
+    await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/logout`, { withCredentials: true });
     dispatch({ type: LOGOUT });
   } catch (error) {
     console.error(error);

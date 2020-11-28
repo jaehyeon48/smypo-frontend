@@ -14,7 +14,6 @@ import MonitorIcon from '../icons/MonitorIcon';
 import ListIcon from '../icons/ListIcon';
 import FolderIcon from '../icons/FolderIcon';
 import SignOutIcon from '../icons/SignOutIcon';
-import HomeIcon from '../icons/HomeIcon';
 import CoinIcon from '../icons/CoinIcon';
 import { logout } from '../../actions/authAction';
 
@@ -34,7 +33,12 @@ const Navbar = ({
   const [isStockListOpen, setIsStockListOpen] = useState(false);
   const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
   const [isCashOpen, setIsCashOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
+  // register closing profile dropdown function
+  useEffect(() => {
+    document.addEventListener('click', closeProfileDropdown);
+  }, []);
 
   useEffect(() => {
     const currentLocation = history.location.pathname;
@@ -92,7 +96,7 @@ const Navbar = ({
     }
   };
 
-  const handleDashboardLogout = () => {
+  const handleSignOut = () => {
     logout();
   }
 
@@ -128,31 +132,31 @@ const Navbar = ({
     history.push('/cash');
   }
 
+  const toggleProfileDropdown = () => {
+    setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  }
+
+  const closeProfileDropdown = (e) => {
+    if (e.target.classList.contains('navbar__avatar-container') ||
+      e.target.classList.contains('avatar-container') ||
+      e.target.classList.contains('avatar-image')) return;
+    setIsProfileDropdownOpen(false);
+  }
+
   const navGuest = (
     <React.Fragment>
       <div
-        className="dashboard-main dashboard-icon-container"
-        title="Open Landing Page"
-        onClick={handleHomeOpen}
-        style={isHomeOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-      >
-        <HomeIcon />
-        <span>Home</span>
-      </div>
-      <div
-        className="dashboard-main dashboard-icon-container"
+        className="navbar-menu navbar-menu__signup"
         title="Open Sign-up Page"
         onClick={handleSignUpOpen}
-        style={isSignUpOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
       >
         <SignUpIcon />
         <span>Sign Up</span>
       </div>
       <div
-        className="dashboard-main dashboard-icon-container"
+        className="navbar-menu navbar-menu__login"
         title="Open Login Page"
         onClick={handleLoginOpen}
-        style={isLoginOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
       >
         <LoginIcon />
         <span>Login</span>
@@ -162,7 +166,6 @@ const Navbar = ({
           className="mobile-icon-item"
           style={isHomeOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
           onClick={handleHomeOpen}>
-          <HomeIcon />
         </div>
         <div
           className="mobile-icon-item"
@@ -184,50 +187,50 @@ const Navbar = ({
   const navAuth = (
     <React.Fragment>
       <div
-        className="dashboard-main dashboard-icon-container"
+        className="navbar-menu navbar-menu__dashboard"
         title="Main Dashboard Page"
         onClick={handleDashboardOpen}
-        style={isDashboardOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
       >
         <MonitorIcon />
         <span>Dashboard</span>
       </div>
       <div
-        className="dashboard-icon-container"
+        className="navbar-menu navbar-menu__stocks"
         title="Shows My Stocks"
         onClick={handleStockListOpen}
-        style={isStockListOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
       >
         <ListIcon />
         <span>Stock List</span>
       </div>
       <div
-        className="dashboard-icon-container"
+        className="navbar-menu navbar-menu__portfolio"
         title="Displays My Portfolio"
         onClick={handlePortfolioOpen}
-        style={isPortfolioOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
       >
         <FolderIcon />
         <span>Portfolio</span>
       </div>
       <div
-        className="dashboard-icon-container"
+        className="navbar-menu navbar-menu__cash"
         title="Displays My Cash"
         onClick={handleCashOpen}
-        style={isCashOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
       >
         <CoinIcon />
         <span>Cash</span>
       </div>
-      <div className="navbar-avatar-container">
-        <AvatarImage />
-      </div>
       <div
-        className="dashboard-icon-container dashboard-logout"
-        onClick={handleDashboardLogout}
-      >
-        <SignOutIcon />
-        <span>Sign Out</span>
+        className={isProfileDropdownOpen ?
+          'navbar__avatar-container profile-dropdown--open' : 'navbar__avatar-container'}
+        onClick={toggleProfileDropdown}>
+        <AvatarImage />
+        {isProfileDropdownOpen && (
+          <div className="navbar__profile-dropdown">
+            <div
+              className="profile-dropdown-item profile-dropdown__sign-out"
+              onClick={handleSignOut}
+            >Sign Out</div>
+          </div>
+        )}
       </div>
       <div className="navbar-mobile-icons">
         <div
@@ -256,7 +259,7 @@ const Navbar = ({
           onClick={handleCashOpen}>
           <CoinIcon />
         </div>
-        <div className="mobile-icon-item" onClick={handleDashboardLogout}>
+        <div className="mobile-icon-item" onClick={handleSignOut}>
           <SignOutIcon />
         </div>
       </div>

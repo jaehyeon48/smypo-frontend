@@ -46,11 +46,6 @@
   src: url('../src/fonts/Lato-Black.ttf');
 }
 
-#root {
-  display: flex;
-  min-height: calc(100vh - 118px);
-}
-
 html {
   font-family: 'Lato', sans-serif;
   font-size: 1rem;
