@@ -3,8 +3,8 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className="footer">
-      <span class="footer-copyright">&#169; SMYPO Inc.</span>
-      <span class="footer-contact">Contact: support@smypo.com</span>
+      <span className="footer-copyright">&#169; SMYPO Inc.</span>
+      <span className="footer-contact">Contact: support@smypo.com</span>
     </footer>
   );
 }
