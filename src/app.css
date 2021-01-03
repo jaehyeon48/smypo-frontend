@@ -45,25 +45,6 @@ a {
   color: inherit;
 }
 
-/* button */
-.btn {
-  padding: 0.5rem;
-  font-size: 1.2rem;
-  border-radius: 0.3rem;
-  border: none;
-  cursor: pointer;
-}
-
-.btn:disabled {
-  background-color: var(--light-dark-color);
-}
-
-.btn:disabled:hover {
-  background-color: var(--light-dark-color);
-  color: var(--light-color);
-  cursor: not-allowed;
-}
-
 /* auth form */
 .auth-form-container {
   display: flex;
