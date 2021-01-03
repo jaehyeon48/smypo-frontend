@@ -7,7 +7,6 @@ import LandingPage from './components/landingpage/LandingPage';
 import Navbar from './components/navbar/Navbar';
 import SignUp from './components/auth/SignUp';
 import Login from './components/auth/Login';
-import MainTheme from './components/maintheme/MainTheme';
 import MainPage from './components/mainpage/MainPage';
 import Stock from './components/stock/Stocks';
 import RealizedStocks from './components/stock/RealizedStocks';
@@ -33,18 +32,16 @@ export default function App() {
         <Switch>
           <Route path="/" component={LandingPage} exact={true} />
           <Navbar>
-            <MainTheme>
-              <Alert />
-              <Route path="/signup" component={SignUp} exact={true} />
-              <Route path="/login" component={Login} exact={true} />
-              {/* <Route path="/dashboard" component={MainPage} exact={true} />
+            <Alert />
+            <Route path="/signup" component={SignUp} exact={true} />
+            <Route path="/login" component={Login} exact={true} />
+            {/* <Route path="/dashboard" component={MainPage} exact={true} />
               <Route path="/stocks" component={Stock} exact={true} />
               <Route path="/stocks/realized" component={RealizedStocks} exact={true} />
               <Route path="/cash" component={Cash} exact={true} />
               <Route path="/portfolios" component={ManagePortfolio} exact={true} />
               <Route path="/profile" component={Profile} exact={true} />
               <Route path="/position/:portfolioId/:ticker" component={PositionDetail} exact={true} /> */}
-            </MainTheme>
             <Footer />
           </Navbar>
         </Switch>

@@ -1,7 +1,7 @@
 /* general styles */
-// @import './font/font';
+@import './base/font';
 @import './base/color';
-// @import './base/base';
+@import './base/base';
 
 /* React Components' styles */
 @import './components/navbar';
