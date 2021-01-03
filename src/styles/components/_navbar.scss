@@ -1,16 +1,15 @@
 .navbar {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100vw;
-  position: relative;
-}
-
-.navbar--light-theme {
+  margin: 0 auto;
   background-color: $blue-white;
-  color: #273542;
+  color: $blue-black;
+  max-width: $max-width;
 }
 
-.main-logo {
+.navbar__main-logo {
   cursor: pointer;
   margin: 1rem;
   width: 200px;
@@ -18,77 +17,92 @@
 }
 
 .navbar-menu {
-  display: flex;
-  align-items: center;
   position: absolute;
-  height: 55px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  outline: none;
+  right: 3em;
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar-menu:hover {
+.navbar-menu > li {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+
+  & > svg {
+    width: 1.3em;
+    height: 1.3em;
+    margin-right: 0.4em;
+  }
+}
+
+.navbar-menu__signup:hover,
+.navbar-menu__login:hover {
   color: $main-color;
 }
 
-.navbar-menu__signup {
-  right: 140px;
+.navbar-menu > li + li {
+  margin-left: 1.2em;
 }
 
-.navbar-menu__login {
-  right: 50px;
-}
-
-.navbar-menu__dashboard {
-  right: 405px;
-}
-
-.navbar-menu__stocks {
-  right: 291px;
-}
-
-.navbar-menu__portfolio {
-  right: 182px;
-}
-
-.navbar-menu__cash {
-  right: 99px;
-}
-
-.navbar-menu > .navbar-menu-icon {
-  width: 24px;
-  height: 24px;
-  padding: 0 0.3rem 0 1rem;
-}
-
-.navbar__avatar-container {
-  position: absolute;
+.navbar-menu > .navbar__avatar-container {
   width: 50px;
   height: 50px;
-  right: 22px;
+  right: 2em;
+  bottom: 2em;
   border: 1px solid $light-gray;
   border-radius: 50%;
-  display: flex;
-  cursor: pointer;
+
+  &.profile-dropdown--close:hover {
+    box-shadow: 0 0 6px $dark-gray;
+  }
 }
 
 .navbar__profile-dropdown {
   position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
   background-color: $blue-white;
   top: 65px;
-  right: -23px;
-  width: 200px;
-  border-top: 1px solid #94a6b6;
+  right: 0;
+  width: 10.5em;
+
+  &::before {
+    content: '';
+    right: 0.8em;
+    top: -1.05em;
+    position: absolute;
+    border: 0.53em solid;
+    border-color: transparent transparent $main-color;
+  }
+
+  & > li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+
+    & > svg {
+      width: 1.3em;
+      height: 1.3em;
+      margin-right: 0.3em;
+    }
+  }
+
+  & > li:hover {
+    color: $main-color;
+  }
+
+  & > li + li {
+    border-top: 1px solid #94a6b6;
+  }
 }
 
 .profile-dropdown--open {
   box-shadow: 0 0 2px 2px $main-color;
   border: 1px solid $main-color;
-}
-
-.profile-dropdown-item {
-  padding: 0.5rem 0.8rem;
-  color: #273542;
-  font-weight: 700;
 }

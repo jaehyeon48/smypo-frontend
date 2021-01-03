@@ -20,7 +20,6 @@ import { logout } from '../../actions/authAction';
 const Navbar = ({
   loading,
   isAuthenticated,
-  theme,
   user,
   logout,
   children
@@ -144,23 +143,23 @@ const Navbar = ({
   }
 
   const navGuest = (
-    <React.Fragment>
-      <div
-        className="navbar-menu navbar-menu__signup"
+    <ul className="navbar-menu">
+      <li
+        className="navbar-menu__signup"
         title="Open Sign-up Page"
         onClick={handleSignUpOpen}
       >
         <SignUpIcon />
         <span>Sign Up</span>
-      </div>
-      <div
-        className="navbar-menu navbar-menu__login"
+      </li>
+      <li
+        className="navbar-menu__login"
         title="Open Login Page"
         onClick={handleLoginOpen}
       >
         <LoginIcon />
         <span>Login</span>
-      </div>
+      </li>
       <div className="navbar-mobile-icons">
         <div
           className="mobile-icon-item"
@@ -182,56 +181,56 @@ const Navbar = ({
           <LoginIcon />
         </div>
       </div>
-    </React.Fragment>
+    </ul>
   );
   const navAuth = (
-    <React.Fragment>
-      <div
-        className="navbar-menu navbar-menu__dashboard"
-        title="Main Dashboard Page"
-        onClick={handleDashboardOpen}
-      >
-        <MonitorIcon />
-        <span>Dashboard</span>
-      </div>
-      <div
-        className="navbar-menu navbar-menu__stocks"
-        title="Shows My Stocks"
-        onClick={handleStockListOpen}
-      >
-        <ListIcon />
-        <span>Stock List</span>
-      </div>
-      <div
-        className="navbar-menu navbar-menu__portfolio"
-        title="Displays My Portfolio"
-        onClick={handlePortfolioOpen}
-      >
-        <FolderIcon />
-        <span>Portfolio</span>
-      </div>
-      <div
-        className="navbar-menu navbar-menu__cash"
-        title="Displays My Cash"
-        onClick={handleCashOpen}
-      >
-        <CoinIcon />
-        <span>Cash</span>
-      </div>
-      <div
+    <ul className="navbar-menu">
+      <li
         className={isProfileDropdownOpen ?
-          'navbar__avatar-container profile-dropdown--open' : 'navbar__avatar-container'}
+          'navbar__avatar-container profile-dropdown--open' : 'navbar__avatar-container profile-dropdown--close'}
         onClick={toggleProfileDropdown}>
         <AvatarImage />
         {isProfileDropdownOpen && (
-          <div className="navbar__profile-dropdown">
-            <div
+          <ul className="navbar__profile-dropdown">
+            <li
+              title="Main Dashboard Page"
+              onClick={handleDashboardOpen}
+            >
+              <MonitorIcon />
+              <span>Dashboard</span>
+            </li>
+            <li
+              title="Shows My Stocks"
+              onClick={handleStockListOpen}
+            >
+              <ListIcon />
+              <span>Stock List</span>
+            </li>
+            <li
+              title="Displays My Portfolio"
+              onClick={handlePortfolioOpen}
+            >
+              <FolderIcon />
+              <span>Portfolio</span>
+            </li>
+            <li
+              title="Displays My Cash"
+              onClick={handleCashOpen}
+            >
+              <CoinIcon />
+              <span>Cash</span>
+            </li>
+            <li
               className="profile-dropdown-item profile-dropdown__sign-out"
               onClick={handleSignOut}
-            >Sign Out</div>
-          </div>
+
+            >
+              <SignOutIcon />
+              <span>Sign Out</span>
+            </li>
+          </ul>
         )}
-      </div>
+      </li>
       <div className="navbar-mobile-icons">
         <div
           className="mobile-icon-item"
@@ -263,14 +262,14 @@ const Navbar = ({
           <SignOutIcon />
         </div>
       </div>
-    </React.Fragment>
+    </ul>
   );
 
   return (
     <React.Fragment>
       {!loading && (
-        <nav className={`navbar ${theme === 'light' ? 'navbar--light-theme' : 'navbar--dark-theme'}`}>
-          <img src={mainLogo} alt="main logo" className="main-logo" onClick={handleClickLogo} />
+        <nav className="navbar">
+          <img src={mainLogo} alt="main logo" className="navbar__main-logo" onClick={handleClickLogo} />
           {isAuthenticated ? navAuth : navGuest}
         </nav>
       )}
@@ -288,7 +287,6 @@ Navbar.propTypes = {
 const mapStateToProps = state => ({
   loading: state.auth.loading,
   isAuthenticated: state.auth.isAuthenticated,
-  theme: state.auth.theme,
   user: state.auth.user
 });
 
