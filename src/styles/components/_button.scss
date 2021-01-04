@@ -11,6 +11,10 @@
 .button:disabled {
   background: $dark-gray;
   cursor: not-allowed;
+
+  &:hover {
+    background: darken($dark-gray, 10%);
+  }
 }
 
 .button--default {
