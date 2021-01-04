@@ -4,6 +4,8 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validator from 'validator';
 
+import Button from '../button/Button';
+
 import { login } from '../../actions/authAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -100,26 +102,26 @@ const Login = ({
   return (
     <React.Fragment>
       {!loading &&
-        <div className="auth-form-container">
-          <p className="auth-form-subtitle">Join TYROS</p>
-          <h1 className="auth-form-title">Login</h1>
-          <form className="auth-form" onSubmit={handleSubmit}>
-            <div className="auth-form-group">
-              <label className={`auth-form-label ${emailErr && "form-label-error"}`}>Email</label>
+        <div className="auth__form-container">
+          <p>Join SMYPO.com</p>
+          <h1>LOGIN</h1>
+          <form className="auth__form" onSubmit={handleSubmit}>
+            <div className="auth__form-group">
+              <label className={emailErr ? "auth__form-label form-label--error" : "auth__form-label"}>Email</label>
               <input
                 type="text"
-                className={`auth-form-field ${emailErr && "form-field-error"}`}
+                className={emailErr ? "auth__form-field form-field--error" : "auth__form-field"}
                 name="email"
                 value={email}
                 placeholder="Email"
                 onChange={handleChange}
               />
             </div>
-            <div className="auth-form-group">
-              <label className={`auth-form-label ${passwordErr && "form-label-error"}`}>Password</label>
+            <div className="auth__form-group">
+              <label className={passwordErr ? "auth__form-label form-label--error" : "auth__form-label"}>Password</label>
               <input
                 type={showPassword ? "text" : "password"}
-                className={`auth-form-field ${passwordErr && "form-field-error"}`}
+                className={passwordErr ? "auth__form-field form-field--error" : "auth__form-field"}
                 name="password"
                 value={password}
                 placeholder="Password"
@@ -127,15 +129,18 @@ const Login = ({
               />
               <small className="auth-form-text">Password must be at least 8 characters long. </small>
             </div>
-            <label className="auth-checkbox-container">Show password
+            <label className="auth__checkbox-container">Show password
             <input type="checkbox" onClick={handleShowPassword} />
-              <span className="checkmark"></span>
             </label>
-            <div className="auth-form-group">
-              <button type="submit" className="btn auth-button" disabled={isSubmitDisabled}>LOGIN</button>
+            <div className="auth__form-group">
+              <Button
+                btnType={'submit'}
+                btnText={'LOGIN'}
+                isDisabled={isSubmitDisabled}
+              />
             </div>
           </form>
-          <div className="auth-footer">
+          <div className="auth__footer">
             Doesn't have an account? <Link to="/signup">Sign Up</Link>
           </div>
         </div>}

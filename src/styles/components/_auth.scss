@@ -1,0 +1,93 @@
+.auth__form-container {
+  padding: 3.6em 2em 1em 10em;
+  width: 80%;
+  max-width: $max-width;
+  min-height: 100vh;
+
+  /* title */
+  & > h1 {
+    margin: 0;
+    font-size: 4.5rem;
+    color: $main-color;
+  }
+
+  /* subtitle */
+  & > p {
+    margin: 0 0 0 8px;
+    font-size: 2.2rem;
+  }
+}
+
+.auth__form {
+  margin: 3.4em 0 0 0;
+  width: 100%;
+
+  & small {
+    display: block;
+    font-size: 0.95rem;
+    margin-top: 0.2em;
+    margin-left: 0.1em;
+  }
+}
+
+.auth__form-group {
+  position: relative;
+
+  &:not(:first-child) {
+    margin: 4em 0 0 0;
+  }
+}
+
+.auth__form-label {
+  position: absolute;
+  top: -27px;
+  left: 2px;
+  font-size: 1.4rem;
+}
+
+.form-label--error {
+  color: $danger;
+}
+
+.auth__form-field {
+  font-size: 1.7rem;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 0.25em;
+  transition: all 100ms ease;
+  background-color: lighten($light-gray, 10%);
+
+  &:focus {
+    box-shadow: 0 0 0 2px $form-focus;
+  }
+}
+
+.form-field--error {
+  box-shadow: 0 0 0 2px $danger;
+}
+
+.auth__checkbox-container {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-top: 1.5em;
+
+  & > input[type='checkbox'] {
+    margin-left: 0.2em;
+  }
+}
+
+.auth__footer {
+  margin: 1em 0 0 0;
+
+  & > a {
+    color: $main-color;
+    transition: all 100ms ease;
+  }
+
+  & > a:hover {
+    color: $dark-gray;
+  }
+}
