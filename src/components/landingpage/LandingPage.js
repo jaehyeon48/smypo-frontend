@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import Footer from '../footer/Footer';
-
-import './landingpage.css';
+import Button from '../button/Button';
 
 const LandingPage = ({
   loading,
@@ -28,25 +27,24 @@ const LandingPage = ({
     <React.Fragment>
       {!loading &&
         <main className="landing-background">
-          <div className="landing-header-filter">
-            <div className="landing-header-title">
-              <h1>Manage & Track your portfolio with <span>TYROS</span></h1>
-            </div>
-            <div className="landing-header-subtitle">
-              <span>TYROS, a pioneer of commission-free investing, gives you more ways to make your money work harder.</span>
+          <div className="landing-header-backdrop">
+            <section className="landing-section">
+              <header>Manage & Track your portfolio with <span>SMYPO</span></header>
+              <p className="landing-section-subtitle">SMYPO provides easy-to-use tools for managing your awesome portfolio. Show your portfolio, and find others in SMYPO!</p>
               <div className="landing-buttons">
-                <button
-                  type="button"
-                  className="btn btn-landing-signup"
-                  onClick={redirectToSignUp}
-                >Sign Up</button>
-                <button
-                  type="button"
-                  className="btn btn-landing-login"
-                  onClick={redirectToLogin}
-                >Login</button>
+                <Button
+                  btnType={'button'}
+                  btnText={'Sign Up'}
+                  onClickFunc={redirectToSignUp}
+                />
+                <Button
+                  btnType={'button'}
+                  btnText={'Login'}
+                  btnColor={'white'}
+                  onClickFunc={redirectToLogin}
+                />
               </div>
-            </div>
+            </section>
           </div>
         </main>}
       <Footer />
