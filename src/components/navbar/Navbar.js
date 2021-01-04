@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter, useHistory, Link } from 'react-router-dom';
 
-import './navbar.css';
 import AvatarImage from '../avatar/AvatarImage';
 import mainLogo from '../../images/main-logo.png';
 
@@ -15,6 +14,7 @@ import ListIcon from '../icons/ListIcon';
 import FolderIcon from '../icons/FolderIcon';
 import SignOutIcon from '../icons/SignOutIcon';
 import CoinIcon from '../icons/CoinIcon';
+import BarsIcon from '../icons/BarsIcon';
 import { logout } from '../../actions/authAction';
 
 const Navbar = ({
@@ -25,64 +25,24 @@ const Navbar = ({
   children
 }) => {
   let history = useHistory();
-  const [isHomeOpen, setIsHomeOpen] = useState(false);
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isDashboardOpen, setIsDashboardOpen] = useState(false);
-  const [isStockListOpen, setIsStockListOpen] = useState(false);
-  const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
-  const [isCashOpen, setIsCashOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
   // register closing profile dropdown function
   useEffect(() => {
     document.addEventListener('click', closeProfileDropdown);
+    return () => {
+      document.removeEventListener('click', closeProfileDropdown);
+    }
   }, []);
 
+  // register closing mobile navbar function
   useEffect(() => {
-    const currentLocation = history.location.pathname;
-    if (currentLocation === '/') {
-      setIsHomeOpen(true);
-      setIsSignUpOpen(false);
-      setIsLoginOpen(false);
+    document.addEventListener('click', closeMobileNav);
+    return () => {
+      document.removeEventListener('click', closeMobileNav);
     }
-    else if (currentLocation === '/signup') {
-      setIsSignUpOpen(true);
-      setIsHomeOpen(false);
-      setIsLoginOpen(false);
-    }
-    else if (currentLocation === '/login') {
-      setIsLoginOpen(true);
-      setIsSignUpOpen(false);
-      setIsHomeOpen(false);
-    }
-    else if (currentLocation === '/dashboard') {
-      setIsDashboardOpen(true);
-      setIsStockListOpen(false);
-      setIsPortfolioOpen(false);
-      setIsCashOpen(false);
-    }
-    else if (/stocks.*/.test(currentLocation) || /position.*/.test(currentLocation)) {
-      setIsStockListOpen(true);
-      setIsDashboardOpen(false);
-      setIsPortfolioOpen(false);
-      setIsCashOpen(false);
-    }
-    else if (/portfolios.*/.test(currentLocation)) {
-      setIsPortfolioOpen(true);
-      setIsStockListOpen(false);
-      setIsDashboardOpen(false);
-      setIsCashOpen(false);
-    }
-    else if (/cash.*/.test(currentLocation)) {
-      setIsCashOpen(true);
-      setIsDashboardOpen(false);
-      setIsStockListOpen(false);
-      setIsPortfolioOpen(false);
-    }
-  }, [history.location.pathname]);
-
-
+  }, []);
 
   const handleClickLogo = () => {
     if (!loading) {
@@ -99,40 +59,12 @@ const Navbar = ({
     logout();
   }
 
-  const goToProfilePage = () => {
-    history.push('/profile');
-  }
-
-  const handleHomeOpen = () => {
-    history.push('/');
-  }
-
-  const handleSignUpOpen = () => {
-    history.push('/signup');
-  }
-
-  const handleLoginOpen = () => {
-    history.push('/login');
-  }
-
-  const handleDashboardOpen = () => {
-    history.push('/dashboard');
-  }
-
-  const handleStockListOpen = () => {
-    history.push('/stocks');
-  }
-
-  const handlePortfolioOpen = () => {
-    history.push('/portfolios');
-  }
-
-  const handleCashOpen = () => {
-    history.push('/cash');
-  }
-
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  }
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
   }
 
   const closeProfileDropdown = (e) => {
@@ -142,45 +74,42 @@ const Navbar = ({
     setIsProfileDropdownOpen(false);
   }
 
+  const closeMobileNav = (e) => {
+    if (e.target.classList.contains('navbar-menu') ||
+      e.target.classList.contains('navbar__bars-icon') ||
+      e.target.parentNode.classList.contains('navbar__bars-icon')) return;
+    setIsMobileNavOpen(false);
+  }
+
   const navGuest = (
     <ul className="navbar-menu">
-      <li
-        className="navbar-menu__signup"
-        title="Open Sign-up Page"
-        onClick={handleSignUpOpen}
-      >
-        <SignUpIcon />
-        <span>Sign Up</span>
+      <li>
+        <Link to="/signup" className="navbar-menu__signup">
+          <SignUpIcon />Sign Up
+        </Link>
       </li>
-      <li
-        className="navbar-menu__login"
-        title="Open Login Page"
-        onClick={handleLoginOpen}
-      >
-        <LoginIcon />
-        <span>Login</span>
+      <li>
+        <Link to="/login" className="navbar-menu__login">
+          <LoginIcon />Login
+        </Link>
       </li>
-      <div className="navbar-mobile-icons">
-        <div
-          className="mobile-icon-item"
-          style={isHomeOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-          onClick={handleHomeOpen}>
+      <BarsIcon onClickFunc={toggleMobileNav} isMobileNavOpen={isMobileNavOpen} />
+      {isMobileNavOpen && (
+        <div className="navbar__mobile">
+          <ul>
+            <li>
+              <Link to="/signup" className="navbar-mobile__signup" onClick={toggleMobileNav}>
+                <SignUpIcon />Sign Up
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className="navbar-mobile__login" onClick={toggleMobileNav}>
+                <LoginIcon />Login
+              </Link>
+            </li>
+          </ul>
         </div>
-        <div
-          className="mobile-icon-item"
-          style={isSignUpOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-          onClick={handleSignUpOpen}
-        >
-          <SignUpIcon />
-        </div>
-        <div
-          className="mobile-icon-item"
-          style={isLoginOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-          onClick={handleLoginOpen}
-        >
-          <LoginIcon />
-        </div>
-      </div>
+      )}
     </ul>
   );
   const navAuth = (
@@ -193,35 +122,33 @@ const Navbar = ({
         <AvatarImage />
         {isProfileDropdownOpen && (
           <ul className="navbar__profile-dropdown">
-            <li
-              title="Main Dashboard Page"
-              onClick={handleDashboardOpen}
-            >
-              <MonitorIcon />
-              <span>Dashboard</span>
+            <li className="navbar__user-name-mobile">{user && user.firstName} {user && user.lastName}</li>
+            <li>
+              <Link to="/dashboard">
+                <MonitorIcon />
+                <span>Dashboard</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/stocks">
+                <ListIcon />
+                <span>Stock List</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/portfolios">
+                <FolderIcon />
+                <span>My Portfolios</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/cash">
+                <CoinIcon />
+                <span>Cash</span>
+              </Link>
             </li>
             <li
-              title="Shows My Stocks"
-              onClick={handleStockListOpen}
-            >
-              <ListIcon />
-              <span>Stock List</span>
-            </li>
-            <li
-              title="Displays My Portfolio"
-              onClick={handlePortfolioOpen}
-            >
-              <FolderIcon />
-              <span>Portfolio</span>
-            </li>
-            <li
-              title="Displays My Cash"
-              onClick={handleCashOpen}
-            >
-              <CoinIcon />
-              <span>Cash</span>
-            </li>
-            <li
+              className="navbar__sign-out"
               onClick={handleSignOut}
             >
               <SignOutIcon />
@@ -230,37 +157,6 @@ const Navbar = ({
           </ul>
         )}
       </li>
-      <div className="navbar-mobile-icons">
-        <div
-          className="mobile-icon-item"
-          style={isDashboardOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-          onClick={handleDashboardOpen}>
-          <MonitorIcon />
-        </div>
-        <div
-          className="mobile-icon-item"
-          style={isStockListOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-          onClick={handleStockListOpen}
-        >
-          <ListIcon />
-        </div>
-        <div
-          className="mobile-icon-item"
-          style={isPortfolioOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-          onClick={handlePortfolioOpen}
-        >
-          <FolderIcon />
-        </div>
-        <div
-          className="mobile-icon-item"
-          style={isCashOpen ? { backgroundColor: "var(--light-theme-bg-color)", color: "var(--light-dark-color)" } : null}
-          onClick={handleCashOpen}>
-          <CoinIcon />
-        </div>
-        <div className="mobile-icon-item" onClick={handleSignOut}>
-          <SignOutIcon />
-        </div>
-      </div>
     </ul>
   );
 

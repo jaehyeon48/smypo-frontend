@@ -25,11 +25,22 @@
 
   & > .navbar__user-name {
     font-size: 1.3rem;
+    font-weight: 700;
     cursor: default;
+
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+
+    @media screen and (min-width: 769px) {
+      display: flex;
+      align-items: center;
+    }
   }
 }
 
-.navbar-menu > li {
+.navbar-menu > li a,
+.navbar__sign-out {
   display: flex;
   align-items: center;
   font-size: 1.2rem;
@@ -40,6 +51,13 @@
     width: 1.3em;
     height: 1.3em;
     margin-right: 0.4em;
+  }
+
+  &.navbar-menu__signup,
+  &.navbar-menu__login {
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
@@ -59,25 +77,67 @@
   bottom: 2em;
   border: 1px solid $light-gray;
   border-radius: 50%;
+  cursor: pointer;
 
   &.profile-dropdown--close:hover {
     box-shadow: 0 0 6px $dark-gray;
   }
 }
 
+.navbar__bars-icon {
+  display: none;
+
+  @media screen and (max-width: 768px) {
+    display: block;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.navbar__mobile {
+  position: absolute;
+  top: 56px;
+  right: -48px;
+  z-index: 99;
+  width: 100vw;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: $blue-white;
+
+  & > ul {
+    list-style-type: none;
+    padding: 0 1em;
+    margin: 0;
+  }
+
+  & > ul a {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #99a7b5;
+    padding: 0.8em 0.7em;
+  }
+
+  & svg {
+    width: 22px;
+    height: 22px;
+    margin-right: 0.4em;
+  }
+}
+
 .navbar__profile-dropdown {
   position: absolute;
   margin: 0;
-  padding: 0;
+  padding: 0 0.8em;
   list-style-type: none;
   background-color: $blue-white;
   top: 65px;
   right: 0;
-  width: 10.5em;
+  width: 13em;
+  z-index: 99;
 
   &::before {
     content: '';
-    right: 0.8em;
+    right: 1em;
     top: -1.05em;
     position: absolute;
     border: 0.53em solid;
@@ -101,8 +161,46 @@
     color: $main-color;
   }
 
-  & > li + li {
+  & > li:not(:first-child) + li {
     border-top: 1px solid #94a6b6;
+  }
+
+  & > .navbar__user-name-mobile {
+    font-size: 1.7rem;
+    font-weight: 700;
+
+    @media screen and (max-width: 768px) {
+      display: flex;
+    }
+
+    @media screen and (min-width: 769px) {
+      display: none;
+      border-top: none;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    right: -48px;
+    padding: 0 1.1em;
+
+    &::before {
+      content: '';
+      right: 4em;
+    }
+
+    & > li {
+      padding: 0.9em 0.5em;
+    }
+
+    & > li a,
+    & .navbar__sign-out {
+      font-size: 1.3rem;
+    }
+
+    & > li:nth-child(2) {
+      border-top: 1px solid #94a6b6;
+    }
   }
 }
 
