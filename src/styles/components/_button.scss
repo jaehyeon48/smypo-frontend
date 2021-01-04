@@ -9,7 +9,7 @@
 }
 
 .button:disabled {
-  background: $dark-gray;
+  background: linear-gradient($dark-gray, darken($dark-gray, 10%));
   cursor: not-allowed;
 
   &:hover {
