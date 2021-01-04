@@ -14,7 +14,7 @@ import Modal from '../modal/Modal';
 import { createPortfolio } from '../../actions/portfolioAction';
 import { showAlert } from '../../actions/alertAction';
 
-const ManagePortfolio = ({
+const Portfolios = ({
   loading,
   isAuthenticated,
   portfolioList,
@@ -123,7 +123,7 @@ const ManagePortfolio = ({
   );
 }
 
-ManagePortfolio.propTypes = {
+Portfolios.propTypes = {
   loading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   portfolioList: PropTypes.array,
@@ -146,4 +146,4 @@ export default connect(mapStateToProps, {
   getSelectedPortfolio,
   createPortfolio,
   showAlert
-})(ManagePortfolio);
+})(Portfolios);

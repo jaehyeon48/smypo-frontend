@@ -11,8 +11,8 @@ import MainPage from './components/mainpage/MainPage';
 import Stock from './components/stock/Stocks';
 import RealizedStocks from './components/stock/RealizedStocks';
 import Cash from './components/cash/Cash';
-import ManagePortfolio from './components/user/ManagePortfolio';
-import Profile from './components/user/Profile';
+import Portfolios from './components/portfolio/Portfolios';
+import Profile from './components/portfolio/Profile';
 import Alert from './components/alert/Alert';
 import PositionDetail from './components/position/PositionDetail';
 import Footer from './components/footer/Footer';
@@ -35,13 +35,13 @@ export default function App() {
             <Alert />
             <Route path="/signup" component={SignUp} exact={true} />
             <Route path="/login" component={Login} exact={true} />
-            {/* <Route path="/dashboard" component={MainPage} exact={true} />
-              <Route path="/stocks" component={Stock} exact={true} />
-              <Route path="/stocks/realized" component={RealizedStocks} exact={true} />
-              <Route path="/cash" component={Cash} exact={true} />
-              <Route path="/portfolios" component={ManagePortfolio} exact={true} />
-              <Route path="/profile" component={Profile} exact={true} />
-              <Route path="/position/:portfolioId/:ticker" component={PositionDetail} exact={true} /> */}
+            {/* <Route path="/dashboard" component={MainPage} exact={true} /> */}
+            {/* <Route path="/stocks" component={Stock} exact={true} /> */}
+            {/* <Route path="/stocks/realized" component={RealizedStocks} exact={true} /> */}
+            {/* <Route path="/cash" component={Cash} exact={true} /> */}
+            <Route path="/portfolios" component={Portfolios} exact={true} />
+            {/* <Route path="/profile" component={Profile} exact={true} /> */}
+            {/* <Route path="/position/:portfolioId/:ticker" component={PositionDetail} exact={true} /> */}
             <Footer />
           </Navbar>
         </Switch>
