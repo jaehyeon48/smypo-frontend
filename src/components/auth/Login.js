@@ -102,7 +102,7 @@ const Login = ({
   return (
     <React.Fragment>
       {!loading &&
-        <div className="auth__form-container">
+        <main className="auth__form-container">
           <p>Join SMYPO.com</p>
           <h1>LOGIN</h1>
           <form className="auth__form" onSubmit={handleSubmit}>
@@ -143,7 +143,7 @@ const Login = ({
           <div className="auth__footer">
             Doesn't have an account? <Link to="/signup">Sign Up</Link>
           </div>
-        </div>}
+        </main>}
     </React.Fragment>
   );
 }

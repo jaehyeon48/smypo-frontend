@@ -23,7 +23,6 @@
 
 /* footer */
 
-
 /* link */
 a {
   text-decoration: none;
@@ -57,88 +56,4 @@ a {
 }
 .btn-edit-transaction:hover {
   background-color: var(--dark-orange-color);
-}
-
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-  .auth-form-container {
-    padding: 3.6rem 2rem 1rem 7rem !important;
-  }
-
-  .signup-title {
-    font-size: 4rem !important;
-  }
-
-  .auth-form-field {
-    width: 70% !important;
-  }
-
-  .auth-button {
-    width: 70% !important;
-  }
-}
-
-@media only screen and (min-width: 427px) and (max-width: 768px) {
-  .auth-form-container {
-    padding: 3.2rem 2rem 1rem 5.5rem !important;
-  }
-
-  .auth-form-title {
-    font-size: 3rem !important;
-  }
-
-  .auth-form-subtitle {
-    font-size: 2rem !important;
-  }
-
-  .auth-form-field {
-    font-size: 1.5rem;
-    width: 75% !important;
-  }
-
-  .auth-form-label {
-    font-size: 1.2rem;
-  }
-
-  .auth-button {
-    width: 75% !important;
-  }
-}
-
-@media only screen and (max-width: 426px) {
-  .auth-form-container {
-    padding: 3.2rem 2rem 1rem 3.5rem !important;
-  }
-
-  .auth-form {
-    margin: 1rem 0 0 0 !important;
-  }
-
-  .auth-form-title {
-    font-size: 2.5rem !important;
-  }
-
-  .auth-form-subtitle {
-    font-size: 1.5rem !important;
-  }
-
-  .auth-form-field {
-    font-size: 1.5rem;
-    width: 90% !important;
-  }
-
-  .auth-form-label {
-    font-size: 1.1rem !important;
-  }
-
-  .auth-form-text {
-    font-size: 0.85rem;
-  }
-
-  .auth-checkbox-container {
-    margin: 3rem 0 0 0 !important;
-  }
-
-  .auth-button {
-    width: 90% !important;
-  }
 }

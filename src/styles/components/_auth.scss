@@ -1,5 +1,6 @@
 .auth__form-container {
-  padding: 3.6em 2em 1em 10em;
+  padding: 3em 2em 1em 2em;
+  margin: 1em auto;
   width: 80%;
   max-width: $max-width;
   min-height: 100vh;
@@ -9,24 +10,41 @@
     margin: 0;
     font-size: 4.5rem;
     color: $main-color;
+
+    @media screen and (max-width: 600px) {
+      font-size: 3.3rem;
+    }
   }
 
   /* subtitle */
   & > p {
-    margin: 0 0 0 8px;
+    margin-left: 0.15em;
     font-size: 2.2rem;
+
+    @media screen and (max-width: 600px) {
+      font-size: 1.7rem;
+    }
   }
 }
 
 .auth__form {
-  margin: 3.4em 0 0 0;
+  margin-top: 3.5em;
   width: 100%;
+  max-width: $max-width * 0.7;
 
   & small {
     display: block;
     font-size: 0.95rem;
     margin-top: 0.2em;
     margin-left: 0.1em;
+
+    @media screen and (min-width: 601px) and (max-width: 968px) {
+      font-size: 1.2rem;
+    }
+
+    @media screen and (max-width: 600px) {
+      font-size: 1.2rem;
+    }
   }
 }
 
@@ -34,7 +52,13 @@
   position: relative;
 
   &:not(:first-child) {
-    margin: 4em 0 0 0;
+    margin-top: 4em;
+  }
+
+  @media screen and (min-width: 601px) and (max-width: 968px) {
+    & > button {
+      font-size: 1.5rem;
+    }
   }
 }
 
@@ -43,6 +67,12 @@
   top: -27px;
   left: 2px;
   font-size: 1.4rem;
+
+  @media screen and (min-width: 601px) and (max-width: 968px) {
+    top: -31px;
+    left: 3px;
+    font-size: 1.6rem;
+  }
 }
 
 .form-label--error {
@@ -62,6 +92,10 @@
   &:focus {
     box-shadow: 0 0 0 2px $form-focus;
   }
+
+  @media screen and (min-width: 601px) and (max-width: 968px) {
+    font-size: 1.9rem;
+  }
 }
 
 .form-field--error {
@@ -77,10 +111,16 @@
   & > input[type='checkbox'] {
     margin-left: 0.2em;
   }
+
+  @media screen and (min-width: 601px) and (max-width: 968px) {
+    margin-top: 1.8em;
+    font-size: 1.4rem;
+  }
 }
 
 .auth__footer {
-  margin: 1em 0 0 0;
+  margin-top: 0.9em;
+  font-size: 1.3rem;
 
   & > a {
     color: $main-color;
@@ -89,5 +129,10 @@
 
   & > a:hover {
     color: $dark-gray;
+  }
+
+  @media screen and (max-width: 425px) {
+    font-size: 1.2rem;
+    width: 11em;
   }
 }
