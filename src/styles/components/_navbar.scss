@@ -22,6 +22,11 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+
+  &.navbar__user-name {
+    font-size: 1.3rem;
+    cursor: default;
+  }
 }
 
 .navbar-menu > li {
@@ -58,11 +63,6 @@
   &.profile-dropdown--close:hover {
     box-shadow: 0 0 6px $dark-gray;
   }
-}
-
-.navbar__user-name {
-  font-size: 1.3rem;
-  cursor: default;
 }
 
 .navbar__profile-dropdown {
