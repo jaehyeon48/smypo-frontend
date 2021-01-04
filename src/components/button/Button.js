@@ -4,10 +4,13 @@ const Button = ({
   btnType,
   btnText,
   btnColor,
-  isDisabled = false
+  isDisabled = false,
+  onClickFunc
 }) => {
   const determineColor = (color) => {
     switch (color) {
+      case 'white':
+        return 'white';
       case 'warning':
         return 'warning';
       case 'danger':
@@ -21,6 +24,7 @@ const Button = ({
       className={`button button--${determineColor(btnColor)}`}
       type={btnType}
       disabled={isDisabled}
+      onClick={onClickFunc}
     >
       {btnText}
     </button>
