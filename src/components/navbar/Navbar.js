@@ -185,6 +185,7 @@ const Navbar = ({
   );
   const navAuth = (
     <ul className="navbar-menu">
+      <li className="navbar__user-name">{user && user.firstName} {user && user.lastName}</li>
       <li
         className={isProfileDropdownOpen ?
           'navbar__avatar-container profile-dropdown--open' : 'navbar__avatar-container profile-dropdown--close'}
