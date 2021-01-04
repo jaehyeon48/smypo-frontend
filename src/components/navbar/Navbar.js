@@ -222,9 +222,7 @@ const Navbar = ({
               <span>Cash</span>
             </li>
             <li
-              className="profile-dropdown-item profile-dropdown__sign-out"
               onClick={handleSignOut}
-
             >
               <SignOutIcon />
               <span>Sign Out</span>
