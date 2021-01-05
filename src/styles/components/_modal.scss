@@ -11,9 +11,11 @@
 .modal-content {
   position: fixed;
   top: 7em;
-  right: 17%;
-  left: 17%;
+  right: 10%;
+  left: 10%;
+  max-width: $max-width * 0.7;
   padding: 3em 4em;
+  margin: 0 auto;
   background-color: white;
   overflow: auto;
   border-radius: 0.2em;
