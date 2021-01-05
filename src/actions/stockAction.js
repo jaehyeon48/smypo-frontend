@@ -28,7 +28,7 @@ import { sortStocks } from '../utils/sortStocks';
 export const checkMarketStatus = () => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    const marketStatusResponse = await axios.get(`${SERVER_URL}/api/stock/marketStatus`, config);
+    const marketStatusResponse = await axios.get(`${SERVER_URL}/stock/marketStatus`, config);
     dispatch({
       type: CHECK_MARKET_STATUS,
       payload: marketStatusResponse.data
@@ -42,7 +42,7 @@ export const checkMarketStatus = () => async (dispatch) => {
 export const getStocks = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    const stocksResult = await axios.get(`${SERVER_URL}/api/portfolio/stocks/${portfolioId}`, config);
+    const stocksResult = await axios.get(`${SERVER_URL}/portfolio/stocks/${portfolioId}`, config);
     if (stocksResult.data !== null) {
       const sortedStocks = await sortStocks(stocksResult.data);
       dispatch({
@@ -66,7 +66,7 @@ export const getSectorInfo = (ticker) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
-    const response = await axios.get(`${SERVER_URL}/api/stock/sector/${ticker}`, config);
+    const response = await axios.get(`${SERVER_URL}/stock/sector/${ticker}`, config);
 
     dispatch({
       type: GET_SECTOR,
@@ -89,7 +89,7 @@ export const addStock = (portfolioId, formData, currentAvgCost) => async (dispat
   try {
     const reqBody = JSON.stringify({ portfolioId, ...formData, currentAvgCost });
 
-    await axios.post(`${SERVER_URL}/api/stock`, reqBody, config);
+    await axios.post(`${SERVER_URL}/stock`, reqBody, config);
     dispatch({ type: ADD_STOCK });
     return 0;
   } catch (error) {
@@ -108,7 +108,7 @@ export const editStock = (formData, currentAvgCost) => async (dispatch) => {
   const { stockId, price, quantity, transactionDate, transactionType } = formData;
   try {
     const reqBody = JSON.stringify({ price, quantity, transactionDate, transactionType, currentAvgCost });
-    await axios.put(`${SERVER_URL}/api/stock/${stockId}`, reqBody, config);
+    await axios.put(`${SERVER_URL}/stock/${stockId}`, reqBody, config);
     dispatch({ type: EDIT_STOCK });
     return 0;
   } catch (error) {
@@ -120,7 +120,7 @@ export const editStock = (formData, currentAvgCost) => async (dispatch) => {
 export const deleteStock = (stockId) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    await axios.delete(`${SERVER_URL}/api/stock/${stockId}`, config);
+    await axios.delete(`${SERVER_URL}/stock/${stockId}`, config);
     dispatch({ type: DELETE_STOCK });
     return 0;
   } catch (error) {
@@ -146,7 +146,7 @@ export const editOverallReturn = (ticker, overallReturn) => (dispatch) => {
 export const getStocksByTickerGroup = (portfolioId, ticker) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    const tickerGroupResult = await axios.get(`${SERVER_URL}/api/portfolio/group/${portfolioId}/${ticker}`, config);
+    const tickerGroupResult = await axios.get(`${SERVER_URL}/portfolio/group/${portfolioId}/${ticker}`, config);
 
     dispatch({
       type: GET_STOCK_GROUP,
@@ -161,7 +161,7 @@ export const getStocksByTickerGroup = (portfolioId, ticker) => async (dispatch) 
 export const getRealizedStocks = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    const realizedStocksResult = await axios.get(`${SERVER_URL}/api/portfolio/realized/${portfolioId}`, config);
+    const realizedStocksResult = await axios.get(`${SERVER_URL}/portfolio/realized/${portfolioId}`, config);
 
     dispatch({
       type: GET_REALIZED_STOCKS,
@@ -184,7 +184,7 @@ export const resetRealizeStockLoading = () => (dispatch) => {
 export const closePosition = (portfolioId, ticker) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    await axios.delete(`${SERVER_URL}/api/stock/${portfolioId}/${ticker}`, config);
+    await axios.delete(`${SERVER_URL}/stock/${portfolioId}/${ticker}`, config);
     dispatch({ type: CLOSE_POSITION });
     return 0;
   } catch (error) {
