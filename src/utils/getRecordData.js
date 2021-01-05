@@ -1,11 +1,10 @@
 import axios from 'axios';
-import SERVER_URL from '../actions/serverURL';
 
 export const get10DaysOfRecord = async (portfolioId) => {
   const config = { withCredentials: true };
 
   try {
-    const recordData = await axios.get(`${SERVER_URL}/api/record/10days/${portfolioId}`, config);
+    const recordData = await axios.get(`${process.env.REACT_APP_SERVER_URL}/record/10days/${portfolioId}`, config);
 
     return convertToDateString(recordData.data.records);
   } catch (error) {
