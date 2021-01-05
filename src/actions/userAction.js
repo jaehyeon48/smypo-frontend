@@ -8,7 +8,7 @@ import {
 } from './actionTypes';
 
 import { loadUser } from './authAction';
-import SERVER_URL from './serverURL';
+import process.env.REACT_APP_SERVER_URL from './serverURL';
 
 export const uploadAvatar = (avatarImage) => async (dispatch) => {
   const config = {
@@ -21,7 +21,7 @@ export const uploadAvatar = (avatarImage) => async (dispatch) => {
     const avatarFile = new FormData();
     avatarFile.append('avatar', avatarImage);
 
-    const uploadResponse = await axios.post(`${SERVER_URL}/user/avatar`, avatarFile, config);
+    const uploadResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/avatar`, avatarFile, config);
     /* wait for 1s to retrieve image */
     await new Promise(resolve => setTimeout(resolve, 1000));
     dispatch({
@@ -45,7 +45,7 @@ export const updateProfile = (formData) => async (dispatch) => {
   };
   try {
     const reqBody = JSON.stringify(formData);
-    await axios.put(`${SERVER_URL}/user`, reqBody, config);
+    await axios.put(`${process.env.REACT_APP_SERVER_URL}/user`, reqBody, config);
     dispatch(loadUser());
     dispatch({ type: UPDATE_USER });
     return 0;

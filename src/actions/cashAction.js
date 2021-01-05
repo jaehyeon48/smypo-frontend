@@ -11,7 +11,6 @@ import {
 } from './actionTypes';
 
 import axios from 'axios';
-import SERVER_URL from './serverURL';
 
 import { calculateTotalCashAmount } from '../utils/calculateTotalCash';
 
@@ -19,7 +18,7 @@ export const getCash = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
-    const cashResponse = await axios.get(`${SERVER_URL}/portfolio/cash/${portfolioId}`, config);
+    const cashResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
     dispatch({
       type: GET_CASH_LIST,
       payload: cashResponse.data
@@ -34,7 +33,7 @@ export const getTotalCash = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
-    const cashResponse = await axios.get(`${SERVER_URL}/portfolio/cash/${portfolioId}`, config);
+    const cashResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
     if (cashResponse.data.length > 0) {
       const totalCash = calculateTotalCashAmount(cashResponse.data);
       dispatch({
@@ -58,7 +57,7 @@ export const addCash = (portfolioId, formData) => async (dispatch) => {
 
   try {
     const reqBody = JSON.stringify({ portfolioId, ...formData });
-    await axios.post(`${SERVER_URL}/cash`, reqBody, config);
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/cash`, reqBody, config);
     dispatch({ type: ADD_CASH });
     dispatch(getTotalCash(portfolioId));
     return 0;
@@ -80,7 +79,7 @@ export const editCash = (formData) => async (dispatch) => {
     const { cashId } = formData;
     const reqBody = JSON.stringify(formData);
 
-    await axios.put(`${SERVER_URL}/cash/${cashId}`, reqBody, config);
+    await axios.put(`${process.env.REACT_APP_SERVER_URL}/cash/${cashId}`, reqBody, config);
     dispatch({ type: EDIT_CASH });
     return 0;
   } catch (error) {
@@ -94,7 +93,7 @@ export const deleteCash = (cashId) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
-    await axios.delete(`${SERVER_URL}/cash/${cashId}`, config);
+    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/cash/${cashId}`, config);
     dispatch({ type: DELETE_CASH });
     return 0;
   } catch (error) {
