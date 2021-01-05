@@ -83,11 +83,10 @@
   font-size: 1.7rem;
   padding: 10px;
   width: 100%;
-  border: none;
+  border: 1px solid $light-gray;
   outline: none;
-  border-radius: 0.25em;
-  transition: all 100ms ease;
-  background-color: lighten($light-gray, 10%);
+  border-radius: 0.15em;
+  transition: all 0.2s ease;
 
   &:focus {
     box-shadow: 0 0 0 2px $form-focus;
