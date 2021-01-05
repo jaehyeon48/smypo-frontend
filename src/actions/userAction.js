@@ -8,7 +8,6 @@ import {
 } from './actionTypes';
 
 import { loadUser } from './authAction';
-import process.env.REACT_APP_SERVER_URL from './serverURL';
 
 export const uploadAvatar = (avatarImage) => async (dispatch) => {
   const config = {
