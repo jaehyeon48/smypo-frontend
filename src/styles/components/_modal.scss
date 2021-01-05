@@ -1,0 +1,48 @@
+.modal-backdrop {
+  position: fixed;
+  z-index: 99;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: fixed;
+  top: 7em;
+  right: 17%;
+  left: 17%;
+  padding: 3em 4em;
+  background-color: white;
+  overflow: auto;
+  border-radius: 0.2em;
+  box-shadow: 4px 5px 5px $black;
+}
+
+.modal-content-bg-dark {
+  background-color: var(--dark-theme-bg-color);
+  border: 1px solid var(--darkgray-color);
+}
+
+.modal-content-bg-light {
+  background-color: var(--light-theme-bg-color);
+  border: 1px solid var(--light-dark-color);
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  cursor: pointer;
+  font-size: 2.2em;
+  height: 1em;
+  width: 1em;
+  border: none;
+  outline: none;
+  background-color: $white;
+
+  &:hover {
+    color: $main-color;
+  }
+}
