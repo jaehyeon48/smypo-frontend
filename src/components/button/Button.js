@@ -8,15 +8,16 @@ const Button = ({
   onClickFunc
 }) => {
   const determineColor = (color) => {
-    switch (color) {
-      case 'white':
-        return 'white';
-      case 'warning':
-        return 'warning';
-      case 'danger':
-        return 'danger';
-      default:
-        return 'default';
+    const colors = {
+      'white': 'white',
+      'warning': 'warning',
+      'danger': 'danger',
+    };
+
+    if (!colors[color]) {
+      return 'default';
+    } else {
+      return colors[color];
     }
   }
   return (
