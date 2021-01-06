@@ -20,16 +20,34 @@
 .button--default {
   background: linear-gradient($main-color, #15a559);
   color: $white;
-}
 
-.button--default:hover {
-  background: darken($main-color, 8%);
+  &:hover {
+    background: darken($main-color, 8%);
+  }
 }
 
 .button--white {
   background: linear-gradient($white, #dadada);
+
+  &:hover {
+    background: darken($white, 15%);
+  }
 }
 
-.button--white:hover {
-  background: darken($white, 15%);
+.button--warning {
+  background: linear-gradient($orange, #d25f1d);
+  color: $white;
+
+  &:hover {
+    background: darken($orange, 10%);
+  }
+}
+
+.button--danger {
+  background: linear-gradient($danger, #b92534);
+  color: $white;
+
+  &:hover {
+    background: darken($danger, 10%);
+  }
 }
