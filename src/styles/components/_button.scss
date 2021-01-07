@@ -39,7 +39,7 @@
   color: $white;
 
   &:hover {
-    background: darken($orange, 10%);
+    background: darken($orange, 13%);
   }
 }
 
@@ -48,6 +48,14 @@
   color: $white;
 
   &:hover {
-    background: darken($danger, 10%);
+    background: darken($danger, 13%);
+  }
+}
+
+.button--light-gray {
+  background-color: linear-gradient($light-gray, #b1b1b1);
+
+  &:hover {
+    background: darken($light-gray, 13%);
   }
 }
