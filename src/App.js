@@ -12,7 +12,7 @@ import Stock from './components/stock/Stocks';
 import RealizedStocks from './components/stock/RealizedStocks';
 import Cash from './components/cash/Cash';
 import Portfolios from './components/portfolio/Portfolios';
-import Profile from './components/portfolio/Profile';
+import Profile from './components/profile/Profile';
 import Alert from './components/alert/Alert';
 import PositionDetail from './components/position/PositionDetail';
 import Footer from './components/footer/Footer';

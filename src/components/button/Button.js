@@ -12,6 +12,7 @@ const Button = ({
       'white': 'white',
       'warning': 'warning',
       'danger': 'danger',
+      'lightGray': 'light-gray'
     };
 
     if (!colors[color]) {

@@ -14,7 +14,7 @@ import {
 import axios from 'axios';
 
 
-export const loadPortfolios = (userId) => async (dispatch) => {
+export const loadPortfolios = () => async (dispatch) => {
   try {
     const portfolioResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio`, { withCredentials: true });
 
@@ -40,7 +40,7 @@ export const selectPortfolio = (portfolioId) => async (dispatch) => {
     const selectedPortfolioResult = await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio/select`, reqBody, config);
     dispatch({
       type: SELECT_PORTFOLIO,
-      payload: selectedPortfolioResult.data
+      payload: selectedPortfolioResult.data.selectedPortfolioId
     });
   } catch (error) {
     console.error(error);
@@ -84,20 +84,17 @@ export const createPortfolio = (portfolioName, privacy) => async (dispatch) => {
     dispatch({ type: CREATE_PORTFOLIO });
     dispatch(loadPortfolios());
     dispatch(getSelectedPortfolio());
-    return false;
   } catch (error) {
     console.error(error);
     dispatch({ type: PORTFOLIO_CREATE_ERROR });
-    if (error.response.status === 400) {
-      return true; // true for name duplication
-    }
-    else {
-      return false;
-    }
   }
 }
 
-export const editPortfolio = (portfolioId, newPortfolioName) => async (dispatch) => {
+export const editPortfolio = ({
+  portfolioId,
+  newPortfolioName,
+  newPortfolioPrivacy
+}) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -105,21 +102,16 @@ export const editPortfolio = (portfolioId, newPortfolioName) => async (dispatch)
     withCredentials: true
   };
 
-  const reqBody = JSON.stringify({ newPortfolioName });
+  const reqBody = JSON.stringify({ newPortfolioName, newPortfolioPrivacy });
   try {
     await axios.put(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, reqBody, config);
 
     dispatch({ type: EDIT_PORTFOLIO });
     dispatch(loadPortfolios());
     dispatch(getSelectedPortfolio());
-    return false;
   } catch (error) {
     console.error(error);
     dispatch({ type: PORTFOLIO_EDIT_ERROR });
-    if (error.response.status === 400) {
-      return true; // true for name duplication
-    }
-    return false;
   }
 }
 
