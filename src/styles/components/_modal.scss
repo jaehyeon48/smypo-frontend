@@ -10,21 +10,17 @@
 
 .modal-content {
   position: fixed;
-  top: 7em;
-  right: 10%;
-  left: 10%;
-  max-width: $max-width * 0.7;
+  max-width: fit-content;
+  left: 0;
+  right: 0;
+  margin: 9vh auto;
   padding: 3em 4em;
-  margin: 0 auto;
   background-color: white;
   overflow: auto;
   border-radius: 0.2em;
   box-shadow: 4px 5px 5px $black;
 
   @media screen and (max-width: 768px) {
-    top: 9em;
-    right: 4%;
-    left: 4%;
     padding: 2.6em 3.6em;
   }
 }
