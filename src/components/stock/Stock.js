@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import StockItem from './StockItem';
+import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import AddTransaction from './AddTransaction';
 import Spinner from '../spinner/Spinner';
 import { getTotalCash } from '../../actions/cashAction';
 import { getStocks } from '../../actions/stockAction';
 import { getSelectedPortfolio } from '../../actions/portfolioAction';
-import './stocks.css';
 
 const Stock = ({
   loading,
@@ -59,20 +59,19 @@ const Stock = ({
   }
 
   return (
-    <React.Fragment>
+    <main className="stock-main">
       <div className="stocks-btn-container">
-        <button
-          type="button"
-          className="btn btn-open-add-transaction-modal"
-          onClick={openAddTransactionModal}
-        >ADD TRANSACTION</button>
-        <button
-          type="button"
-          className="btn btn-redirect-realized-stocks"
-          onClick={redirectToRealizedStocks}
-        >
-          Realized Stocks
-      </button>
+        <Button
+          btnType={'button'}
+          btnText={'Add transaction'}
+          onClickFunc={openAddTransactionModal}
+        />
+        <Button
+          btnType={'button'}
+          btnText={'Realized stocks'}
+          btnColor={'primary'}
+          onClickFunc={redirectToRealizedStocks}
+        />
       </div>
       {stock && !stock.stockLoading ? (
         <React.Fragment>
@@ -84,14 +83,18 @@ const Stock = ({
                 avgCost={eachStock.avgCost}
                 quantity={eachStock.quantity}
               />
-            )) : <div className="notice-empty-stocklist">The stock list is empty. Please Add Your Stock First!</div>}
+            )) : (
+                <div className="notice-empty-stocklist">
+                  <p>The stock list is empty. Please Add Your Stock First!</p>
+                </div>
+              )}
           </div>
           {isAddTransactionModalOpen && <Modal closeModalFunc={closeAddTransactionModal} overflowY={true}>
             <AddTransaction closeAddTransactionModal={closeAddTransactionModal} />
           </Modal>}
         </React.Fragment>
       ) : <Spinner />}
-    </React.Fragment>
+    </main>
   );
 }
 

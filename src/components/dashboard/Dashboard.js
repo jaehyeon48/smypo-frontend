@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import {
   loadPortfolios,
@@ -13,13 +13,13 @@ import {
   resetStockLoading
 } from '../../actions/stockAction';
 import { getTotalCash } from '../../actions/cashAction';
+import Button from '../button/Button';
 import GetStockPrice from './GetStockPrice';
 import ValuePieChart from './ValuePieChart';
 import SectorPieChart from './SectorPieChart';
 import TenDayChart from './TenDayChart';
 import DollarSignIcon from '../icons/DollarSignIcon';
 import Spinner from '../spinner/Spinner';
-import './mainpage.css';
 
 const Dashboard = ({
   loading,
@@ -128,7 +128,7 @@ const Dashboard = ({
   return (
     <React.Fragment>
       {portfolioList && portfolioList.length > 0 ? (
-        <div className="main-container">
+        <main className="dashboard-main">
           {!stock.stockLoading ? (
             <React.Fragment>
               {stock.stockList.length > 0 ? (
@@ -170,7 +170,17 @@ const Dashboard = ({
                   {stock.stockList.length > 0 && <SectorPieChart />}
                   <TenDayChart currentPortfolioId={currentPortfolio} />
                 </React.Fragment>
-              ) : <div className="notice-empty-stocklist">The stock list is empty. Please Add Your Stock First!</div>}
+              ) : (
+                  <div className="notice-empty-stocklist">
+                    <p>Your stock list is empty. Please add your stock first.</p>
+                    <Link to="/stocks">
+                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                      </svg>
+                      Add new stock
+                    </Link>
+                  </div>
+                )}
             </React.Fragment>
           ) : <div className="dashboard-spinner"><Spinner /></div>}
           <div className="portfolio-actions">
@@ -183,8 +193,18 @@ const Dashboard = ({
               quantity={eachStock.quantity}
             />
           ))}
-        </div>
-      ) : <div className="notice-empty-portfoliolist">Portfolio Does Not Exist! Why Don't You Create Your First Portfolio?</div>}
+        </main>
+      ) : (
+          <main className="notice-empty-portfolio-list">
+            <p>Portfolio list is empty. Would you like to create a new one?</p>
+            <Link to="/portfolios">
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+              </svg>
+              Add new portfolio
+            </Link>
+          </main>
+        )}
     </React.Fragment>
   );
 }

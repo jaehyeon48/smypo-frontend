@@ -10,6 +10,7 @@ const Button = ({
   const determineColor = (color) => {
     const colors = {
       'white': 'white',
+      'primary': 'primary',
       'warning': 'warning',
       'danger': 'danger',
       'lightGray': 'light-gray'

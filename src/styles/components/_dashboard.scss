@@ -1,8 +1,8 @@
-.main-container {
-  display: grid;
-  grid-template-columns: repeat(30, 1fr);
-  max-width: 1600px;
-  margin: 0 auto 70px;
+.dashboard-main {
+  display: flex;
+  max-width: $max-width;
+  min-height: 100vh;
+  margin: 0 auto;
 }
 
 .display-return-container {
@@ -86,19 +86,89 @@
 }
 
 .notice-empty-stocklist {
-  margin-top: 30px;
-  grid-column: 1 / span 30;
-  font-size: 2.7rem;
-  text-align: center;
-  color: var(--highlight-color);
+  margin: 2em auto;
+
+  & > p {
+    padding: 0.5em;
+    font-size: 3rem;
+    text-align: center;
+    color: $main-color;
+
+    @media screen and (max-width: 600px) {
+      font-size: 2.4rem;
+    }
+  }
+
+  & > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em auto;
+    width: 10em;
+    padding: 0.5em;
+    font-size: 1.3rem;
+    border-radius: 0.3em;
+    border: none;
+    outline: none;
+    box-shadow: 1px 1px 4px $black;
+    text-align: center;
+    background: linear-gradient($orange, #d25f1d);
+    color: $white;
+
+    & > svg {
+      width: 28px;
+      height: 28px;
+      margin-right: 0.4em;
+    }
+  }
+
+  & > a:hover {
+    background: darken($orange, 13%);
+  }
 }
 
-.notice-empty-portfoliolist {
-  padding: 70px 0 0 0;
-  grid-row: 1;
-  grid-column: 1 / span 30;
-  font-size: 2.7rem;
-  text-align: center;
+.notice-empty-portfolio-list {
+  max-width: $max-width;
+  min-height: 100vh;
+  margin: 2em auto;
+
+  & > p {
+    padding: 0.5em;
+    font-size: 3rem;
+    text-align: center;
+    color: $main-color;
+
+    @media screen and (max-width: 600px) {
+      font-size: 2.4rem;
+    }
+  }
+
+  & > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em auto;
+    width: 10em;
+    padding: 0.5em;
+    font-size: 1.3rem;
+    border-radius: 0.3em;
+    border: none;
+    outline: none;
+    box-shadow: 1px 1px 4px $black;
+    text-align: center;
+    background: linear-gradient($orange, #d25f1d);
+    color: $white;
+
+    & > svg {
+      width: 28px;
+      height: 28px;
+      margin-right: 0.4em;
+    }
+  }
+
+  & > a:hover {
+    background: darken($orange, 13%);
+  }
 }
 
 .mainpage-loading-spinner {

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import tickerAutoComplete from '../../utils/tickerAutoComplete';
 import AutoCompleteResult from '../dashboard/AutoCompleteResult';
+import Button from '../button/Button';
 
 import { addStock } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';
@@ -147,7 +148,7 @@ const AddTransaction = ({
             )}
         </div>
         <div className="ticker-container">
-          <label className="add-transaction-inputs">
+          <label className="add-transaction-label">
             Ticker
           <input
               type="text"
@@ -164,7 +165,7 @@ const AddTransaction = ({
             handleClickItem={handleClickItem}
           />}
         </div>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Company
           <input
             type="text"
@@ -173,7 +174,7 @@ const AddTransaction = ({
             disabled={true}
           />
         </label>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Price
           <input
             type="number"
@@ -185,7 +186,7 @@ const AddTransaction = ({
             className="add-transaction-field"
           />
         </label>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Quantity
           <input
             type="number"
@@ -195,7 +196,7 @@ const AddTransaction = ({
             className="add-transaction-field"
           />
         </label>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Date
           <input
             type="date"
@@ -205,7 +206,10 @@ const AddTransaction = ({
             className="add-transaction-date-field"
           />
         </label>
-        <button type="submit" className="btn btn-add-transaction">ADD TRANSACTION</button>
+        <Button
+          btnType={'submit'}
+          btnText={'Add transaction'}
+        />
       </form>
     </div>
   );

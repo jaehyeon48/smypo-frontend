@@ -8,7 +8,7 @@ import Navbar from './components/navbar/Navbar';
 import SignUp from './components/auth/SignUp';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
-import Stock from './components/stock/Stocks';
+import Stock from './components/stock/Stock';
 import RealizedStocks from './components/stock/RealizedStocks';
 import Cash from './components/cash/Cash';
 import Portfolios from './components/portfolio/Portfolios';
@@ -36,9 +36,9 @@ export default function App() {
             <Route path="/signup" component={SignUp} exact={true} />
             <Route path="/login" component={Login} exact={true} />
             <Route path="/dashboard" component={Dashboard} exact={true} />
-            {/* <Route path="/stocks" component={Stock} exact={true} /> */}
-            {/* <Route path="/stocks/realized" component={RealizedStocks} exact={true} /> */}
-            {/* <Route path="/cash" component={Cash} exact={true} /> */}
+            <Route path="/stocks" component={Stock} exact={true} />
+            <Route path="/stocks/realized" component={RealizedStocks} exact={true} />
+            <Route path="/cash" component={Cash} exact={true} />
             <Route path="/portfolios" component={Portfolios} exact={true} />
             {/* <Route path="/profile" component={Profile} exact={true} /> */}
             {/* <Route path="/position/:portfolioId/:ticker" component={PositionDetail} exact={true} /> */}
