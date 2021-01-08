@@ -28,7 +28,7 @@ export const loadPortfolios = () => async (dispatch) => {
   }
 }
 
-export const selectPortfolio = (portfolioId) => async (dispatch) => {
+export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'

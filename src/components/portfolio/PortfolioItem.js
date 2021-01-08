@@ -7,14 +7,14 @@ import Button from '../button/Button';
 import {
   editPortfolio,
   deletePortfolio,
-  selectPortfolio
+  chooseDefaultPortfolio
 } from '../../actions/portfolioAction';
 import { showAlert } from '../../actions/alertAction';
 
 const PortfolioItem = ({
   portfolio,
   currentPortfolio,
-  selectPortfolio,
+  chooseDefaultPortfolio,
   editPortfolio,
   deletePortfolio,
   showAlert
@@ -23,15 +23,15 @@ const PortfolioItem = ({
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [pfNameToBeEdited, setPfNameToBeEdited] = useState(portfolio.portfolioName);
   const [privacy, setPrivacy] = useState(portfolio.portfolioPrivacy);
-  const [isSelected, setIsSelected] = useState(false);
+  const [isDefault, setIsDefault] = useState(false);
   const [isNameEmptyErr, setIsNameEmptyErr] = useState(false);
   const [isPfNameEmpty, setIsPfNameEmpty] = useState(false);
 
   useEffect(() => {
     if (portfolio.portfolioId === currentPortfolio) {
-      setIsSelected(true);
+      setIsDefault(true);
     } else {
-      setIsSelected(false);
+      setIsDefault(false);
     }
   }, [currentPortfolio]);
 
@@ -93,9 +93,9 @@ const PortfolioItem = ({
     setPrivacy('public');
   }
 
-  const handleSelectPortfolio = () => {
-    if (!isSelected) {
-      selectPortfolio(portfolio.portfolioId);
+  const handleChooseDefault = () => {
+    if (!isDefault) {
+      chooseDefaultPortfolio(portfolio.portfolioId);
     }
   }
 
@@ -114,11 +114,12 @@ const PortfolioItem = ({
           ${portfolio.portfolioPrivacy === 'public' ? "portfolio--public" : "portfolio--private"}`}>
           {portfolio.portfolioPrivacy}
         </div>
-        <div className="portfolio-item-select">
+        <div className="portfolio-item-default">
           <span
-            className={`portfolio-select-notice ${isSelected ? "pf--selected" : "pf--not-selected"}`}
-            onClick={handleSelectPortfolio}
-          >{isSelected ? 'SELECTED' : 'NOT SELECTED'}
+            className={`portfolio-default-notice ${isDefault ? "pf--default" : "pf--not-default"}`}
+            onClick={handleChooseDefault}
+          >
+            DEFAULT
           </span>
         </div>
         <div className="portfolio-item-actions">
@@ -230,7 +231,7 @@ PortfolioItem.propTypes = {
 
 export default connect(null, {
   editPortfolio,
-  selectPortfolio,
+  chooseDefaultPortfolio,
   deletePortfolio,
   showAlert
 })(PortfolioItem);

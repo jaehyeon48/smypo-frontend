@@ -127,7 +127,7 @@
   background-color: #0e318a;
 }
 
-.portfolio-item-select {
+.portfolio-item-default {
   font-size: 2rem;
   font-weight: 700;
   margin: 0.8em 0;
@@ -170,12 +170,12 @@
   }
 }
 
-.pf--selected {
+.pf--default {
   color: $highlight;
   cursor: not-allowed;
 }
 
-.pf--not-selected {
+.pf--not-default {
   color: $dark-gray;
   cursor: pointer;
 }
