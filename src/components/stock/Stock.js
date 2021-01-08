@@ -12,7 +12,7 @@ import { getStocks } from '../../actions/stockAction';
 import { getSelectedPortfolio } from '../../actions/portfolioAction';
 import './stocks.css';
 
-const Stocks = ({
+const Stock = ({
   loading,
   isAuthenticated,
   stock,
@@ -95,7 +95,7 @@ const Stocks = ({
   );
 }
 
-Stocks.propTypes = {
+Stock.propTypes = {
   isAuthenticated: PropTypes.bool,
   stock: PropTypes.object,
   currentPortfolio: PropTypes.number,
@@ -115,4 +115,4 @@ export default connect(mapStateToProps, {
   getTotalCash,
   getStocks,
   getSelectedPortfolio
-})(Stocks);
+})(Stock);
