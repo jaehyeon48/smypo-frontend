@@ -389,3 +389,35 @@
   font-size: 1.1rem;
   color: $danger;
 }
+
+.portfolio-delete-confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 1.5em auto;
+  font-size: 1.2rem;
+
+  & > svg {
+    width: 100px;
+    height: 100px;
+    color: $orange;
+  }
+
+  & > p {
+    margin: 1em 0;
+  }
+}
+
+.portfolio-to-delete-name {
+  font-weight: 700;
+  margin-left: 0.2em;
+}
+
+.portfolio-delete-confirm-actions {
+  display: flex;
+
+  & > button:first-child {
+    margin-right: 1.4em;
+  }
+}
