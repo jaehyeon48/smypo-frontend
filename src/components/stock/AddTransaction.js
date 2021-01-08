@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import tickerAutoComplete from '../../utils/tickerAutoComplete';
-import AutoCompleteResult from '../mainpage/AutoCompleteResult';
+import AutoCompleteResult from '../dashboard/AutoCompleteResult';
 
 import { addStock } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';

@@ -7,7 +7,7 @@ import LandingPage from './components/landingpage/LandingPage';
 import Navbar from './components/navbar/Navbar';
 import SignUp from './components/auth/SignUp';
 import Login from './components/auth/Login';
-import MainPage from './components/mainpage/MainPage';
+import Dashboard from './components/dashboard/Dashboard';
 import Stock from './components/stock/Stocks';
 import RealizedStocks from './components/stock/RealizedStocks';
 import Cash from './components/cash/Cash';
@@ -35,7 +35,7 @@ export default function App() {
             <Alert />
             <Route path="/signup" component={SignUp} exact={true} />
             <Route path="/login" component={Login} exact={true} />
-            {/* <Route path="/dashboard" component={MainPage} exact={true} /> */}
+            <Route path="/dashboard" component={Dashboard} exact={true} />
             {/* <Route path="/stocks" component={Stock} exact={true} /> */}
             {/* <Route path="/stocks/realized" component={RealizedStocks} exact={true} /> */}
             {/* <Route path="/cash" component={Cash} exact={true} /> */}

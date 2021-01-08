@@ -21,7 +21,7 @@ import DollarSignIcon from '../icons/DollarSignIcon';
 import Spinner from '../spinner/Spinner';
 import './mainpage.css';
 
-const MainPage = ({
+const Dashboard = ({
   loading,
   isAuthenticated,
   stock,
@@ -190,7 +190,7 @@ const MainPage = ({
 }
 
 
-MainPage.propTypes = {
+Dashboard.propTypes = {
   theme: PropTypes.string,
   loading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
@@ -224,4 +224,4 @@ export default connect(mapStateToProps, {
   getStocks,
   getTotalCash,
   resetStockLoading
-})(MainPage);
+})(Dashboard);
