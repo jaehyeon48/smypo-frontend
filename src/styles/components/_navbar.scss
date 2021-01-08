@@ -82,6 +82,10 @@
   &.profile-dropdown--close:hover {
     box-shadow: 0 0 6px $dark-gray;
   }
+
+  @media screen and (max-width: 450px) {
+    margin-right: -1.3em;
+  }
 }
 
 .navbar__bars-icon {
@@ -200,6 +204,12 @@
 
     & > li:nth-child(2) {
       border-top: 1px solid #94a6b6;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    &::before {
+      right: 2.7em;
     }
   }
 }
