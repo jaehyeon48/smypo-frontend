@@ -165,17 +165,17 @@ const ValuePieChart = ({
         color: '#fff',
         anchor: 'end',
         align: 'start',
-        offset: -10,
+        offset: -2,
         borderWidth: 2,
         borderColor: '#fff',
-        borderRadius: 20,
+        borderRadius: 14,
         backgroundColor: (context) => {
           return context.dataset.backgroundColor;
         },
         font: {
           weight: 'bold',
-          size: 16,
-          family: 'Lato'
+          size: 14,
+          family: 'Roboto Condensed'
         },
         textAlign: 'center',
         padding: 7

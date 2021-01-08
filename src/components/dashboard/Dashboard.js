@@ -166,8 +166,12 @@ const Dashboard = ({
                       </span>
                     </div>
                   </div>
-                  {stock.stockList.length > 0 && <ValuePieChart stockListLength={stock.stockList.length} />}
-                  {stock.stockList.length > 0 && <SectorPieChart />}
+                  {stock.stockList && stock.stockList.length > 0 && (
+                    <div className="dashboard-pie-charts">
+                      <ValuePieChart stockListLength={stock.stockList.length} />
+                      <SectorPieChart />
+                    </div>
+                  )}
                   <TenDayChart currentPortfolioId={currentPortfolio} />
                 </React.Fragment>
               ) : (

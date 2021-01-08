@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import tickerAutoComplete from '../../utils/tickerAutoComplete';
-import AutoCompleteResult from '../dashboard/AutoCompleteResult';
+import AutoCompleteResult from './AutoCompleteResult';
 import Button from '../button/Button';
 
 import { addStock } from '../../actions/stockAction';
@@ -82,7 +82,7 @@ const AddTransaction = ({
         closeAddTransactionModal();
       }
       else {
-        showAlert('Something went wrong. Please try again!', 'fail');
+        showAlert('Something went wrong. Please try again!', 'error');
         closeAddTransactionModal();
       }
     }
@@ -158,21 +158,24 @@ const AddTransaction = ({
               onInput={handleTickerInput}
               className="add-transaction-field"
             />
+
           </label>
-          {renderAutoComplete && <AutoCompleteResult
-            results={autoCompleteResults}
-            userInput={tickerInput}
-            handleClickItem={handleClickItem}
-          />}
         </div>
         <label className="add-transaction-label">
           Company
-          <input
-            type="text"
-            value={companyName}
-            className="add-transaction-field"
-            disabled={true}
-          />
+          <div className="auto-complete-field-wrapper">
+            <input
+              type="text"
+              value={companyName}
+              className="add-transaction-field"
+              disabled={true}
+            />
+            {renderAutoComplete && <AutoCompleteResult
+              results={autoCompleteResults}
+              userInput={tickerInput}
+              handleClickItem={handleClickItem}
+            />}
+          </div>
         </label>
         <label className="add-transaction-label">
           Price

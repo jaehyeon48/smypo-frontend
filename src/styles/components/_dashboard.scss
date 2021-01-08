@@ -1,51 +1,55 @@
 .dashboard-main {
   display: flex;
-  max-width: $max-width;
+  align-items: center;
+  flex-direction: column;
+  max-width: $max-width * 0.9;
   min-height: 100vh;
   margin: 0 auto;
 }
 
 .display-return-container {
-  grid-row: 2;
-  grid-column: 1 / span 30;
-  display: grid;
-  grid-template-columns: repeat(40, 1fr);
-  margin: 2rem;
-  padding: 1.2rem 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 2em;
+  padding: 0.4em 0;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+    justify-content: initial;
+    align-items: center;
+    width: 100%;
+  }
 }
 
 .return-item {
-  border: 1px solid #fff;
-  background-color: #fff;
-  box-shadow: 4px 5px 2px 2px var(--lightgray-color);
+  border: 1px solid $blue-white;
+  background-color: $white;
+  box-shadow: 4px 5px 2px 2px $dark-gray;
   display: flex;
   flex-direction: column;
-  border-radius: 0.3rem;
-  font-size: 2rem;
-  padding: 1rem;
-  margin: 10px 20px;
+  border-radius: 0.25em;
+  font-size: 1.7rem;
+  padding: 0.7em;
+  margin: 0.4em 0.8em;
+  width: 30%;
   text-align: center;
-}
 
-.daily-return {
-  grid-row: 1;
-  grid-column: 2 / span 12;
-}
+  @media screen and (max-width: 1024px) {
+    margin: 1.2em 0;
+    width: 90%;
+    max-width: 620px;
+  }
 
-.overall-return {
-  grid-row: 1;
-  grid-column: 15 / span 12;
-}
-
-.total-value {
-  grid-row: 1;
-  grid-column: 28 / span 12;
+  @media screen and (max-width: 450px) {
+    font-size: 1.5rem;
+  }
 }
 
 .return-item > span:first-child {
   overflow-wrap: anywhere;
-  margin: 0 0 15px 0;
-  color: #372750;
+  margin-bottom: 0.9em;
+  color: $blue-black;
   font-weight: 700;
 }
 
@@ -69,15 +73,30 @@
 }
 
 .return-item-bottom-positive {
-  border-bottom: 3px solid #2ead76;
+  border-bottom: 0.4em solid #2ead76;
+
+  @media screen and (max-width: 1024px) {
+    border-left: 0.5em solid #2ead76;
+    border-bottom: 1px solid $blue-white;
+  }
 }
 
 .return-item-bottom-negative {
-  border-bottom: 3px solid #fd142c;
+  border-bottom: 0.4em solid #fd142c;
+
+  @media screen and (max-width: 1024px) {
+    border-left: 0.5em solid #fd142c;
+    border-bottom: 1px solid $blue-white;
+  }
 }
 
 .return-item-bottom-zero {
-  border-bottom: 3px solid #9e9e9e;
+  border-bottom: 0.4em solid #9e9e9e;
+
+  @media screen and (max-width: 1024px) {
+    border-left: 0.5em solid #9e9e9e;
+    border-bottom: 1px solid $blue-white;
+  }
 }
 
 .return-item-dollar-icon {
@@ -172,124 +191,6 @@
 }
 
 .mainpage-loading-spinner {
-  grid-row: 2;
-  grid-column: 1 / span 30;
   display: flex;
   justify-content: center;
-}
-
-.dashboard-spinner {
-  grid-row: 2;
-  grid-column: 1 / span 30;
-}
-
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-  .return-item {
-    font-size: 1.5rem;
-  }
-}
-
-@media only screen and (min-width: 577px) and (max-width: 768px) {
-  .daily-pl-container {
-    font-size: 2rem;
-  }
-
-  .overall-pl-container {
-    font-size: 2rem;
-  }
-
-  .overall-value-container {
-    font-size: 2rem;
-  }
-
-  .daily-return {
-    grid-row: 1;
-    grid-column: 3 / span 36;
-  }
-
-  .overall-return {
-    grid-row: 2;
-    grid-column: 3 / span 36;
-  }
-
-  .total-value {
-    grid-row: 3;
-    grid-column: 3 / span 36;
-  }
-
-  .value-pie-chart {
-    grid-row: 6;
-    grid-column: 1 / span 30;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .daily-pl-container {
-    font-size: 1.7rem;
-  }
-
-  .overall-pl-container {
-    font-size: 1.7rem;
-  }
-
-  .overall-value-container {
-    font-size: 1.7rem;
-  }
-
-  .return-item {
-    font-size: 1.7rem;
-  }
-
-  .daily-return {
-    grid-row: 1;
-    grid-column: 1 / span 40;
-  }
-
-  .overall-return {
-    grid-row: 2;
-    grid-column: 1 / span 40;
-  }
-
-  .total-value {
-    grid-row: 3;
-    grid-column: 1 / span 40;
-  }
-
-  .value-pie-chart {
-    grid-row: 6;
-    grid-column: 1 / span 30;
-  }
-}
-
-@media only screen and (max-width: 425px) {
-  .daily-pl-container {
-    font-size: 1.4rem;
-  }
-
-  .overall-pl-container {
-    font-size: 1.4rem;
-  }
-
-  .overall-value-container {
-    font-size: 1.4rem;
-  }
-
-  .return-item {
-    font-size: 1.5rem;
-  }
-
-  .daily-return {
-    grid-row: 1;
-    grid-column: 1 / span 40;
-  }
-
-  .overall-return {
-    grid-row: 2;
-    grid-column: 1 / span 40;
-  }
-
-  .total-value {
-    grid-row: 3;
-    grid-column: 1 / span 40;
-  }
 }

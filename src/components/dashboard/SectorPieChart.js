@@ -151,17 +151,17 @@ const SectorPieChart = ({
         color: '#fff',
         anchor: 'end',
         align: 'start',
-        offset: -20,
+        offset: -12,
         borderWidth: 2,
         borderColor: '#fff',
-        borderRadius: 20,
+        borderRadius: 14,
         backgroundColor: (context) => {
           return context.dataset.backgroundColor;
         },
         font: {
           weight: 'bold',
           size: 14,
-          family: 'Lato'
+          family: 'Roboto Condensed'
         },
         textAlign: 'center',
         padding: 7
