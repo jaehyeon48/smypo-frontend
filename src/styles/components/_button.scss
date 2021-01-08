@@ -23,7 +23,16 @@
   color: $white;
 
   &:hover {
-    background: darken($main-color, 8%);
+    background: darken($main-color, 13%);
+  }
+}
+
+.button--primary {
+  background: linear-gradient($primary, #118597);
+  color: $white;
+
+  &:hover {
+    background: darken($primary, 13%);
   }
 }
 
