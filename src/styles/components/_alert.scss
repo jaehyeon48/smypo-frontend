@@ -5,25 +5,37 @@
 }
 
 .alert {
-  padding: 16px;
+  padding: 1em;
   text-align: center;
   width: 50%;
-  border-radius: 0.6rem;
+  border-left: 0.6em solid #bababa;
+  border-radius: 0.4em;
   font-size: 1.3rem;
   font-weight: 700;
 }
 
-.alert-bg-color-success {
-  background-color: var(--success-color);
-  color: var(--light-color);
+.alert--success {
+  border-color: #2ed573;
+  background: #c3f3d7;
+  color: $success;
 }
-.alert-bg-color-warning {
-  background-color: var(--warning-color);
-  color: var(--light-dark-color);
+
+.alert--warning {
+  border-color: #ffa502;
+  background: #ffdb9b;
+  color: $warning;
 }
-.alert-bg-color-fail {
-  background-color: var(--danger-color);
-  color: var(--light-color);
+
+.alert--error {
+  border-color: #ff4757;
+  background: #ffe0e3;
+  color: #ff4757;
+}
+
+.alert--normal {
+  border-color: #333;
+  background: #d6d6d6;
+  color: darken($dark-gray, 10%);
 }
 
 @media only screen and (min-width: 426px) and (max-width: 768px) {

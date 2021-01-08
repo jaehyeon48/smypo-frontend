@@ -2,19 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import './alert.css';
-
 const Alert = ({ alert }) => {
   const alertTypeBgColor = (alertType) => {
     switch (alertType) {
       case 'success':
-        return 'alert-bg-color-success';
+        return 'alert--success';
       case 'warning':
-        return 'alert-bg-color-warning';
-      case 'fail':
-        return 'alert-bg-color-fail';
+        return 'alert--warning';
+      case 'error':
+        return 'alert--error';
       default:
-        return;
+        return 'alert--normal';
     }
   }
 
