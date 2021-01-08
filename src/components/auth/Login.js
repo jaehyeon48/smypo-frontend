@@ -72,14 +72,14 @@ const Login = ({
       else {
         const loginResult = await login(loginFormData);
         if (loginResult === -1) {
-          showAlert('Email or password is invalid. Please Try again!', 'fail');
+          showAlert('Email or password is invalid. Please Try again!', 'error');
         }
       }
     }
     else {
       const loginResult = await login(loginFormData);
       if (loginResult === -1) {
-        showAlert('Email or password is invalid. Please Try again!', 'fail');
+        showAlert('Email or password is invalid. Please Try again!', 'error');
       }
     }
   }

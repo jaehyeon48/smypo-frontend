@@ -102,14 +102,14 @@ const SignUp = ({
       else {
         const signUpResult = await signUp(signupFormData);
         if (signUpResult === -1) {
-          showAlert('User already exists. Please try other email!', 'fail');
+          showAlert('User already exists. Please try other email!', 'error');
         }
       }
     }
     else {
       const signUpResult = await signUp(signupFormData);
       if (signUpResult === -1) {
-        showAlert('User already exists. Please try other email!', 'fail');
+        showAlert('User already exists. Please try other email!', 'error');
       }
     }
   }
