@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 import StockItem from './StockItem';
 import Button from '../button/Button';
@@ -16,6 +17,7 @@ const Stock = ({
   loading,
   isAuthenticated,
   stock,
+  portfolioList,
   defaultPortfolio,
   getTotalCash,
   getStocks,
@@ -24,6 +26,7 @@ const Stock = ({
   let history = useHistory();
   const [defaultPortfolioId, setdefaultPortfolioId] = useState();
   const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
+  const [currentPortfolioName, setCurrentPortfolioName] = useState('');
 
   useEffect(() => {
     getDefaultPortfolio();
@@ -33,6 +36,19 @@ const Stock = ({
       }
       else return prevId;
     });
+  }, [defaultPortfolio]);
+
+  useEffect(() => {
+    if (defaultPortfolio) {
+      (async () => {
+        try {
+          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolio}`);
+          setCurrentPortfolioName(res.data.name);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
   }, [defaultPortfolio]);
 
   useEffect(() => {
@@ -60,6 +76,12 @@ const Stock = ({
 
   return (
     <main className="stock-main">
+      {defaultPortfolio && (
+        <div className="stock-current-portfolio">
+          <span>Current Portfolio: </span>
+          <span>{currentPortfolioName}</span>
+        </div>
+      )}
       <div className="stocks-btn-container">
         <Button
           btnType={'button'}
@@ -111,7 +133,8 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   isAuthenticated: state.auth.isAuthenticated,
   stock: state.stock,
-  defaultPortfolio: state.portfolio.defaultPortfolio
+  defaultPortfolio: state.portfolio.defaultPortfolio,
+  portfolioList: state.portfolio.portfolioList
 });
 
 export default connect(mapStateToProps, {
