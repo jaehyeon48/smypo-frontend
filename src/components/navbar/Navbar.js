@@ -12,6 +12,7 @@ import LoginIcon from '../icons/LoginIcon';
 import MonitorIcon from '../icons/MonitorIcon';
 import ListIcon from '../icons/ListIcon';
 import FolderIcon from '../icons/FolderIcon';
+import PiggyBankIcon from '../icons/PiggyBankIcon';
 import SignOutIcon from '../icons/SignOutIcon';
 import CoinIcon from '../icons/CoinIcon';
 import BarsIcon from '../icons/BarsIcon';
@@ -133,6 +134,12 @@ const Navbar = ({
               <Link to="/stocks">
                 <ListIcon />
                 <span>Stock List</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/stocks/realized">
+                <PiggyBankIcon />
+                <span>Realized Stocks</span>
               </Link>
             </li>
             <li>
