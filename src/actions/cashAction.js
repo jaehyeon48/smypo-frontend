@@ -60,6 +60,7 @@ export const addCash = (portfolioId, formData) => async (dispatch) => {
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/cash`, reqBody, config);
     dispatch({ type: ADD_CASH });
     dispatch(getTotalCash(portfolioId));
+    dispatch(getCash(portfolioId));
     return 0;
   } catch (error) {
     console.error(error);
