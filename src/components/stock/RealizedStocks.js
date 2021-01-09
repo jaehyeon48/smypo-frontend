@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Spinner from '../spinner/Spinner';
 import DollarSignIcon from '../icons/DollarSignIcon';
@@ -19,12 +20,26 @@ const RealizedStocks = ({
   realizedStockLoading
 }) => {
   const [totalRealizedReturn, setTotalRealizedReturn] = useState(0);
+  const [currentPortfolioName, setCurrentPortfolioName] = useState('');
 
   useEffect(() => {
     if (defaultPortfolio === null) {
       getDefaultPortfolio();
     }
   }, []);
+
+  useEffect(() => {
+    if (defaultPortfolio) {
+      (async () => {
+        try {
+          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolio}`);
+          setCurrentPortfolioName(res.data.name);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+  }, [defaultPortfolio]);
 
   useEffect(() => {
     resetRealizeStockLoading();
@@ -38,7 +53,13 @@ const RealizedStocks = ({
   }
 
   return (
-    <React.Fragment>
+    <main className="realized-stock-main">
+    {defaultPortfolio && (
+      <div className="current-portfolio">
+        <span>Current Portfolio: </span>
+        <span>{currentPortfolioName}</span>
+      </div>
+    )}
       {!realizedStockLoading ? (
         <React.Fragment>
         <div className="total-realized-value">
@@ -64,7 +85,7 @@ const RealizedStocks = ({
       ) : (
         <Spinner/>
       )}
-    </React.Fragment>
+    </main>
   );
 }
 

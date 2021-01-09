@@ -141,18 +141,26 @@
 }
 
 /* realized stocks info */
+.realized-stock-main {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  min-height: 100vh;
+  max-width: $max-width;
+}
+
 .total-realized-value {
   display: flex;
   font-size: 2rem;
   flex-direction: column;
-  border: 1px solid $blue-black;
+  border: 1px solid $blue-white;
   background-color: $white;
   box-shadow: 4px 5px 2px $dark-gray;
   border-radius: 0.2em;
   padding: 1em;
   width: 70vw;
   max-width: 700px;
-  margin: 6em auto;
+  margin: 2em auto;
   text-align: center;
 }
 
@@ -162,58 +170,93 @@
 
 .realized-stocks-container {
   display: flex;
-  flex-direction: column;
-  width: 87vw;
-  max-width: 1100px;
-  margin: 0 auto 70px;
-  max-height: 500px;
-  overflow-y: auto;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 1536px;
+  margin: 0 auto;
+
+  @media screen and (min-width: 1263px) and (max-width: 1567px) {
+    width: 1229px;
+  }
+
+  @media screen and (min-width: 957px) and (max-width: 1262px) {
+    width: 922px;
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 956px) {
+    width: 615px;
+  }
+
+  @media screen and (min-width: 536px) and (max-width: 768px) {
+    width: 500px;
+  }
+
+  @media screen and (max-width: 535px) {
+    width: 273px;
+  }
 }
 
 .realized-stock-item {
-  margin: 2rem 1rem;
-  padding: 1.2rem;
-  border-radius: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  margin: 2em 1em;
+  padding: 0.6em 0.3em;
+  border-radius: 0.2em;
   font-size: 1.6rem;
-  display: flex;
+  color: $blue-black;
   align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  background-color: #fff;
-  box-shadow: 2px 3px 2px 3px var(--darkgray-color);
+  border: 1px solid $blue-white;
+  background-color: $white;
+  box-shadow: 2px 3px 2px $dark-gray;
+  width: 10em;
   text-align: center;
-}
 
-.realized-item-upper {
-  display: flex;
-  justify-content: space-evenly;
-  width: 50%;
-}
+  & > div + div {
+    margin-top: 0.6em;
+  }
 
-.realized-item-lower {
-  display: flex;
-  justify-content: space-evenly;
-  width: 50%;
+  @media screen and (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 }
 
 .realized-stock-price {
   display: flex;
   align-items: center;
+
+  & > svg {
+    width: 20px;
+    height: 23px;
+    margin-left: 0.1em;
+
+    @media screen and (max-width: 768px) {
+      width: 19px;
+      height: 21px;
+    }
+  }
 }
 
-.realized-stock-price > span {
-  color: var(--highlight-color);
-}
-
-.realized-stock-quantity > span {
-  color: var(--highlight-color);
+.realized-stock-ticker {
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .realized-stock-return {
   display: flex;
   align-items: center;
-}
 
-.realized-stock-return > span {
-  color: var(--highlight-color);
+  & > svg {
+    width: 20px;
+    height: 23px;
+    margin-left: 0.1em;
+
+    @media screen and (max-width: 768px) {
+      width: 19px;
+      height: 21px;
+    }
+  }
+
+  & > span {
+    color: $blue-black;
+  }
 }

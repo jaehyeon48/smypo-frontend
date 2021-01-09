@@ -18,21 +18,17 @@ const RealizedStockItem = ({
 
   return (
     <div className="realized-stock-item">
-      <div className="realized-item-upper">
-        <span className="realized-stock-ticker">
-          {realizedStockItem.ticker}
-        </span>
-        <span className="realized-stock-price">
-          <span>Price: </span><DollarSignIcon />{realizedStockItem.price}
-        </span>
+      <div className="realized-stock-ticker">
+        {realizedStockItem.ticker}
       </div>
-      <div className="realized-item-lower">
-        <span className="realized-stock-quantity">
-          <span>Quantity: </span>{realizedStockItem.quantity}
-        </span>
-        <span className={`realized-stock-return ${colorRealizedReturn()}`}>
-          <span>Return: </span><DollarSignIcon />{realizedReturn}
-        </span>
+      <div className="realized-stock-price">
+        <span>Price: </span><DollarSignIcon />{realizedStockItem.price}
+      </div>
+      <div className="realized-stock-quantity">
+        <span>Quantity: </span>{realizedStockItem.quantity}
+      </div>
+      <div className={`realized-stock-return ${colorRealizedReturn()}`}>
+        <span>Return: </span><DollarSignIcon />{realizedReturn}
       </div>
     </div>
   );
