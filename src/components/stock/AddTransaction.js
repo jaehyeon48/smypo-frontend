@@ -11,7 +11,7 @@ import { showAlert } from '../../actions/alertAction';
 
 const AddTransaction = ({
   closeAddTransactionModal,
-  currentPortfolio,
+  defaultPortfolio,
   totalCash,
   stockList,
   addStock,
@@ -75,7 +75,7 @@ const AddTransaction = ({
     }
     else {
       // currentAvgCost is used when the user sells a stock
-      const addStockResult = await addStock(currentPortfolio, formData, currentAvgCost);
+      const addStockResult = await addStock(defaultPortfolio, formData, currentAvgCost);
 
       if (addStockResult === 0) {
         window.location.reload();
@@ -220,7 +220,7 @@ const AddTransaction = ({
 
 AddTransaction.propTypes = {
   closeAddTransactionModal: PropTypes.func,
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   totalCash: PropTypes.number,
   stockList: PropTypes.array,
   addStock: PropTypes.func,
@@ -228,7 +228,7 @@ AddTransaction.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  currentPortfolio: state.portfolio.currentPortfolio,
+  defaultPortfolio: state.portfolio.defaultPortfolio,
   totalCash: state.cash.totalCash,
   stockList: state.stock.stockList
 });

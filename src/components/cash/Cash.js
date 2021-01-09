@@ -10,7 +10,7 @@ import Modal from '../modal/Modal';
 import Button from '../button/Button';
 import AddCash from './AddCash';
 import EditCash from './EditCash';
-import { getSelectedPortfolio } from '../../actions/portfolioAction';
+import { getDefaultPortfolio } from '../../actions/portfolioAction';
 import {
   getTotalCash,
   getCash
@@ -19,11 +19,11 @@ import {
 const Cash = ({
   loading,
   isAuthenticated,
-  currentPortfolio,
+  defaultPortfolio,
   cashLoading,
   totalCash,
   cashList,
-  getSelectedPortfolio,
+  getDefaultPortfolio,
   getCash,
   getTotalCash
 }) => {
@@ -37,15 +37,15 @@ const Cash = ({
   });
 
   useEffect(() => {
-    getSelectedPortfolio();
+    getDefaultPortfolio();
   }, []);
 
   useEffect(() => {
-    if (currentPortfolio) {
-      getCash(currentPortfolio);
-      getTotalCash(currentPortfolio);
+    if (defaultPortfolio) {
+      getCash(defaultPortfolio);
+      getTotalCash(defaultPortfolio);
     }
-  }, [currentPortfolio]);
+  }, [defaultPortfolio]);
 
   useEffect(() => {
     if (cashList.length > 0) {
@@ -125,11 +125,11 @@ const Cash = ({
 Cash.propTypes = {
   loading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   cashLoading: PropTypes.bool,
   cashList: PropTypes.array,
   totalCash: PropTypes.number,
-  getSelectedPortfolio: PropTypes.func,
+  getDefaultPortfolio: PropTypes.func,
   getCash: PropTypes.func,
   getTotalCash: PropTypes.func
 };
@@ -137,14 +137,14 @@ Cash.propTypes = {
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   isAuthenticated: state.auth.isAuthenticated,
-  currentPortfolio: state.portfolio.currentPortfolio,
+  defaultPortfolio: state.portfolio.defaultPortfolio,
   cashLoading: state.cash.cashLoading,
   cashList: state.cash.cashList,
   totalCash: state.cash.totalCash
 });
 
 export default connect(mapStateToProps, {
-  getSelectedPortfolio,
+  getDefaultPortfolio,
   getCash,
   getTotalCash
 })(Cash);

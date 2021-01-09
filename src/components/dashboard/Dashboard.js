@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom';
 
 import {
   loadPortfolios,
-  getSelectedPortfolio
+  getDefaultPortfolio
 } from '../../actions/portfolioAction';
 import {
   checkMarketStatus,
@@ -13,7 +13,6 @@ import {
   resetStockLoading
 } from '../../actions/stockAction';
 import { getTotalCash } from '../../actions/cashAction';
-import Button from '../button/Button';
 import GetStockPrice from './GetStockPrice';
 import ValuePieChart from './ValuePieChart';
 import SectorPieChart from './SectorPieChart';
@@ -27,9 +26,9 @@ const Dashboard = ({
   stock,
   totalCash,
   portfolioList,
-  currentPortfolio,
+  defaultPortfolio,
   loadPortfolios,
-  getSelectedPortfolio,
+  getDefaultPortfolio,
   checkMarketStatus,
   getStocks,
   getTotalCash,
@@ -44,7 +43,7 @@ const Dashboard = ({
   const [totalValue, setTotalValue] = useState(0);
 
   useEffect(() => { checkMarketStatus(); }, []);
-  useEffect(() => { getSelectedPortfolio(); }, []);
+  useEffect(() => { getDefaultPortfolio(); }, []);
   useEffect(() => { resetStockLoading(); }, []);
 
   useEffect(() => {
@@ -52,11 +51,11 @@ const Dashboard = ({
   }, [loadPortfolios]);
 
   useEffect(() => {
-    if (currentPortfolio) {
-      getStocks(currentPortfolio);
-      getTotalCash(currentPortfolio);
+    if (defaultPortfolio) {
+      getStocks(defaultPortfolio);
+      getTotalCash(defaultPortfolio);
     }
-  }, [currentPortfolio]);
+  }, [defaultPortfolio]);
 
   useEffect(() => {
     if (stock.stockList.length > 0) {
@@ -172,7 +171,7 @@ const Dashboard = ({
                       <SectorPieChart />
                     </div>
                   )}
-                  <TenDayChart currentPortfolioId={currentPortfolio} />
+                  <TenDayChart defaultPortfolioId={defaultPortfolio} />
                 </React.Fragment>
               ) : (
                   <div className="notice-empty-stocklist">
@@ -221,10 +220,10 @@ Dashboard.propTypes = {
   totalCost: PropTypes.number,
   totalCash: PropTypes.number,
   portfolioList: PropTypes.array,
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   loadPortfolios: PropTypes.func,
   checkMarketStatus: PropTypes.func,
-  getSelectedPortfolio: PropTypes.func,
+  getDefaultPortfolio: PropTypes.func,
   getStocks: PropTypes.func,
   addTotalCost: PropTypes.func,
   getTotalCash: PropTypes.func,
@@ -238,12 +237,12 @@ const mapStateToProps = (state) => ({
   stock: state.stock,
   totalCash: state.cash.totalCash,
   portfolioList: state.portfolio.portfolioList,
-  currentPortfolio: state.portfolio.currentPortfolio
+  defaultPortfolio: state.portfolio.defaultPortfolio
 });
 
 export default connect(mapStateToProps, {
   loadPortfolios,
-  getSelectedPortfolio,
+  getDefaultPortfolio,
   checkMarketStatus,
   getStocks,
   getTotalCash,

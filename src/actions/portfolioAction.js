@@ -1,6 +1,6 @@
 import {
-  SELECT_PORTFOLIO,
-  GET_SELECTED_PORTFOLIO,
+  CHOOSE_DEFAULT_PORTFOLIO,
+  GET_DEFAULT_PORTFOLIO,
   LOAD_PORTFOLIO,
   CREATE_PORTFOLIO,
   EDIT_PORTFOLIO,
@@ -37,10 +37,10 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
   };
   try {
     const reqBody = JSON.stringify({ portfolioId });
-    const selectedPortfolioResult = await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio/select`, reqBody, config);
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, reqBody, config);
     dispatch({
-      type: SELECT_PORTFOLIO,
-      payload: selectedPortfolioResult.data.selectedPortfolioId
+      type: CHOOSE_DEFAULT_PORTFOLIO,
+      payload: response.data.defaultPortfolioId
     });
   } catch (error) {
     console.error(error);
@@ -48,15 +48,15 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
   }
 }
 
-export const getSelectedPortfolio = () => async (dispatch) => {
+export const getDefaultPortfolio = () => async (dispatch) => {
   try {
-    const selectResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/select`, { withCredentials: true });
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, { withCredentials: true });
 
-    const selectedPortfolioId = selectResponse.data.selectedPortfolioId;
+    const defaultPortfolioId = response.data.defaultPortfolioId;
 
     dispatch({
-      type: GET_SELECTED_PORTFOLIO,
-      payload: selectedPortfolioId
+      type: GET_DEFAULT_PORTFOLIO,
+      payload: defaultPortfolioId
     });
   } catch (error) {
     if (error.response.status === 404) { // if the user's portfolio does not exist
@@ -83,7 +83,7 @@ export const createPortfolio = (portfolioName, privacy) => async (dispatch) => {
 
     dispatch({ type: CREATE_PORTFOLIO });
     dispatch(loadPortfolios());
-    dispatch(getSelectedPortfolio());
+    dispatch(getDefaultPortfolio());
   } catch (error) {
     console.error(error);
     dispatch({ type: PORTFOLIO_CREATE_ERROR });
@@ -108,7 +108,7 @@ export const editPortfolio = ({
 
     dispatch({ type: EDIT_PORTFOLIO });
     dispatch(loadPortfolios());
-    dispatch(getSelectedPortfolio());
+    dispatch(getDefaultPortfolio());
   } catch (error) {
     console.error(error);
     dispatch({ type: PORTFOLIO_EDIT_ERROR });
@@ -121,7 +121,7 @@ export const deletePortfolio = (portfolioId) => async (dispatch) => {
 
     dispatch({ type: DELETE_PORTFOLIO });
     dispatch(loadPortfolios());
-    dispatch(getSelectedPortfolio());
+    dispatch(getDefaultPortfolio());
   } catch (error) {
     dispatch({ type: PORTFOLIO_DELETE_ERROR });
     console.error(error.response);

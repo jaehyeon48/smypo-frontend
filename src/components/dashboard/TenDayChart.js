@@ -6,7 +6,7 @@ import 'chartjs-plugin-datalabels';
 import { get10DaysOfRecord } from '../../utils/getRecordData';
 
 const TenDayChart = ({
-  currentPortfolioId
+  defaultPortfolioId
 }) => {
   const [chartData, setChartData] = useState({
     labels: [],
@@ -23,7 +23,7 @@ const TenDayChart = ({
 
   useEffect(() => {
     (async () => {
-      const record = await get10DaysOfRecord(currentPortfolioId);
+      const record = await get10DaysOfRecord(defaultPortfolioId);
       setRecordData(record);
     })();
   }, []);
@@ -77,7 +77,7 @@ const TenDayChart = ({
 }
 
 TenDayChart.propTypes = {
-  currentPortfolioId: PropTypes.number,
+  defaultPortfolioId: PropTypes.number,
   get10DaysOfRecord: PropTypes.func
 };
 

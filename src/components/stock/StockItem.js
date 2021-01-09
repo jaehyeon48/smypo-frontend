@@ -16,7 +16,7 @@ const StockItem = ({
   ticker,
   avgCost,
   quantity,
-  currentPortfolio,
+  defaultPortfolio,
   editDailyReturn,
   editOverallReturn
 }) => {
@@ -114,7 +114,7 @@ const StockItem = ({
   }
 
   const directToPositionDetailPage = () => {
-    history.push(`/position/${currentPortfolio}/${ticker}`);
+    history.push(`/position/${defaultPortfolio}/${ticker}`);
   }
 
   return (
@@ -147,7 +147,7 @@ StockItem.propTypes = {
   ticker: PropTypes.string,
   avgCost: PropTypes.number,
   quantity: PropTypes.number,
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   totalDailyPL: PropTypes.number,
   totalOverallPL: PropTypes.number,
   setTotalDailyPL: PropTypes.func,
@@ -158,7 +158,7 @@ StockItem.propTypes = {
 
 const mapStateToProps = (state) => ({
   stock: state.stock,
-  currentPortfolio: state.portfolio.currentPortfolio
+  defaultPortfolio: state.portfolio.defaultPortfolio
 });
 
 export default connect(mapStateToProps, {

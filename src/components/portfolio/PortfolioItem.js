@@ -13,7 +13,7 @@ import { showAlert } from '../../actions/alertAction';
 
 const PortfolioItem = ({
   portfolio,
-  currentPortfolio,
+  defaultPortfolio,
   chooseDefaultPortfolio,
   editPortfolio,
   deletePortfolio,
@@ -28,12 +28,12 @@ const PortfolioItem = ({
   const [isPfNameEmpty, setIsPfNameEmpty] = useState(false);
 
   useEffect(() => {
-    if (portfolio.portfolioId === currentPortfolio) {
+    if (portfolio.portfolioId === defaultPortfolio) {
       setIsDefault(true);
     } else {
       setIsDefault(false);
     }
-  }, [currentPortfolio]);
+  }, [defaultPortfolio]);
 
   useEffect(() => {
     if (isNameEmptyErr && pfNameToBeEdited.trim() !== '') {

@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import { Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
-import './charts.css';
-
-
 const ValuePieChart = ({
   stockList,
   stockListLength,

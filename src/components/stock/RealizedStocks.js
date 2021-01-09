@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import Spinner from '../spinner/Spinner';
 import DollarSignIcon from '../icons/DollarSignIcon';
 import RealizedStockItem from './RealizedStockItem';
-import { getSelectedPortfolio } from '../../actions/portfolioAction';
+import { getDefaultPortfolio } from '../../actions/portfolioAction';
 import {
   resetRealizeStockLoading,
   getRealizedStocks
 } from '../../actions/stockAction';
 
 const RealizedStocks = ({
-  currentPortfolio,
-  getSelectedPortfolio,
+  defaultPortfolio,
+  getDefaultPortfolio,
   getRealizedStocks,
   realizedStocks,
   realizedStockLoading
@@ -21,15 +21,15 @@ const RealizedStocks = ({
   const [totalRealizedReturn, setTotalRealizedReturn] = useState(0);
 
   useEffect(() => {
-    if (currentPortfolio === null) {
-      getSelectedPortfolio();
+    if (defaultPortfolio === null) {
+      getDefaultPortfolio();
     }
   }, []);
 
   useEffect(() => {
     resetRealizeStockLoading();
-    getRealizedStocks(currentPortfolio);
-  }, [currentPortfolio]);
+    getRealizedStocks(defaultPortfolio);
+  }, [defaultPortfolio]);
 
   const colorTotalRealizedReturn = () => {
     if (totalRealizedReturn > 0) return 'return-positive';
@@ -69,15 +69,15 @@ const RealizedStocks = ({
 }
 
 RealizedStocks.propTypes = {
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   getRealizedStocks: PropTypes.func,
-  getSelectedPortfolio: PropTypes.func,
+  getDefaultPortfolio: PropTypes.func,
   realizedStocks: PropTypes.array,
   realizedStockLoading: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
-  currentPortfolio: state.portfolio.currentPortfolio,
+  defaultPortfolio: state.portfolio.defaultPortfolio,
   realizedStocks: state.stock.realizedStocks,
   realizedStockLoading: state.stock.realizedStockLoading
 });
@@ -85,5 +85,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   resetRealizeStockLoading,
   getRealizedStocks,
-  getSelectedPortfolio
+  getDefaultPortfolio
 })(RealizedStocks);

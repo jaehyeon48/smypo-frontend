@@ -9,7 +9,7 @@ import Modal from '../modal/Modal';
 import {
   loadPortfolios,
   createPortfolio,
-  getSelectedPortfolio
+  getDefaultPortfolio
 } from '../../actions/portfolioAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -17,14 +17,14 @@ const Portfolios = ({
   loading,
   isAuthenticated,
   portfolioList,
-  currentPortfolio,
+  defaultPortfolio,
   loadPortfolios,
-  getSelectedPortfolio,
+  getDefaultPortfolio,
   createPortfolio,
   showAlert
 }) => {
   useEffect(() => { loadPortfolios() }, [loadPortfolios]);
-  useEffect(() => { getSelectedPortfolio() }, [getSelectedPortfolio]);
+  useEffect(() => { getDefaultPortfolio() }, [getDefaultPortfolio]);
 
   const [newPortfolioName, setNewPortfolioName] = useState('');
   const [privacy, setPrivacy] = useState('public');
@@ -96,7 +96,7 @@ const Portfolios = ({
               <PortfolioItem
                 key={portfolio.portfolioId}
                 portfolio={portfolio}
-                currentPortfolio={currentPortfolio}
+                defaultPortfolio={defaultPortfolio}
               />
             ))}
           </ul>
@@ -111,7 +111,7 @@ const Portfolios = ({
               onChange={handleAddPfName}
               data-is-empty={newPortfolioName.length === 0}
               className={isPfNameEmpty ? "portfolio-form-field portfolio-form-field-error"
-                  : "portfolio-form-field"}
+                : "portfolio-form-field"}
             />
             <label
               className={isPfNameEmpty ? "portfolio-form-label portfolio-form-label-error"
@@ -158,9 +158,9 @@ Portfolios.propTypes = {
   loading: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   portfolioList: PropTypes.array,
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   loadPortfolios: PropTypes.func,
-  getSelectedPortfolio: PropTypes.func,
+  getDefaultPortfolio: PropTypes.func,
   createPortfolio: PropTypes.func,
   showAlert: PropTypes.func
 };
@@ -169,12 +169,12 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   isAuthenticated: state.auth.isAuthenticated,
   portfolioList: state.portfolio.portfolioList,
-  currentPortfolio: state.portfolio.currentPortfolio
+  defaultPortfolio: state.portfolio.defaultPortfolio
 });
 
 export default connect(mapStateToProps, {
   loadPortfolios,
-  getSelectedPortfolio,
+  getDefaultPortfolio,
   createPortfolio,
   showAlert
 })(Portfolios);

@@ -1,6 +1,6 @@
 import {
-  SELECT_PORTFOLIO,
-  GET_SELECTED_PORTFOLIO,
+  CHOOSE_DEFAULT_PORTFOLIO,
+  GET_DEFAULT_PORTFOLIO,
   LOAD_PORTFOLIO,
   CREATE_PORTFOLIO,
   EDIT_PORTFOLIO,
@@ -15,22 +15,22 @@ import {
 
 const initialState = {
   portfolioList: [],
-  currentPortfolio: null
+  defaultPortfolio: null
 };
 
 export default function portfolioReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case SELECT_PORTFOLIO:
+    case CHOOSE_DEFAULT_PORTFOLIO:
       return {
         ...state,
-        currentPortfolio: payload
+        defaultPortfolio: payload
       };
-    case GET_SELECTED_PORTFOLIO:
+    case GET_DEFAULT_PORTFOLIO:
       return {
         ...state,
-        currentPortfolio: payload
+        defaultPortfolio: payload
       };
     case LOAD_PORTFOLIO:
       return {
@@ -43,7 +43,7 @@ export default function portfolioReducer(state = initialState, action) {
       return {
         ...state,
         portfolioList: [],
-        currentPortfolio: null
+        defaultPortfolio: null
       };
     case PORTFOLIO_CREATE_ERROR:
     case PORTFOLIO_EDIT_ERROR:

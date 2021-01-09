@@ -10,37 +10,37 @@ import AddTransaction from './AddTransaction';
 import Spinner from '../spinner/Spinner';
 import { getTotalCash } from '../../actions/cashAction';
 import { getStocks } from '../../actions/stockAction';
-import { getSelectedPortfolio } from '../../actions/portfolioAction';
+import { getDefaultPortfolio } from '../../actions/portfolioAction';
 
 const Stock = ({
   loading,
   isAuthenticated,
   stock,
-  currentPortfolio,
+  defaultPortfolio,
   getTotalCash,
   getStocks,
-  getSelectedPortfolio
+  getDefaultPortfolio
 }) => {
   let history = useHistory();
-  const [currentPortfolioId, setCurrentPortfolioId] = useState();
+  const [defaultPortfolioId, setdefaultPortfolioId] = useState();
   const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
 
   useEffect(() => {
-    getSelectedPortfolio();
-    setCurrentPortfolioId((prevId) => {
-      if (prevId !== currentPortfolio) {
-        return currentPortfolio;
+    getDefaultPortfolio();
+    setdefaultPortfolioId((prevId) => {
+      if (prevId !== defaultPortfolio) {
+        return defaultPortfolio;
       }
       else return prevId;
     });
-  }, [currentPortfolio]);
+  }, [defaultPortfolio]);
 
   useEffect(() => {
-    if (currentPortfolioId) {
-      getTotalCash(currentPortfolioId);
-      getStocks(currentPortfolioId);
+    if (defaultPortfolioId) {
+      getTotalCash(defaultPortfolioId);
+      getStocks(defaultPortfolioId);
     }
-  }, [currentPortfolioId]);
+  }, [defaultPortfolioId]);
 
   const openAddTransactionModal = () => {
     setIsAddTransactionModalOpen(true);
@@ -101,21 +101,21 @@ const Stock = ({
 Stock.propTypes = {
   isAuthenticated: PropTypes.bool,
   stock: PropTypes.object,
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   getTotalCash: PropTypes.func,
   getStocks: PropTypes.func,
-  getSelectedPortfolio: PropTypes.func
+  getDefaultPortfolio: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   isAuthenticated: state.auth.isAuthenticated,
   stock: state.stock,
-  currentPortfolio: state.portfolio.currentPortfolio
+  defaultPortfolio: state.portfolio.defaultPortfolio
 });
 
 export default connect(mapStateToProps, {
   getTotalCash,
   getStocks,
-  getSelectedPortfolio
+  getDefaultPortfolio
 })(Stock);
