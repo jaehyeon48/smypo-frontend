@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 import CashItem from './CashItem';
 import Spinner from '../spinner/Spinner';
@@ -88,56 +89,54 @@ const Cash = ({
 
   return (
     <React.Fragment>
-      {!cashLoading ? (
-        <main className="cash-main">
+      <main className="cash-main">
         {defaultPortfolio && (
-        <div className="stock-current-portfolio">
-          <span>Current Portfolio: </span>
-          <span>{currentPortfolioName}</span>
-        </div>
-      )}
-          <Button
-            btnType={'button'}
-            btnText={'Add cash transaction'}
-            onClickFunc={openAddCashModal}
-          />
-          {cashList && cashList.length > 0 ? (
-            <React.Fragment>
-              <div className="cash-total-amount">
-                <span>Total Cash</span>
-                <span><DollarSignIcon />{totalCash}</span>
-              </div>
-              <div className="cash-items">
-                {cashList.map((cash) => (
-                  <CashItem
-                    key={cash.cashId}
-                    cashId={cash.cashId}
-                    amount={cash.amount}
-                    transactionType={cash.transactionType}
-                    transactionDate={new Date(cash.transactionDate).toJSON().slice(0, 10)}
-                    formData={formData}
-                    setFormData={setFormData}
-                    openEditCashModal={openEditCashModal}
-                  />
-                ))}
-              </div>
-            </React.Fragment>
-          ) : (<div className="no-cash-notice">The cash list is empty.</div>)}
-          {isAddCashModalOpen && (
-            <Modal closeModalFunc={closeAddCashModal}>
-              <AddCash closeAddCashModal={closeAddCashModal} />
-            </Modal>
-          )}
-          {isEditCashModalOpen && (
-            <Modal closeModalFunc={closeEditCashModal}>
-              <EditCash
-                closeEditCashModal={closeEditCashModal}
-                formData={formData}
-                setFormData={setFormData} />
-            </Modal>
-          )}
-        </main>
-      ) : (<Spinner />)}
+          <div className="current-portfolio">
+            <span>Current Portfolio: </span>
+            <span>{currentPortfolioName}</span>
+          </div>
+        )}
+        <Button
+          btnType={'button'}
+          btnText={'Add cash transaction'}
+          onClickFunc={openAddCashModal}
+        />
+        {cashList && cashList.length > 0 ? (
+          <React.Fragment>
+            <div className="cash-total-amount">
+              <span>Total Cash</span>
+              <span><DollarSignIcon />{totalCash}</span>
+            </div>
+            <div className="cash-items">
+              {cashList.map((cash) => (
+                <CashItem
+                  key={cash.cashId}
+                  cashId={cash.cashId}
+                  amount={cash.amount}
+                  transactionType={cash.transactionType}
+                  transactionDate={new Date(cash.transactionDate).toJSON().slice(0, 10)}
+                  formData={formData}
+                  setFormData={setFormData}
+                  openEditCashModal={openEditCashModal}
+                />
+              ))}
+            </div>
+          </React.Fragment>
+        ) : (<div className="no-cash-notice">The cash list is empty.</div>)}
+        {isAddCashModalOpen && (
+          <Modal closeModalFunc={closeAddCashModal}>
+            <AddCash closeAddCashModal={closeAddCashModal} />
+          </Modal>
+        )}
+        {isEditCashModalOpen && (
+          <Modal closeModalFunc={closeEditCashModal}>
+            <EditCash
+              closeEditCashModal={closeEditCashModal}
+              formData={formData}
+              setFormData={setFormData} />
+          </Modal>
+        )}
+      </main>
     </React.Fragment>
   );
 }

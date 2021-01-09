@@ -77,7 +77,7 @@ const Stock = ({
   return (
     <main className="stock-main">
       {defaultPortfolio && (
-        <div className="stock-current-portfolio">
+        <div className="current-portfolio">
           <span>Current Portfolio: </span>
           <span>{currentPortfolioName}</span>
         </div>

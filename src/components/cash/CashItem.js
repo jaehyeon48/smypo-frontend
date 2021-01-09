@@ -17,6 +17,7 @@ const CashItem = ({
   setFormData,
   openEditCashModal,
   deleteCash,
+  defaultPortfolio,
   showAlert
 }) => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -30,7 +31,7 @@ const CashItem = ({
   }
 
   const handleDeleteCash = async () => {
-    const deleteResult = await deleteCash(cashId);
+    const deleteResult = await deleteCash(cashId, defaultPortfolio);
     if (deleteResult !== 0) {
       showAlert('Something went wrong. Please try again!', 'error');
     }
@@ -107,7 +108,11 @@ CashItem.propTypes = {
   showAlert: PropTypes.func
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  defaultPortfolio: state.portfolio.defaultPortfolio
+});
+
+export default connect(mapStateToProps, {
   deleteCash,
   showAlert
 })(CashItem);

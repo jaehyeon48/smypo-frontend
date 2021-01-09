@@ -89,12 +89,14 @@ export const editCash = (formData) => async (dispatch) => {
   }
 }
 
-export const deleteCash = (cashId) => async (dispatch) => {
+export const deleteCash = (cashId, portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
     await axios.delete(`${process.env.REACT_APP_SERVER_URL}/cash/${cashId}`, config);
     dispatch({ type: DELETE_CASH });
+    dispatch(getCash(portfolioId));
+    dispatch(getTotalCash(portfolioId));
     return 0;
   } catch (error) {
     console.error(error);
