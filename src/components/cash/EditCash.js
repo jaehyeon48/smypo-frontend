@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Button from '../button/Button';
 import { editCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -24,10 +25,7 @@ const EditCash = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const addCashResult = await editCash(formData);
-    if (addCashResult === 0) {
-      window.location.reload();
-    }
-    else {
+    if (addCashResult !== 0) {
       showAlert('Something went wrong. Please try again!', 'fail');
       closeEditCashModal();
     }
@@ -42,6 +40,7 @@ const EditCash = ({
               type="radio"
               name="transactionType"
               value="deposit"
+              className="transaction-type-cash"
               checked={transactionType === 'deposit'}
               onChange={handleChange}
             />
@@ -51,13 +50,14 @@ const EditCash = ({
               type="radio"
               name="transactionType"
               value="withdraw"
+              className="transaction-type-cash"
               checked={transactionType === 'withdraw'}
               onChange={handleChange}
             />
           </label>
         </div>
         <div className="ticker-container">
-          <label className="add-transaction-inputs">
+          <label className="add-transaction-label">
             AMOUNT
           <input
               type="number"
@@ -70,7 +70,7 @@ const EditCash = ({
             />
           </label>
         </div>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Date
           <input
             type="date"
@@ -80,7 +80,11 @@ const EditCash = ({
             className="add-transaction-date-field"
           />
         </label>
-        <button type="submit" className="btn btn-edit-transaction">EDIT CASH TRANSACTION</button>
+        <Button
+          btnType={'submit'}
+          btnText={'Edit cash transaction'}
+          btnColor={'warning'}
+        />
       </form>
     </div>
   );

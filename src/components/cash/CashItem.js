@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
+import Modal from '../modal/Modal';
 import DollarSignIcon from '../icons/DollarSignIcon';
 import { deleteCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
@@ -18,18 +19,23 @@ const CashItem = ({
   deleteCash,
   showAlert
 }) => {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+  const openConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+  }
+
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+  }
 
   const handleDeleteCash = async () => {
-    if (window.confirm('Do you really want to delete the cash transaction record?')) {
-      const deleteResult = await deleteCash(cashId);
-      if (deleteResult === 0) {
-        window.location.reload();
-      }
-      else {
-        showAlert('Something went wrong. Please try again!', 'fail');
-      }
+    const deleteResult = await deleteCash(cashId);
+    if (deleteResult !== 0) {
+      showAlert('Something went wrong. Please try again!', 'error');
     }
   }
+
 
   const handleOpenEditCashModal = () => {
     setFormData({
@@ -45,7 +51,7 @@ const CashItem = ({
   return (
     <div className="cash-item">
       <div className="cash-item-type">{transactionType}</div>
-      <div className="cash-item-amount"><DollarSignIcon/>{amount}</div>
+      <div className="cash-item-amount"><DollarSignIcon />{amount}</div>
       <div className="cash-item-date">{transactionDate.slice(2)}</div>
       <div className="cash-item-actions">
         <Button
@@ -58,9 +64,35 @@ const CashItem = ({
           btnType={'button'}
           btnText={'Delete'}
           btnColor={'danger'}
-          onClickFunc={handleDeleteCash}
+          onClickFunc={openConfirmModal}
         />
       </div>
+      {isConfirmModalOpen && (
+        <Modal closeModalFunc={closeConfirmModal}>
+          <div className="delete-confirm">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="exclamation-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path fill="currentColor" d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z" />
+            </svg>
+            <p>
+              Do you really want to delete?
+              </p>
+            <div className="delete-confirm-actions">
+              <Button
+                btnType={'button'}
+                btnText={'Delete'}
+                btnColor={'danger'}
+                onClickFunc={handleDeleteCash}
+              />
+              <Button
+                btnType={'button'}
+                btnText={'Cancel'}
+                btnColor={'lightGray'}
+                onClickFunc={closeConfirmModal}
+              />
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
