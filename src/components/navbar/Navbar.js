@@ -9,7 +9,7 @@ import mainLogo from '../../images/main-logo.png';
 /* Import SVG Icon Components */
 import SignUpIcon from '../icons/SignUpIcon';
 import LoginIcon from '../icons/LoginIcon';
-import MonitorIcon from '../icons/MonitorIcon';
+import AnalyticsIcon from '../icons/AnalyticsIcon';
 import ListIcon from '../icons/ListIcon';
 import FolderIcon from '../icons/FolderIcon';
 import PiggyBankIcon from '../icons/PiggyBankIcon';
@@ -126,7 +126,7 @@ const Navbar = ({
             <li className="navbar__user-name-mobile">{user && user.firstName} {user && user.lastName}</li>
             <li>
               <Link to="/dashboard">
-                <MonitorIcon />
+                <AnalyticsIcon />
                 <span>Dashboard</span>
               </Link>
             </li>
