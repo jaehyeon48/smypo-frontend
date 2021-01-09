@@ -7,9 +7,9 @@ import CashItem from './CashItem';
 import Spinner from '../spinner/Spinner';
 import DollarSignIcon from '../icons/DollarSignIcon';
 import Modal from '../modal/Modal';
+import Button from '../button/Button';
 import AddCash from './AddCash';
 import EditCash from './EditCash';
-import './cash.css';
 import { getSelectedPortfolio } from '../../actions/portfolioAction';
 import {
   getTotalCash,
@@ -75,24 +75,19 @@ const Cash = ({
   return (
     <React.Fragment>
       {!cashLoading ? (
-        <React.Fragment>
-          <button
-            type="button"
-            className="btn btn-open-add-cash-modal"
-            onClick={openAddCashModal}
-          >ADD CASH TRANSACTION</button>
+        <main className="cash-main">
+          <Button
+            btnType={'button'}
+            btnText={'Add cash transaction'}
+            onClickFunc={openAddCashModal}
+          />
           {cashList && cashList.length > 0 ? (
-            <div className="cash-page">
+            <React.Fragment>
               <div className="cash-total-amount">
                 <span>Total Cash</span>
                 <span><DollarSignIcon />{totalCash}</span>
               </div>
-              <div className="cash-header">
-                <span className="cash-header-amount">Amount</span>
-                <span className="cash-header-type">Type</span>
-                <span className="cash-header-date">Date</span>
-              </div>
-              <div className="cash-container">
+              <div className="cash-items">
                 {cashList.map((cash) => (
                   <CashItem
                     key={cash.cashId}
@@ -106,8 +101,8 @@ const Cash = ({
                   />
                 ))}
               </div>
-            </div>
-          ) : (<div className="notice-empty-cashlist">The cash list is empty. Add a cash transaction!</div>)}
+            </React.Fragment>
+          ) : (<div className="no-cash-notice">The cash list is empty.</div>)}
           {isAddCashModalOpen && (
             <Modal closeModalFunc={closeAddCashModal}>
               <AddCash closeAddCashModal={closeAddCashModal} />
@@ -121,7 +116,7 @@ const Cash = ({
                 setFormData={setFormData} />
             </Modal>
           )}
-        </React.Fragment>
+        </main>
       ) : (<Spinner />)}
     </React.Fragment>
   );

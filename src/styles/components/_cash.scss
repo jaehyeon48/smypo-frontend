@@ -1,0 +1,157 @@
+.cash-main {
+  display: flex;
+  flex-direction: column;
+  padding: 4em 1em;
+  margin: 0 auto;
+  min-height: 100vh;
+  max-width: $max-width;
+
+  & > button {
+    font-size: 1.5rem;
+    width: 23em;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 551px) and (max-width: 768px) {
+    & > button {
+      font-size: 1.3rem;
+    }
+  }
+
+  @media screen and (min-width: 426px) and (max-width: 550px) {
+    & > button {
+      font-size: 1.2rem;
+      width: 19em;
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    & > button {
+      font-size: 1.2rem;
+      width: 15em;
+    }
+  }
+}
+
+.cash-total-amount {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  border: 1px solid $blue-white;
+  background-color: $white;
+  box-shadow: 4px 5px 2px $dark-gray;
+  border-radius: 0.3em;
+  margin: 2em auto;
+  padding: 1rem;
+  width: 70vw;
+  max-width: 700px;
+  color: $blue-black;
+  text-align: center;
+
+  & > span:first-child {
+    margin-bottom: 1em;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.7rem;
+  }
+}
+
+.cash-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 1536px;
+  margin: 0 auto;
+
+  @media screen and (min-width: 1263px) and (max-width: 1567px) {
+    width: 1229px;
+  }
+
+  @media screen and (min-width: 957px) and (max-width: 1262px) {
+    width: 922px;
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 956px) {
+    width: 615px;
+  }
+
+  @media screen and (min-width: 536px) and (max-width: 768px) {
+    width: 500px;
+  }
+
+  @media screen and (max-width: 535px) {
+    width: 273px;
+  }
+}
+
+.cash-item {
+  display: flex;
+  flex-direction: column;
+  margin: 2em 1em;
+  padding: 0.6em 0.3em;
+  border-radius: 0.2em;
+  font-size: 1.6rem;
+  color: $blue-black;
+  align-items: center;
+  border: 1px solid $blue-white;
+  background-color: $white;
+  box-shadow: 2px 3px 2px $dark-gray;
+  width: 10em;
+  text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+
+  @media screen and (max-width: 535px) {
+    width: 13em;
+  }
+}
+
+.cash-item-type {
+  text-transform: uppercase;
+  margin-bottom: 0.6em;
+}
+
+.cash-item-amount {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.6em;
+
+  & > svg {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 0.1em;
+  }
+}
+
+.cash-item-date {
+}
+
+.cash-item-actions {
+  display: flex;
+  margin-top: 0.7em;
+
+  & > button {
+    width: 4em;
+    padding: 0.3em 0.4em;
+    font-size: 1.2rem;
+  }
+
+  & > button:first-child {
+    margin-right: 1em;
+  }
+}
+
+.no-cash-notice {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-top: 2em;
+  color: $main-color;
+
+  @media screen and (max-width: 550px) {
+    font-size: 2.4rem;
+  }
+}

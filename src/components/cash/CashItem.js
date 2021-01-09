@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Button from '../button/Button';
+import DollarSignIcon from '../icons/DollarSignIcon';
 import { deleteCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -42,18 +44,23 @@ const CashItem = ({
 
   return (
     <div className="cash-item">
-      <span className="cash-item-amount">{amount}</span>
-      <span className="cash-item-type">{transactionType}</span>
-      <span className="cash-item-date">{transactionDate.slice(2)}</span>
-      <button
-        type="button"
-        className="btn btn-edit-cash"
-        onClick={handleOpenEditCashModal}
-      >EDIT</button>
-      <button
-        type="button"
-        className="btn btn-delete-cash"
-        onClick={handleDeleteCash}>DELETE</button>
+      <div className="cash-item-type">{transactionType}</div>
+      <div className="cash-item-amount"><DollarSignIcon/>{amount}</div>
+      <div className="cash-item-date">{transactionDate.slice(2)}</div>
+      <div className="cash-item-actions">
+        <Button
+          btnType={'button'}
+          btnText={'Edit'}
+          btnColor={'warning'}
+          onClickFunc={handleOpenEditCashModal}
+        />
+        <Button
+          btnType={'button'}
+          btnText={'Delete'}
+          btnColor={'danger'}
+          onClickFunc={handleDeleteCash}
+        />
+      </div>
     </div>
   );
 }

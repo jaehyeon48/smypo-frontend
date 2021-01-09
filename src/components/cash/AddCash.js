@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Button from '../button/Button';
 import { addCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -31,13 +32,11 @@ const AddCash = ({
     const addCashResult = await addCash(currentPortfolio, formData);
     if (addCashResult === 0) {
       closeAddCashModal();
-      window.location.reload();
     }
     else {
-      showAlert('Something went wrong. Please try again!', 'fail');
+      showAlert('Something went wrong. Please try again!', 'error');
       closeAddCashModal();
     }
-
   }
 
   return (
@@ -48,6 +47,7 @@ const AddCash = ({
           <input
               type="radio"
               name="transactionType"
+              className="transaction-type-cash"
               value="deposit"
               checked={transactionType === 'deposit'}
               onChange={handleChange}
@@ -57,27 +57,26 @@ const AddCash = ({
           <input
               type="radio"
               name="transactionType"
+              className="transaction-type-cash"
               value="withdraw"
               checked={transactionType === 'withdraw'}
               onChange={handleChange}
             />
           </label>
         </div>
-        <div className="ticker-container">
-          <label className="add-transaction-inputs">
-            AMOUNT
+        <label className="add-transaction-label">
+          AMOUNT
           <input
-              type="number"
-              name="amount"
-              min="0"
-              step="0.01"
-              value={amount}
-              onChange={handleChange}
-              className="add-transaction-field"
-            />
-          </label>
-        </div>
-        <label className="add-transaction-inputs">
+            type="number"
+            name="amount"
+            min="0"
+            step="0.01"
+            value={amount}
+            onChange={handleChange}
+            className="add-transaction-field"
+          />
+        </label>
+        <label className="add-transaction-label">
           Date
           <input
             type="date"
@@ -87,7 +86,10 @@ const AddCash = ({
             className="add-transaction-date-field"
           />
         </label>
-        <button type="submit" className="btn btn-add-transaction">ADD CASH TRANSACTION</button>
+        <Button
+          btnType={'submit'}
+          btnText={'Add transaction'}
+        />
       </form>
     </div>
   );

@@ -71,8 +71,16 @@
     left: 30px;
   }
 
+  & > label:first-child > input[type='radio'].transaction-type-cash {
+    left: 59px;
+  }
+
   & > label:last-child > input[type='radio'] {
     left: 37px;
+  }
+
+  & > label:last-child > input[type='radio'].transaction-type-cash {
+    left: 77px;
   }
 }
 
