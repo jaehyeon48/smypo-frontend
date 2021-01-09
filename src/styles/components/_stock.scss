@@ -142,17 +142,17 @@
 
 /* realized stocks info */
 .total-realized-value {
-  border: 3px solid var(--highlight-color);
-  background-color: #fff;
-  box-shadow: 4px 5px 2px 2px var(--lightgray-color);
   display: flex;
-  flex-direction: column;
-  border-radius: 0.3rem;
   font-size: 2rem;
-  padding: 1rem;
+  flex-direction: column;
+  border: 1px solid $blue-black;
+  background-color: $white;
+  box-shadow: 4px 5px 2px $dark-gray;
+  border-radius: 0.2em;
+  padding: 1em;
   width: 70vw;
   max-width: 700px;
-  margin: 6rem auto;
+  margin: 6em auto;
   text-align: center;
 }
 
