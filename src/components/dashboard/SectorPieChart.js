@@ -23,7 +23,7 @@ const SectorPieChart = ({
   const [shouldRenderChart, setShouldRenderChart] = useState(false);
 
   function getRandomColor(i) {
-    const colors = ['#0F4BBD', '#F7A8D5', '#CA2F4C', '#F2AB59', '#CAD038', '#69C58B', '#0F4E52', '#134253', '#17A7AA', '#6F9BA9', '#4B3B57'];
+    const colors = ['#0DA886', '#4FDF5A', '#F5B428', '#F47B2E', '#EF4827', '#40C8CC', '#5E6F9E', '#C2596E', '#E9B07F', '#E2E678', '#EC7DBC'];
     if (i === 0) {
       return colors[0];
     }

@@ -22,14 +22,15 @@ const ValuePieChart = ({
   const [tickerLabels, setTickerLabels] = useState([]);
   const [stockValueData, setStockValueData] = useState([]);
   const [shouldRenderChart, setShouldRenderChart] = useState(false);
+  // const [chartFontSize, setChartFontSize] = useState(16);
 
   function getRandomColor(i) {
-    const colors = ['#F7A8D5', '#CA2F4C', '#F2AB59', '#CAD038', '#69C58B', '#0F4E52', '#134253', '#17A7AA', '#6F9BA9', '#4B3B57', '#0F4BBD'];
+    const colors = ['#0DA886', '#4FDF5A', '#F5B428', '#F47B2E', '#EF4827', '#40C8CC', '#5E6F9E', '#C2596E', '#E9B07F', '#E2E678', '#EC7DBC'];
     if (i === 0) {
       return colors[0];
     }
     else {
-      return colors[i % 10 + 1];
+      return colors[i % 11];
     }
   }
 
