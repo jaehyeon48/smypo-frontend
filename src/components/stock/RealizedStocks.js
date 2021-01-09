@@ -47,9 +47,15 @@ const RealizedStocks = ({
   }, [defaultPortfolio]);
 
   const colorTotalRealizedReturn = () => {
-    if (totalRealizedReturn > 0) return 'return-positive';
-    else if (totalRealizedReturn < 0) return 'return-negative';
-    else return 'return-zero';
+    if (totalRealizedReturn > 0) return 'total-return-positive';
+    else if (totalRealizedReturn < 0) return 'total-return-negative';
+    else return 'total-return-zero';
+  }
+
+  const borderColorTotalRealizedReturn = () => {
+    if (totalRealizedReturn > 0) return 'total-return-positive--border';
+    else if (totalRealizedReturn < 0) return 'total-return-negative--border';
+    else return 'total-return-zero--border';
   }
 
   return (
@@ -62,9 +68,14 @@ const RealizedStocks = ({
     )}
       {!realizedStockLoading ? (
         <React.Fragment>
-        <div className="total-realized-value">
-        <span>Total Realized Value</span>
-        <span className={colorTotalRealizedReturn()}><DollarSignIcon/>{totalRealizedReturn.toFixed(2)}</span>
+        <div className={`total-realized-value ${borderColorTotalRealizedReturn()}`}>
+          <span>Total Realized Value</span>
+          <div>
+            <DollarSignIcon/>
+            <span className={colorTotalRealizedReturn()}>
+              {totalRealizedReturn.toFixed(2)}
+            </span>
+          </div>
         </div>
         <div className="realized-stocks-container">
           {realizedStocks && realizedStocks.length > 0 ? (
