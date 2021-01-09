@@ -28,7 +28,7 @@ const RealizedStockItem = ({
         <span>Quantity: </span>{realizedStockItem.quantity}
       </div>
       <div className={`realized-stock-return ${colorRealizedReturn()}`}>
-        <span>Return: </span><DollarSignIcon />{realizedReturn}
+        <span>Return: <DollarSignIcon /></span>{realizedReturn}
       </div>
     </div>
   );

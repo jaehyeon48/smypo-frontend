@@ -156,12 +156,20 @@
   border: 1px solid $blue-white;
   background-color: $white;
   box-shadow: 4px 5px 2px $dark-gray;
-  border-radius: 0.2em;
+  border-radius: 0.25em;
   padding: 1em;
   width: 70vw;
   max-width: 700px;
-  margin: 2em auto;
+  margin: 0.5em auto 1.5em;
   text-align: center;
+
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    font-size: 1.7rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 1.5rem;
+  }
 }
 
 .total-realized-value > span:first-child {
@@ -224,7 +232,7 @@
   display: flex;
   align-items: center;
 
-  & > svg {
+  & > span > svg {
     width: 20px;
     height: 23px;
     margin-left: 0.1em;
@@ -245,7 +253,7 @@
   display: flex;
   align-items: center;
 
-  & > svg {
+  & > span > svg {
     width: 20px;
     height: 23px;
     margin-left: 0.1em;
