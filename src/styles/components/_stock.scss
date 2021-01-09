@@ -4,18 +4,6 @@
   margin: 0 auto;
 }
 
-.stock-current-portfolio {
-  display: flex;
-  justify-content: center;
-  margin: 1em 0;
-  font-size: 1.4rem;
-
-  & > span:last-child {
-    margin-left: 0.2em;
-    font-weight: 700;
-  }
-}
-
 .stocks-container {
   margin: 2rem 2rem 70px;
   display: flex;
