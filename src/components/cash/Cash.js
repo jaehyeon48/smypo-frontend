@@ -29,6 +29,7 @@ const Cash = ({
 }) => {
   const [isAddCashModalOpen, setIsAddCashModalOpen] = useState(false);
   const [isEditCashModalOpen, setIsEditCashModalOpen] = useState(false);
+  const [currentPortfolioName, setCurrentPortfolioName] = useState('');
   const [formData, setFormData] = useState({
     cashId: '',
     amount: '',
@@ -39,6 +40,19 @@ const Cash = ({
   useEffect(() => {
     getDefaultPortfolio();
   }, []);
+
+  useEffect(() => {
+    if (defaultPortfolio) {
+      (async () => {
+        try {
+          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolio}`);
+          setCurrentPortfolioName(res.data.name);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+  }, [defaultPortfolio]);
 
   useEffect(() => {
     if (defaultPortfolio) {
@@ -76,6 +90,12 @@ const Cash = ({
     <React.Fragment>
       {!cashLoading ? (
         <main className="cash-main">
+        {defaultPortfolio && (
+        <div className="stock-current-portfolio">
+          <span>Current Portfolio: </span>
+          <span>{currentPortfolioName}</span>
+        </div>
+      )}
           <Button
             btnType={'button'}
             btnText={'Add cash transaction'}

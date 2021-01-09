@@ -17,20 +17,19 @@ const Stock = ({
   loading,
   isAuthenticated,
   stock,
-  portfolioList,
   defaultPortfolio,
   getTotalCash,
   getStocks,
   getDefaultPortfolio
 }) => {
   let history = useHistory();
-  const [defaultPortfolioId, setdefaultPortfolioId] = useState();
+  const [defaultPortfolioId, setDefaultPortfolioId] = useState();
   const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
   const [currentPortfolioName, setCurrentPortfolioName] = useState('');
 
   useEffect(() => {
     getDefaultPortfolio();
-    setdefaultPortfolioId((prevId) => {
+    setDefaultPortfolioId((prevId) => {
       if (prevId !== defaultPortfolio) {
         return defaultPortfolio;
       }
@@ -53,6 +52,7 @@ const Stock = ({
 
   useEffect(() => {
     if (defaultPortfolioId) {
+      // use total cash when adding a new transaction
       getTotalCash(defaultPortfolioId);
       getStocks(defaultPortfolioId);
     }
@@ -133,8 +133,7 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   isAuthenticated: state.auth.isAuthenticated,
   stock: state.stock,
-  defaultPortfolio: state.portfolio.defaultPortfolio,
-  portfolioList: state.portfolio.portfolioList
+  defaultPortfolio: state.portfolio.defaultPortfolio
 });
 
 export default connect(mapStateToProps, {
