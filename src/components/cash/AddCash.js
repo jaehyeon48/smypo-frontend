@@ -7,7 +7,7 @@ import { addCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
 
 const AddCash = ({
-  currentPortfolio,
+  defaultPortfolio,
   closeAddCashModal,
   addCash,
   showAlert
@@ -29,7 +29,7 @@ const AddCash = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const addCashResult = await addCash(currentPortfolio, formData);
+    const addCashResult = await addCash(defaultPortfolio, formData);
     if (addCashResult === 0) {
       closeAddCashModal();
     }
@@ -96,13 +96,13 @@ const AddCash = ({
 }
 
 AddCash.propTypes = {
-  currentPortfolio: PropTypes.number,
+  defaultPortfolio: PropTypes.number,
   closeAddCashModal: PropTypes.func,
   addCash: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  currentPortfolio: state.portfolio.currentPortfolio
+  defaultPortfolio: state.portfolio.defaultPortfolio
 });
 
 export default connect(mapStateToProps, {
