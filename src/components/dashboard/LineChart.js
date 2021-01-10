@@ -5,7 +5,7 @@ import 'chartjs-plugin-datalabels';
 
 import { get10DaysOfRecord } from '../../utils/getRecordData';
 
-const TenDayChart = ({
+const LineChart = ({
   defaultPortfolioId
 }) => {
   const [chartData, setChartData] = useState({
@@ -60,6 +60,9 @@ const TenDayChart = ({
     },
     legend: {
       display: false
+    },
+    gridLines: {
+      color: '#000'
     }
   }
 
@@ -76,9 +79,9 @@ const TenDayChart = ({
   );
 }
 
-TenDayChart.propTypes = {
+LineChart.propTypes = {
   defaultPortfolioId: PropTypes.number,
   get10DaysOfRecord: PropTypes.func
 };
 
-export default TenDayChart;
+export default LineChart;

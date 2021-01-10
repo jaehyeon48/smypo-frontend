@@ -74,6 +74,11 @@
 
 .ten-day-chart {
   width: 96%;
+  height: 30em;
+
+  @media screen and (max-width: 768px) {
+    width: 97%;
+  }
 
   @media screen and (max-width: 450px) {
     & > h1 {
@@ -84,9 +89,14 @@
 
 .line-chart-wrapper {
   position: relative;
-  width: 90% !important;
-  height: 500px !important;
+  width: 90%;
+  height: 81%;
   padding: 1rem;
+
+  @media screen and (max-width: 768px) {
+    width: 98%;
+    height: 82%;
+  }
 }
 
 .notice-chart-no-display {

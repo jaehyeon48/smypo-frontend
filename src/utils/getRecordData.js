@@ -4,9 +4,9 @@ export const get10DaysOfRecord = async (portfolioId) => {
   const config = { withCredentials: true };
 
   try {
-    const recordData = await axios.get(`${process.env.REACT_APP_SERVER_URL}/record/10days/${portfolioId}`, config);
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/record/10days/${portfolioId}`, config);
 
-    return convertToDateString(recordData.data.records);
+    return convertToDateString(response.data.records);
   } catch (error) {
     console.error(error);
   }

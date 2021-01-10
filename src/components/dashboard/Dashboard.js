@@ -16,9 +16,10 @@ import { getTotalCash } from '../../actions/cashAction';
 import GetStockPrice from './GetStockPrice';
 import ValuePieChart from './ValuePieChart';
 import SectorPieChart from './SectorPieChart';
-import TenDayChart from './TenDayChart';
+import LineChart from './LineChart';
 import DollarSignIcon from '../icons/DollarSignIcon';
 import Spinner from '../spinner/Spinner';
+import { Line } from 'react-chartjs-2';
 
 const Dashboard = ({
   loading,
@@ -171,7 +172,7 @@ const Dashboard = ({
                       <SectorPieChart />
                     </div>
                   )}
-                  <TenDayChart defaultPortfolioId={defaultPortfolio} />
+                  <LineChart defaultPortfolioId={defaultPortfolio} />
                 </React.Fragment>
               ) : (
                   <div className="notice-empty-stocklist">
