@@ -21,6 +21,8 @@ const SectorPieChart = ({
   const [sectorLabels, setSectorLabels] = useState([]);
   const [sectorsCount, setSectorsCount] = useState([]);
   const [shouldRenderChart, setShouldRenderChart] = useState(false);
+  const [chartLegends, setChartLegends] = useState([]);
+  const [chartFontSize, setChartFontSize] = useState(16);
 
   function getRandomColor(i) {
     const colors = ['#0DA886', '#4FDF5A', '#F5B428', '#F47B2E', '#EF4827', '#40C8CC', '#5E6F9E', '#C2596E', '#E9B07F', '#E2E678', '#EC7DBC'];
@@ -31,6 +33,15 @@ const SectorPieChart = ({
       return colors[i % 11];
     }
   }
+
+  // calculate font size based on viewport size
+  useEffect(() => {
+    const viewportWidth = window.innerWidth;
+
+    if (viewportWidth >= 1460) {
+      setChartFontSize(16);
+    }
+  }, []);
 
   useEffect(() => {
     if (stockList.length > 0) {
@@ -43,6 +54,24 @@ const SectorPieChart = ({
       setSectors(newSectorsArray);
     }
   }, [stockList]);
+
+  // make legend
+  useEffect(() => {
+    if (sectorLabels && sectorsCount &&
+      sectorLabels.length > 0 && sectorsCount.length > 0 &&
+      sectorLabels.length === sectorsCount.length) {
+      const legendData = [];
+      for (let i = 0; i < sectorLabels.length; ++i) {
+        legendData.push({
+          weight: sectorsCount[i] * 100,
+          sector: sectorLabels[i],
+          index: i
+        });
+      }
+      legendData.sort((a, b) => b.weight - a.weight);
+      setChartLegends(legendData);
+    }
+  }, [sectorLabels, sectorsCount]);
 
   useEffect(() => {
     if (!stockLoading && stockList.length > 0) {
@@ -119,67 +148,51 @@ const SectorPieChart = ({
 
   const chartOptions = {
     maintainAspectRatio: false,
-    legend: {
-      labels: {
-        fontColor: '#372750',
-        padding: 20,
-        fontSize: 16
-      }
-    },
+    legend: { display: false },
     layout: {
       padding: {
-        top: 10,
-        bottom: 20
+        top: 30,
+        bottom: 30,
+        left: 30,
+        right: 30
       }
     },
     plugins: {
       datalabels: {
-        formatter: (value, context) => {
-          if (value) {
-            const sectorName = context.chart.data.labels[context.dataIndex];
-            let sum = 0;
-            let dataArr = context.chart.data.datasets[0].data;
-            dataArr.forEach(data => {
-              sum += data;
-            });
-            let percentage = (value * 100 / sum).toFixed(2) + "%";
-            return sectorName + '\n' + percentage;
-          }
-        },
-        color: '#fff',
-        anchor: 'end',
-        align: 'start',
-        offset: -12,
-        borderWidth: 2,
-        borderColor: '#fff',
-        borderRadius: 14,
-        backgroundColor: (context) => {
-          return context.dataset.backgroundColor;
-        },
-        font: {
-          weight: 'bold',
-          size: 14,
-          family: 'Roboto Condensed'
-        },
-        textAlign: 'center',
-        padding: 7
+        font: { size: 0 }
       }
     }
   }
 
-
-
   return (
     <div className="chart-container sector-pie-chart">
       <h1>Distribution By Sector</h1>
-      {shouldRenderChart ? (
-        <div className="chart-wrapper">
-          <Pie
-            data={chartData}
-            options={chartOptions}
-          />
+      <div className="chart-content">
+        <div className="pie-chart-legend">
+          {shouldRenderChart && chartLegends && chartLegends.length > 0 && (
+            chartLegends.map((legendData) => (
+              <div className="pie-chart-legend-item">
+                <div
+                  className="pie-chart-legend-color"
+                  style={{ backgroundColor: `${getRandomColor(legendData.index)}` }}>
+                </div>
+                <div className="pie-chart-legend-content">
+                  <span>{legendData.sector}</span>
+                  <span>{legendData.weight.toFixed(2)}%</span>
+                </div>
+              </div>
+            ))
+          )}
         </div>
-      ) : <div className="notice-chart-no-display">Nothing to display.</div>}
+        {shouldRenderChart ? (
+          <div className="chart-wrapper">
+            <Pie
+              data={chartData}
+              options={chartOptions}
+            />
+          </div>
+        ) : <div className="notice-chart-no-display">Nothing to display.</div>}
+      </div>
     </div>
   );
 }
