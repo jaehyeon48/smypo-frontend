@@ -5,21 +5,25 @@
 }
 
 .stocks-container {
-  margin: 2em;
+  margin: 3em 5em;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-height: 600px;
+  max-height: 650px;
   border: 1px solid $blue-white;
   border-radius: 0.1em;
   overflow-y: auto;
 
   @media screen and (min-width: 501px) and (max-width: 768px) {
-    margin: 2.3em 6em;
+    margin: 3em 6em;
   }
 
   @media screen and (max-width: 500px) {
-    margin: 2.3em 4em;
+    margin: 3em 4em;
+  }
+
+  @media screen and (max-width: 368px) {
+    margin: 3em;
   }
 }
 
@@ -45,20 +49,27 @@
       margin-bottom: 2em;
     }
   }
+
+  @media screen and (max-width: 500px) {
+    & > button {
+      font-size: 1.2rem;
+    }
+  }
 }
 
 .stock-item {
   display: flex;
   flex-direction: column;
-  font-size: 1.5rem;
-  width: 11em;
+  justify-content: center;
+  font-size: 1.4rem;
+  width: 15em;
   min-height: 13em;
   max-width: $max-width;
-  margin: 1.7em;
+  margin: 2em;
   color: $blue-black;
   background-color: $white;
   text-align: center;
-  border: 1px solid #e4e7ff;
+  border: 1px solid $blue-white;
   border-radius: 0.2em;
   padding: 0.5em;
   cursor: pointer;
@@ -71,12 +82,17 @@
 
   @media screen and (min-width: 501px) and (max-width: 768px) {
     font-size: 1.2rem;
-    width: 10.7em;
+    width: 11em;
   }
 
   @media screen and (max-width: 500px) {
     font-size: 1.1rem;
-    width: 11em;
+    width: 10.5em;
+    margin: 2.5em 1.3em;
+  }
+
+  @media screen and (max-width: 368px) {
+    font-size: 1rem;
   }
 }
 
@@ -88,34 +104,8 @@
 }
 
 .stock-item-ticker {
-  font-size: 2.2rem;
-  font-weight: 700;
-
-  @media screen and (min-width: 501px) and (max-width: 768px) {
-    font-size: 1.9rem;
-  }
-
-  @media screen and (max-width: 500px) {
-    font-size: 1.6rem;
-  }
-}
-
-.stock-item-name {
-  font-size: 1.3rem;
-
-  @media screen and (min-width: 501px) and (max-width: 768px) {
-    font-size: 1.2rem;
-  }
-
-  @media screen and (max-width: 500px) {
-    font-size: 1.1rem;
-  }
-}
-
-.stock-item-realtime {
-  font-weight: 700;
   font-size: 2rem;
-  margin-bottom: 0.5em;
+  font-weight: 700;
 
   @media screen and (min-width: 501px) and (max-width: 768px) {
     font-size: 1.7rem;
@@ -124,30 +114,50 @@
   @media screen and (max-width: 500px) {
     font-size: 1.5rem;
   }
+
+  @media screen and (max-width: 368px) {
+    font-size: 1.4rem;
+  }
+}
+
+.stock-item-name {
+  font-size: 1.2rem;
+
+  @media screen and (min-width: 501px) and (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
+}
+
+.stock-item-realtime {
+  font-weight: 700;
+  font-size: 1.9rem;
+  margin-bottom: 0.5em;
+
+  @media screen and (min-width: 501px) and (max-width: 768px) {
+    font-size: 1.6rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.4rem;
+  }
+
+  @media screen and (max-width: 368px) {
+    font-size: 1.3rem;
+  }
 }
 
 .stock-item-avgPrice,
 .stock-item-quantity {
-  margin-bottom: 0.6em;
+  margin-bottom: 0.7em;
 }
 
 .stock-item-daily-pl,
 .stock-item-overall-pl {
-  margin: 0.25em 0;
-}
-
-.btn-delete-transaction {
-  margin: 25px 0 0 0;
-  width: 100%;
-  color: var(--white-color);
-  background: #fc1529;
-  border-bottom: 3px solid var(--dark-red-color);
-  -webkit-box-shadow: inset 0 -3px var(--dark-red-color);
-  box-shadow: inset 0 -3px var(--dark-red-color);
-}
-
-.btn-delete-transaction:hover {
-  background-color: var(--dark-red-color);
+  margin: 0.35em 0;
 }
 
 /* realized stocks info */
