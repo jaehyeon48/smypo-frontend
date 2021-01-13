@@ -21,13 +21,13 @@ const RealizedStockItem = ({
         {realizedStockItem.ticker}
       </div>
       <div className="realized-stock-price">
-        <span>Price: <span className="dollar-sign">$</span>{realizedStockItem.price}</span>
+        <span>Price: {realizedStockItem.price}</span>
       </div>
       <div className="realized-stock-quantity">
         <span>Quantity: </span>{realizedStockItem.quantity}
       </div>
       <div className={`realized-stock-return ${colorRealizedReturn()}`}>
-        <span>Return: <span className="dollar-sign">$</span></span>{realizedReturn}
+        <span>Return: </span>{realizedReturn}
       </div>
     </div>
   );

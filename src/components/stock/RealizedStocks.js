@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import Spinner from '../spinner/Spinner';
-import DollarSignIcon from '../icons/DollarSignIcon';
 import RealizedStockItem from './RealizedStockItem';
 import { getDefaultPortfolio } from '../../actions/portfolioAction';
 import {
@@ -71,7 +70,6 @@ const RealizedStocks = ({
         <div className={`total-realized-value ${borderColorTotalRealizedReturn()}`}>
           <span>Total Realized Value</span>
           <div>
-            <DollarSignIcon/>
             <span className={colorTotalRealizedReturn()}>
               {totalRealizedReturn.toFixed(2)}
             </span>

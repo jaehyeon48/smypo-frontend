@@ -17,7 +17,6 @@ import GetStockPrice from './GetStockPrice';
 import ValuePieChart from './ValuePieChart';
 import SectorPieChart from './SectorPieChart';
 import LineChart from './LineChart';
-import DollarSignIcon from '../icons/DollarSignIcon';
 import Spinner from '../spinner/Spinner';
 import { Line } from 'react-chartjs-2';
 
@@ -139,7 +138,6 @@ const Dashboard = ({
                     >
                       <span>Daily Return</span>
                       <span className={`${colorReturnItem(totalDailyReturn)}`}>
-                        <DollarSignIcon />
                         {totalDailyReturn} ({totalDailyReturn > 0 && '+'}
                         {isNaN(dailyReturnPercent.toFixed(2)) ? (0) : (
                           dailyReturnPercent.toFixed(2)
@@ -151,7 +149,6 @@ const Dashboard = ({
                     >
                       <span>Overall Return</span>
                       <span className={`${colorReturnItem(totalOverallReturn)}`}>
-                        <DollarSignIcon />
                         {totalOverallReturn} ({totalOverallReturn > 0 && '+'}
                         {isNaN(overallReturnPercent.toFixed(2)) ? (0) : (
                           overallReturnPercent.toFixed(2)
@@ -161,7 +158,6 @@ const Dashboard = ({
                     <div className={`return-item total-value ${colorReturnItemBottom(totalValue)}`}>
                       <span>Total Value</span>
                       <span className={`${colorReturnItem(totalValue)}`}>
-                        <DollarSignIcon />
                         {(totalValue).toFixed(2)}
                       </span>
                     </div>

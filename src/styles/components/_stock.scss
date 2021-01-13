@@ -236,17 +236,6 @@
 .realized-stock-price {
   display: flex;
   align-items: center;
-
-  & > svg {
-    width: 20px;
-    height: 23px;
-    margin-left: 0.1em;
-
-    @media screen and (max-width: 768px) {
-      width: 19px;
-      height: 21px;
-    }
-  }
 }
 
 .realized-stock-ticker {
@@ -257,17 +246,6 @@
 .realized-stock-return {
   display: flex;
   align-items: center;
-
-  & > span > svg {
-    width: 20px;
-    height: 23px;
-    margin-left: 0.1em;
-
-    @media screen and (max-width: 768px) {
-      width: 19px;
-      height: 21px;
-    }
-  }
 
   & > span {
     color: $blue-black;

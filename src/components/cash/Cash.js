@@ -6,7 +6,6 @@ import axios from 'axios';
 
 import CashItem from './CashItem';
 import Spinner from '../spinner/Spinner';
-import DollarSignIcon from '../icons/DollarSignIcon';
 import Modal from '../modal/Modal';
 import Button from '../button/Button';
 import AddCash from './AddCash';
@@ -105,7 +104,7 @@ const Cash = ({
           <React.Fragment>
             <div className="cash-total-amount">
               <span>Total Cash</span>
-              <span><DollarSignIcon />{totalCash}</span>
+              <span>{totalCash}</span>
             </div>
             <div className="cash-items">
               {cashList.map((cash) => (

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
-import DollarSignIcon from '../icons/DollarSignIcon';
 import { deleteCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -52,7 +51,7 @@ const CashItem = ({
   return (
     <div className="cash-item">
       <div className="cash-item-type">{transactionType}</div>
-      <div className="cash-item-amount"><DollarSignIcon />{amount}</div>
+      <div className="cash-item-amount">{amount}</div>
       <div className="cash-item-date">{transactionDate.slice(2)}</div>
       <div className="cash-item-actions">
         <Button
