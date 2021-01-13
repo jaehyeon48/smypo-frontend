@@ -22,6 +22,12 @@ body {
   background-color: $main-bg-color;
 }
 
+.dollar-sign {
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 1rem;
+}
+
 .current-portfolio {
   display: flex;
   justify-content: center;

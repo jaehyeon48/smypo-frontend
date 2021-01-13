@@ -14,7 +14,7 @@ import Cash from './components/cash/Cash';
 import Portfolios from './components/portfolio/Portfolios';
 import Profile from './components/profile/Profile';
 import Alert from './components/alert/Alert';
-import PositionDetail from './components/position/PositionDetail';
+import Position from './components/position/Position';
 import Footer from './components/footer/Footer';
 import './app.css';
 import './styles/index.scss';
@@ -40,8 +40,8 @@ export default function App() {
             <Route path="/stocks/realized" component={RealizedStocks} exact={true} />
             <Route path="/cash" component={Cash} exact={true} />
             <Route path="/portfolios" component={Portfolios} exact={true} />
-            {/* <Route path="/profile" component={Profile} exact={true} /> */}
-            {/* <Route path="/position/:portfolioId/:ticker" component={PositionDetail} exact={true} /> */}
+            <Route path="/profile" component={Profile} exact={true} />
+            <Route path="/position/:portfolioId/:ticker" component={Position} exact={true} />
             <Footer />
           </Navbar>
         </Switch>

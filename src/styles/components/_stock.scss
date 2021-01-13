@@ -199,30 +199,14 @@
 .realized-stocks-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: 1280px;
-  max-height: 600px;
+  justify-content: center;
+  max-width: 1440px;
+  max-height: 650px;
   overflow-y: scroll;
-  margin: 1em auto 5em;
-  padding: 0 1em;
+  margin: 2em 5em;
+  padding: 1em;
   border: 1px solid $blue-white;
-
-  @media screen and (min-width: 1000px) and (max-width: 1299px) {
-    width: 956px;
-  }
-
-  @media screen and (min-width: 769px) and (max-width: 999px) {
-    width: 649px;
-  }
-
-  @media screen and (min-width: 542px) and (max-width: 768px) {
-    width: 534px;
-  }
-
-  @media screen and (max-width: 541px) {
-    width: 283px;
-  }
+  border-radius: 0.2em;
 }
 
 .realized-stock-item {
@@ -231,7 +215,7 @@
   margin: 2em 1em;
   padding: 0.6em 0.3em;
   border-radius: 0.2em;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: $blue-black;
   align-items: center;
   border: 1px solid $blue-white;
@@ -253,7 +237,7 @@
   display: flex;
   align-items: center;
 
-  & > span > svg {
+  & > svg {
     width: 20px;
     height: 23px;
     margin-left: 0.1em;

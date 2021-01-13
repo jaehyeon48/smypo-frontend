@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Button from '../button/Button';
 import {
   editStock,
   deleteStock
@@ -76,7 +77,7 @@ const EditTransaction = ({
           </label>
         </div>
         <div className="ticker-container">
-          <label className="add-transaction-inputs">
+          <label className="add-transaction-label">
             Ticker
           <input
               type="text"
@@ -87,7 +88,7 @@ const EditTransaction = ({
             />
           </label>
         </div>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Price
           <input
             type="number"
@@ -100,7 +101,7 @@ const EditTransaction = ({
             required={true}
           />
         </label>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Quantity
           <input
             type="number"
@@ -111,7 +112,7 @@ const EditTransaction = ({
             required={true}
           />
         </label>
-        <label className="add-transaction-inputs">
+        <label className="add-transaction-label">
           Date
           <input
             type="date"
@@ -121,13 +122,18 @@ const EditTransaction = ({
             className="add-transaction-date-field"
           />
         </label>
-        <button type="submit" className="btn btn-edit-transaction">EDIT TRANSACTION</button>
+        <Button
+          btnType={'submit'}
+          btnText={'Edit transaction'}
+          btnColor={'warning'}
+        />
       </form>
-      <button
-        type="button"
-        className="btn btn-delete-transaction"
-        onClick={() => handleDeleteTransaction(formData.stockId)}
-      >DELETE TRANSACTION</button>
+      <Button
+        btnType={'button'}
+        btnText={'Delete transaction'}
+        btnColor={'danger'}
+        onClickFunc={() => handleDeleteTransaction(formData.stockId)}
+      />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import StockGroupItem from './StockGroupItem';
+import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import {
   getStocks,
@@ -12,11 +13,10 @@ import {
 } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';
 import { getCompanyInfo } from '../../utils/getCompanyInfo';
-import './positionDetail.css';
 import EditTransaction from './EditTransaction';
 import CompanyInfo from './CompanyInfo';
 
-const PositionDetail = ({
+const Position = ({
   match,
   stockGroup,
   stockGroupLoading,
@@ -93,28 +93,25 @@ const PositionDetail = ({
   }, [TICKER]);
 
   return (
-    <div className="position-details">
-      <div className="position-header">
+    <main className="position-main">
+      <header className="position-header">
         <span>{TICKER.toUpperCase()}</span>
         <span>{companyInfo && companyInfo.companyName}</span>
+      </header>
+      <div className="position-actions">
+        <Button
+          btnType={'button'}
+          btnText={'See company info'}
+          onClickFunc={openInfoModal}
+        />
+        <Button
+          btnType={'button'}
+          btnText={'Close position'}
+          btnColor={'danger'}
+          onClickFunc={handleClosePosition}
+        />
       </div>
-      <button
-        type="button"
-        className="btn btn-company-info"
-        onClick={openInfoModal}
-      >See Company Info</button>
-      <button
-        type="button"
-        className="btn btn-close-position"
-        onClick={handleClosePosition}
-      >ClosePosition</button>
-      <div className="stock-group-container">
-        <div className="stock-group-header">
-          <span className="stock-group-header-price">Price</span>
-          <span className="stock-group-header-quantity">Quantity</span>
-          <span className="stock-group-header-type">Type</span>
-          <span className="stock-group-header-date">Date</span>
-        </div>
+      <div className="stock-group">
         <div className="stock-group-items">
           {stockGroup && stockGroup.map(item => (
             <StockGroupItem
@@ -143,11 +140,11 @@ const PositionDetail = ({
           <CompanyInfo companyInfo={companyInfo} />
         </Modal>
       )}
-    </div>
+    </main>
   );
 }
 
-PositionDetail.propTypes = {
+Position.propTypes = {
   match: PropTypes.object,
   stockGroupLoading: PropTypes.bool,
   getStocksByTickerGroup: PropTypes.func,
@@ -165,4 +162,4 @@ export default connect(mapStateToProps, {
   getStocks,
   closePosition,
   showAlert
-})(PositionDetail);
+})(Position);

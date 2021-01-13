@@ -158,7 +158,6 @@ const AddTransaction = ({
               onInput={handleTickerInput}
               className="add-transaction-field"
             />
-
           </label>
         </div>
         <label className="add-transaction-label">
