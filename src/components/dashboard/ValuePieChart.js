@@ -49,7 +49,7 @@ const ValuePieChart = ({
     if (!stockLoading && stockList && stockList.length > 0) {
       let newTickerLabels = [];
       if (totalCash > 0) {
-        newTickerLabels.push('CASH');
+        newTickerLabels.push('cash');
       }
       stockList.forEach(stock => {
         if (stock.quantity > 0) {
@@ -194,7 +194,7 @@ const ValuePieChart = ({
                   style={{ backgroundColor: `${getRandomColor(legendData.index)}` }}
                 ></div>
                 <div className="pie-chart-legend-content">
-                  <span className={legendData.ticker === 'CASH' ? 'chart-legend-cash' : null}>{legendData.ticker}</span>
+                  <span className={legendData.ticker === 'cash' ? 'chart-legend-cash' : null}>{legendData.ticker}</span>
                   <span>{legendData.weight.toFixed(2)}%</span>
                 </div>
               </div>
