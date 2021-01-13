@@ -194,7 +194,7 @@ const ValuePieChart = ({
                   style={{ backgroundColor: `${getRandomColor(legendData.index)}` }}
                 ></div>
                 <div className="pie-chart-legend-content">
-                  <span>{legendData.ticker}</span>
+                  <span className={legendData.ticker === 'CASH' ? 'chart-legend-cash' : null}>{legendData.ticker}</span>
                   <span>{legendData.weight.toFixed(2)}%</span>
                 </div>
               </div>
