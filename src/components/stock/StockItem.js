@@ -129,12 +129,16 @@ const StockItem = ({
       {quantity > 0 && (
         <React.Fragment>
           <span className="stock-item-daily-pl">
-            Daily: <span className={`stock-item-daily-pl ${colorDailyPL()}`}>
-              {dailyReturn} ({dailyReturn > 0 && '+'}{stockPriceData.changePercent.toFixed(2)}%)</span>
+            <span>Daily:</span>
+            <span className={colorDailyPL()}>
+              {dailyReturn} ({dailyReturn > 0 && '+'}{stockPriceData.changePercent.toFixed(2)}%)
+            </span>
           </span>
           <span className="stock-item-overall-pl">
-            Overall: <span className={`stock-item-overall-pl ${colorOverallPL()}`}>
-              {overallReturn} ({overallReturn > 0 && '+'}{overallReturnPercent}%)</span>
+            <span>Total:</span>
+            <span className={colorOverallPL()}>
+              {overallReturn} ({overallReturn > 0 && '+'}{overallReturnPercent}%)
+            </span>
           </span>
         </React.Fragment>
       )}
