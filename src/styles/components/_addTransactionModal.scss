@@ -64,22 +64,24 @@
     -webkit-transform: scale(1.3); /* Chrome, Safari, Opera */
     transform: scale(1.3);
     position: absolute;
+    margin: 0;
+    top: 8px;
   }
 
   & > label:first-child > input[type='radio'] {
-    left: 30px;
+    left: 36px;
   }
 
   & > label:first-child > input[type='radio'].transaction-type-cash {
-    left: 59px;
+    left: 72px;
   }
 
   & > label:last-child > input[type='radio'] {
-    left: 37px;
+    left: 42px;
   }
 
   & > label:last-child > input[type='radio'].transaction-type-cash {
-    left: 77px;
+    left: 95px;
   }
 }
 
