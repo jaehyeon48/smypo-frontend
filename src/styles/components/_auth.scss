@@ -8,11 +8,11 @@
   /* title */
   & > h1 {
     margin: 0;
-    font-size: 4.5rem;
+    font-size: 4rem;
     color: $main-color;
 
     @media screen and (min-width: 601px) and (max-width: 768px) {
-      font-size: 3.9rem;
+      font-size: 3.6rem;
     }
 
     @media screen and (min-width: 440px) and (max-width: 600px) {
@@ -26,11 +26,11 @@
 
   /* subtitle */
   & > p {
-    margin-left: 0.15em;
-    font-size: 2.2rem;
+    margin-left: 0.4em;
+    font-size: 1.8rem;
 
     @media screen and (min-width: 440px) and (max-width: 600px) {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
     }
 
     @media screen and (max-width: 439px) {
@@ -40,9 +40,8 @@
 }
 
 .auth__form {
-  margin-top: 3.5em;
+  margin-top: 6em;
   width: 100%;
-  max-width: $max-width * 0.7;
 
   & small {
     display: block;
@@ -78,15 +77,7 @@
   position: absolute;
   top: -29px;
   left: 3px;
-  font-size: 1.4rem;
-
-  @media screen and (min-width: 601px) and (max-width: 968px) {
-    font-size: 1.6rem;
-  }
-
-  @media screen and (min-width: 440px) and (max-width: 600px) {
-    font-size: 1.5rem;
-  }
+  font-size: 1.3rem;
 
   @media screen and (max-width: 439px) {
     font-size: 1.2rem;
@@ -98,7 +89,7 @@
 }
 
 .auth__form-field {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   padding: 10px;
   width: 100%;
   border: 1px solid $light-gray;
@@ -111,15 +102,15 @@
   }
 
   @media screen and (min-width: 601px) and (max-width: 968px) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
   @media screen and (min-width: 440px) and (max-width: 600px) {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   @media screen and (max-width: 439px) {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -148,7 +139,7 @@
 
 .auth__footer {
   margin-top: 0.9em;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 
   & > a {
     color: $main-color;
