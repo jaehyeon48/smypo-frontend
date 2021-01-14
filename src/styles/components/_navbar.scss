@@ -37,6 +37,10 @@
       align-items: center;
     }
   }
+
+  @media screen and (max-width: 500px) {
+    right: 2em;
+  }
 }
 
 .navbar-menu > li a,
@@ -127,6 +131,10 @@
     width: 22px;
     height: 22px;
     margin-right: 0.4em;
+  }
+
+  @media screen and (max-width: 500px) {
+    right: -31px;
   }
 }
 
