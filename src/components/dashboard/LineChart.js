@@ -67,8 +67,8 @@ const LineChart = ({
   }
 
   return (
-    <div className="chart-container ten-day-chart">
-      <h1>10 Days Value Chart</h1>
+    <div className="chart-container asset-chart">
+      <h1>Asset History</h1>
       <div className="line-chart-wrapper">
         <Line
           data={chartData}

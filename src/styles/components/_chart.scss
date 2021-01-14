@@ -8,7 +8,7 @@
   text-align: center;
   background-color: $white;
   border: 1px solid $blue-white;
-  box-shadow: 4px 5px 2px 3px $dark-gray;
+  box-shadow: 2px 3px 3px $dark-gray;
 
   @media screen and (max-width: 450px) {
     & > h1 {
@@ -72,8 +72,8 @@
   }
 }
 
-.ten-day-chart {
-  width: 96%;
+.asset-chart {
+  width: 96.2%;
   height: 30em;
 
   @media screen and (max-width: 768px) {
@@ -136,7 +136,7 @@
   width: 28px;
   height: 14px;
   margin-right: 0.35em;
-  margin-bottom: 2px;
+  margin-bottom: -2px;
 }
 
 .pie-chart-legend-content {

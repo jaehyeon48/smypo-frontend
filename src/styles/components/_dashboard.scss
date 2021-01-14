@@ -4,7 +4,7 @@
   flex-direction: column;
   max-width: $max-width * 0.9;
   min-height: 100vh;
-  margin: 0 auto;
+  margin: 0 auto 6em;
 }
 
 .display-return-container {
@@ -23,41 +23,53 @@
 }
 
 .return-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border: 1px solid $blue-white;
   background-color: $white;
-  box-shadow: 4px 5px 2px 2px $dark-gray;
-  display: flex;
-  flex-direction: column;
+  box-shadow: 2px 3px 3px $dark-gray;
   border-radius: 0.25em;
-  font-size: 1.7rem;
-  padding: 0.7em;
-  margin: 0.4em 0.8em;
+  font-size: 1.6rem;
+  padding: 0.5em 1em;
+  margin: 0.4em 0.9em;
   width: 30%;
   text-align: center;
+
+  & > svg {
+    width: 2em;
+    height: 2em;
+  }
 
   @media screen and (max-width: 1024px) {
     margin: 1.2em 0;
     width: 90%;
     max-width: 620px;
+    height: 5.7em;
   }
 
   @media screen and (max-width: 450px) {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 
-.return-item > span:first-child {
+.return-item-content > span:first-child {
   overflow-wrap: anywhere;
   margin-bottom: 0.9em;
   color: $blue-black;
   font-weight: 700;
 }
 
-.return-item > span:last-child {
+.return-item-content > span:last-child {
   overflow-wrap: anywhere;
-  display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.return-numbers {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.15em;
 }
 
 .return-positive {

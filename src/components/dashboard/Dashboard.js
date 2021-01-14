@@ -13,6 +13,8 @@ import {
   resetStockLoading
 } from '../../actions/stockAction';
 import { getTotalCash } from '../../actions/cashAction';
+import ChartIcon from '../icons/ChartIcon';
+import SackDollarIcon from '../icons/SackDollarIcon';
 import GetStockPrice from './GetStockPrice';
 import ValuePieChart from './ValuePieChart';
 import SectorPieChart from './SectorPieChart';
@@ -136,30 +138,49 @@ const Dashboard = ({
                     <div
                       className={`return-item daily-return ${colorReturnItemBottom(totalDailyReturn)}`}
                     >
-                      <span>Daily Return</span>
-                      <span className={`${colorReturnItem(totalDailyReturn)}`}>
-                        {totalDailyReturn} ({totalDailyReturn > 0 && '+'}
-                        {isNaN(dailyReturnPercent.toFixed(2)) ? (0) : (
-                          dailyReturnPercent.toFixed(2)
-                        )}%)
+                      <ChartIcon />
+                      <div className="return-item-content">
+                        <span>Daily Return</span>
+                        <span className={`return-numbers ${colorReturnItem(totalDailyReturn)}`}>
+                          <span>
+                            {totalDailyReturn}
+                          </span>
+                          <span>
+                            ({totalDailyReturn > 0 && '+'}
+                            {isNaN(dailyReturnPercent.toFixed(2)) ? (0) : (
+                              dailyReturnPercent.toFixed(2)
+                            )}%)
+                          </span>
                         </span>
+                      </div>
                     </div>
                     <div
                       className={`return-item overall-return ${colorReturnItemBottom(totalOverallReturn)}`}
                     >
-                      <span>Overall Return</span>
-                      <span className={`${colorReturnItem(totalOverallReturn)}`}>
-                        {totalOverallReturn} ({totalOverallReturn > 0 && '+'}
-                        {isNaN(overallReturnPercent.toFixed(2)) ? (0) : (
-                          overallReturnPercent.toFixed(2)
-                        )}%)
-                      </span>
+                      <ChartIcon />
+                      <div className="return-item-content">
+                        <span>Total Return</span>
+                        <span className={`return-numbers ${colorReturnItem(totalOverallReturn)}`}>
+                          <span>
+                            {totalOverallReturn}
+                          </span>
+                          <span>
+                            ({totalOverallReturn > 0 && '+'}
+                            {isNaN(overallReturnPercent.toFixed(2)) ? (0) : (
+                              overallReturnPercent.toFixed(2)
+                            )}%)
+                          </span>
+                        </span>
+                      </div>
                     </div>
                     <div className={`return-item total-value ${colorReturnItemBottom(totalValue)}`}>
-                      <span>Total Value</span>
-                      <span className={`${colorReturnItem(totalValue)}`}>
-                        {(totalValue).toFixed(2)}
-                      </span>
+                      <SackDollarIcon />
+                      <div className="return-item-content">
+                        <span>Total Asset</span>
+                        <span className={`return-numbers ${colorReturnItem(totalValue)}`}>
+                          {(totalValue).toFixed(2)}
+                        </span>
+                      </div>
                     </div>
                   </div>
                   {stock.stockList && stock.stockList.length > 0 && (
