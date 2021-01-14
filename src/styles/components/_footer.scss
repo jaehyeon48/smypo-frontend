@@ -6,7 +6,15 @@
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
-  padding: 1.5em 0;
+  padding: 2em 0;
+
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 1.1rem;
+  }
 }
 
 .footer-copyright {
