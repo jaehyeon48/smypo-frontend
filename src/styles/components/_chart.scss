@@ -60,14 +60,19 @@
     height: 430px;
   }
 
-  @media screen and (min-width: 676px) and (max-width: 768px) {
+  @media screen and (min-width: 451px) and (max-width: 768px) {
     width: 370px;
     height: 370px;
   }
 
-  @media screen and (max-width: 675px) {
-    width: 390px;
-    height: 390px;
+  @media screen and (min-width: 360px) and (max-width: 450px) {
+    width: 350px;
+    height: 350px;
+  }
+
+  @media screen and (max-width: 359px) {
+    width: 300px;
+    height: 300px;
   }
 }
 
@@ -155,9 +160,3 @@
     font-style: italic;
   }
 }
-
-
-
-
-
-
