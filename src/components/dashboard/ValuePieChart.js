@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
+import PieChartIcon from '../icons/PieChartIcon';
+
 const ValuePieChart = ({
   stockList,
   stockListLength,
@@ -183,6 +185,9 @@ const ValuePieChart = ({
 
   return (
     <div className="chart-container value-pie-chart">
+      <div className="pie-chart-icon">
+        <PieChartIcon />
+      </div>
       <h1>Distribution By Value</h1>
       <div className="chart-content">
         <div className="pie-chart-legend">

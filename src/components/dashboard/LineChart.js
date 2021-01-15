@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
+
+import LineChartIcon from '../icons/LineChartIcon';
 import { get10DaysOfRecord } from '../../utils/getRecordData';
 
 const LineChart = ({
@@ -68,6 +70,9 @@ const LineChart = ({
 
   return (
     <div className="chart-container asset-chart">
+      <div className="line-chart-icon">
+        <LineChartIcon />
+      </div>
       <h1>Asset History</h1>
       <div className="line-chart-wrapper">
         <Line

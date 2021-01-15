@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
+import PieChartIcon from '../icons/PieChartIcon';
+
 const SectorPieChart = ({
   stockList,
   stockLoading
@@ -166,6 +168,9 @@ const SectorPieChart = ({
 
   return (
     <div className="chart-container sector-pie-chart">
+      <div className="pie-chart-icon">
+        <PieChartIcon />
+      </div>
       <h1>Distribution By Sector</h1>
       <div className="chart-content">
         <div className="pie-chart-legend">
