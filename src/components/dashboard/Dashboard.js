@@ -13,7 +13,8 @@ import {
   resetStockLoading
 } from '../../actions/stockAction';
 import { getTotalCash } from '../../actions/cashAction';
-import ChartIcon from '../icons/ChartIcon';
+import ChartSolidIcon from '../icons/ChartSolidIcon';
+import ChartRegularIcon from '../icons/ChartRegularIcon';
 import SackDollarIcon from '../icons/SackDollarIcon';
 import GetStockPrice from './GetStockPrice';
 import ValuePieChart from './ValuePieChart';
@@ -138,7 +139,9 @@ const Dashboard = ({
                     <div
                       className={`return-item daily-return ${colorReturnItemBottom(totalDailyReturn)}`}
                     >
-                      <ChartIcon />
+                      <div className="return-item-icon">
+                        <ChartRegularIcon />
+                      </div>
                       <div className="return-item-content">
                         <span>Daily Return</span>
                         <span className={`return-numbers ${colorReturnItem(totalDailyReturn)}`}>
@@ -157,7 +160,9 @@ const Dashboard = ({
                     <div
                       className={`return-item overall-return ${colorReturnItemBottom(totalOverallReturn)}`}
                     >
-                      <ChartIcon />
+                      <div className="return-item-icon">
+                        <ChartSolidIcon />
+                      </div>
                       <div className="return-item-content">
                         <span>Total Return</span>
                         <span className={`return-numbers ${colorReturnItem(totalOverallReturn)}`}>
@@ -174,7 +179,9 @@ const Dashboard = ({
                       </div>
                     </div>
                     <div className={`return-item total-value ${colorReturnItemBottom(totalValue)}`}>
-                      <SackDollarIcon />
+                      <div className="return-item-icon">
+                        <SackDollarIcon />
+                      </div>
                       <div className="return-item-content">
                         <span>Total Asset</span>
                         <span className={`return-numbers ${colorReturnItem(totalValue)}`}>

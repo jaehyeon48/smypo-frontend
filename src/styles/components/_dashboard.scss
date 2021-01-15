@@ -25,7 +25,8 @@
 .return-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  position: relative;
   background-color: $card-bg-color;
   box-shadow: 2px 3px 3px $dark-gray;
   border-radius: $card-border-radius;
@@ -35,20 +36,36 @@
   width: 30%;
   text-align: center;
 
-  & > svg {
-    width: 2em;
-    height: 2em;
-  }
-
   @media screen and (max-width: 1024px) {
+    font-size: 1.5rem;
     margin: 1.2em 0;
     width: 90%;
-    max-width: 620px;
-    height: 5.7em;
+    max-width: 700px;
+    height: 5em;
   }
 
   @media screen and (max-width: 450px) {
     font-size: 1.3rem;
+  }
+}
+
+.return-item-icon {
+  width: 3em;
+  height: 3em;
+  padding: 0.7em;
+  position: absolute;
+  top: -21px;
+  left: 17px;
+  background: linear-gradient(60deg, #9b9e9d, #818483);
+  color: white;
+  border-radius: 6px;
+  box-shadow: 0 12px 20px -10px rgba(130, 136, 139, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12),
+    0 7px 8px -5px rgba(130, 136, 139, 0.2);
+
+  @media screen and (min-width: 650px) and (max-width: 1023px) {
+    width: 3.5em;
+    height: 3.5em;
+    padding: 0.9em;
   }
 }
 
