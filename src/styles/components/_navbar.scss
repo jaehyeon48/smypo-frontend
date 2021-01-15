@@ -196,7 +196,7 @@
 
   @media screen and (max-width: 768px) {
     width: 100vw;
-    right: -48px;
+    right: -31px;
     padding: 0 1.1em;
 
     &::before {
@@ -220,7 +220,7 @@
 
   @media screen and (max-width: 450px) {
     &::before {
-      right: 2.7em;
+      right: 1.7em;
     }
   }
 }

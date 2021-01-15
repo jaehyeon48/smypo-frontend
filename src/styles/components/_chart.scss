@@ -4,10 +4,9 @@
   align-items: center;
   justify-content: center;
   margin: 2em;
-  border-radius: 0.3em;
+  border-radius: $card-border-radius;
   text-align: center;
-  background-color: $white;
-  border: 1px solid $blue-white;
+  background-color: $card-color;
   box-shadow: 2px 3px 3px $dark-gray;
 
   @media screen and (max-width: 450px) {
