@@ -101,15 +101,15 @@ const StockItem = ({
   }, [overallReturn]);
 
   const colorDailyPL = () => {
-    if (dailyReturn > 0) return 'return-positive';
-    else if (dailyReturn < 0) return 'return-negative';
-    else return 'return-zero';
+    if (dailyReturn > 0) return 'stock-item--return-positive';
+    else if (dailyReturn < 0) return 'stock-item--return-negative';
+    else return 'stock-item--return-zero';
   }
 
   const colorOverallPL = () => {
-    if (overallReturn > 0) return 'return-positive';
-    else if (overallReturn < 0) return 'return-negative';
-    else return 'return-zero';
+    if (overallReturn > 0) return 'stock-item--return-positive';
+    else if (overallReturn < 0) return 'stock-item--return-negative';
+    else return 'stock-item--return-zero';
   }
 
   return (
@@ -124,8 +124,10 @@ const StockItem = ({
       <td className={`stock-item__realtime ${colorDailyPL()}`}>
         {stockPriceData.price}
       </td>
-      <td className={`stock-item__realtime-change ${colorDailyPL()}`}>
-        {stockPriceData.change.toFixed(2)}
+      <td className="stock-item__change">
+        <span className={colorDailyPL()}>
+          {stockPriceData.change.toFixed(2)}
+        </span>
       </td>
       <td className="stock-item__cost">{avgCost}</td>
       <td className="stock-item__shares">{quantity}</td>

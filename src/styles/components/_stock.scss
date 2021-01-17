@@ -144,6 +144,19 @@
   color: #2662e8;
 }
 
+.stock-item--return-positive {
+  color: #1bbb70;
+}
+
+.stock-item--return-negative {
+  color: #fd142c;
+  margin-left: -8px !important;
+}
+
+.stock-item--return-zero {
+  color: #9e9e9e;
+}
+
 .stock-item__ticker-header {
   @include stock-item__ticker;
 }
@@ -166,6 +179,7 @@
 .stock-item__change {
   min-width: 130px;
   overflow-x: auto;
+  padding-left: 9px !important;
 }
 
 .stock-item__cost-header,
@@ -190,12 +204,14 @@
 .stock-item__dgain {
   min-width: 230px;
   overflow-x: auto;
+  padding-left: 9px !important;
 }
 
 .stock-item__tgain-header,
 .stock-item__tgain {
   min-width: 250px;
   overflow-x: auto;
+  padding-left: 9px !important;
 }
 
 /* realized info */
