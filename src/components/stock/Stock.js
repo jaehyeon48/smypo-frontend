@@ -98,18 +98,40 @@ const Stock = ({
       {stock && !stock.stockLoading ? (
         <React.Fragment>
           <div className="stocks-container">
-            {stock.stockList && stock.stockList.length > 0 ? stock.stockList.map(eachStock => (
-              <StockItem
-                key={eachStock.ticker}
-                ticker={eachStock.ticker}
-                avgCost={eachStock.avgCost}
-                quantity={eachStock.quantity}
-              />
-            )) : (
-                <div className="notice-empty-stocklist">
-                  <p>The stock list is empty. Please Add Your Stock First!</p>
-                </div>
-              )}
+            <header className="stocks-container__header">
+              Holdings
+            </header>
+            <div className="stocks-table-wrapper">
+              {stock.stockList && stock.stockList.length > 0 ? (
+                <table className="stocks-table">
+                  <thead>
+                    <tr>
+                      <th className="stock-item__ticker-header">Ticker</th>
+                      <th className="stock-item__price-header">Price</th>
+                      <th className="stock-item__change-header">Change</th>
+                      <th className="stock-item__cost-header">Cost</th>
+                      <th className="stock-item__shares-header">Shares</th>
+                      <th className="stock-item__mv-header">Market Value</th>
+                      <th className="stock-item__dgain-header">Daily Gain</th>
+                      <th className="stock-item__tgain-header">Total Gain</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {stock.stockList.map(eachStock => (
+                      <StockItem
+                        key={eachStock.ticker}
+                        ticker={eachStock.ticker}
+                        avgCost={eachStock.avgCost}
+                        quantity={eachStock.quantity}
+                      />
+                    ))}
+                  </tbody>
+                </table>) : (
+                  <div className="notice-empty-stocklist">
+                    <p>The stock list is empty. Please Add Your Stock First!</p>
+                  </div>
+                )}
+            </div>
           </div>
           {isAddTransactionModalOpen && <Modal closeModalFunc={closeAddTransactionModal} overflowY={true}>
             <AddTransaction closeAddTransactionModal={closeAddTransactionModal} />

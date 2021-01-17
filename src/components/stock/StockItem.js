@@ -118,31 +118,32 @@ const StockItem = ({
   }
 
   return (
-    <div className="stock-item" onClick={directToPositionDetailPage}>
-      <div className="stock-item-info">
-        <span className="stock-item-ticker">{ticker.toUpperCase()}</span>
-        <span className="stock-item-name">{findCompanyNameByTicker(ticker)}</span>
-      </div>
-      <span className="stock-item-realtime">{stockPriceData.price}</span>
-      <span className="stock-item-avgPrice">Cost: {avgCost}</span>
-      <span className="stock-item-quantity">Quantity: {quantity}</span>
-      {quantity > 0 && (
-        <React.Fragment>
-          <span className="stock-item-daily-pl">
-            <span>Daily:</span>
-            <span className={colorDailyPL()}>
-              {dailyReturn} ({dailyReturn > 0 && '+'}{stockPriceData.changePercent.toFixed(2)}%)
-            </span>
+    <tr className="stock-item" onClick={directToPositionDetailPage}>
+      <td className="stock-item__ticker">{ticker.toUpperCase()}</td>
+      <td className={`stock-item__realtime ${colorDailyPL()}`}>
+        {stockPriceData.price}
+      </td>
+      <td className={`stock-item__realtime-change ${colorDailyPL()}`}>
+        {stockPriceData.change.toFixed(2)}
+      </td>
+      <td className="stock-item__cost">{avgCost}</td>
+      <td className="stock-item__shares">{quantity}</td>
+      <td className="stock-item__mv">{(stockPriceData.price * quantity).toFixed(2)}</td>
+      <td className="stock-item__dgain">
+        {quantity > 0 ? (
+          <span className={colorDailyPL()}>
+            {dailyReturn} &#40;{dailyReturn > 0 && '+'}{stockPriceData.changePercent.toFixed(2)}%&#41;
           </span>
-          <span className="stock-item-overall-pl">
-            <span>Total:</span>
-            <span className={colorOverallPL()}>
-              {overallReturn} ({overallReturn > 0 && '+'}{overallReturnPercent}%)
-            </span>
+        ) : 0}
+      </td>
+      <td className="stock-item__tgain">
+        {quantity ? (
+          <span className={colorOverallPL()}>
+            {overallReturn} &#40;{overallReturn > 0 && '+'}{overallReturnPercent}%&#41;
           </span>
-        </React.Fragment>
-      )}
-    </div>
+        ) : 0}
+      </td>
+    </tr>
   )
 }
 
