@@ -138,11 +138,22 @@
   }
 }
 
-.stock-item__ticker-header,
-.stock-item__ticker {
+@mixin stock-item__ticker {
   min-width: 100px;
   overflow-x: auto;
   color: #2662e8;
+}
+
+.stock-item__ticker-header {
+  @include stock-item__ticker;
+}
+
+.stock-item__ticker {
+  @include stock-item__ticker;
+  font-weight: 600;
+  & > a:hover {
+    text-decoration: underline;
+  }
 }
 
 .stock-item__realtime-header,

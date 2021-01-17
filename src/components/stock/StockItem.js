@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { findCompanyNameByTicker } from '../../utils/findNameByTicker';
 import { getRealTimePrice } from '../../utils/getRealTimePrice';
@@ -20,7 +20,6 @@ const StockItem = ({
   editDailyReturn,
   editOverallReturn
 }) => {
-  let history = useHistory();
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [stockPriceData, setStockPriceData] = useState({
     price: 0,
@@ -113,13 +112,15 @@ const StockItem = ({
     else return 'return-zero';
   }
 
-  const directToPositionDetailPage = () => {
-    history.push(`/position/${defaultPortfolio}/${ticker}`);
-  }
-
   return (
-    <tr className="stock-item" onClick={directToPositionDetailPage}>
-      <td className="stock-item__ticker">{ticker.toUpperCase()}</td>
+    <tr className="stock-item">
+      <td className="stock-item__ticker">
+        <Link
+          to={`/position/${defaultPortfolio}/${ticker}`}
+          title={findCompanyNameByTicker(ticker)}>
+          {ticker.toUpperCase()}
+        </Link>
+      </td>
       <td className={`stock-item__realtime ${colorDailyPL()}`}>
         {stockPriceData.price}
       </td>
