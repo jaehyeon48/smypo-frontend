@@ -1,29 +1,41 @@
 @font-face {
-  font-family: 'Oswald';
-  font-weight: 300;
-  src: url('../../fonts/Oswald-Light.ttf');
-}
-
-@font-face {
-  font-family: 'Oswald';
+  font-family: 'Nunito Sans';
   font-weight: 400;
-  src: url('../../fonts/Oswald-Regular.ttf');
+  font-style: normal;
+  src: url('../../fonts/NunitoSans-Regular.ttf');
 }
 
 @font-face {
-  font-family: 'Oswald';
-  font-weight: 500;
-  src: url('../../fonts/Oswald-Medium.ttf');
+  font-family: 'Nunito Sans';
+  font-weight: 400;
+  font-style: italic;
+  src: url('../../fonts/NunitoSans-Italic.ttf');
 }
 
 @font-face {
-  font-family: 'Oswald';
+  font-family: 'Nunito Sans';
   font-weight: 600;
-  src: url('../../fonts/Oswald-SemiBold.ttf');
+  font-style: normal;
+  src: url('../../fonts/NunitoSans-SemiBold.ttf');
 }
 
 @font-face {
-  font-family: 'Oswald';
+  font-family: 'Nunito Sans';
+  font-weight: 600;
+  font-style: italic;
+  src: url('../../fonts/NunitoSans-SemiBoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
   font-weight: 700;
-  src: url('../../fonts/Oswald-Bold.ttf');
+  font-style: normal;
+  src: url('../../fonts/NunitoSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  font-weight: 700;
+  font-style: italic;
+  src: url('../../fonts/NunitoSans-BoldItalic.ttf');
 }
