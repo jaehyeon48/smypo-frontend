@@ -51,6 +51,7 @@
 
 .chart-container > h1 {
   color: $card-color;
+  font-weight: 600;
 }
 
 .chart-wrapper {
@@ -204,7 +205,7 @@
   justify-content: flex-start;
 
   & > span:first-child {
-    font-weight: 700;
+    font-weight: 500;
     width: 10em;
     margin-right: 0.3em;
     text-align: left;
