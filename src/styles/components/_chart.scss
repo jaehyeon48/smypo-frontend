@@ -51,7 +51,7 @@
 
 .chart-container > h1 {
   color: $card-color;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .chart-wrapper {
@@ -205,13 +205,9 @@
   justify-content: flex-start;
 
   & > span:first-child {
-    font-weight: 500;
+    font-weight: 600;
     width: 10em;
     margin-right: 0.3em;
     text-align: left;
-  }
-
-  & > span:last-child {
-    font-style: italic;
   }
 }
