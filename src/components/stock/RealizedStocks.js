@@ -46,9 +46,9 @@ const RealizedStocks = ({
   }, [defaultPortfolio]);
 
   const colorTotalRealizedReturn = () => {
-    if (totalRealizedReturn > 0) return 'total-return-positive';
-    else if (totalRealizedReturn < 0) return 'total-return-negative';
-    else return 'total-return-zero';
+    if (totalRealizedReturn > 0) return 'return-positive';
+    else if (totalRealizedReturn < 0) return 'return-negative';
+    else return 'return-zero';
   }
 
   const borderColorTotalRealizedReturn = () => {
