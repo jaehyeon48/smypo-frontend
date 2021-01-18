@@ -235,7 +235,7 @@
   border: 1px solid $blue-white;
   background-color: #edeff2;
   box-shadow: 3px 4px 3px $dark-gray;
-  border-radius: 0.3em;
+  border-radius: $card-border-radius * 2;
   padding: 0.7em 0.6em;
   width: 70vw;
   max-width: 700px;
@@ -253,71 +253,6 @@
 
 .total-realized-value > span:first-child {
   margin-bottom: 1rem;
-}
-
-.realized-stocks-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 1440px;
-  max-height: 650px;
-  overflow-y: scroll;
-  margin: 2em 5em;
-  padding: 1em;
-  border-radius: 0.3em;
-  background-color: #dde6ea;
-
-  @media screen and (max-width: 550px) {
-    margin: 2em;
-  }
-}
-
-.realized-stock-item {
-  display: flex;
-  flex-direction: column;
-  margin: 2em 1em;
-  padding: 0.6em 0.3em;
-  border-radius: 0.2em;
-  font-size: 1.4rem;
-  color: $blue-black;
-  align-items: center;
-  border: 1px solid $blue-white;
-  background-color: $white;
-  box-shadow: 2px 3px 2px $dark-gray;
-  width: 10em;
-  text-align: center;
-
-  & > div + div {
-    margin-top: 0.6em;
-  }
-
-  @media screen and (min-width: 451px) and (max-width: 768px) {
-    font-size: 1.3rem;
-  }
-
-  @media screen and (max-width: 450px) {
-    font-size: 1.2rem;
-  }
-}
-
-.realized-stock-price {
-  display: flex;
-  align-items: center;
-}
-
-.realized-stock-ticker {
-  color: #3e2148;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.realized-stock-return {
-  display: flex;
-  align-items: center;
-
-  & > span {
-    color: $blue-black;
-  }
 }
 
 .total-return-positive--border {
@@ -345,4 +280,128 @@
     border-left: 0.5em solid #525252;
     border-bottom: 1px solid $blue-white;
   }
+}
+
+.realized-stocks-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  margin: 3.5em auto 5em;
+  padding: 3.5em 1.3em 2em;
+  width: 80vw;
+  max-height: 450px;
+  max-width: $max-width * 0.55;
+  background-color: #f4f6f6;
+  color: #202425;
+  border-radius: 0.3em;
+}
+
+.realized-stocks__header {
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: $card-border-radius;
+  top: -13px;
+  left: 25px;
+  color: $white;
+  padding: 0.5em 0.8em;
+  background: linear-gradient(60deg, #767787, #5e5f6b);
+  box-shadow: 0 12px 20px -10px rgba(106, 107, 121, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12),
+    0 7px 8px -5px rgba(106, 107, 121, 0.2);
+
+  @media screen and (max-width: 570px) {
+    font-size: 1.1rem;
+    left: initial;
+  }
+}
+
+.realized-stocks-table-wrapper {
+  width: 100%;
+  overflow: auto;
+  max-height: 362px;
+}
+
+.realized-stocks-table {
+  background-color: inherit;
+  width: 100%;
+  border-collapse: collapse;
+
+  & > thead > tr > th {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.2em 0.2em 0.7em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #3b434c;
+    position: sticky;
+    top: 0px;
+    background-color: #f4f6f6;
+  }
+
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    & > thead > tr > th {
+      font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    & > thead > tr > th {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.realized-stock-item {
+  background-color: inherit;
+  text-align: center;
+  font-size: 1.2rem;
+
+  & > td {
+    padding: 0.5em 0.2em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  &:last-child > td {
+    border-bottom: none;
+  }
+
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 1rem;
+  }
+}
+
+.realized-stock-price {
+  display: flex;
+  align-items: center;
+}
+
+.realized-stock-item__ticker-header {
+  min-width: 150px;
+}
+.realized-stock-item__ticker {
+  min-width: 150px;
+  font-weight: 700;
+}
+
+.realized-stock-item__price-header,
+.realized-stock-item__price {
+  min-width: 180px;
+}
+
+.realized-stock-item__shares-header,
+.realized-stock-item__shares-header {
+  min-width: 160px;
+}
+
+.realized-stock-item__return-header,
+.realized-stock-item__return {
+  min-width: 230px;
+  overflow-x: auto;
+  padding-left: 9px !important;
 }

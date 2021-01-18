@@ -76,19 +76,34 @@ const RealizedStocks = ({
           </div>
         </div>
         <div className="realized-stocks-container">
+        <header className="realized-stocks__header">
+          Realized Stocks
+        </header>
+        <div className="realized-stocks-table-wrapper">
           {realizedStocks && realizedStocks.length > 0 ? (
-        <React.Fragment>
-          {realizedStocks.map(realizedOne => (
-            <RealizedStockItem
-              key={realizedOne.stockId}
-              realizedStockItem={realizedOne}
-              setTotalRealizedReturn={setTotalRealizedReturn}
-            />
-          ))}
-        </React.Fragment>
-      ) : (
-          <div className="notice-no-realized-stocks">You haven't realized any stocks.</div>
-        )}
+            <table className="realized-stocks-table">
+              <thead>
+                <tr>
+                  <th className="realized-stock-item__ticker-header">Ticker</th>
+                  <th className="realized-stock-item__price-header">Price</th>
+                  <th className="realized-stock-item__shares-header">Shares</th>
+                  <th className="realized-stock-item__return-header">Return</th>
+                </tr>
+              </thead>
+              <tbody>
+              {realizedStocks.map(realizedOne => (
+                <RealizedStockItem
+                  key={realizedOne.stockId}
+                  realizedStockItem={realizedOne}
+                  setTotalRealizedReturn={setTotalRealizedReturn}
+                />
+              ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="notice-no-realized-stocks">You haven't realized any stocks.</div>
+          )}
+        </div>
     </div>
         </React.Fragment>
       ) : (

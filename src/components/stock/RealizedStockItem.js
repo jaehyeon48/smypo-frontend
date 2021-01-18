@@ -10,26 +10,28 @@ const RealizedStockItem = ({
   useEffect(() => { setTotalRealizedReturn(prev => prev + realizedReturn) }, [realizedReturn]);
 
   const colorRealizedReturn = () => {
-    if (realizedReturn > 0) return 'return-positive';
-    else if (realizedReturn < 0) return 'return-negative';
-    else return 'return-zero';
+    if (realizedReturn > 0) return 'stock-item--return-positive';
+    else if (realizedReturn < 0) return 'stock-item--return-negative';
+    else return 'stock-item--return-zero';
   }
 
   return (
-    <div className="realized-stock-item">
-      <div className="realized-stock-ticker">
+    <tr className="realized-stock-item">
+      <td className="realized-stock-item__ticker">
         {realizedStockItem.ticker}
-      </div>
-      <div className="realized-stock-price">
-        <span>Price:&nbsp;{realizedStockItem.price}</span>
-      </div>
-      <div className="realized-stock-quantity">
-        <span>Quantity:&nbsp;</span>{realizedStockItem.quantity}
-      </div>
-      <div className={`realized-stock-return ${colorRealizedReturn()}`}>
-        <span>Return:&nbsp;</span>{realizedReturn}
-      </div>
-    </div>
+      </td>
+      <td className="realized-stock-item__price">
+        <span>{realizedStockItem.price}</span>
+      </td>
+      <td className="realized-stock-item__quantity">
+        <span></span>{realizedStockItem.quantity}
+      </td>
+      <td className={"realized-stock-item__return"}>
+        <span className={colorRealizedReturn()}>
+        {realizedReturn}
+        </span>
+      </td>
+    </tr>
   );
 }
 
