@@ -9,9 +9,10 @@
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
-  margin: 5em 5em 3em;
-  padding: 3.5em 1.3em 1em;
-  max-height: 650px;
+  margin: 5em auto 3em;
+  padding: 3.5em 1.3em 2em;
+  max-width: $max-width * 0.75;
+  max-height: 450px;
   background-color: #f4f6f6;
   color: #202425;
   border-radius: 0.3em;
@@ -32,6 +33,7 @@
 .stocks-table-wrapper {
   width: 100%;
   overflow: auto;
+  max-height: 362px;
 }
 
 .stocks-container__header {
@@ -69,6 +71,9 @@
     border-bottom: 1px solid #ddd;
     text-align: left;
     color: #3b434c;
+    top: 0px;
+    position: sticky;
+    background-color: #f4f6f6;
   }
 
   @media screen and (min-width: 451px) and (max-width: 768px) {
