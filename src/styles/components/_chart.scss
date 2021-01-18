@@ -179,6 +179,8 @@
   justify-content: center;
   color: $card-color;
   margin: 0.6em;
+  max-height: 350px;
+  overflow: auto;
 }
 
 .pie-chart-legend-item {
