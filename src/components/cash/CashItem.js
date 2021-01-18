@@ -49,24 +49,26 @@ const CashItem = ({
   }
 
   return (
-    <div className="cash-item">
-      <div className="cash-item-type">{transactionType}</div>
-      <div className="cash-item-amount">{amount}</div>
-      <div className="cash-item-date">{transactionDate.slice(2)}</div>
-      <div className="cash-item-actions">
+    <tr className="cash-item">
+      <td className="cash-item-type">{transactionType}</td>
+      <td className="cash-item-amount">{amount}</td>
+      <td className="cash-item-date">{transactionDate.slice(2)}</td>
+      <td className="cash-item-edit">
         <Button
           btnType={'button'}
           btnText={'Edit'}
           btnColor={'warning'}
           onClickFunc={handleOpenEditCashModal}
         />
+      </td>
+      <td className="cash-item-delete">
         <Button
           btnType={'button'}
           btnText={'Delete'}
           btnColor={'danger'}
           onClickFunc={openConfirmModal}
         />
-      </div>
+      </td>
       {isConfirmModalOpen && (
         <Modal closeModalFunc={closeConfirmModal}>
           <div className="delete-confirm">
@@ -93,7 +95,7 @@ const CashItem = ({
           </div>
         </Modal>
       )}
-    </div>
+    </tr>
   );
 }
 

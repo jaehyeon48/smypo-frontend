@@ -56,84 +56,134 @@
   }
 }
 
-.cash-items {
+.cash-items-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: 1280px;
-  max-height: 600px;
-  overflow-y: scroll;
-  margin: 1em auto 5em;
-  padding: 0 1em;
+  justify-content: center;
+  position: relative;
+  margin: 2em auto 5em;
+  padding: 3.5em 1.3em 2em;
+  width: 80vw;
+  max-height: 450px;
+  max-width: $max-width * 0.55;
+  background-color: #f4f6f6;
+  color: #202425;
   border-radius: 0.3em;
-  background-color: #dde6ea;
+}
 
-  @media screen and (min-width: 1000px) and (max-width: 1299px) {
-    width: 956px;
+.cash-items__header {
+  position: absolute;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: $card-border-radius;
+  top: -13px;
+  left: 25px;
+  color: $white;
+  padding: 0.5em 0.8em;
+  background: linear-gradient(60deg, #767787, #5e5f6b);
+  box-shadow: 0 12px 20px -10px rgba(106, 107, 121, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12),
+    0 7px 8px -5px rgba(106, 107, 121, 0.2);
+
+  @media screen and (max-width: 570px) {
+    font-size: 1.2rem;
+    left: initial;
   }
 
-  @media screen and (min-width: 769px) and (max-width: 999px) {
-    width: 649px;
+  @media screen and (max-width: 450px) {
+    font-size: 1.1rem;
+  }
+}
+
+.cash-table-wrapper {
+  width: 100%;
+  overflow: auto;
+  max-height: 362px;
+}
+
+.cash-table {
+  background-color: inherit;
+  width: 100%;
+  border-collapse: collapse;
+
+  & > thead > tr > th {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.2em 0.2em 0.7em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #3b434c;
+    position: sticky;
+    top: 0px;
+    background-color: #f4f6f6;
   }
 
-  @media screen and (min-width: 542px) and (max-width: 768px) {
-    width: 534px;
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    & > thead > tr > th {
+      font-size: 1rem;
+    }
   }
 
-  @media screen and (max-width: 541px) {
-    width: 283px;
+  @media screen and (max-width: 450px) {
+    & > thead > tr > th {
+      font-size: 0.9rem;
+    }
   }
 }
 
 .cash-item {
-  display: flex;
-  flex-direction: column;
-  margin: 2em 1em;
-  padding: 0.6em 0.3em;
-  border-radius: 0.2em;
-  font-size: 1.6rem;
-  color: $blue-black;
-  align-items: center;
-  border: 1px solid $blue-white;
-  background-color: $white;
-  box-shadow: 2px 3px 2px $dark-gray;
-  width: 10em;
+  background-color: inherit;
   text-align: center;
+  font-size: 1.2rem;
 
-  @media screen and (max-width: 768px) {
-    font-size: 1.3rem;
+  & > td {
+    padding: 0.5em 0.2em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
   }
 
-  @media screen and (max-width: 535px) {
-    width: 13em;
+  &:last-child > td {
+    border-bottom: none;
+  }
+
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 1rem;
   }
 }
 
+.cash-item__type-header,
 .cash-item-type {
-  text-transform: uppercase;
-  margin-bottom: 0.6em;
+  min-width: 120px;
+  text-transform: capitalize;
 }
 
-.cash-item-amount {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.6em;
-  color: #07498e;
+.cash-item__amount-header,
+.cash-item-header {
+  min-width: 145px;
 }
 
-.cash-item-actions {
-  display: flex;
-  margin-top: 0.7em;
+.cash-item__date-header,
+.cash-item-date {
+  min-width: 135px;
+}
+
+.cash-item-edit {
+  width: 80px;
+  padding-right: 0.7em;
 
   & > button {
-    width: 4em;
-    padding: 0.3em 0.4em;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
+}
 
-  & > button:first-child {
-    margin-right: 1em;
+.cash-item-delete {
+  width: 100px;
+
+  & > button {
+    font-size: 1.1rem;
   }
 }
 
