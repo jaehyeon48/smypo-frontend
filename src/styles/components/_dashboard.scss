@@ -87,41 +87,41 @@
 }
 
 .return-positive {
-  color: #1bbb70;
+  color: #009e54;
 }
 
 .return-negative {
-  color: #fd142c;
+  color: #eb142a;
   margin-left: -8px;
 }
 
 .return-zero {
-  color: #9e9e9e;
+  color: #525252;
 }
 
 .return-item-bottom-positive {
-  border-bottom: 0.4em solid #2ead76;
+  border-bottom: 0.4em solid #009e54;
 
   @media screen and (max-width: 1024px) {
-    border-left: 0.5em solid #2ead76;
+    border-left: 0.5em solid #009e54;
     border-bottom: 1px solid $blue-white;
   }
 }
 
 .return-item-bottom-negative {
-  border-bottom: 0.4em solid #fd142c;
+  border-bottom: 0.4em solid #eb142a;
 
   @media screen and (max-width: 1024px) {
-    border-left: 0.5em solid #fd142c;
+    border-left: 0.5em solid #eb142a;
     border-bottom: 1px solid $blue-white;
   }
 }
 
 .return-item-bottom-zero {
-  border-bottom: 0.4em solid #9e9e9e;
+  border-bottom: 0.4em solid #525252;
 
   @media screen and (max-width: 1024px) {
-    border-left: 0.5em solid #9e9e9e;
+    border-left: 0.5em solid #525252;
     border-bottom: 1px solid $blue-white;
   }
 }
