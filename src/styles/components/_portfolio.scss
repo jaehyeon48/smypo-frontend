@@ -1,4 +1,4 @@
-.portfolio-container {
+.portfolio-main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,9 +8,9 @@
   max-width: $max-width;
 
   & > button {
-    font-size: 1.5rem;
-    width: 23em;
-    margin: 0 auto;
+    font-size: 1.4rem;
+    width: 15em;
+    margin: 1em auto 2em;
   }
 
   @media screen and (min-width: 551px) and (max-width: 768px) {
@@ -22,16 +22,60 @@
   @media screen and (min-width: 426px) and (max-width: 550px) {
     & > button {
       font-size: 1.2rem;
-      width: 19em;
     }
   }
 
   @media screen and (max-width: 425px) {
     & > button {
-      font-size: 1.2rem;
-      width: 15em;
+      font-size: 1.1rem;
+      width: 12em;
     }
   }
+}
+
+.portfolios-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  margin: 2em auto 5em;
+  padding: 3.5em 1.3em 2em;
+  width: 80vw;
+  max-height: 450px;
+  max-width: $max-width * 0.55;
+  background-color: #f4f6f6;
+  color: #202425;
+  border-radius: 0.3em;
+  box-shadow: 2px 3px 3px #a7a7a7;
+}
+
+.portfolios-container__header {
+  position: absolute;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: $card-border-radius;
+  top: -13px;
+  left: 25px;
+  color: $white;
+  padding: 0.5em 0.8em;
+  background: linear-gradient(60deg, #767787, #5e5f6b);
+  box-shadow: 0 12px 20px -10px rgba(106, 107, 121, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12),
+    0 7px 8px -5px rgba(106, 107, 121, 0.2);
+
+  @media screen and (max-width: 570px) {
+    font-size: 1.2rem;
+    left: initial;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 1.1rem;
+  }
+}
+
+.portfolios-table-wrapper {
+  width: 100%;
+  overflow: auto;
+  max-height: 362px;
 }
 
 .no-portfolio-notice {
@@ -46,136 +90,121 @@
   }
 }
 
-.portfolio-list {
-  margin: 5em auto;
-  padding: 3em 5.5em;
-  max-width: $max-width * 0.7;
-  max-height: 81vh;
-  background-color: #dde6ea;
-  border-radius: 0.3em;
-  overflow-y: auto;
+.portfolio-table {
+  background-color: inherit;
+  width: 100%;
+  border-collapse: collapse;
 
-  & > li + li {
-    margin-top: 7em;
+  & > thead > tr > th {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.2em 0.2em 0.7em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    color: #3b434c;
+    position: sticky;
+    top: 0px;
+    background-color: #f4f6f6;
   }
 
-  @media screen and (min-width: 600px) and (max-width: 768px) {
-    padding: 2em 3.5em;
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    & > thead > tr > th {
+      font-size: 1rem;
+    }
   }
 
-  @media screen and (min-width: 426px) and (max-width: 599px) {
-    padding: 1.8em 3em;
-  }
-
-  @media screen and(max-width:425px) {
-    padding: 1.7em 2.6em;
+  @media screen and (max-width: 450px) {
+    & > thead > tr > th {
+      font-size: 0.9rem;
+    }
   }
 }
 
 .portfolio-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.3em;
-  border-radius: 0.1em;
-  width: 60vw;
-  max-width: $max-width * 0.5;
-  background-color: #fff;
-  box-shadow: 2px 2px 3px var(--darkgray-color);
-
-  @media screen and (max-width: 599px) {
-    width: 58vw;
-  }
-}
-
-.portfolio-item-name {
-  font-size: 2rem;
-  max-width: 85%;
-
-  @media screen and (max-width: 768px) {
-    font-size: 1.6rem;
-  }
-
-  @media screen and (max-width: 599px) {
-    font-size: 1.4rem;
-    max-width: 90%;
-  }
-}
-
-.portfolio-item-privacy {
-  color: $white;
-  border-radius: 0.15em;
-  padding: 0.2em 0.4em;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  margin-top: 0.1em;
-
-  @media screen and (max-width: 599px) {
-    font-size: 0.8rem;
-    margin-top: 0.3em;
-  }
-}
-
-.portfolio--public {
-  background-color: #1959c3;
-}
-
-.portfolio--private {
-  background-color: #0e318a;
-}
-
-.portfolio-item-default {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 0.8em 0;
+  background-color: inherit;
   text-align: center;
+  font-size: 1.2rem;
 
-  @media screen and (max-width: 768px) {
-    font-size: 1.6rem;
+  & > td {
+    padding: 0.5em 0.2em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
   }
 
-  @media screen and (max-width: 599px) {
-    margin: 1em 0;
-    font-size: 1.4rem;
+  &:last-child > td {
+    border-bottom: none;
+  }
+
+  @media screen and (min-width: 451px) and (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 1rem;
   }
 }
 
-.portfolio-item-actions {
-  margin-top: 0.4em;
+.portfolio-item__name-header,
+.portfolio-item-name {
+  min-width: 120px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 0.7em !important;
+}
+
+.portfolio-item__privacy-header,
+.portfolio-item-privacy {
+  min-width: 145px;
+}
+
+.portfolio-item__default-header,
+.portfolio-item-default {
+  min-width: 175px;
+}
+
+.portfolio-item-default > button {
+  font-size: 1.1rem;
+  padding: 0.3em 0.5em;
+  width: 6.3em;
+}
+
+.portfolio-item__default-text {
+  color: #f0616f;
+  font-weight: 600;
+}
+
+.portfolio-item > .portfolio-item-edit {
+  width: 80px;
+  padding-right: 1em;
 
   & > button {
-    font-size: 1.2rem;
-    width: 5.8em;
-  }
-
-  & > button + button {
-    margin-left: 2em;
-  }
-
-  @media screen and (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-
-    & > button + button {
-      margin-left: 0;
-      margin-top: 1.3em;
-    }
-
-    & > button {
-      width: 6em;
-      font-size: 1.1rem;
-    }
+    font-size: 1.1rem;
   }
 }
 
-.pf--default {
-  color: $highlight;
-  cursor: not-allowed;
+.portfolio-item > .portfolio-item-delete {
+  width: 100px;
+  padding-right: 1em;
+
+  & > button {
+    font-size: 1.1rem;
+  }
 }
 
-.pf--not-default {
-  color: $dark-gray;
-  cursor: pointer;
+.portfolio-item-detail {
+  width: 90px;
+
+  & > button {
+    font-size: 1.1rem;
+  }
+}
+
+.portfolio-privacy-icon {
+  width: 18px;
+  height: 18px;
+  margin-left: 0.2em;
+  margin-bottom: -0.1em;
 }
 
 .portfolio-form {
