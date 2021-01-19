@@ -13,7 +13,8 @@ const Button = ({
       'primary': 'primary',
       'warning': 'warning',
       'danger': 'danger',
-      'lightGray': 'light-gray'
+      'lightGray': 'light-gray',
+      'blue': 'blue'
     };
 
     if (!colors[color]) {

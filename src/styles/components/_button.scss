@@ -69,3 +69,12 @@
     background: darken($light-gray, 13%);
   }
 }
+
+.button--blue {
+  background: linear-gradient(#4e76e4, #3d63cc);
+  color: #fff;
+
+  &:hover {
+    background: darken(#4e76e4, 13%);
+  }
+}
