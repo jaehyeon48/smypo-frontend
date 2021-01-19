@@ -208,7 +208,7 @@
 
     & > li a,
     & .navbar__sign-out {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
 
     & > li:nth-child(2) {
@@ -227,6 +227,11 @@
   @media screen and (max-width: 450px) {
     &::before {
       right: 1.7em;
+    }
+
+    & > li a,
+    & .navbar__sign-out {
+      font-size: 1.1rem;
     }
   }
 }
