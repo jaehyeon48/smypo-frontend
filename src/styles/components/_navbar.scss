@@ -194,7 +194,7 @@
 
   @media screen and (max-width: 768px) {
     width: 100vw;
-    right: -30px;
+    right: -48px;
     padding: 0 1.1em;
 
     &::before {
@@ -213,6 +213,14 @@
 
     & > li:nth-child(2) {
       border-top: 1px solid #94a6b6;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    right: -32px;
+
+    &::before {
+      right: 3em;
     }
   }
 
