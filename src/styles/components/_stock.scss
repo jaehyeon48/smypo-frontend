@@ -243,6 +243,10 @@
   margin: 0.7em auto 1.5em;
   text-align: center;
 
+  @media screen and (max-width: 1024px) {
+    box-shadow: 2px 3px 3px $dark-gray;
+  }
+
   @media screen and (min-width: 451px) and (max-width: 768px) {
     font-size: 1.5rem;
   }
