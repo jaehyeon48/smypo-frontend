@@ -6,8 +6,8 @@
   max-width: $max-width;
 
   & > button {
-    font-size: 1.5rem;
-    width: 23em;
+    font-size: 1.4rem;
+    width: 15em;
     margin: 0 auto;
   }
 
@@ -20,14 +20,13 @@
   @media screen and (min-width: 426px) and (max-width: 550px) {
     & > button {
       font-size: 1.2rem;
-      width: 19em;
     }
   }
 
   @media screen and (max-width: 425px) {
     & > button {
-      font-size: 1.2rem;
-      width: 15em;
+      font-size: 1.1rem;
+      width: 12em;
     }
   }
 }
