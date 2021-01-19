@@ -182,7 +182,7 @@ const SectorPieChart = ({
                   style={{ backgroundColor: `${getRandomColor(legendData.index)}` }}>
                 </div>
                 <div className="pie-chart-legend-content">
-                  <span>{legendData.sector}</span>
+                  <span className="pie-chart-legend__sector">{legendData.sector}</span>
                   <span>{legendData.weight.toFixed(2)}%</span>
                 </div>
               </div>

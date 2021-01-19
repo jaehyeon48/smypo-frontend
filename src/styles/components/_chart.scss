@@ -204,11 +204,20 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
 
-  & > span:first-child {
-    font-weight: 600;
-    width: 10em;
-    margin-right: 0.3em;
-    text-align: left;
-  }
+@mixin pie-chart-legend__span {
+  font-weight: 600;
+  margin-right: 0.3em;
+  text-align: left;
+}
+
+.pie-chart-legend__ticker {
+  @include pie-chart-legend__span;
+  width: 5em;
+}
+
+.pie-chart-legend__sector {
+  @include pie-chart-legend__span;
+  width: 10em;
 }
