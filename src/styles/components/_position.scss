@@ -1,36 +1,49 @@
 .position-main {
   display: flex;
   flex-direction: column;
-  padding: 4em 1em;
   margin: 0 auto;
   min-height: 100vh;
   max-width: $max-width;
+
+  & > button {
+    font-size: 1.1rem;
+    width: 11em;
+    margin: 0 auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    & > button {
+      font-size: 1rem;
+      width: 10em;
+    }
+  }
 }
 
 .position-header {
   display: flex;
   justify-content: center;
-  margin: 0.2em 0 1em;
-  font-size: 3rem;
+  margin: 0.8em 0 0.9em;
+  font-size: 2.7rem;
 
   & > span:first-child {
-    color: $main-color;
+    color: #2662e8;
     margin-right: 0.4em;
-  }
-}
-
-.position-actions {
-  display: flex;
-  justify-content: center;
-  margin: 1em 0;
-
-  & > button {
-    width: 11em;
-    font-size: 1.2rem;
+    cursor: pointer;
   }
 
-  & > button:first-child {
-    margin-right: 1.3em;
+  @media screen and (min-width: 551px) and (max-width: 768px) {
+    font-size: 2.2rem;
+  }
+
+  @media screen and (max-width: 550px) {
+    font-size: 1.8rem;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.2em;
+
+    & > span:first-child {
+      margin-right: 0;
+    }
   }
 }
 

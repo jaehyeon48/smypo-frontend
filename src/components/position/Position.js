@@ -95,22 +95,15 @@ const Position = ({
   return (
     <main className="position-main">
       <header className="position-header">
-        <span>{TICKER.toUpperCase()}</span>
+        <span onClick={openInfoModal}>{TICKER.toUpperCase()}</span>
         <span>{companyInfo && companyInfo.companyName}</span>
       </header>
-      <div className="position-actions">
-        <Button
-          btnType={'button'}
-          btnText={'See company info'}
-          onClickFunc={openInfoModal}
-        />
-        <Button
-          btnType={'button'}
-          btnText={'Close position'}
-          btnColor={'danger'}
-          onClickFunc={handleClosePosition}
-        />
-      </div>
+      <Button
+        btnType={'button'}
+        btnText={'Close position'}
+        btnColor={'danger'}
+        onClickFunc={handleClosePosition}
+      />
       <div className="stock-group-container">
         <header className="stock-group__header">
           Transaction History
