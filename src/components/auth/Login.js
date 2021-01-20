@@ -141,7 +141,7 @@ const Login = ({
             </div>
           </form>
           <div className="auth__footer">
-            Doesn't have an account? <Link to="/signup">Sign Up</Link>
+            Don't have an account? <Link to="/signup">Sign Up</Link>
           </div>
         </main>}
     </React.Fragment>
