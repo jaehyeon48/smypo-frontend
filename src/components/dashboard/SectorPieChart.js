@@ -176,7 +176,10 @@ const SectorPieChart = ({
         <div className="pie-chart-legend">
           {shouldRenderChart && chartLegends && chartLegends.length > 0 && (
             chartLegends.map((legendData) => (
-              <div className="pie-chart-legend-item">
+              <div
+                key={legendData.index}
+                className="pie-chart-legend-item"
+              >
                 <div
                   className="pie-chart-legend-color"
                   style={{ backgroundColor: `${getRandomColor(legendData.index)}` }}>
