@@ -111,20 +111,35 @@ const Position = ({
           onClickFunc={handleClosePosition}
         />
       </div>
-      <div className="stock-group">
-        <div className="stock-group-items">
-          {stockGroup && stockGroup.map(item => (
-            <StockGroupItem
-              key={item.stockId}
-              stockId={item.stockId}
-              price={item.price}
-              quantity={item.quantity}
-              transactionType={item.transactionType}
-              transactionDate={new Date(item.transactionDate).toJSON().slice(0, 10)}
-              formData={formData}
-              openEditModal={openEditModal}
-              setFormData={setFormData}
-            />))}
+      <div className="stock-group-container">
+        <header className="stock-group__header">
+          Transaction History
+      </header>
+        <div className="stock-group-table-wrapper">
+          <table className="stock-group-table">
+            <thead>
+              <tr>
+                <th className="stock-group-item__type-header">Type</th>
+                <th className="stock-group-item__amount-header">price</th>
+                <th className="stock-group-item__quantity-header">Quantity</th>
+                <th className="stock-group-item__date-header">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stockGroup && stockGroup.map(item => (
+                <StockGroupItem
+                  key={item.stockId}
+                  stockId={item.stockId}
+                  price={item.price}
+                  quantity={item.quantity}
+                  transactionType={item.transactionType}
+                  transactionDate={new Date(item.transactionDate).toJSON().slice(0, 10)}
+                  formData={formData}
+                  openEditModal={openEditModal}
+                  setFormData={setFormData}
+                />))}
+            </tbody>
+          </table>
         </div>
       </div>
       {isEditModalOpen && (

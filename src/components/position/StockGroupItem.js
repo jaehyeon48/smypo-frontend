@@ -23,12 +23,12 @@ const StockGroupItem = ({
     openEditModal();
   }
   return (
-    <div className="stock-group-item" onClick={handleOpenEditModal}>
-      <span className="stock-group-price">{price}</span>
-      <span className="stock-group-quantity">{quantity}</span>
-      <span className="stock-group-type">{transactionType}</span>
-      <span className="stock-group-date">{transactionDate.slice(2)}</span>
-    </div>
+    <tr className="stock-group-item" onClick={handleOpenEditModal}>
+      <td className="stock-group-item-type">{transactionType}</td>
+      <td className="stock-group-item-price">{price}</td>
+      <td className="stock-group-item-quantity">{quantity}</td>
+      <td className="stock-group-item-date">{transactionDate.slice(2)}</td>
+    </tr>
   )
 }
 
