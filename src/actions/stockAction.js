@@ -121,6 +121,7 @@ export const deleteStock = (stockId) => async (dispatch) => {
   try {
     await axios.delete(`${process.env.REACT_APP_SERVER_URL}/stock/${stockId}`, config);
     dispatch({ type: DELETE_STOCK });
+
     return 0;
   } catch (error) {
     console.error(error);

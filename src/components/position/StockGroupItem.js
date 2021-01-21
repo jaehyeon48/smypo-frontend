@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '../button/Button';
+
 const StockGroupItem = ({
   stockId,
   price,
@@ -9,7 +11,9 @@ const StockGroupItem = ({
   transactionDate,
   formData,
   openEditModal,
-  setFormData
+  openConfirmModal,
+  setFormData,
+  setToDeleteStockId
 }) => {
   const handleOpenEditModal = () => {
     setFormData({
@@ -22,13 +26,38 @@ const StockGroupItem = ({
     });
     openEditModal();
   }
+
+  const handleOpenConfirmModal = () => {
+    openConfirmModal();
+    setToDeleteStockId(stockId);
+  }
+
   return (
-    <tr className="stock-group-item" onClick={handleOpenEditModal}>
-      <td className="stock-group-item-type">{transactionType}</td>
-      <td className="stock-group-item-price">{price}</td>
-      <td className="stock-group-item-quantity">{quantity}</td>
-      <td className="stock-group-item-date">{transactionDate.slice(2)}</td>
-    </tr>
+    <React.Fragment>
+      <tr className="stock-group-item" >
+        <td className="stock-group-item-type">{transactionType}</td>
+        <td className="stock-group-item-price">{price}</td>
+        <td className="stock-group-item-quantity">{quantity}</td>
+        <td className="stock-group-item-date">{transactionDate.slice(2)}</td>
+        <td className="stock-group-item-edit">
+          <Button
+            btnType={'button'}
+            btnText={'Edit'}
+            btnColor={'warning'}
+            onClickFunc={handleOpenEditModal}
+          />
+        </td>
+        <td className="stock-group-item-delete">
+          <Button
+            btnType={'button'}
+            btnText={'Delete'}
+            btnColor={'danger'}
+            onClickFunc={handleOpenConfirmModal}
+          />
+        </td>
+      </tr>
+
+    </React.Fragment>
   )
 }
 

@@ -6,12 +6,14 @@ import { connect } from 'react-redux';
 import StockGroupItem from './StockGroupItem';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
+import ConfirmModal from '../modal/ConfirmModal';
 import {
   getStocks,
   getStocksByTickerGroup,
   closePosition
 } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';
+import { deleteStock } from '../../actions/stockAction';
 import { getCompanyInfo } from '../../utils/getCompanyInfo';
 import EditTransaction from './EditTransaction';
 import CompanyInfo from './CompanyInfo';
@@ -23,6 +25,7 @@ const Position = ({
   getStocks,
   getStocksByTickerGroup,
   closePosition,
+  deleteStock,
   showAlert
 }) => {
   let history = useHistory();
@@ -31,6 +34,8 @@ const Position = ({
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [toDeleteStockId, setToDeleteStockId] = useState(null);
   const [formData, setFormData] = useState({
     stockId: '',
     ticker: TICKER.toUpperCase(),
@@ -57,6 +62,13 @@ const Position = ({
     }
   }, [stockGroupLoading, stockGroup]);
 
+  useEffect(() => {
+    (async () => {
+      const companyInfoResult = await getCompanyInfo(TICKER);
+      setCompanyInfo(companyInfoResult);
+    })();
+  }, [TICKER]);
+
   const openEditModal = () => {
     setIsEditModalOpen(true);
   }
@@ -68,8 +80,17 @@ const Position = ({
   const openInfoModal = () => {
     setIsInfoModalOpen(true);
   }
+
   const closeInfoModal = () => {
     setIsInfoModalOpen(false);
+  }
+
+  const openConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+  }
+
+  const handleCloseConfirmModal = () => {
+    setIsConfirmModalOpen(false);
   }
 
   const handleClosePosition = async () => {
@@ -85,12 +106,19 @@ const Position = ({
     }
   }
 
-  useEffect(() => {
-    (async () => {
-      const companyInfoResult = await getCompanyInfo(TICKER);
-      setCompanyInfo(companyInfoResult);
-    })();
-  }, [TICKER]);
+  const handleDeleteTransaction = async () => {
+    const res = await deleteStock(toDeleteStockId);
+    if (res === 0) {
+      getStocks(PORTFOLIO_ID);
+      getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
+      handleCloseConfirmModal();
+    }
+    else {
+      showAlert('error', 'Something went wrong. Please try again.')
+    }
+  }
+
+
 
   return (
     <main className="position-main">
@@ -116,6 +144,8 @@ const Position = ({
                 <th className="stock-group-item__amount-header">price</th>
                 <th className="stock-group-item__quantity-header">Quantity</th>
                 <th className="stock-group-item__date-header">Date</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -129,7 +159,9 @@ const Position = ({
                   transactionDate={new Date(item.transactionDate).toJSON().slice(0, 10)}
                   formData={formData}
                   openEditModal={openEditModal}
+                  openConfirmModal={openConfirmModal}
                   setFormData={setFormData}
+                  setToDeleteStockId={setToDeleteStockId}
                 />))}
             </tbody>
           </table>
@@ -147,6 +179,13 @@ const Position = ({
         <Modal closeModalFunc={closeInfoModal} overflowY={true}>
           <CompanyInfo companyInfo={companyInfo} />
         </Modal>
+      )}
+      {isConfirmModalOpen && (
+        <ConfirmModal
+          confirmMsg={'Do you really want to delete this transaction record?'}
+          confirmAction={handleDeleteTransaction}
+          closeModalFunc={handleCloseConfirmModal}
+        />
       )}
     </main>
   );
@@ -169,5 +208,6 @@ export default connect(mapStateToProps, {
   getStocksByTickerGroup,
   getStocks,
   closePosition,
+  deleteStock,
   showAlert
 })(Position);

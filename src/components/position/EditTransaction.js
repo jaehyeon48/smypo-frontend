@@ -43,15 +43,6 @@ const EditTransaction = ({
     }
   }
 
-  const handleDeleteTransaction = async (stockId) => {
-    const deleteResponse = await deleteStock(stockId);
-    if (deleteResponse === 0) {
-      window.location.reload();
-    }
-    else {
-
-    }
-  }
 
   return (
     <div className="add-transaction-container">
@@ -128,12 +119,6 @@ const EditTransaction = ({
           btnColor={'warning'}
         />
       </form>
-      <Button
-        btnType={'button'}
-        btnText={'Delete transaction'}
-        btnColor={'danger'}
-        onClickFunc={() => handleDeleteTransaction(formData.stockId)}
-      />
     </div>
   );
 }
