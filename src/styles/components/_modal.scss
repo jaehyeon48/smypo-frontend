@@ -51,3 +51,43 @@
     color: $main-color;
   }
 }
+
+/* delete confirm modal */
+.delete-confirm-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 1.5em auto 0;
+  font-size: 1.2rem;
+  max-width: 600px;
+
+  & > svg {
+    width: 115px;
+    height: 115px;
+    color: $orange;
+  }
+
+  & > p {
+    margin: 1em 0;
+    text-align: center;
+
+    @media screen and (max-width: 450px) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.delete-confirm-actions {
+  display: flex;
+  margin-top: 1em;
+
+  & > button:first-child {
+    width: 5em;
+    margin-right: 1.4em;
+  }
+
+  & > button:last-child {
+    width: 5em;
+  }
+}
