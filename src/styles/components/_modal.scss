@@ -41,11 +41,12 @@
   right: 0.5em;
   cursor: pointer;
   font-size: 2.2em;
-  height: 1em;
-  width: 1em;
+  height: 0.85em;
+  width: 0.85em;
   border: none;
   outline: none;
   background-color: $white;
+  color: darken($dark-gray, 15%);
 
   &:hover {
     color: $main-color;
