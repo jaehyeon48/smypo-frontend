@@ -23,6 +23,10 @@
   @media screen and (max-width: 768px) {
     padding: 2.6em 3.6em;
   }
+
+  @media screen and (max-width: 450px) {
+    padding: 2em 2.8em;
+  }
 }
 
 .modal-content-bg-dark {
@@ -77,18 +81,61 @@
       font-size: 1rem;
     }
   }
+
+  @media screen and (min-width: 601px) and (max-width: 768px) {
+    max-width: 400px;
+    font-size: 1.1rem;
+
+    & > svg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  @media screen and (min-width: 401px) and (max-width: 600px) {
+    max-width: 250px;
+    font-size: 1.1rem;
+
+    & > svg {
+      width: 90px;
+      height: 90px;
+    }
+  }
+
+  @media screen and(max-width: 400px) {
+    max-width: 200px;
+    font-size: 1.1rem;
+
+    & > svg {
+      width: 80px;
+      height: 80px;
+    }
+  }
 }
 
 .delete-confirm-actions {
   display: flex;
   margin-top: 1em;
 
-  & > button:first-child {
+  & > button {
     width: 5em;
+  }
+
+  & > button:first-child {
     margin-right: 1.4em;
   }
 
-  & > button:last-child {
-    width: 5em;
+  @media screen and (min-width: 401px) and (max-width: 768px) {
+    & > button {
+      font-size: 1.2rem;
+      width: 4em;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    & > button {
+      font-size: 1.1rem;
+      width: 4em;
+    }
   }
 }
