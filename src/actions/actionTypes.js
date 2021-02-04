@@ -1,9 +1,11 @@
 /* Auth */
+export const START_LOAD_USER = 'START_LOAD_USER';
+export const SUCCESS_LOAD_USER = 'SUCCESS_LOAD_USER';
+export const FAIL_LOAD_USER = 'FAIL_LOAD_USER';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAIL = 'SIGNUP_FAIL';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
-export const USER_LOADED = 'USER_LOADED';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const LOGOUT = 'LOGOUT';
 

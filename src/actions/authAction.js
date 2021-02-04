@@ -1,9 +1,11 @@
 import {
+  START_LOAD_USER,
+  SUCCESS_LOAD_USER,
+  FAIL_LOAD_USER,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  USER_LOADED,
   LOGOUT,
   AUTH_FAIL
 } from './actionTypes';
@@ -13,13 +15,16 @@ export const loadUser = () => async dispatch => {
   try {
     const loadResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth`, { withCredentials: true });
 
+    dispatch({ type: START_LOAD_USER });
     dispatch({
-      type: USER_LOADED,
+      type: SUCCESS_LOAD_USER,
       payload: loadResponse.data
     })
   } catch (error) {
-    dispatch({ type: AUTH_FAIL });
-    console.error(error);
+    dispatch({
+      type: FAIL_LOAD_USER,
+      payload: error.response.data.errorMsg
+    });
   }
 }
 
