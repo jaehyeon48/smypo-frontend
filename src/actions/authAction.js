@@ -5,8 +5,8 @@ import {
   SIGNUP_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
-  AUTH_FAIL
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from './actionTypes';
 import axios from 'axios';
 
@@ -73,9 +73,11 @@ export const signUp = (formData) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   try {
     await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/logout`, { withCredentials: true });
-    dispatch({ type: LOGOUT });
+    dispatch({ type: LOGOUT_SUCCESS });
   } catch (error) {
-    console.error(error);
-    dispatch({ type: AUTH_FAIL });
+    dispatch({
+      type: LOGOUT_FAIL,
+      payload: error.message
+    });
   }
 }

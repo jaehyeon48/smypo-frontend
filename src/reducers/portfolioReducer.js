@@ -10,7 +10,8 @@ import {
   PORTFOLIO_EDIT_ERROR,
   PORTFOLIO_DELETE_ERROR,
   EMPTY_PORTFOLIO,
-  LOGOUT
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -39,11 +40,10 @@ export default function portfolioReducer(state = initialState, action) {
       };
     case PORTFOLIO_LOAD_ERROR:
     case EMPTY_PORTFOLIO:
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
+    case LOGOUT_FAIL:
       return {
-        ...state,
-        portfolioList: [],
-        defaultPortfolio: null
+        ...initialState
       };
     case PORTFOLIO_CREATE_ERROR:
     case PORTFOLIO_EDIT_ERROR:

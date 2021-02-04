@@ -19,7 +19,8 @@ import {
   EDIT_OVERALL_RETURN,
   CLOSE_POSITION,
   CLOSE_POSITION_ERROR,
-  LOGOUT,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -155,12 +156,10 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         realizedStockLoading: true
       };
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
+    case LOGOUT_FAIL:
       return {
-        stockList: [],
-        isMarketOpen: null,
-        stockLoading: true,
-        stockGroupLoading: true
+        ...initialState
       };
     case GET_SECTOR_ERROR:
     case ADD_STOCK:

@@ -8,7 +8,8 @@ import {
   EDIT_CASH_ERROR,
   DELETE_CASH,
   DELETE_CASH_ERROR,
-  LOGOUT
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -33,11 +34,10 @@ export default function cashReducer(state = initialState, action) {
         totalCash: payload,
         cashLoading: false
       };
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
+    case LOGOUT_FAIL:
       return {
-        cashList: [],
-        totalCash: 0,
-        cashLoading: true
+        ...initialState
       };
     case ADD_CASH:
     case EDIT_CASH:

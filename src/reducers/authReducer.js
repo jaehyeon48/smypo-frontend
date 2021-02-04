@@ -7,7 +7,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   AUTH_FAIL,
-  LOGOUT,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
   UPLOAD_AVATAR,
   AVATAR_ERROR,
   UPDATE_USER,
@@ -81,12 +82,15 @@ export default function authReducer(state = initialState, action) {
         status: false,
         isAuthenticated: false
       };
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
       return {
-        ...state,
-        status: false,
-        isAuthenticated: false,
-        user: {}
+        ...initialState
+      }
+    case LOGOUT_FAIL:
+      return {
+        ...initialState,
+        status: 'failed',
+        error: payload
       }
     case UPLOAD_AVATAR:
       return {
