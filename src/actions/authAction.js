@@ -1,4 +1,5 @@
 import {
+  START_LOAD_USER,
   SUCCESS_LOAD_USER,
   FAIL_LOAD_USER,
   SIGNUP_SUCCESS,
@@ -11,6 +12,7 @@ import {
 import axios from 'axios';
 
 export const loadUser = () => async dispatch => {
+  dispatch({ type: START_LOAD_USER });
   try {
     const loadResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth`, { withCredentials: true });
 
