@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 import AvatarImage from '../avatar/AvatarImage';
 import Modal from '../modal/Modal';
@@ -12,8 +11,6 @@ import './profile.css';
 import { showAlert } from '../../actions/alertAction';
 
 const Profile = ({
-  loading,
-  isAuthenticated,
   user,
   updateProfile,
   loadUser,
@@ -31,10 +28,6 @@ const Profile = ({
       setLastName(user.lastName);
     }
   }, [user]);
-
-  if (!isAuthenticated && !loading) {
-    return <Redirect to="/login" />
-  }
 
   const openAvatarModal = () => {
     setIsAvatarModalOpen(true);
@@ -134,16 +127,12 @@ const Profile = ({
 }
 
 Profile.propTypes = {
-  loading: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
   user: PropTypes.object,
   updateProfile: PropTypes.func,
   loadUser: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
-  isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user
 })
 

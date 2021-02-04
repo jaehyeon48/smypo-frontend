@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import {
   loadPortfolios,
@@ -24,8 +24,6 @@ import Spinner from '../spinner/Spinner';
 import { Line } from 'react-chartjs-2';
 
 const Dashboard = ({
-  loading,
-  isAuthenticated,
   stock,
   totalCash,
   portfolioList,
@@ -110,10 +108,6 @@ const Dashboard = ({
       setCashToDisplay(totalCash);
     }
   }, [totalCash]);
-
-  if (!isAuthenticated && !loading) {
-    return <Redirect to="/login" />
-  }
 
   const colorReturnItem = (value) => {
     if (value > 0) return 'return-positive';
@@ -240,8 +234,6 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
   theme: PropTypes.string,
-  loading: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
   totalCost: PropTypes.number,
   totalCash: PropTypes.number,
   portfolioList: PropTypes.array,
@@ -257,8 +249,6 @@ Dashboard.propTypes = {
 
 const mapStateToProps = (state) => ({
   theme: state.auth.theme,
-  loading: state.auth.loading,
-  isAuthenticated: state.auth.isAuthenticated,
   stock: state.stock,
   totalCash: state.cash.totalCash,
   portfolioList: state.portfolio.portfolioList,

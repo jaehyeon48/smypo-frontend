@@ -16,7 +16,7 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  status: 'idle', // idle, loading, succeeded, failed
+  status: 'initial', // initial, idle, loading, succeeded, failed
   isAuthenticated: false,
   theme: 'light',
   user: {},
@@ -84,7 +84,8 @@ export default function authReducer(state = initialState, action) {
       };
     case LOGOUT_SUCCESS:
       return {
-        ...initialState
+        ...initialState,
+        status: 'idle'
       }
     case LOGOUT_FAIL:
       return {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -15,8 +14,6 @@ import {
 import { showAlert } from '../../actions/alertAction';
 
 const Portfolios = ({
-  loading,
-  isAuthenticated,
   portfolioList,
   defaultPortfolio,
   loadPortfolios,
@@ -91,10 +88,6 @@ const Portfolios = ({
 
   const privacyToPublic = () => {
     setPrivacy('public');
-  }
-
-  if (!isAuthenticated && !loading) {
-    return <Redirect to="/login" />
   }
 
   return (
@@ -191,8 +184,6 @@ const Portfolios = ({
 }
 
 Portfolios.propTypes = {
-  loading: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
   portfolioList: PropTypes.array,
   defaultPortfolio: PropTypes.number,
   loadPortfolios: PropTypes.func,
@@ -202,8 +193,6 @@ Portfolios.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
-  isAuthenticated: state.auth.isAuthenticated,
   portfolioList: state.portfolio.portfolioList,
   defaultPortfolio: state.portfolio.defaultPortfolio
 });

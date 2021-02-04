@@ -37,12 +37,12 @@ export default function App() {
             <Route path="/signup" component={SignUp} exact={true} />
             <Route path="/login" component={Login} exact={true} />
             <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
-            <Route path="/stocks" component={Stock} exact={true} />
-            <Route path="/stocks/realized" component={RealizedStocks} exact={true} />
-            <Route path="/cash" component={Cash} exact={true} />
-            <Route path="/portfolios" component={Portfolios} exact={true} />
-            <Route path="/profile" component={Profile} exact={true} />
-            <Route path="/position/:portfolioId/:ticker" component={Position} exact={true} />
+            <PrivateRoute path="/stocks" component={Stock} exact={true} />
+            <PrivateRoute path="/stocks/realized" component={RealizedStocks} exact={true} />
+            <PrivateRoute path="/cash" component={Cash} exact={true} />
+            <PrivateRoute path="/portfolios" component={Portfolios} exact={true} />
+            <PrivateRoute path="/profile" component={Profile} exact={true} />
+            <PrivateRoute path="/position/:portfolioId/:ticker" component={Position} exact={true} />
             <Footer />
           </Navbar>
         </Switch>

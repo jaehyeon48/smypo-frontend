@@ -9,14 +9,16 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if (auth.status === 'loading') {
+        if (auth.status === 'initial' || auth.status === 'loading') {
           return <UserLoadingSpinner />
         }
-        else if (auth.status !== 'loading' && !auth.isAuthenticated) {
-          return <Redirect to="/" />
-        }
-        else if (auth.status !== 'loading' && auth.isAuthenticated) {
-          return <Component {...props} />
+        else {
+          if (!auth.isAuthenticated) {
+            return <Redirect to="/login" />
+          }
+          else {
+            return <Component {...props} />
+          }
         }
       }}
     />

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -13,8 +12,6 @@ import {
 } from '../../actions/stockAction';
 
 const RealizedStocks = ({
-  isAuthenticated,
-  loading,
   defaultPortfolio,
   getDefaultPortfolio,
   getRealizedStocks,
@@ -58,10 +55,6 @@ const RealizedStocks = ({
     if (totalRealizedReturn > 0) return 'total-return-positive--border';
     else if (totalRealizedReturn < 0) return 'total-return-negative--border';
     else return 'total-return-zero--border';
-  }
-
-  if (!isAuthenticated && !loading) {
-    return <Redirect to="/login" />
   }
 
   return (
@@ -129,8 +122,6 @@ RealizedStocks.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
-  isAuthenticated: state.auth.isAuthenticated,
   defaultPortfolio: state.portfolio.defaultPortfolio,
   realizedStocks: state.stock.realizedStocks,
   realizedStockLoading: state.stock.realizedStockLoading

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import CashItem from './CashItem';
@@ -17,8 +16,6 @@ import {
 } from '../../actions/cashAction';
 
 const Cash = ({
-  loading,
-  isAuthenticated,
   defaultPortfolio,
   cashLoading,
   totalCash,
@@ -80,10 +77,6 @@ const Cash = ({
 
   const closeEditCashModal = () => {
     setIsEditCashModalOpen(false);
-  }
-
-  if (!loading && !isAuthenticated) {
-    return <Redirect to="/login" />
   }
 
   return (
@@ -159,8 +152,6 @@ const Cash = ({
 }
 
 Cash.propTypes = {
-  loading: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
   defaultPortfolio: PropTypes.number,
   cashLoading: PropTypes.bool,
   cashList: PropTypes.array,
@@ -171,8 +162,6 @@ Cash.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
-  isAuthenticated: state.auth.isAuthenticated,
   defaultPortfolio: state.portfolio.defaultPortfolio,
   cashLoading: state.cash.cashLoading,
   cashList: state.cash.cashList,

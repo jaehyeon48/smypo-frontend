@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import StockItem from './StockItem';
@@ -14,8 +14,6 @@ import { getStocks } from '../../actions/stockAction';
 import { getDefaultPortfolio } from '../../actions/portfolioAction';
 
 const Stock = ({
-  loading,
-  isAuthenticated,
   stock,
   defaultPortfolio,
   getTotalCash,
@@ -68,10 +66,6 @@ const Stock = ({
 
   const redirectToRealizedStocks = () => {
     history.push('/stocks/realized');
-  }
-
-  if (!loading && !isAuthenticated) {
-    return <Redirect to="/login" />
   }
 
   return (
@@ -143,7 +137,6 @@ const Stock = ({
 }
 
 Stock.propTypes = {
-  isAuthenticated: PropTypes.bool,
   stock: PropTypes.object,
   defaultPortfolio: PropTypes.number,
   getTotalCash: PropTypes.func,
@@ -152,8 +145,6 @@ Stock.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.auth.loading,
-  isAuthenticated: state.auth.isAuthenticated,
   stock: state.stock,
   defaultPortfolio: state.portfolio.defaultPortfolio
 });
