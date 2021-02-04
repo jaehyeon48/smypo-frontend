@@ -1,0 +1,17 @@
+.user-loading-spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.user-loading-spinner {
+  width: 160px;
+  height: 160px;
+  margin-top: 6em;
+}
+
+.user-loading-spinner-text {
+  color: #505050;
+  margin-bottom: 3em;
+}
