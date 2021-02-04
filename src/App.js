@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import store from './store';
+import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
 import LandingPage from './components/landingpage/LandingPage';
 import Navbar from './components/navbar/Navbar';
@@ -34,8 +35,8 @@ export default function App() {
           <Route path="/" component={LandingPage} exact={true} />
           <Navbar>
             <Alert />
-            <Route path="/signup" component={SignUp} exact={true} />
-            <Route path="/login" component={Login} exact={true} />
+            <PublicRoute path="/signup" component={SignUp} exact={true} />
+            <PublicRoute path="/login" component={Login} exact={true} />
             <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
             <PrivateRoute path="/stocks" component={Stock} exact={true} />
             <PrivateRoute path="/stocks/realized" component={RealizedStocks} exact={true} />
