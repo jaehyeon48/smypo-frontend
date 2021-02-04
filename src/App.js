@@ -19,10 +19,12 @@ import Footer from './components/footer/Footer';
 import './app.css';
 import './styles/index.scss';
 
+import { START_LOAD_USER } from './actions/actionTypes';
 import { loadUser } from './actions/authAction';
 
 export default function App() {
   useEffect(() => {
+    store.dispatch({ type: START_LOAD_USER });
     store.dispatch(loadUser());
   }, []);
 

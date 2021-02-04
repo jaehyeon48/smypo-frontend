@@ -1,5 +1,4 @@
 import {
-  START_LOAD_USER,
   SUCCESS_LOAD_USER,
   FAIL_LOAD_USER,
   SIGNUP_SUCCESS,
@@ -15,7 +14,6 @@ export const loadUser = () => async dispatch => {
   try {
     const loadResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth`, { withCredentials: true });
 
-    dispatch({ type: START_LOAD_USER });
     dispatch({
       type: SUCCESS_LOAD_USER,
       payload: loadResponse.data
