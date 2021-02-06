@@ -2,8 +2,8 @@ import {
   BEGIN_LOAD_USER,
   SUCCESS_LOAD_USER,
   FAIL_LOAD_USER,
-  SIGNUP_SUCCESS,
-  SIGNUP_FAIL,
+  SUCCESS_SIGNUP,
+  FAIL_SIGNUP,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   AUTH_FAIL,
@@ -66,14 +66,19 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: false,
         error: payload
       };
-    case SIGNUP_SUCCESS:
+    case SUCCESS_SIGNUP:
     case LOGIN_SUCCESS:
       return {
         ...state,
         status: false,
         isAuthenticated: true
       };
-    case SIGNUP_FAIL:
+    case FAIL_SIGNUP:
+      return {
+        ...state,
+        status: 'failed',
+        isAuthenticated: false
+      };
     case LOGIN_FAIL:
     case AUTH_FAIL:
     case AVATAR_ERROR:

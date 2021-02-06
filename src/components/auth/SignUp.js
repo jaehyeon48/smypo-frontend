@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validator from 'validator';
 
@@ -10,12 +10,10 @@ import { signUp } from '../../actions/authAction';
 import { showAlert } from '../../actions/alertAction';
 
 const SignUp = ({
-  loading,
-  isAuthenticated,
   signUp,
   showAlert
 }) => {
-  const [signupFormData, setSignupFormData] = useState({
+  const [signUpFormData, setSignUpFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
@@ -30,7 +28,7 @@ const SignUp = ({
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { firstName, lastName, email, password } = signupFormData;
+  const { firstName, lastName, email, password } = signUpFormData;
 
   useEffect(() => {
     if (!isFirstSubmit && firstName.trim() === '') {
@@ -100,23 +98,23 @@ const SignUp = ({
         setPasswordErr(true);
       }
       else {
-        const signUpResult = await signUp(signupFormData);
-        if (signUpResult === -1) {
-          showAlert('User already exists. Please try other email!', 'error');
+        const signUpResult = await signUp(signUpFormData);
+        if (signUpResult !== 0) {
+          showAlert(signUpResult, 'error');
         }
       }
     }
     else {
-      const signUpResult = await signUp(signupFormData);
-      if (signUpResult === -1) {
-        showAlert('User already exists. Please try other email!', 'error');
+      const signUpResult = await signUp(signUpFormData);
+      if (signUpResult !== 0) {
+        showAlert(signUpResult, 'error');
       }
     }
   }
 
   function handleChange(e) {
-    setSignupFormData({
-      ...signupFormData,
+    setSignUpFormData({
+      ...signUpFormData,
       [e.target.name]: e.target.value
     });
   }
@@ -125,94 +123,83 @@ const SignUp = ({
     setShowPassword(!showPassword);
   }
 
-  if (isAuthenticated) {
-    return <Redirect to="/dashboard" />
-  }
-
   return (
     <React.Fragment>
-      {!loading &&
-        <main className="auth__form-container">
-          <p>Join SMYPO.com</p>
-          <h1>CREATE YOUR ACCOUNT</h1>
-          <form className="auth__form" onSubmit={handleSubmit}>
-            <div className="auth__form-group">
-              <label className={firstNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>First Name</label>
-              <input
-                type="text"
-                className={firstNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
-                name="firstName"
-                value={firstName}
-                placeholder="First Name"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="auth__form-group">
-              <label className={lastNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>Last Name</label>
-              <input
-                type="text"
-                className={lastNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
-                name="lastName"
-                value={lastName}
-                placeholder="Last Name"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="auth__form-group">
-              <label className={emailErr ? "auth__form-label form-label--error" : "auth__form-label"}>Email</label>
-              <input
-                type="text"
-                className={emailErr ? "auth__form-field form-field--error" : "auth__form-field"}
-                name="email"
-                value={email}
-                placeholder="Email"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="auth__form-group">
-              <label className={passwordErr ? "auth__form-label form-label--error" : "auth__form-label"}>Password</label>
-              <input
-                type={showPassword ? "text" : "password"}
-                className={passwordErr ? "auth__form-field form-field--error" : "auth__form-field"}
-                name="password"
-                value={password}
-                placeholder="Password"
-                onChange={handleChange}
-              />
-              <small>Password must be at least 8 characters long. </small>
-            </div>
-            <label className="auth__checkbox-container">Show password
-            <input type="checkbox" onClick={handleShowPassword} />
-            </label>
-            <div className="auth__form-group">
-              <Button
-                btnType={'submit'}
-                btnText={'SIGN UP'}
-                isDisabled={isSubmitDisabled}
-              />
-            </div>
-          </form>
-          <div className="auth__footer">
-            Already have an account? <Link to="/login">Log in</Link>
+      <main className="auth__form-container">
+        <p>Join SMYPO.com</p>
+        <h1>CREATE YOUR ACCOUNT</h1>
+        <form className="auth__form" onSubmit={handleSubmit}>
+          <div className="auth__form-group">
+            <label className={firstNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>First Name</label>
+            <input
+              type="text"
+              className={firstNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              name="firstName"
+              value={firstName}
+              placeholder="First Name"
+              onChange={handleChange}
+            />
           </div>
-        </main>}
+          <div className="auth__form-group">
+            <label className={lastNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>Last Name</label>
+            <input
+              type="text"
+              className={lastNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              name="lastName"
+              value={lastName}
+              placeholder="Last Name"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="auth__form-group">
+            <label className={emailErr ? "auth__form-label form-label--error" : "auth__form-label"}>Email</label>
+            <input
+              type="text"
+              className={emailErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              name="email"
+              value={email}
+              placeholder="Email"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="auth__form-group">
+            <label className={passwordErr ? "auth__form-label form-label--error" : "auth__form-label"}>Password</label>
+            <input
+              type={showPassword ? "text" : "password"}
+              className={passwordErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              name="password"
+              value={password}
+              placeholder="Password"
+              onChange={handleChange}
+            />
+            <small>Password must be at least 8 characters long. </small>
+          </div>
+          <label className="auth__checkbox-container">Show password
+            <input type="checkbox" onClick={handleShowPassword} />
+          </label>
+          <div className="auth__form-group">
+            <Button
+              btnType={'submit'}
+              btnText={'SIGN UP'}
+              isDisabled={isSubmitDisabled}
+            />
+          </div>
+        </form>
+        <div className="auth__footer">
+          Already have an account? <Link to="/login">Log in</Link>
+        </div>
+      </main>
     </React.Fragment>
   );
 }
 
 SignUp.propTypes = {
-  loading: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
   signUp: PropTypes.func,
   showAlert: PropTypes.func
 };
 
-const mapStateToProps = state => ({
-  loading: state.auth.loading,
-  isAuthenticated: state.auth.isAuthenticated,
-});
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   signUp,
   showAlert
 })(SignUp);
