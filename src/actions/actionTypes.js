@@ -1,5 +1,5 @@
 /* Auth */
-export const START_LOAD_USER = 'START_LOAD_USER';
+export const BEGIN_LOAD_USER = 'BEGIN_LOAD_USER';
 export const SUCCESS_LOAD_USER = 'SUCCESS_LOAD_USER';
 export const FAIL_LOAD_USER = 'FAIL_LOAD_USER';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';

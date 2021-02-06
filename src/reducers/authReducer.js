@@ -1,5 +1,5 @@
 import {
-  START_LOAD_USER,
+  BEGIN_LOAD_USER,
   SUCCESS_LOAD_USER,
   FAIL_LOAD_USER,
   SIGNUP_SUCCESS,
@@ -27,7 +27,7 @@ export default function authReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case START_LOAD_USER:
+    case BEGIN_LOAD_USER:
       return {
         ...state,
         status: 'loading'
