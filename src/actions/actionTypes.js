@@ -4,9 +4,8 @@ export const SUCCESS_LOAD_USER = 'SUCCESS_LOAD_USER';
 export const FAIL_LOAD_USER = 'FAIL_LOAD_USER';
 export const SUCCESS_SIGNUP = 'SUCCESS_SIGNUP';
 export const FAIL_SIGNUP = 'FAIL_SIGNUP';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-export const AUTH_FAIL = 'AUTH_FAIL';
+export const SUCCESS_LOGIN = 'SUCCESS_LOGIN';
+export const FAIL_LOGIN = 'FAIL_LOGIN';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 

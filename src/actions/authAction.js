@@ -4,8 +4,8 @@ import {
   FAIL_LOAD_USER,
   SUCCESS_SIGNUP,
   FAIL_SIGNUP,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
+  SUCCESS_LOGIN,
+  FAIL_LOGIN,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
 } from './actionTypes';
@@ -40,13 +40,12 @@ export const login = (formData) => async (dispatch) => {
   try {
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, reqBody, config);
 
-    dispatch({ type: LOGIN_SUCCESS });
+    dispatch({ type: SUCCESS_LOGIN });
     dispatch(loadUser());
     return 0;
   } catch (error) {
-    dispatch({ type: LOGIN_FAIL });
-    console.error(error);
-    return -1;
+    dispatch({ type: FAIL_LOGIN });
+    return error.response.data.errorMsg;
   }
 }
 

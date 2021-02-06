@@ -2,7 +2,6 @@ import {
   SHOW_ALERT,
   HIDE_ALERT,
   LOGOUT_SUCCESS,
-  LOGIN_FAIL
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -25,7 +24,6 @@ export default function alertReducer(state = initialState, action) {
       };
     case HIDE_ALERT:
     case LOGOUT_SUCCESS:
-    case LOGIN_FAIL:
       return {
         ...initialState
       };
