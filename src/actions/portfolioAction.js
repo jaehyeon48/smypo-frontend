@@ -52,11 +52,9 @@ export const getDefaultPortfolio = () => async (dispatch) => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, { withCredentials: true });
 
-    const defaultPortfolioId = response.data.defaultPortfolioId;
-
     dispatch({
       type: GET_DEFAULT_PORTFOLIO,
-      payload: defaultPortfolioId
+      payload: response.data.defaultPortfolioId
     });
   } catch (error) {
     if (error.response.status === 404) { // if the user's portfolio does not exist
