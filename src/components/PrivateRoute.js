@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import UserLoadingSpinner from './spinners/UserLoadingSpinner';
+import MainLoadingSpinner from './spinners/MainLoadingSpinner';
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   return (
@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
       {...rest}
       render={props => {
         if (auth.status === 'initial' || auth.status === 'loading') {
-          return <UserLoadingSpinner />
+          return <MainLoadingSpinner loadingText={'Loading user data...'} />
         }
         else {
           if (!auth.isAuthenticated) {

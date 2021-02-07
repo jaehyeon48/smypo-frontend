@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserLoadingSpinner = () => {
+const MainLoadingSpinner = ({ loadingText }) => {
   return (
     <div className="user-loading-spinner-wrapper">
       <svg
@@ -16,9 +16,9 @@ const UserLoadingSpinner = () => {
           </animate>
         </circle>
       </svg>
-      <p className="user-loading-spinner-text">Loading User Info...</p>
+      <p className="user-loading-spinner-text">{loadingText}</p>
     </div>
   );
 }
 
-export default UserLoadingSpinner;
+export default MainLoadingSpinner;
