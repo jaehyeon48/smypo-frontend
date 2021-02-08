@@ -47,7 +47,6 @@ const Dashboard = ({
   useEffect(() => {
     if (portfolio && portfolio.defaultPortfolioStatus !== 'succeeded'
       && portfolio.defaultPortfolioStatus !== 'loading') {
-      console.log(portfolio.defaultPortfolioStatus)
       getDefaultPortfolio();
     }
   }, [portfolio, getDefaultPortfolio]);
