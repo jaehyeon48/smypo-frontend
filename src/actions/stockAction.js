@@ -1,11 +1,9 @@
 import {
-  RESET_STOCK_LOADING,
-  RESET_REALIZE_STOCK_LOADING,
   CHECK_MARKET_STATUS,
   CHECK_MARKET_STATUS_ERROR,
-  GET_STOCK_LIST,
-  GET_EMPTY_STOCK_LIST,
-  GET_STOCK_ERROR,
+  START_GET_STOCK_LIST,
+  SUCCESS_GET_STOCK_LIST,
+  FAIL_GET_STOCK_LIST,
   GET_STOCK_GROUP,
   GET_STOCK_GROUP_ERROR,
   GET_REALIZED_STOCKS,
@@ -13,17 +11,21 @@ import {
   ADD_STOCK,
   EDIT_STOCK,
   DELETE_STOCK,
-  EDIT_DAILY_RETURN,
-  EDIT_OVERALL_RETURN,
+  SUCCESS_CALCULATE_RETURN,
+  FAIL_CALCULATE_RETURN,
   GET_SECTOR_ERROR,
   GET_SECTOR,
   CLOSE_POSITION,
-  CLOSE_POSITION_ERROR
+  CLOSE_POSITION_ERROR,
+  UPDATE_PROGRESS,
+  DONE_PROGRESS,
+  FAIL_PROGRESS
 } from './actionTypes';
 
 import axios from 'axios';
 import { sortStocks } from '../utils/sortStocks';
 
+// check if the market is currently open
 export const checkMarketStatus = () => async (dispatch) => {
   const config = { withCredentials: true };
   try {
@@ -38,26 +40,28 @@ export const checkMarketStatus = () => async (dispatch) => {
   }
 }
 
-export const getStocks = (portfolioId) => async (dispatch) => {
+export const getStocks = (portfolioId) => async (dispatch, getState) => {
   const config = { withCredentials: true };
   try {
-    const stocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/stocks/${portfolioId}`, config);
-    if (stocksResult.data !== null) {
-      const sortedStocks = await sortStocks(stocksResult.data);
-      dispatch({
-        type: GET_STOCK_LIST,
-        payload: sortedStocks
-      });
-    }
-    else {
-      dispatch({
-        type: GET_EMPTY_STOCK_LIST,
-        payload: []
-      });
+    dispatch({ type: START_GET_STOCK_LIST });
+    dispatch({
+      type: UPDATE_PROGRESS,
+      payload: 3
+    });
+    const stocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/stocks/${portfolioId}`,
+      config);
+    const sortedStocks = await sortStocks(stocksResult.data);
+    const [calcResCode, calcResult] = await calculateReturnLogic(sortedStocks, getState(), dispatch);
+    dispatch({
+      type: SUCCESS_GET_STOCK_LIST,
+      payload: calcResult
+    });
+    if (calcResCode === -1) {
+      dispatch({ type: FAIL_CALCULATE_RETURN });
     }
   } catch (error) {
     console.error(error);
-    dispatch({ type: GET_STOCK_ERROR });
+    dispatch({ type: FAIL_GET_STOCK_LIST });
   }
 }
 
@@ -129,18 +133,32 @@ export const deleteStock = (stockId) => async (dispatch) => {
   }
 }
 
+// calculate realtime daily & overall return
+export const calculateReturn = (stocks) => async (dispatch, getState) => {
+  const [calcResCode, calcResult] = await calculateReturnLogic(stocks, getState());
+  if (calcResCode === 0) {
+    dispatch({
+      type: SUCCESS_CALCULATE_RETURN,
+      payload: calcResult
+    });
+  }
+  else {
+    dispatch({ type: FAIL_CALCULATE_RETURN });
+  }
+}
+
 export const editDailyReturn = (ticker, dailyReturn) => (dispatch) => {
-  dispatch({
-    type: EDIT_DAILY_RETURN,
-    payload: { ticker, dailyReturn }
-  });
+  // dispatch({
+  //   type: EDIT_DAILY_RETURN,
+  //   payload: { ticker, dailyReturn }
+  // });
 }
 
 export const editOverallReturn = (ticker, overallReturn) => (dispatch) => {
-  dispatch({
-    type: EDIT_OVERALL_RETURN,
-    payload: { ticker, overallReturn }
-  });
+  // dispatch({
+  //   type: EDIT_OVERALL_RETURN,
+  //   payload: { ticker, overallReturn }
+  // });
 }
 
 export const getStocksByTickerGroup = (portfolioId, ticker) => async (dispatch) => {
@@ -173,14 +191,6 @@ export const getRealizedStocks = (portfolioId) => async (dispatch) => {
   }
 }
 
-export const resetStockLoading = () => (dispatch) => {
-  dispatch({ type: RESET_STOCK_LOADING });
-}
-
-export const resetRealizeStockLoading = () => (dispatch) => {
-  dispatch({ type: RESET_REALIZE_STOCK_LOADING });
-}
-
 export const closePosition = (portfolioId, ticker) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
@@ -191,5 +201,51 @@ export const closePosition = (portfolioId, ticker) => async (dispatch) => {
     console.error(error);
     dispatch({ type: CLOSE_POSITION_ERROR });
     return -1;
+  }
+}
+
+async function calculateReturnLogic(stocks, state, dispatch) {
+  if (stocks && stocks.length === 0) return;
+  const config = { withCredentials: true };
+  let calculatedStocks = { ...stocks };
+  let totalStuffsToDo = Object.keys(stocks).length;
+  let finishedStuffs = 0;
+  try {
+    for (const [ticker, stockItem] of Object.entries(stocks)) {
+      finishedStuffs += 0.3;
+      dispatch({
+        type: UPDATE_PROGRESS,
+        payload: (3 + parseFloat((finishedStuffs / totalStuffsToDo) * 100)).toFixed(0)
+      });
+      let stockPriceForDailyReturn = 0;
+      let stockPriceForOverallReturn = 0;
+      if (state.stock.isMarketOpen) {
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/realTime/${ticker}`, config);
+        stockPriceForDailyReturn = res.data.change;
+        stockPriceForOverallReturn = res.data.price;
+      } else {
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/close/${ticker}`, config);
+        stockPriceForDailyReturn = res.data.change;
+        stockPriceForOverallReturn = res.data.price;
+      }
+      const dailyReturnVal = parseFloat((stockPriceForDailyReturn * stockItem.quantity).toFixed(2));
+      const overallReturnVal = parseFloat(((stockPriceForOverallReturn - stockItem.avgCost) * stockItem.quantity).toFixed(2));
+      calculatedStocks[ticker].dailyReturn = dailyReturnVal;
+      calculatedStocks[ticker].overallReturn = overallReturnVal;
+      finishedStuffs += 0.7;
+      if (totalStuffsToDo === finishedStuffs) {
+        dispatch({ type: DONE_PROGRESS });
+      } else {
+        dispatch({
+          type: UPDATE_PROGRESS,
+          payload: (3 + parseFloat((finishedStuffs / totalStuffsToDo) * 100)).toFixed(0)
+        });
+      }
+    }
+    return [0, calculatedStocks];
+  } catch (error) {
+    dispatch({ type: FAIL_PROGRESS });
+    console.error(error);
+    return [-1, stocks];
   }
 }

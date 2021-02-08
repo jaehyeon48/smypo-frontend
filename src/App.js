@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import store from './store';
+import { store, persistor } from './store';
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
 import LandingPage from './components/landingpage/LandingPage';
@@ -25,29 +26,33 @@ import { loadUser } from './actions/authAction';
 
 export default function App() {
   useEffect(() => {
-    store.dispatch(loadUser());
+    if (store.getState().auth.status !== 'succeeded') {
+      store.dispatch(loadUser());
+    }
   }, []);
 
   return (
-    <Provider store={store} >
-      <Router>
-        <Switch>
-          <Route path="/" component={LandingPage} exact={true} />
-          <Navbar>
-            <Alert />
-            <PublicRoute path="/signup" component={SignUp} exact={true} />
-            <PublicRoute path="/login" component={Login} exact={true} />
-            <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
-            <PrivateRoute path="/stocks" component={Stock} exact={true} />
-            <PrivateRoute path="/stocks/realized" component={RealizedStocks} exact={true} />
-            <PrivateRoute path="/cash" component={Cash} exact={true} />
-            <PrivateRoute path="/portfolios" component={Portfolios} exact={true} />
-            <PrivateRoute path="/profile" component={Profile} exact={true} />
-            <PrivateRoute path="/position/:portfolioId/:ticker" component={Position} exact={true} />
-            <Footer />
-          </Navbar>
-        </Switch>
-      </Router>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <Switch>
+            <Route path="/" component={LandingPage} exact={true} />
+            <Navbar>
+              <Alert />
+              <PublicRoute path="/signup" component={SignUp} exact={true} />
+              <PublicRoute path="/login" component={Login} exact={true} />
+              <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
+              <PrivateRoute path="/stocks" component={Stock} exact={true} />
+              <PrivateRoute path="/stocks/realized" component={RealizedStocks} exact={true} />
+              <PrivateRoute path="/cash" component={Cash} exact={true} />
+              <PrivateRoute path="/portfolios" component={Portfolios} exact={true} />
+              <PrivateRoute path="/profile" component={Profile} exact={true} />
+              <PrivateRoute path="/position/:portfolioId/:ticker" component={Position} exact={true} />
+              <Footer />
+            </Navbar>
+          </Switch>
+        </Router>
+      </PersistGate>
     </Provider>
   );
 }

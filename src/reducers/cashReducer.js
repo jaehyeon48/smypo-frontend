@@ -1,7 +1,10 @@
 import {
-  GET_TOTAL_CASH,
-  GET_CASH_LIST,
-  GET_CASH_ERROR,
+  START_GET_CASH_LIST,
+  SUCCESS_GET_CASH_LIST,
+  FAIL_GET_CASH_LIST,
+  START_GET_TOTAL_CASH,
+  SUCCESS_GET_TOTAL_CASH,
+  FAIL_GET_TOTAL_CASH,
   ADD_CASH,
   ADD_CASH_ERROR,
   EDIT_CASH,
@@ -15,24 +18,45 @@ import {
 const initialState = {
   cashList: [],
   totalCash: 0,
-  cashLoading: true
+  cashListStatus: 'initial',
+  totalCashStatus: 'initial'
 }
 
 export default function cashReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_CASH_LIST:
+    case START_GET_CASH_LIST:
+      return {
+        ...state,
+        cashListStatus: 'loading'
+      };
+    case SUCCESS_GET_CASH_LIST:
       return {
         ...state,
         cashList: payload,
-        cashLoading: false
+        cashListStatus: 'succeeded'
       };
-    case GET_TOTAL_CASH:
+    case FAIL_GET_CASH_LIST:
+      return {
+        ...state,
+        cashListStatus: 'failed'
+      };
+    case START_GET_TOTAL_CASH:
+      return {
+        ...state,
+        totalCashStatus: 'loading'
+      };
+    case SUCCESS_GET_TOTAL_CASH:
       return {
         ...state,
         totalCash: payload,
-        cashLoading: false
+        totalCashStatus: 'succeeded'
+      };
+    case FAIL_GET_TOTAL_CASH:
+      return {
+        ...state,
+        totalCashStatus: 'failed'
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
@@ -48,7 +72,6 @@ export default function cashReducer(state = initialState, action) {
       };
     case ADD_CASH_ERROR:
     case EDIT_CASH_ERROR:
-    case GET_CASH_ERROR:
     case DELETE_CASH_ERROR:
     default:
       return {

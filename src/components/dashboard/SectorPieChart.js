@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useMemo, memo } from 'react';
 import { connect } from 'react-redux';
 import { Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
@@ -7,8 +6,7 @@ import 'chartjs-plugin-datalabels';
 import PieChartIcon from '../icons/PieChartIcon';
 
 const SectorPieChart = ({
-  stockList,
-  stockLoading
+  stock
 }) => {
   const [chartData, setChartData] = useState({
     labels: [],
@@ -20,11 +18,10 @@ const SectorPieChart = ({
     }]
   });
   const [sectors, setSectors] = useState([]);
-  const [sectorLabels, setSectorLabels] = useState([]);
   const [sectorsCount, setSectorsCount] = useState([]);
   const [shouldRenderChart, setShouldRenderChart] = useState(false);
   const [chartLegends, setChartLegends] = useState([]);
-  const [chartFontSize, setChartFontSize] = useState(16);
+  // const [chartFontSize, setChartFontSize] = useState(16);
 
   function getRandomColor(i) {
     const colors = ['#0DA886', '#4FDF5A', '#F5B428', '#F47B2E', '#EF4827', '#40C8CC', '#5E6F9E', '#C2596E', '#E9B07F', '#E2E678', '#EC7DBC'];
@@ -36,26 +33,49 @@ const SectorPieChart = ({
     }
   }
 
-  // calculate font size based on viewport size
-  useEffect(() => {
-    const viewportWidth = window.innerWidth;
-
-    if (viewportWidth >= 1460) {
-      setChartFontSize(16);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (stockList.length > 0) {
-      let newSectorsArray = [];
-      stockList.forEach((stock, index) => {
-        if (stock.quantity > 0) {
-          newSectorsArray.splice(index, 1, stock.sector);
+  const sectorLabels = useMemo(() => {
+    let newSectorLabelsArray = [];
+    if (stock && Object.keys(stock.stockList).length > 0) {
+      for (const stockItem of Object.values(stock.stockList)) {
+        if (stockItem.quantity > 0) {
+          if (newSectorLabelsArray.length === 0) {
+            newSectorLabelsArray.push(stockItem.sector);
+          }
+          else {
+            const isSectorNameDuplicate = newSectorLabelsArray.find((sectorName) => sectorName === stockItem.sector);
+            if (isSectorNameDuplicate === undefined) {
+              newSectorLabelsArray.push(stockItem.sector);
+            }
+          }
         }
-      });
+      }
+      newSectorLabelsArray.sort((a, b) => a.localeCompare(b));
+    }
+    return newSectorLabelsArray;
+  }, [stock]);
+
+  // calculate font size based on viewport size
+  // useEffect(() => {
+  //   const viewportWidth = window.innerWidth;
+
+  //   if (viewportWidth >= 1460) {
+  //     setChartFontSize(16);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    if (stock && Object.keys(stock.stockList).length > 0) {
+      let newSectorsArray = [];
+      let i = 0
+      for (const stockItem of Object.values(stock.stockList)) {
+        if (stockItem.quantity > 0) {
+          newSectorsArray.splice(i, 1, stockItem.sector);
+        }
+        i++;
+      }
       setSectors(newSectorsArray);
     }
-  }, [stockList]);
+  }, [stock]);
 
   // make legend
   useEffect(() => {
@@ -75,67 +95,46 @@ const SectorPieChart = ({
     }
   }, [sectorLabels, sectorsCount]);
 
-  useEffect(() => {
-    if (!stockLoading && stockList.length > 0) {
-      let newSectorLabelsArray = [];
-      stockList.forEach(stock => {
-        if (stock.quantity > 0) {
-          if (newSectorLabelsArray.length === 0) {
-            newSectorLabelsArray.push(stock.sector);
-          }
-          else {
-            const isSectorNameDuplicate = newSectorLabelsArray.find(sectorName => sectorName === stock.sector);
-            if (isSectorNameDuplicate === undefined) {
-              newSectorLabelsArray.push(stock.sector);
-            }
-          }
-        }
-      });
-      newSectorLabelsArray.sort((a, b) => a.localeCompare(b));
-      setSectorLabels(newSectorLabelsArray);
-    }
-  }, [stockList]);
-
+  // set each sector's label
   useEffect(() => {
     let newColors = [];
     if (sectorLabels.length > 0) {
       for (let i = 0; i < sectorLabels.length; i++) {
         newColors.push(getRandomColor(i));
       }
-      setChartData({
+      setChartData((prevState) => ({
+        ...prevState,
         labels: [...sectorLabels],
         datasets: [{
-          data: [...chartData.datasets[0].data],
           backgroundColor: [...newColors],
           borderColor: '#e8f0fe',
           borderWidth: 1
         }]
-      });
+      }));
     }
   }, [sectorLabels]);
 
+  // calculate each sector's ratio
   useEffect(() => {
     let newSectorsCount = [];
     if (sectors.length > 0 && sectorLabels.length > 0) {
       sectorLabels.forEach(label => {
-        const sectorCount = sectors.filter(sectorName => sectorName === label).length;
+        const sectorCount = sectors.filter((sectorName) => sectorName === label).length;
         newSectorsCount.push(parseFloat((sectorCount / sectors.length).toFixed(3)));
       });
     }
     setSectorsCount(newSectorsCount);
   }, [sectors, sectorLabels]);
 
+  // set the number of each sectors (sectors count)
   useEffect(() => {
     if (sectorsCount.length > 0) {
-      setChartData({
-        labels: [...chartData.labels],
+      setChartData((prevState) => ({
+        ...prevState,
         datasets: [{
-          data: [...sectorsCount],
-          backgroundColor: [...chartData.datasets[0].backgroundColor],
-          borderColor: '#e8f0fe',
-          borderWidth: 1
+          data: [...sectorsCount]
         }]
-      });
+      }));
     }
   }, [sectorsCount]);
 
@@ -146,7 +145,7 @@ const SectorPieChart = ({
     else {
       setShouldRenderChart(false);
     }
-  }, [chartData.labels.length]);
+  }, [chartData.labels]);
 
   const chartOptions = {
     maintainAspectRatio: false,
@@ -205,14 +204,8 @@ const SectorPieChart = ({
   );
 }
 
-SectorPieChart.propTypes = {
-  stockList: PropTypes.array,
-  stockLoading: PropTypes.bool
-};
-
 const mapStateToProps = (state) => ({
-  stockList: state.stock.stockList,
-  stockLoading: state.stock.stockLoading
+  stock: state.stock
 });
 
-export default connect(mapStateToProps)(SectorPieChart);
+export default connect(mapStateToProps)(memo(SectorPieChart));

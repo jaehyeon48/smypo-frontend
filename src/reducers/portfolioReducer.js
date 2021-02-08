@@ -1,11 +1,14 @@
 import {
   CHOOSE_DEFAULT_PORTFOLIO,
-  GET_DEFAULT_PORTFOLIO,
-  LOAD_PORTFOLIO,
+  START_LOAD_DEFAULT_PORTFOLIO,
+  SUCCESS_LOAD_DEFAULT_PORTFOLIO,
+  FAIL_LOAD_DEFAULT_PORTFOLIO,
+  START_LOAD_PORTFOLIO_LIST,
+  SUCCESS_LOAD_PORTFOLIO_LIST,
+  FAIL_LOAD_PORTFOLIO_LIST,
   CREATE_PORTFOLIO,
   EDIT_PORTFOLIO,
   DELETE_PORTFOLIO,
-  PORTFOLIO_LOAD_ERROR,
   PORTFOLIO_CREATE_ERROR,
   PORTFOLIO_EDIT_ERROR,
   PORTFOLIO_DELETE_ERROR,
@@ -16,7 +19,9 @@ import {
 
 const initialState = {
   portfolioList: [],
-  defaultPortfolio: null
+  defaultPortfolio: null,
+  portfolioListStatus: 'initial', // initial, idle, loading, succeeded, failed
+  defaultPortfolioStatus: 'initial' // initial, idle, loading, succeeded, failed
 };
 
 export default function portfolioReducer(state = initialState, action) {
@@ -26,19 +31,41 @@ export default function portfolioReducer(state = initialState, action) {
     case CHOOSE_DEFAULT_PORTFOLIO:
       return {
         ...state,
+        defaultPortfolioStatus: 'idle',
         defaultPortfolio: payload
       };
-    case GET_DEFAULT_PORTFOLIO:
+    case START_LOAD_DEFAULT_PORTFOLIO:
       return {
         ...state,
+        defaultPortfolioStatus: 'loading'
+      };
+    case SUCCESS_LOAD_DEFAULT_PORTFOLIO:
+      return {
+        ...state,
+        defaultPortfolioStatus: 'succeeded',
         defaultPortfolio: payload
       };
-    case LOAD_PORTFOLIO:
+    case FAIL_LOAD_DEFAULT_PORTFOLIO:
       return {
         ...state,
+        defaultPortfolioStatus: 'failed'
+      };
+    case START_LOAD_PORTFOLIO_LIST:
+      return {
+        ...state,
+        portfolioListStatus: 'loading'
+      };
+    case SUCCESS_LOAD_PORTFOLIO_LIST:
+      return {
+        ...state,
+        portfolioListStatus: 'succeeded',
         portfolioList: payload
       };
-    case PORTFOLIO_LOAD_ERROR:
+    case FAIL_LOAD_PORTFOLIO_LIST:
+      return {
+        ...state,
+        portfolioListStatus: 'failed'
+      };
     case EMPTY_PORTFOLIO:
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:

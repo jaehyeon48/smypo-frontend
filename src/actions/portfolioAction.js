@@ -1,11 +1,14 @@
 import {
   CHOOSE_DEFAULT_PORTFOLIO,
-  GET_DEFAULT_PORTFOLIO,
-  LOAD_PORTFOLIO,
+  START_LOAD_DEFAULT_PORTFOLIO,
+  SUCCESS_LOAD_DEFAULT_PORTFOLIO,
+  FAIL_LOAD_DEFAULT_PORTFOLIO,
+  START_LOAD_PORTFOLIO_LIST,
+  SUCCESS_LOAD_PORTFOLIO_LIST,
+  FAIL_LOAD_PORTFOLIO_LIST,
   CREATE_PORTFOLIO,
   EDIT_PORTFOLIO,
   DELETE_PORTFOLIO,
-  PORTFOLIO_LOAD_ERROR,
   PORTFOLIO_CREATE_ERROR,
   PORTFOLIO_EDIT_ERROR,
   PORTFOLIO_DELETE_ERROR,
@@ -16,15 +19,16 @@ import axios from 'axios';
 
 export const loadPortfolios = () => async (dispatch) => {
   try {
+    dispatch({ type: START_LOAD_PORTFOLIO_LIST });
     const portfolioResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio`, { withCredentials: true });
 
     dispatch({
-      type: LOAD_PORTFOLIO,
+      type: SUCCESS_LOAD_PORTFOLIO_LIST,
       payload: portfolioResponse.data
     });
   } catch (error) {
     console.error(error);
-    dispatch({ type: PORTFOLIO_LOAD_ERROR });
+    dispatch({ type: FAIL_LOAD_PORTFOLIO_LIST });
   }
 }
 
@@ -50,10 +54,11 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
 
 export const getDefaultPortfolio = () => async (dispatch) => {
   try {
+    dispatch({type: START_LOAD_DEFAULT_PORTFOLIO});
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, { withCredentials: true });
 
     dispatch({
-      type: GET_DEFAULT_PORTFOLIO,
+      type: SUCCESS_LOAD_DEFAULT_PORTFOLIO,
       payload: response.data.defaultPortfolioId
     });
   } catch (error) {
@@ -62,6 +67,7 @@ export const getDefaultPortfolio = () => async (dispatch) => {
     }
     else {
       console.error(error);
+      dispatch({type: FAIL_LOAD_DEFAULT_PORTFOLIO});
     }
   }
 }

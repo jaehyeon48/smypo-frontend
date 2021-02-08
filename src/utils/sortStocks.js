@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 export const sortStocks = async (stocksList) => {
-  let organizedShares = [];
+  if (stocksList && stocksList.length === 0) return [];
+  let organizedShares = {};
   const groupedStocks = groupStocksByTickerName(stocksList);
   for (let [ticker, value] of Object.entries(groupedStocks)) {
-    organizedShares.push(await organizeGroupedStocks(ticker, value));
+    // organizedShares.push(await organizeGroupedStocks(ticker, value));
+    organizedShares[ticker] = await organizeGroupedStocks(ticker, value);
   }
   return organizedShares;
 }
@@ -25,7 +27,6 @@ const groupStocksByTickerName = (stocks) => {
   stocks.forEach(share => {
     stockGroup[share.ticker.toLowerCase()].push(share);
   });
-
   return stockGroup;
 };
 

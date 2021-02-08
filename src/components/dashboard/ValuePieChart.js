@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
@@ -7,9 +6,7 @@ import 'chartjs-plugin-datalabels';
 import PieChartIcon from '../icons/PieChartIcon';
 
 const ValuePieChart = ({
-  stockList,
-  stockListLength,
-  stockLoading,
+  stock,
   totalCash
 }) => {
   const [chartData, setChartData] = useState({
@@ -25,10 +22,10 @@ const ValuePieChart = ({
   const [stockValueData, setStockValueData] = useState([]);
   const [shouldRenderChart, setShouldRenderChart] = useState(false);
   const [chartLegends, setChartLegends] = useState([]);
-  const [chartFontSize, setChartFontSize] = useState(16);
+  // const [chartFontSize, setChartFontSize] = useState(16);
 
   function getRandomColor(i) {
-    const colors = ['#0DA886', '#4FDF5A', '#F5B428', '#F47B2E', '#EF4827', '#40C8CC', '#5E6F9E', '#C2596E', '#E9B07F', '#E2E678', '#EE636C'];
+    const colors = ['#F0564E', '#F49B50', '#32C08C', '#5BAEDC', '#855AE9', '#E955AA', '#F2C650', '#1DBE50', '#3489D6', '#C244E1', '#e2ea49'];
     if (i === 0) {
       return colors[0];
     }
@@ -38,102 +35,76 @@ const ValuePieChart = ({
   }
 
   // calculate font size based on viewport size
-  useEffect(() => {
-    const viewportWidth = window.innerWidth;
+  // useEffect(() => {
+  //   const viewportWidth = window.innerWidth;
 
-    if (viewportWidth >= 1460) {
-      setChartFontSize(16);
-    }
-  }, []);
+  //   if (viewportWidth >= 1460) {
+  //     setChartFontSize(16);
+  //   }
+  // }, []);
 
   // insert ticker into the chart's data label array
   useEffect(() => {
-    if (!stockLoading && stockList && stockList.length > 0) {
+    if (stock && Object.keys(stock.stockList).length > 0) {
       let newTickerLabels = [];
       if (totalCash > 0) {
         newTickerLabels.push('cash');
       }
-      stockList.forEach(stock => {
-        if (stock.quantity > 0) {
-          newTickerLabels.push(stock.ticker.toUpperCase());
+      for (const stockItem of Object.values(stock.stockList)) {
+        if (stockItem.quantity > 0) {
+          newTickerLabels.push(stockItem.ticker.toUpperCase());
         }
-      });
+      }
       setTickerLabels(newTickerLabels);
     }
-  }, [stockList]);
-
-
-  // initialize chart data labels, background colors and border colors
-  useEffect(() => {
-    let newColors = [];
-    if (tickerLabels.length > 0) {
-      for (let i = 0; i < tickerLabels.length; i++) {
-        newColors.push(getRandomColor(i));
-      }
-      setChartData({
-        labels: [...tickerLabels],
-        datasets: [{
-          data: [...chartData.datasets[0].data],
-          backgroundColor: newColors,
-          borderColor: '#e8f0fe',
-          borderWidth: 1
-        }]
-      });
-    }
-  }, [tickerLabels]);
+  }, [stock, totalCash]);
 
   // calculate each stock's (and cash) value
   useEffect(() => {
-    if (stockList.length === stockListLength) {
-      // filter stock items with quantity is 0
-      const filteredStockList = stockList.filter((stock) => stock.quantity > 0);
-      let newChartData;
-      if (totalCash > 0) {
-        newChartData = new Array(filteredStockList.length + 1); // add 1 for cash
-        // cash always comes at the first position
-        newChartData.splice(0, 1, totalCash);
-        filteredStockList.forEach((stock, index) => {
-          if (stock.overallReturn !== null && stock.quantity > 0) {
-            const overallReturn = parseFloat((stock.avgCost * stock.quantity + stock.overallReturn).toFixed(2));
-            if (overallReturn > 0) {
-              newChartData.splice(index + 1, 1, overallReturn);
-            }
-          }
-        });
+    if (stock && Object.keys(stock.stockList).length > 0) {
+      let filteredStockList = {};
+      for (const [ticker, stockItem] of Object.entries(stock.stockList)) {
+        if (stockItem.quantity > 0) {
+          filteredStockList[ticker] = stockItem;
+        }
       }
-      else {
-        newChartData = new Array(filteredStockList.length);
-        filteredStockList.forEach((stock, index) => {
-          if (stock.overallReturn !== null && stock.quantity > 0) {
-            const overallReturn = parseFloat((stock.avgCost * stock.quantity + stock.overallReturn).toFixed(2));
-            if (overallReturn > 0) {
-              newChartData.splice(index, 1, overallReturn);
-            }
+      let newChartData = [];
+      // cash always comes at the first position
+      if (totalCash > 0) {
+        newChartData.push(totalCash);
+      }
+      for (const stockItem of Object.values(stock.stockList)) {
+        if (stockItem.overallReturn !== null && stockItem.quantity > 0) {
+          const overallReturn = parseFloat((stockItem.avgCost * stockItem.quantity + stockItem.overallReturn)
+            .toFixed(2));
+          if (overallReturn > 0) {
+            newChartData.push(overallReturn);
           }
-        });
+        }
       }
       setStockValueData(newChartData);
     }
-  }, [stockList, totalCash]);
+  }, [stock, totalCash]);
 
   // initialize stock's returns into chart data
   useEffect(() => {
-    if (stockValueData.length > 0 && chartData.labels.length > 0) {
+    if (stockValueData.length > 0 && tickerLabels.length > 0) {
       let newColors = [];
       for (let i = 0; i < tickerLabels.length; i++) {
         newColors.push(getRandomColor(i));
       }
-      setChartData({
+      setChartData((prevState) => ({
+        ...prevState,
         labels: [...tickerLabels],
         datasets: [{
           data: [...stockValueData],
-          backgroundColor: newColors,
+          backgroundColor: [...newColors],
           borderColor: '#e8f0fe',
           borderWidth: 1
         }]
-      });
+      }));
     }
-  }, [stockValueData]);
+  }, [stockValueData, tickerLabels]);
 
   // make legend
   useEffect(() => {
@@ -226,15 +197,8 @@ const ValuePieChart = ({
   );
 }
 
-ValuePieChart.propTypes = {
-  stockList: PropTypes.array,
-  totalCash: PropTypes.number,
-  stockLoading: PropTypes.bool
-};
-
 const mapStateToProps = (state) => ({
-  stockList: state.stock.stockList,
-  stockLoading: state.stock.stockLoading,
+  stock: state.stock,
   totalCash: state.cash.totalCash
 });
 

@@ -1,11 +1,9 @@
 import {
-  RESET_STOCK_LOADING,
-  RESET_REALIZE_STOCK_LOADING,
   CHECK_MARKET_STATUS,
   CHECK_MARKET_STATUS_ERROR,
-  GET_STOCK_LIST,
-  GET_EMPTY_STOCK_LIST,
-  GET_STOCK_ERROR,
+  START_GET_STOCK_LIST,
+  SUCCESS_GET_STOCK_LIST,
+  FAIL_GET_STOCK_LIST,
   GET_STOCK_GROUP,
   GET_STOCK_GROUP_ERROR,
   GET_SECTOR,
@@ -15,12 +13,15 @@ import {
   ADD_STOCK,
   EDIT_STOCK,
   DELETE_STOCK,
-  EDIT_DAILY_RETURN,
-  EDIT_OVERALL_RETURN,
+  SUCCESS_CALCULATE_RETURN,
+  FAIL_CALCULATE_RETURN,
   CLOSE_POSITION,
   CLOSE_POSITION_ERROR,
   LOGOUT_SUCCESS,
-  LOGOUT_FAIL
+  LOGOUT_FAIL,
+  UPDATE_PROGRESS,
+  DONE_PROGRESS,
+  FAIL_PROGRESS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -28,9 +29,8 @@ const initialState = {
   stockGroup: [],
   realizedStocks: [],
   isMarketOpen: null,
-  stockLoading: true,
-  stockGroupLoading: true,
-  realizedStockLoading: true
+  stockStatus: 'initial',
+  calcProgress: 0 // progress of the calculating return process
 };
 
 const sortByTicker = (a, b) => {
@@ -47,17 +47,20 @@ const sortByTicker = (a, b) => {
  * and current stock list (which is passed by payload) and returns false if 
  * two stock lists are different.
 */
-const compareStockList = (prevStockList, nextStockList) => {
-  if (prevStockList.length !== nextStockList.length) return false;
+// const compareStockList = (prevStockList, nextStockList) => {
+//   if (Object.keys(prevStockList).length !== Object.keys(nextStockList).length) return false;
 
-  for (let i = 0; i < prevStockList.length; i++) {
-    if (prevStockList[i].ticker !== nextStockList[i].ticker) return false;
-    if (prevStockList[i].avgCost !== nextStockList[i].avgCost) return false;
-    if (prevStockList[i].quantity !== nextStockList[i].quantity) return false;
-    if (prevStockList[i].sector !== nextStockList[i].sector) return false;
-  }
-  return true;
-}
+//   for (const [ticker, stockItem] of Object.entries(prevStockList)) {
+//     if prevStockList[ticker]
+//   }
+//   for (let i = 0; i < prevStockList.length; i++) {
+//     if (prevStockList[i].ticker !== nextStockList[i].ticker) return false;
+//     if (prevStockList[i].avgCost !== nextStockList[i].avgCost) return false;
+//     if (prevStockList[i].quantity !== nextStockList[i].quantity) return false;
+//     if (prevStockList[i].sector !== nextStockList[i].sector) return false;
+//   }
+//   return true;
+// }
 
 export default function stockReducer(state = initialState, action) {
   const { type, payload } = action;
@@ -68,33 +71,22 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         isMarketOpen: payload
       };
-    case GET_STOCK_LIST:
-      if (compareStockList(state.stockList, payload)) {
-        return {
-          ...state,
-          stockLoading: false,
-          stockGroupLoading: true
-        };
-      }
+    case START_GET_STOCK_LIST:
+      return {
+        ...state,
+        stockStatus: 'loading'
+      };
+    case SUCCESS_GET_STOCK_LIST:
       return {
         ...state,
         stockList: payload,
-        stockLoading: false,
-        stockGroupLoading: true
+        stockStatus: 'succeeded',
       };
-    case GET_EMPTY_STOCK_LIST:
-      return {
-        ...state,
-        stockList: payload,
-        stockLoading: false,
-        stockGroupLoading: true
-      };
-    case GET_STOCK_ERROR:
+    case FAIL_GET_STOCK_LIST:
       return {
         ...state,
         stockList: [],
-        stockLoading: false,
-        stockGroupLoading: true
+        stockStatus: 'failed'
       };
     case GET_STOCK_GROUP:
       return {
@@ -119,23 +111,14 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         realizedStockLoading: false
       };
-    case EDIT_DAILY_RETURN:
-      const tickerObjDaily = state.stockList.filter(stock => stock.ticker === payload.ticker);
-      const otherStocksDaily = state.stockList.filter(stock => stock.ticker !== payload.ticker);
-      tickerObjDaily[0].dailyReturn = payload.dailyReturn;
-      const newStockListDaily = [...tickerObjDaily, ...otherStocksDaily].sort(sortByTicker);
+    case SUCCESS_CALCULATE_RETURN:
       return {
         ...state,
-        stockList: newStockListDaily
+        stockList: payload
       };
-    case EDIT_OVERALL_RETURN:
-      const tickerObjOverall = state.stockList.filter(stock => stock.ticker === payload.ticker);
-      const otherStocksOverall = state.stockList.filter(stock => stock.ticker !== payload.ticker);
-      tickerObjOverall[0].overallReturn = payload.overallReturn;
-      const newStockListOverall = [...tickerObjOverall, ...otherStocksOverall].sort(sortByTicker);
+    case FAIL_CALCULATE_RETURN:
       return {
         ...state,
-        stockList: newStockListOverall
       };
     case GET_SECTOR:
       const targetStockObj = state.stockList.filter(stock => stock.ticker === payload.ticker);
@@ -146,15 +129,16 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         stockList: newStockList
       };
-    case RESET_STOCK_LOADING:
+    case UPDATE_PROGRESS:
       return {
         ...state,
-        stockLoading: true
+        calcProgress: payload
       };
-    case RESET_REALIZE_STOCK_LOADING:
+    case DONE_PROGRESS:
+    case FAIL_PROGRESS:
       return {
         ...state,
-        realizedStockLoading: true
+        calcProgress: 0
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:

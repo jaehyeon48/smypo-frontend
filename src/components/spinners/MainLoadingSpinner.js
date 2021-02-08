@@ -2,10 +2,9 @@ import React from 'react';
 
 const MainLoadingSpinner = ({ loadingText }) => {
   return (
-    <div className="user-loading-spinner-wrapper">
+    <div className="main-loading-spinner-wrapper">
       <svg
-        className="user-loading-spinner"
-        xmlns="http://www.w3.org/2000/svg"
+        className="main-loading-spinner"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
       >
@@ -16,7 +15,7 @@ const MainLoadingSpinner = ({ loadingText }) => {
           </animate>
         </circle>
       </svg>
-      <p className="user-loading-spinner-text">{loadingText}</p>
+      <p className="main-loading-spinner-text">{loadingText}</p>
     </div>
   );
 }

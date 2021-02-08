@@ -1,7 +1,10 @@
 import {
-  GET_TOTAL_CASH,
-  GET_CASH_LIST,
-  GET_CASH_ERROR,
+  START_GET_CASH_LIST,
+  SUCCESS_GET_CASH_LIST,
+  FAIL_GET_CASH_LIST,
+  START_GET_TOTAL_CASH,
+  SUCCESS_GET_TOTAL_CASH,
+  FAIL_GET_TOTAL_CASH,
   ADD_CASH,
   ADD_CASH_ERROR,
   EDIT_CASH,
@@ -14,18 +17,20 @@ import axios from 'axios';
 
 import { calculateTotalCashAmount } from '../utils/calculateTotalCash';
 
+// retrieve user's cash list
 export const getCash = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
+    dispatch({ type: START_GET_CASH_LIST });
     const cashResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
     dispatch({
-      type: GET_CASH_LIST,
+      type: SUCCESS_GET_CASH_LIST,
       payload: cashResponse.data
     });
   } catch (error) {
     console.error(error);
-    dispatch({ type: GET_CASH_ERROR });
+    dispatch({ type: FAIL_GET_CASH_LIST });
   }
 }
 
@@ -33,17 +38,18 @@ export const getTotalCash = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
+    dispatch({ type: START_GET_TOTAL_CASH })
     const cashResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
     if (cashResponse.data.length > 0) {
       const totalCash = calculateTotalCashAmount(cashResponse.data);
       dispatch({
-        type: GET_TOTAL_CASH,
+        type: SUCCESS_GET_TOTAL_CASH,
         payload: totalCash
       });
     }
   } catch (error) {
     console.error(error);
-    dispatch({ type: GET_CASH_ERROR });
+    dispatch({ type: FAIL_GET_TOTAL_CASH });
   }
 }
 

@@ -7,7 +7,6 @@ import Spinner from '../spinner/Spinner';
 import RealizedStockItem from './RealizedStockItem';
 import { getDefaultPortfolio } from '../../actions/portfolioAction';
 import {
-  resetRealizeStockLoading,
   getRealizedStocks
 } from '../../actions/stockAction';
 
@@ -15,8 +14,7 @@ const RealizedStocks = ({
   defaultPortfolio,
   getDefaultPortfolio,
   getRealizedStocks,
-  realizedStocks,
-  realizedStockLoading
+  realizedStocks
 }) => {
   const [totalRealizedReturn, setTotalRealizedReturn] = useState(0);
   const [currentPortfolioName, setCurrentPortfolioName] = useState('');
@@ -41,7 +39,6 @@ const RealizedStocks = ({
   }, [defaultPortfolio]);
 
   useEffect(() => {
-    resetRealizeStockLoading();
     getRealizedStocks(defaultPortfolio);
   }, [defaultPortfolio]);
 
@@ -65,7 +62,7 @@ const RealizedStocks = ({
         <span>{currentPortfolioName}</span>
       </div>
     )}
-      {!realizedStockLoading ? (
+      {true ? (
         <React.Fragment>
         <div className={`total-realized-value ${borderColorTotalRealizedReturn()}`}>
           <span>Total Realized Value</span>
@@ -118,17 +115,14 @@ RealizedStocks.propTypes = {
   getRealizedStocks: PropTypes.func,
   getDefaultPortfolio: PropTypes.func,
   realizedStocks: PropTypes.array,
-  realizedStockLoading: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   defaultPortfolio: state.portfolio.defaultPortfolio,
   realizedStocks: state.stock.realizedStocks,
-  realizedStockLoading: state.stock.realizedStockLoading
 });
 
 export default connect(mapStateToProps, {
-  resetRealizeStockLoading,
   getRealizedStocks,
   getDefaultPortfolio
 })(RealizedStocks);

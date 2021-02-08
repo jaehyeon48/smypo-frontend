@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,83 +10,97 @@ import {
 import {
   checkMarketStatus,
   getStocks,
-  resetStockLoading
 } from '../../actions/stockAction';
 import { getTotalCash } from '../../actions/cashAction';
 import ChartSolidIcon from '../icons/ChartSolidIcon';
 import ChartRegularIcon from '../icons/ChartRegularIcon';
 import SackDollarIcon from '../icons/SackDollarIcon';
-import GetStockPrice from './GetStockPrice';
 import ValuePieChart from './ValuePieChart';
 import SectorPieChart from './SectorPieChart';
 import LineChart from './LineChart';
-import Spinner from '../spinner/Spinner';
-import { Line } from 'react-chartjs-2';
+import MainLoadingSpinner from '../spinners/MainLoadingSpinner';
+import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
 
 const Dashboard = ({
   stock,
-  totalCash,
-  portfolioList,
+  cash,
+  portfolio,
   defaultPortfolio,
   loadPortfolios,
   getDefaultPortfolio,
   checkMarketStatus,
   getStocks,
   getTotalCash,
-  resetStockLoading
 }) => {
   const [totalDailyReturn, setTotalDailyReturn] = useState(0);
   const [totalOverallReturn, setTotalOverallReturn] = useState(0);
   const [dailyReturnPercent, setDailyReturnPercent] = useState(0);
   const [overallReturnPercent, setOverallReturnPercent] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
-  const [cashToDisplay, setCashToDisplay] = useState(totalCash);
+  const [cashToDisplay, setCashToDisplay] = useState(cash.totalCash);
   const [totalValue, setTotalValue] = useState(0);
 
-  useEffect(() => { checkMarketStatus(); }, []);
-  useEffect(() => { getDefaultPortfolio(); }, []);
-  useEffect(() => { resetStockLoading(); }, []);
+  useEffect(() => {
+    checkMarketStatus();
+  }, [checkMarketStatus]);
 
   useEffect(() => {
-    loadPortfolios();
-  }, [loadPortfolios]);
+    if (portfolio && portfolio.defaultPortfolioStatus !== 'succeeded'
+      && portfolio.defaultPortfolioStatus !== 'loading') {
+      console.log(portfolio.defaultPortfolioStatus)
+      getDefaultPortfolio();
+    }
+  }, [portfolio, getDefaultPortfolio]);
+
+  useEffect(() => {
+    if (portfolio && portfolio.portfolioListStatus !== 'succeeded'
+      && portfolio.portfolioListStatus !== 'loading') {
+      loadPortfolios();
+    }
+  }, [portfolio, loadPortfolios]);
 
   useEffect(() => {
     if (defaultPortfolio) {
-      getStocks(defaultPortfolio);
-      getTotalCash(defaultPortfolio);
+      if (stock && stock.stockStatus !== 'succeeded'
+        && stock.stockStatus !== 'loading') {
+        getStocks(defaultPortfolio);
+      }
+      if (cash && cash.totalCashStatus !== 'succeeded'
+        && cash.totalCashStatus !== 'loading') {
+        getTotalCash(defaultPortfolio);
+      }
     }
-  }, [defaultPortfolio]);
+  }, [stock, cash, getStocks, getTotalCash, defaultPortfolio]);
 
   useEffect(() => {
-    if (stock.stockList.length > 0) {
+    if (stock && Object.keys(stock.stockList).length > 0) {
       let sumOfCost = 0;
-      stock.stockList.forEach(stock => {
-        sumOfCost += (stock.avgCost * stock.quantity);
-      });
+      for (const stockInfo of Object.values(stock.stockList)) {
+        sumOfCost += (stockInfo.avgCost * stockInfo.quantity);
+      }
       setTotalCost(parseFloat(sumOfCost.toFixed(2)));
     }
-  }, [stock.stockList]);
+  }, [stock]);
 
   useEffect(() => {
-    if (stock.stockList.length > 0) {
+    if (stock && Object.keys(stock.stockList).length > 0) {
       let sumOfDailyReturn = 0;
-      stock.stockList.forEach(stock => {
-        sumOfDailyReturn += stock.dailyReturn;
-      });
+      for (const stockInfo of Object.values(stock.stockList)) {
+        sumOfDailyReturn += stockInfo.dailyReturn;
+      }
       setTotalDailyReturn(parseFloat(sumOfDailyReturn.toFixed(2)));
     }
-  }, [stock.stockList]);
+  }, [stock]);
 
   useEffect(() => {
-    if (stock.stockList.length > 0) {
+    if (stock && Object.keys(stock.stockList).length > 0) {
       let sumOfOverallReturn = 0;
-      stock.stockList.forEach(stock => {
-        sumOfOverallReturn += stock.overallReturn;
-      });
+      for (const stockInfo of Object.values(stock.stockList)) {
+        sumOfOverallReturn += stockInfo.overallReturn;
+      }
       setTotalOverallReturn(parseFloat(sumOfOverallReturn.toFixed(2)));
     }
-  }, [stock.stockList]);
+  }, [stock]);
 
   useEffect(() => {
     setDailyReturnPercent((totalDailyReturn / (totalOverallReturn + totalCost - totalDailyReturn) * 100));
@@ -101,13 +115,13 @@ const Dashboard = ({
   }, [totalOverallReturn, totalCost, cashToDisplay]);
 
   useEffect(() => {
-    if (totalCash < 0) {
+    if (cash.totalCash < 0) {
       setCashToDisplay(0);
     }
     else {
-      setCashToDisplay(totalCash);
+      setCashToDisplay(cash.totalCash);
     }
-  }, [totalCash]);
+  }, [cash]);
 
   const colorReturnItem = (value) => {
     if (value > 0) return 'return-positive';
@@ -123,109 +137,106 @@ const Dashboard = ({
 
   return (
     <React.Fragment>
-      {portfolioList && portfolioList.length > 0 ? (
-        <main className="dashboard-main">
-          {!stock.stockLoading ? (
-            <React.Fragment>
-              {stock.stockList.length > 0 ? (
-                <React.Fragment>
-                  <div className="display-return-container">
-                    <div
-                      className={`return-item daily-return ${colorReturnItemBottom(totalDailyReturn)}`}
-                    >
-                      <div className="return-item-icon">
-                        <ChartRegularIcon />
+      {portfolio && portfolio.status !== 'loading'
+        && portfolio.portfolioList.length > 0 ? (
+          <main className="dashboard-main">
+            {stock && stock.stockStatus !== 'loading' ? (
+              <React.Fragment>
+                {Object.keys(stock.stockList).length > 0 ? (
+                  <React.Fragment>
+                    <div className="display-return-container">
+                      <div
+                        className={`return-item daily-return ${colorReturnItemBottom(totalDailyReturn)}`}
+                      >
+                        <div className="return-item-icon">
+                          <ChartRegularIcon />
+                        </div>
+                        <div className="return-item-content">
+                          <span>Daily Return</span>
+                          <span className={`return-numbers ${colorReturnItem(totalDailyReturn)}`}>
+                            <span>
+                              {totalDailyReturn}
+                            </span>
+                            <span>
+                              ({totalDailyReturn > 0 && '+'}
+                              {isNaN(dailyReturnPercent.toFixed(2)) ? (0) : (
+                                dailyReturnPercent.toFixed(2)
+                              )}%)
+                          </span>
+                          </span>
+                        </div>
                       </div>
-                      <div className="return-item-content">
-                        <span>Daily Return</span>
-                        <span className={`return-numbers ${colorReturnItem(totalDailyReturn)}`}>
-                          <span>
-                            {totalDailyReturn}
+                      <div
+                        className={`return-item overall-return ${colorReturnItemBottom(totalOverallReturn)}`}
+                      >
+                        <div className="return-item-icon">
+                          <ChartSolidIcon />
+                        </div>
+                        <div className="return-item-content">
+                          <span>Total Return</span>
+                          <span className={`return-numbers ${colorReturnItem(totalOverallReturn)}`}>
+                            <span>
+                              {totalOverallReturn}
+                            </span>
+                            <span>
+                              ({totalOverallReturn > 0 && '+'}
+                              {isNaN(overallReturnPercent.toFixed(2)) ? (0) : (
+                                overallReturnPercent.toFixed(2)
+                              )}%)
                           </span>
-                          <span>
-                            ({totalDailyReturn > 0 && '+'}
-                            {isNaN(dailyReturnPercent.toFixed(2)) ? (0) : (
-                              dailyReturnPercent.toFixed(2)
-                            )}%)
                           </span>
-                        </span>
+                        </div>
+                      </div>
+                      <div className={`return-item total-value ${colorReturnItemBottom(totalValue)}`}>
+                        <div className="return-item-icon">
+                          <SackDollarIcon />
+                        </div>
+                        <div className="return-item-content">
+                          <span>Total Asset</span>
+                          <span className={`return-numbers ${colorReturnItem(totalValue)}`}>
+                            {(totalValue).toFixed(2)}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    <div
-                      className={`return-item overall-return ${colorReturnItemBottom(totalOverallReturn)}`}
-                    >
-                      <div className="return-item-icon">
-                        <ChartSolidIcon />
+                    {stock && Object.values(stock.stockList).length > 0 && (
+                      <div className="dashboard-pie-charts">
+                        <ValuePieChart />
+                        <SectorPieChart />
                       </div>
-                      <div className="return-item-content">
-                        <span>Total Return</span>
-                        <span className={`return-numbers ${colorReturnItem(totalOverallReturn)}`}>
-                          <span>
-                            {totalOverallReturn}
-                          </span>
-                          <span>
-                            ({totalOverallReturn > 0 && '+'}
-                            {isNaN(overallReturnPercent.toFixed(2)) ? (0) : (
-                              overallReturnPercent.toFixed(2)
-                            )}%)
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                    <div className={`return-item total-value ${colorReturnItemBottom(totalValue)}`}>
-                      <div className="return-item-icon">
-                        <SackDollarIcon />
-                      </div>
-                      <div className="return-item-content">
-                        <span>Total Asset</span>
-                        <span className={`return-numbers ${colorReturnItem(totalValue)}`}>
-                          {(totalValue).toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  {stock.stockList && stock.stockList.length > 0 && (
-                    <div className="dashboard-pie-charts">
-                      <ValuePieChart stockListLength={stock.stockList.length} />
-                      <SectorPieChart />
-                    </div>
-                  )}
-                  <LineChart defaultPortfolioId={defaultPortfolio} />
-                </React.Fragment>
-              ) : (
-                  <div className="notice-empty-stocklist">
-                    <p>Your stock list is empty. Please add your stock first.</p>
-                    <Link to="/stocks">
-                      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                        <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                      </svg>
+                    )}
+                    <LineChart defaultPortfolioId={defaultPortfolio} />
+                  </React.Fragment>
+                ) : (
+                    <div className="notice-empty-stocklist">
+                      <p>Your stock list is empty. Please add your stock first.</p>
+                      <Link to="/stocks">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                          <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                        </svg>
                       Add new stock
                     </Link>
-                  </div>
-                )}
-            </React.Fragment>
-          ) : <div className="dashboard-spinner"><Spinner /></div>}
-          <div className="portfolio-actions">
-          </div>
-          {stock && !stock.stockLoading && stock.stockList.map(eachStock => (
-            <GetStockPrice
-              key={eachStock.ticker}
-              ticker={eachStock.ticker}
-              avgCost={eachStock.avgCost}
-              quantity={eachStock.quantity}
-            />
-          ))}
-        </main>
-      ) : (
-          <main className="notice-empty-portfolio-list">
-            <p>Portfolio list is empty. Would you like to create a new one?</p>
-            <Link to="/portfolios">
-              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-              </svg>
+                    </div>
+                  )}
+              </React.Fragment>
+            ) : <StockLoadingSpinner loadingProgress={stock.calcProgress} />}
+            <div className="portfolio-actions">
+            </div>
+          </main>
+        ) : (
+          portfolio.status === 'loading' ? (
+            <MainLoadingSpinner loadingText={'Loading portfolio list...'} />
+          ) : (
+              <main className="notice-empty-portfolio-list">
+                <p>Portfolio list is empty. Would you like to create a new one?</p>
+                <Link to="/portfolios">
+                  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                  </svg>
               Add new portfolio
             </Link>
-          </main>
+              </main>
+            )
         )}
     </React.Fragment>
   );
@@ -235,8 +246,6 @@ const Dashboard = ({
 Dashboard.propTypes = {
   theme: PropTypes.string,
   totalCost: PropTypes.number,
-  totalCash: PropTypes.number,
-  portfolioList: PropTypes.array,
   defaultPortfolio: PropTypes.number,
   loadPortfolios: PropTypes.func,
   checkMarketStatus: PropTypes.func,
@@ -244,14 +253,13 @@ Dashboard.propTypes = {
   getStocks: PropTypes.func,
   addTotalCost: PropTypes.func,
   getTotalCash: PropTypes.func,
-  resetStockLoading: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
   theme: state.auth.theme,
   stock: state.stock,
-  totalCash: state.cash.totalCash,
-  portfolioList: state.portfolio.portfolioList,
+  cash: state.cash,
+  portfolio: state.portfolio,
   defaultPortfolio: state.portfolio.defaultPortfolio
 });
 
@@ -260,6 +268,5 @@ export default connect(mapStateToProps, {
   getDefaultPortfolio,
   checkMarketStatus,
   getStocks,
-  getTotalCash,
-  resetStockLoading
-})(Dashboard);
+  getTotalCash
+})(memo(Dashboard));
