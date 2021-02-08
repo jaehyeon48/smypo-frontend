@@ -28,7 +28,7 @@ const initialState = {
   stockList: [],
   stockGroup: [],
   realizedStocks: [],
-  isMarketOpen: null,
+  isMarketOpen: false,
   stockStatus: 'initial',
   calcProgress: 0 // progress of the calculating return process
 };
