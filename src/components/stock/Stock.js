@@ -118,8 +118,12 @@ const Stock = ({
                       <StockItem
                         key={stockItem.ticker}
                         ticker={stockItem.ticker}
+                        price={stockItem.price}
+                        change={stockItem.change}
                         avgCost={stockItem.avgCost}
                         quantity={stockItem.quantity}
+                        dailyReturn={stockItem.dailyReturn}
+                        overallReturn={stockItem.overallReturn}
                       />
                     ))}
                   </tbody>
