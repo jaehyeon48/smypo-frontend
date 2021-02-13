@@ -233,6 +233,7 @@ async function calculateReturnLogic(stocks, state, dispatch) {
       calculatedStocks[ticker].dailyReturn = dailyReturnVal;
       calculatedStocks[ticker].overallReturn = overallReturnVal;
       // add 'price' property for later use
+      calculatedStocks[ticker].change = stockPriceForDailyReturn;
       calculatedStocks[ticker].price = stockPriceForOverallReturn;
       finishedStuffs += 0.7;
       if (totalStuffsToDo === finishedStuffs) {
