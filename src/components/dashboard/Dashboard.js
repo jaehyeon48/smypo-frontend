@@ -45,27 +45,27 @@ const Dashboard = ({
   }, [checkMarketStatus]);
 
   useEffect(() => {
-    if (portfolio && portfolio.defaultPortfolioStatus !== 'succeeded'
-      && portfolio.defaultPortfolioStatus !== 'loading') {
+    if (portfolio && (portfolio.defaultPortfolioStatus === 'initial' ||
+      portfolio.defaultPortfolioStatus === 'idle')) {
       getDefaultPortfolio();
     }
   }, [portfolio, getDefaultPortfolio]);
 
   useEffect(() => {
-    if (portfolio && portfolio.portfolioListStatus !== 'succeeded'
-      && portfolio.portfolioListStatus !== 'loading') {
+    if (portfolio && (portfolio.portfolioListStatus === 'initial' ||
+      portfolio.portfolioListStatus === 'idle')) {
       loadPortfolios();
     }
   }, [portfolio, loadPortfolios]);
 
   useEffect(() => {
     if (defaultPortfolio) {
-      if (stock && stock.stockStatus !== 'succeeded'
-        && stock.stockStatus !== 'loading') {
+      if (stock && (stock.stockStatus === 'initial' ||
+        stock.stockStatus === 'idle')) {
         getStocks(defaultPortfolio);
       }
-      if (cash && cash.totalCashStatus !== 'succeeded'
-        && cash.totalCashStatus !== 'loading') {
+      if (cash && (cash.totalCashStatus === 'initial' ||
+        cash.totalCashStatus === 'idle')) {
         getTotalCash(defaultPortfolio);
       }
     }
