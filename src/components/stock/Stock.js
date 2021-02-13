@@ -8,53 +8,56 @@ import StockItem from './StockItem';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import AddTransaction from './AddTransaction';
-import Spinner from '../spinner/Spinner';
+import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
 import { getTotalCash } from '../../actions/cashAction';
 import { getStocks } from '../../actions/stockAction';
 import { getDefaultPortfolio } from '../../actions/portfolioAction';
 
 const Stock = ({
   stock,
-  defaultPortfolio,
+  cash,
+  portfolio,
   getTotalCash,
   getStocks,
   getDefaultPortfolio
 }) => {
   let history = useHistory();
-  const [defaultPortfolioId, setDefaultPortfolioId] = useState();
   const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
   const [currentPortfolioName, setCurrentPortfolioName] = useState('');
 
   useEffect(() => {
-    getDefaultPortfolio();
-    setDefaultPortfolioId((prevId) => {
-      if (prevId !== defaultPortfolio) {
-        return defaultPortfolio;
-      }
-      else return prevId;
-    });
-  }, [defaultPortfolio]);
+    if (portfolio && (portfolio.defaultPortfolioStatus === 'initial' ||
+      portfolio.defaultPortfolioStatus === 'idle')) {
+      getDefaultPortfolio();
+    }
+  }, [portfolio, getDefaultPortfolio]);
 
   useEffect(() => {
-    if (defaultPortfolio) {
+    if (portfolio.defaultPortfolio) {
       (async () => {
         try {
-          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolio}`);
+          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${portfolio.defaultPortfolio}`);
           setCurrentPortfolioName(res.data.name);
         } catch (error) {
           console.error(error);
         }
       })();
     }
-  }, [defaultPortfolio]);
+  }, [portfolio]);
 
   useEffect(() => {
-    if (defaultPortfolioId) {
-      // use total cash when adding a new transaction
-      getTotalCash(defaultPortfolioId);
-      getStocks(defaultPortfolioId);
+    if (portfolio.defaultPortfolio) {
+      if (stock && (stock.stockStatus === 'initial' ||
+        stock.stockStatus === 'idle')) {
+        getStocks(portfolio.defaultPortfolio);
+      }
+      if (cash && (cash.totalCashStatus === 'initial' ||
+        cash.totalCashStatus === 'idle')) {
+        // use total cash when adding a new transaction
+        getTotalCash(portfolio.defaultPortfolio);
+      }
     }
-  }, [defaultPortfolioId]);
+  }, [portfolio, stock, cash, getStocks, getTotalCash]);
 
   const openAddTransactionModal = () => {
     setIsAddTransactionModalOpen(true);
@@ -70,7 +73,7 @@ const Stock = ({
 
   return (
     <main className="stock-main">
-      {defaultPortfolio && (
+      {portfolio.defaultPortfolio && (
         <div className="current-portfolio">
           <span>Current Portfolio: </span>
           <span>{currentPortfolioName}</span>
@@ -89,14 +92,14 @@ const Stock = ({
           onClickFunc={redirectToRealizedStocks}
         />
       </div>
-      {stock && !stock.stockLoading ? (
+      {stock && stock.stockStatus !== 'loading' ? (
         <React.Fragment>
           <div className="stocks-container">
             <header className="stocks-container__header">
               Holdings
             </header>
             <div className="stocks-table-wrapper">
-              {stock.stockList && stock.stockList.length > 0 ? (
+              {stock.stockList && Object.keys(stock.stockList).length > 0 ? (
                 <table className="stocks-table">
                   <thead>
                     <tr>
@@ -111,12 +114,12 @@ const Stock = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {stock.stockList.map(eachStock => (
+                    {Object.values(stock.stockList).map((stockItem) => (
                       <StockItem
-                        key={eachStock.ticker}
-                        ticker={eachStock.ticker}
-                        avgCost={eachStock.avgCost}
-                        quantity={eachStock.quantity}
+                        key={stockItem.ticker}
+                        ticker={stockItem.ticker}
+                        avgCost={stockItem.avgCost}
+                        quantity={stockItem.quantity}
                       />
                     ))}
                   </tbody>
@@ -131,14 +134,13 @@ const Stock = ({
             <AddTransaction closeAddTransactionModal={closeAddTransactionModal} />
           </Modal>}
         </React.Fragment>
-      ) : <Spinner />}
+      ) : <StockLoadingSpinner loadingProgress={stock.calcProgress} />}
     </main>
   );
 }
 
 Stock.propTypes = {
   stock: PropTypes.object,
-  defaultPortfolio: PropTypes.number,
   getTotalCash: PropTypes.func,
   getStocks: PropTypes.func,
   getDefaultPortfolio: PropTypes.func
@@ -146,7 +148,8 @@ Stock.propTypes = {
 
 const mapStateToProps = (state) => ({
   stock: state.stock,
-  defaultPortfolio: state.portfolio.defaultPortfolio
+  cash: state.cash,
+  portfolio: state.portfolio
 });
 
 export default connect(mapStateToProps, {
