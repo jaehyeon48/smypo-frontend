@@ -95,7 +95,8 @@ const SectorPieChart = ({
     }
   }, [sectorLabels, sectorsCount]);
 
-  // set each sector's label
+  // set each sector's label and
+  // set the number of each sectors (sectors count)
   useEffect(() => {
     let newColors = [];
     if (sectorLabels.length > 0) {
@@ -106,13 +107,14 @@ const SectorPieChart = ({
         ...prevState,
         labels: [...sectorLabels],
         datasets: [{
+          data: [...sectorsCount],
           backgroundColor: [...newColors],
           borderColor: '#e8f0fe',
           borderWidth: 1
         }]
       }));
     }
-  }, [sectorLabels]);
+  }, [sectorLabels, sectorsCount]);
 
   // calculate each sector's ratio
   useEffect(() => {
@@ -125,18 +127,6 @@ const SectorPieChart = ({
     }
     setSectorsCount(newSectorsCount);
   }, [sectors, sectorLabels]);
-
-  // set the number of each sectors (sectors count)
-  useEffect(() => {
-    if (sectorsCount.length > 0) {
-      setChartData((prevState) => ({
-        ...prevState,
-        datasets: [{
-          data: [...sectorsCount]
-        }]
-      }));
-    }
-  }, [sectorsCount]);
 
   useEffect(() => {
     if (chartData.labels.length > 0) {
