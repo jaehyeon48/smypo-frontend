@@ -232,6 +232,8 @@ async function calculateReturnLogic(stocks, state, dispatch) {
       const overallReturnVal = parseFloat(((stockPriceForOverallReturn - stockItem.avgCost) * stockItem.quantity).toFixed(2));
       calculatedStocks[ticker].dailyReturn = dailyReturnVal;
       calculatedStocks[ticker].overallReturn = overallReturnVal;
+      // add 'price' property for later use
+      calculatedStocks[ticker].price = stockPriceForOverallReturn;
       finishedStuffs += 0.7;
       if (totalStuffsToDo === finishedStuffs) {
         dispatch({ type: DONE_PROGRESS });
