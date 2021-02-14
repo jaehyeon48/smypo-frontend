@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import PortfolioItem from './PortfolioItem';
 import Button from '../button/Button';
@@ -14,8 +13,7 @@ import {
 import { showAlert } from '../../actions/alertAction';
 
 const Portfolios = ({
-  portfolioList,
-  defaultPortfolio,
+  portfolio,
   loadPortfolios,
   getDefaultPortfolio,
   createPortfolio,
@@ -29,7 +27,6 @@ const Portfolios = ({
   const [isNameEmptyErr, setIsNameEmptyErr] = useState(false);
   const [isPfNameEmpty, setIsPfNameEmpty] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [currentPortfolioName, setCurrentPortfolioName] = useState('');
 
   useEffect(() => {
     if (isNameEmptyErr && newPortfolioName.trim() !== '') {
@@ -39,19 +36,6 @@ const Portfolios = ({
       setIsPfNameEmpty(true);
     }
   }, [newPortfolioName, isNameEmptyErr]);
-
-  useEffect(() => {
-    if (defaultPortfolio) {
-      (async () => {
-        try {
-          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolio}`);
-          setCurrentPortfolioName(res.data.name);
-        } catch (error) {
-          console.error(error);
-        }
-      })();
-    }
-  }, [defaultPortfolio]);
 
   const handleAddPfName = (e) => {
     setNewPortfolioName(e.target.value);
@@ -93,12 +77,10 @@ const Portfolios = ({
   return (
     <React.Fragment>
       <main className="portfolio-main">
-        {defaultPortfolio && (
-          <div className="current-portfolio">
-            <span>Current Portfolio: </span>
-            <span>{currentPortfolioName}</span>
-          </div>
-        )}
+        <div className="current-portfolio">
+          <span>Current Portfolio: </span>
+          <span>{portfolio.defaultPortfolioName}</span>
+        </div>
         <Button
           btnType="button"
           btnText="Add New Portfolio"
@@ -107,7 +89,7 @@ const Portfolios = ({
         <div className="portfolios-container">
           <header className="portfolios-container__header">Portfolios</header>
           <div className="portfolios-table-wrapper">
-            {portfolioList.length > 0 ? (
+            {portfolio.portfolioList.length > 0 ? (
               <table className="portfolio-table">
                 <thead>
                   <tr>
@@ -119,11 +101,11 @@ const Portfolios = ({
                     <th></th>
                   </tr>
                 </thead>
-                {portfolioList.map((portfolio) => (
+                {portfolio.portfolioList.map((portfolioItem) => (
                   <PortfolioItem
-                    key={portfolio.portfolioId}
-                    portfolio={portfolio}
-                    defaultPortfolio={defaultPortfolio}
+                    key={portfolioItem.portfolioId}
+                    portfolio={portfolioItem}
+                    defaultPortfolio={portfolio.defaultPortfolio}
                   />
                 ))}
               </table>
@@ -184,8 +166,6 @@ const Portfolios = ({
 }
 
 Portfolios.propTypes = {
-  portfolioList: PropTypes.array,
-  defaultPortfolio: PropTypes.number,
   loadPortfolios: PropTypes.func,
   getDefaultPortfolio: PropTypes.func,
   createPortfolio: PropTypes.func,
@@ -193,8 +173,7 @@ Portfolios.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  portfolioList: state.portfolio.portfolioList,
-  defaultPortfolio: state.portfolio.defaultPortfolio
+  portfolio: state.portfolio
 });
 
 export default connect(mapStateToProps, {

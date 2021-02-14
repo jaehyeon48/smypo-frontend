@@ -3,6 +3,8 @@ import {
   START_LOAD_DEFAULT_PORTFOLIO,
   SUCCESS_LOAD_DEFAULT_PORTFOLIO,
   FAIL_LOAD_DEFAULT_PORTFOLIO,
+  SUCCESS_GET_DEFAULT_PORTFOLIO_NAME,
+  FAIL_GET_DEFAULT_PORTFOLIO_NAME,
   START_LOAD_PORTFOLIO_LIST,
   SUCCESS_LOAD_PORTFOLIO_LIST,
   FAIL_LOAD_PORTFOLIO_LIST,
@@ -54,21 +56,38 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
 
 export const getDefaultPortfolio = () => async (dispatch) => {
   try {
-    dispatch({type: START_LOAD_DEFAULT_PORTFOLIO});
+    dispatch({ type: START_LOAD_DEFAULT_PORTFOLIO });
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, { withCredentials: true });
 
     dispatch({
       type: SUCCESS_LOAD_DEFAULT_PORTFOLIO,
       payload: response.data.defaultPortfolioId
     });
+    dispatch(getDefaultPortfolioName());
   } catch (error) {
     if (error.response.status === 404) { // if the user's portfolio does not exist
       dispatch({ type: EMPTY_PORTFOLIO });
     }
     else {
       console.error(error);
-      dispatch({type: FAIL_LOAD_DEFAULT_PORTFOLIO});
+      dispatch({ type: FAIL_LOAD_DEFAULT_PORTFOLIO });
     }
+  }
+}
+
+export const getDefaultPortfolioName = () => async (dispatch, getState) => {
+  const defaultPortfolioId = getState().portfolio.defaultPortfolio;
+
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolioId}`);
+
+    dispatch({
+      type: SUCCESS_GET_DEFAULT_PORTFOLIO_NAME,
+      payload: res.data.name
+    });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: FAIL_GET_DEFAULT_PORTFOLIO_NAME });
   }
 }
 

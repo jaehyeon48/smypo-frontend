@@ -3,6 +3,8 @@ import {
   START_LOAD_DEFAULT_PORTFOLIO,
   SUCCESS_LOAD_DEFAULT_PORTFOLIO,
   FAIL_LOAD_DEFAULT_PORTFOLIO,
+  SUCCESS_GET_DEFAULT_PORTFOLIO_NAME,
+  FAIL_GET_DEFAULT_PORTFOLIO_NAME,
   START_LOAD_PORTFOLIO_LIST,
   SUCCESS_LOAD_PORTFOLIO_LIST,
   FAIL_LOAD_PORTFOLIO_LIST,
@@ -20,6 +22,7 @@ import {
 const initialState = {
   portfolioList: [],
   defaultPortfolio: null,
+  defaultPortfolioName: '',
   portfolioListStatus: 'initial', // initial, idle, loading, succeeded, failed
   defaultPortfolioStatus: 'initial' // initial, idle, loading, succeeded, failed
 };
@@ -50,6 +53,15 @@ export default function portfolioReducer(state = initialState, action) {
       return {
         ...state,
         defaultPortfolioStatus: 'failed'
+      };
+    case SUCCESS_GET_DEFAULT_PORTFOLIO_NAME:
+      return {
+        ...state,
+        defaultPortfolioName: payload
+      };
+    case FAIL_GET_DEFAULT_PORTFOLIO_NAME:
+      return {
+        ...state
       };
     case START_LOAD_PORTFOLIO_LIST:
       return {

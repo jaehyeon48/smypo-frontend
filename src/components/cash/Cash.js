@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import CashItem from './CashItem';
-import Spinner from '../spinner/Spinner';
 import Modal from '../modal/Modal';
 import Button from '../button/Button';
 import AddCash from './AddCash';
 import EditCash from './EditCash';
-import { getDefaultPortfolio } from '../../actions/portfolioAction';
 import {
   getTotalCash,
   getCash
 } from '../../actions/cashAction';
 
 const Cash = ({
-  defaultPortfolio,
+  portfolio,
   cashLoading,
   totalCash,
   cashList,
-  getDefaultPortfolio,
   getCash,
   getTotalCash
 }) => {
   const [isAddCashModalOpen, setIsAddCashModalOpen] = useState(false);
   const [isEditCashModalOpen, setIsEditCashModalOpen] = useState(false);
-  const [currentPortfolioName, setCurrentPortfolioName] = useState('');
   const [formData, setFormData] = useState({
     cashId: '',
     amount: '',
@@ -35,28 +30,11 @@ const Cash = ({
   });
 
   useEffect(() => {
-    getDefaultPortfolio();
-  }, []);
-
-  useEffect(() => {
-    if (defaultPortfolio) {
-      (async () => {
-        try {
-          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolio}`);
-          setCurrentPortfolioName(res.data.name);
-        } catch (error) {
-          console.error(error);
-        }
-      })();
+    if (portfolio && portfolio.defaultPortfolio) {
+      getCash(portfolio.defaultPortfolio);
+      getTotalCash(portfolio.defaultPortfolio);
     }
-  }, [defaultPortfolio]);
-
-  useEffect(() => {
-    if (defaultPortfolio) {
-      getCash(defaultPortfolio);
-      getTotalCash(defaultPortfolio);
-    }
-  }, [defaultPortfolio]);
+  }, [portfolio, getCash, getTotalCash]);
 
   useEffect(() => {
     if (cashList.length > 0) {
@@ -82,12 +60,10 @@ const Cash = ({
   return (
     <React.Fragment>
       <main className="cash-main">
-        {defaultPortfolio && (
-          <div className="current-portfolio">
-            <span>Current Portfolio: </span>
-            <span>{currentPortfolioName}</span>
-          </div>
-        )}
+        <div className="current-portfolio">
+          <span>Current Portfolio: </span>
+          <span>{portfolio.defaultPortfolioName}</span>
+        </div>
         <Button
           btnType={'button'}
           btnText={'Add cash transaction'}
@@ -162,14 +138,13 @@ Cash.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  defaultPortfolio: state.portfolio.defaultPortfolio,
+  portfolio: state.portfolio,
   cashLoading: state.cash.cashLoading,
   cashList: state.cash.cashList,
   totalCash: state.cash.totalCash
 });
 
 export default connect(mapStateToProps, {
-  getDefaultPortfolio,
   getCash,
   getTotalCash
 })(Cash);

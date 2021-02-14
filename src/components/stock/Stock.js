@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 import StockItem from './StockItem';
 import Button from '../button/Button';
@@ -11,7 +10,10 @@ import AddTransaction from './AddTransaction';
 import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
 import { getTotalCash } from '../../actions/cashAction';
 import { getStocks } from '../../actions/stockAction';
-import { getDefaultPortfolio } from '../../actions/portfolioAction';
+import {
+  getDefaultPortfolio,
+  getDefaultPortfolioName
+} from '../../actions/portfolioAction';
 
 const Stock = ({
   stock,
@@ -19,31 +21,18 @@ const Stock = ({
   portfolio,
   getTotalCash,
   getStocks,
-  getDefaultPortfolio
+  getDefaultPortfolio,
+  getDefaultPortfolioName
 }) => {
   let history = useHistory();
   const [isAddTransactionModalOpen, setIsAddTransactionModalOpen] = useState(false);
-  const [currentPortfolioName, setCurrentPortfolioName] = useState('');
 
   useEffect(() => {
     if (portfolio && (portfolio.defaultPortfolioStatus === 'initial' ||
       portfolio.defaultPortfolioStatus === 'idle')) {
       getDefaultPortfolio();
     }
-  }, [portfolio, getDefaultPortfolio]);
-
-  useEffect(() => {
-    if (portfolio.defaultPortfolio) {
-      (async () => {
-        try {
-          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${portfolio.defaultPortfolio}`);
-          setCurrentPortfolioName(res.data.name);
-        } catch (error) {
-          console.error(error);
-        }
-      })();
-    }
-  }, [portfolio]);
+  }, [portfolio, getDefaultPortfolio, getDefaultPortfolioName]);
 
   useEffect(() => {
     if (portfolio.defaultPortfolio) {
@@ -73,12 +62,10 @@ const Stock = ({
 
   return (
     <main className="stock-main">
-      {portfolio.defaultPortfolio && (
-        <div className="current-portfolio">
-          <span>Current Portfolio: </span>
-          <span>{currentPortfolioName}</span>
-        </div>
-      )}
+      <div className="current-portfolio">
+        <span>Current Portfolio: </span>
+        <span>{portfolio.defaultPortfolioName}</span>
+      </div>
       <div className="stocks-btn-container">
         <Button
           btnType={'button'}
@@ -159,5 +146,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getTotalCash,
   getStocks,
-  getDefaultPortfolio
+  getDefaultPortfolio,
+  getDefaultPortfolioName
 })(Stock);
