@@ -25,7 +25,7 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  stockList: [],
+  stockList: {},
   stockGroup: [],
   realizedStocks: [],
   isMarketOpen: false,
