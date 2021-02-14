@@ -4,8 +4,9 @@ import {
   START_GET_STOCK_LIST,
   SUCCESS_GET_STOCK_LIST,
   FAIL_GET_STOCK_LIST,
-  GET_STOCK_GROUP,
-  GET_STOCK_GROUP_ERROR,
+  START_GET_STOCK_GROUP,
+  SUCCESS_GET_STOCK_GROUP,
+  FAIL_GET_STOCK_GROUP,
   GET_REALIZED_STOCKS,
   GET_REALIZED_STOCKS_ERROR,
   ADD_STOCK,
@@ -150,15 +151,15 @@ export const calculateReturn = (stocks) => async (dispatch, getState) => {
 export const getStocksByTickerGroup = (portfolioId, ticker) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
+    dispatch({ type: START_GET_STOCK_GROUP });
     const tickerGroupResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/group/${portfolioId}/${ticker}`, config);
-
     dispatch({
-      type: GET_STOCK_GROUP,
-      payload: tickerGroupResult.data
+      type: SUCCESS_GET_STOCK_GROUP,
+      payload: { ticker, data: tickerGroupResult.data }
     });
   } catch (error) {
     console.error(error);
-    dispatch({ type: GET_STOCK_GROUP_ERROR });
+    dispatch({ type: FAIL_GET_STOCK_GROUP });
   }
 }
 

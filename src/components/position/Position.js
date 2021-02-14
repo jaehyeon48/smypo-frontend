@@ -17,11 +17,11 @@ import { deleteStock } from '../../actions/stockAction';
 import { getCompanyInfo } from '../../utils/getCompanyInfo';
 import EditTransaction from './EditTransaction';
 import CompanyInfo from './CompanyInfo';
+import StockGroupLoadingSpinner from '../spinners/StockGroupLoadingSpinner';
 
 const Position = ({
   match,
-  stockGroup,
-  stockGroupLoading,
+  stock,
   getStocks,
   getStocksByTickerGroup,
   closePosition,
@@ -48,19 +48,12 @@ const Position = ({
 
   useEffect(() => {
     if (PORTFOLIO_ID && TICKER) {
-      getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
+      if (stock && (stock.stockGroupLoading === 'initial' ||
+        stock.stockGroupLoading === 'idle')) {
+        getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
+      }
     }
-  }, [PORTFOLIO_ID, TICKER]);
-
-  useEffect(() => {
-    getStocks(PORTFOLIO_ID);
-  }, [PORTFOLIO_ID]);
-
-  useEffect(() => {
-    if (!stockGroupLoading && stockGroup && stockGroup.length === 0) {
-      history.push('/stocks');
-    }
-  }, [stockGroupLoading, stockGroup]);
+  }, [stock, PORTFOLIO_ID, TICKER, getStocksByTickerGroup]);
 
   useEffect(() => {
     (async () => {
@@ -118,8 +111,6 @@ const Position = ({
     }
   }
 
-
-
   return (
     <main className="position-main">
       <header className="position-header">
@@ -132,41 +123,49 @@ const Position = ({
         btnColor={'danger'}
         onClickFunc={handleClosePosition}
       />
-      <div className="stock-group-container">
-        <header className="stock-group__header">
-          Transaction History
-      </header>
-        <div className="stock-group-table-wrapper">
-          <table className="stock-group-table">
-            <thead>
-              <tr>
-                <th className="stock-group-item__type-header">Type</th>
-                <th className="stock-group-item__amount-header">price</th>
-                <th className="stock-group-item__quantity-header">Quantity</th>
-                <th className="stock-group-item__date-header">Date</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {stockGroup && stockGroup.map(item => (
-                <StockGroupItem
-                  key={item.stockId}
-                  stockId={item.stockId}
-                  price={item.price}
-                  quantity={item.quantity}
-                  transactionType={item.transactionType}
-                  transactionDate={new Date(item.transactionDate).toJSON().slice(0, 10)}
-                  formData={formData}
-                  openEditModal={openEditModal}
-                  openConfirmModal={openConfirmModal}
-                  setFormData={setFormData}
-                  setToDeleteStockId={setToDeleteStockId}
-                />))}
-            </tbody>
-          </table>
+      {stock && stock.stockGroupLoading !== 'loading' ? (
+        <div className="stock-group-container">
+          <header className="stock-group__header">
+            Transaction History
+          </header>
+          {stock && stock.stockGroup[TICKER] && Object.keys(stock.stockGroup[TICKER]).length > 0 ? (
+            <div className="stock-group-table-wrapper">
+              <table className="stock-group-table">
+                <thead>
+                  <tr>
+                    <th className="stock-group-item__type-header">Type</th>
+                    <th className="stock-group-item__amount-header">price</th>
+                    <th className="stock-group-item__quantity-header">Quantity</th>
+                    <th className="stock-group-item__date-header">Date</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stock && Object.values(stock.stockGroup[TICKER]).map(stockItem => (
+                    <StockGroupItem
+                      key={stockItem.stockId}
+                      stockId={stockItem.stockId}
+                      price={stockItem.price}
+                      quantity={stockItem.quantity}
+                      transactionType={stockItem.transactionType}
+                      transactionDate={new Date(stockItem.transactionDate).toJSON().slice(0, 10)}
+                      formData={formData}
+                      openEditModal={openEditModal}
+                      openConfirmModal={openConfirmModal}
+                      setFormData={setFormData}
+                      setToDeleteStockId={setToDeleteStockId}
+                    />))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+              <div>Transaction list is empty.</div>
+            )}
         </div>
-      </div>
+      ) : (
+          <StockGroupLoadingSpinner />
+        )}
       {isEditModalOpen && (
         <Modal closeModalFunc={closeEditModal}>
           <EditTransaction
@@ -175,11 +174,11 @@ const Position = ({
           />
         </Modal>
       )}
-      {isInfoModalOpen && (
+      {/* {isInfoModalOpen && (
         <Modal closeModalFunc={closeInfoModal} overflowY={true}>
           <CompanyInfo companyInfo={companyInfo} />
         </Modal>
-      )}
+      )} */}
       {isConfirmModalOpen && (
         <ConfirmModal
           confirmMsg={'Do you really want to delete this transaction record?'}
@@ -200,8 +199,7 @@ Position.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  stockGroup: state.stock.stockGroup,
-  stockGroupLoading: state.stock.stockGroupLoading
+  stock: state.stock
 });
 
 export default connect(mapStateToProps, {
