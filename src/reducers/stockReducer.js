@@ -22,7 +22,8 @@ import {
   LOGOUT_FAIL,
   UPDATE_PROGRESS,
   DONE_PROGRESS,
-  FAIL_PROGRESS
+  FAIL_PROGRESS,
+  CHOOSE_DEFAULT_PORTFOLIO
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -68,6 +69,13 @@ export default function stockReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case CHOOSE_DEFAULT_PORTFOLIO:
+      return {
+        ...state,
+        stockStatus: 'idle',
+        stockGroupStatus: 'idle',
+        calcProgress: 0
+      };
     case CHECK_MARKET_STATUS:
       return {
         ...state,
