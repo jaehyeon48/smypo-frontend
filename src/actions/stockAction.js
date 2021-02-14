@@ -147,20 +147,6 @@ export const calculateReturn = (stocks) => async (dispatch, getState) => {
   }
 }
 
-export const editDailyReturn = (ticker, dailyReturn) => (dispatch) => {
-  // dispatch({
-  //   type: EDIT_DAILY_RETURN,
-  //   payload: { ticker, dailyReturn }
-  // });
-}
-
-export const editOverallReturn = (ticker, overallReturn) => (dispatch) => {
-  // dispatch({
-  //   type: EDIT_OVERALL_RETURN,
-  //   payload: { ticker, overallReturn }
-  // });
-}
-
 export const getStocksByTickerGroup = (portfolioId, ticker) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
