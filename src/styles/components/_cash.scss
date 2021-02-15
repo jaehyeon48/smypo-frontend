@@ -187,14 +187,20 @@
   }
 }
 
-.no-cash-notice {
-  text-align: center;
-  font-size: 3rem;
-  font-weight: 700;
-  margin-top: 2em;
-  color: $main-color;
+.notice-no-cash {
+  margin: 2em auto;
 
-  @media screen and (max-width: 550px) {
-    font-size: 2.4rem;
+  & > p {
+    padding: 0.5em;
+    font-size: 2rem;
+    text-align: center;
+
+    @media screen and (min-width: 426px) and (max-width: 600px) {
+      font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 425px) {
+      font-size: 1.2rem;
+    }
   }
 }
