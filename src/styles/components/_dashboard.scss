@@ -126,6 +126,52 @@
   }
 }
 
+.dashboard-notice-empty-stocklist {
+  margin: 2em auto;
+
+  & > p {
+    padding: 0.5em;
+    font-size: 2rem;
+    text-align: center;
+
+    @media screen and (min-width: 426px) and (max-width: 600px) {
+      font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 425px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  & > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em auto;
+    width: 11em;
+    padding: 0.5em;
+    font-size: 1.2rem;
+    border-radius: 0.3em;
+    border: none;
+    outline: none;
+    box-shadow: 1px 1px 4px $black;
+    text-align: center;
+    background: linear-gradient($main-color, #15a559);
+    color: $white;
+
+    & > svg {
+      width: 20px;
+      height: 22px;
+      margin-right: 0.4em;
+      margin-bottom: 2px;
+    }
+  }
+
+  & > a:hover {
+    background: darken($main-color, 13%);
+  }
+}
+
 .dashboard-notice-empty-portfolio-list {
   max-width: $max-width;
   min-height: 100vh;

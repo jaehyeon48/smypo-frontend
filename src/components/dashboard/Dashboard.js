@@ -207,7 +207,7 @@ const Dashboard = ({
                     <LineChart defaultPortfolioId={defaultPortfolio} />
                   </React.Fragment>
                 ) : (
-                    <div className="notice-empty-stocklist">
+                    <div className="dashboard-notice-empty-stocklist">
                       <p>Your stock list is empty. Please add your stock first.</p>
                       <Link to="/stocks">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
