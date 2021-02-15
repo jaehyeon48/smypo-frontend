@@ -41,48 +41,50 @@ const RealizedStocks = ({
       </div>
       {true ? (
         <React.Fragment>
-        <div className={`total-realized-value ${borderColorTotalRealizedReturn()}`}>
-          <span>Total Realized Value</span>
-          <div>
-            <span className={colorTotalRealizedReturn()}>
-              {totalRealizedReturn.toFixed(2)}
-            </span>
+          <div className={`total-realized-value ${borderColorTotalRealizedReturn()}`}>
+            <span>Total Realized Value</span>
+            <div>
+              <span className={colorTotalRealizedReturn()}>
+                {totalRealizedReturn.toFixed(2)}
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="realized-stocks-container">
-        <header className="realized-stocks__header">
-          Realized Stocks
+          <div className="realized-stocks-container">
+            <header className="realized-stocks__header">
+              Realized Stocks
         </header>
-        <div className="realized-stocks-table-wrapper">
-          {realizedStocks && realizedStocks.length > 0 ? (
-            <table className="realized-stocks-table">
-              <thead>
-                <tr>
-                  <th className="realized-stock-item__ticker-header">Ticker</th>
-                  <th className="realized-stock-item__price-header">Price</th>
-                  <th className="realized-stock-item__shares-header">Shares</th>
-                  <th className="realized-stock-item__return-header">Return</th>
-                </tr>
-              </thead>
-              <tbody>
-              {realizedStocks.map(realizedOne => (
-                <RealizedStockItem
-                  key={realizedOne.stockId}
-                  realizedStockItem={realizedOne}
-                  setTotalRealizedReturn={setTotalRealizedReturn}
-                />
-              ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="notice-no-realized-stocks">You haven't realized any stocks.</div>
-          )}
-        </div>
-    </div>
+            <div className="realized-stocks-table-wrapper">
+              {realizedStocks && realizedStocks.length > 0 ? (
+                <table className="realized-stocks-table">
+                  <thead>
+                    <tr>
+                      <th className="realized-stock-item__ticker-header">Ticker</th>
+                      <th className="realized-stock-item__price-header">Price</th>
+                      <th className="realized-stock-item__shares-header">Shares</th>
+                      <th className="realized-stock-item__return-header">Return</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {realizedStocks.map(realizedOne => (
+                      <RealizedStockItem
+                        key={realizedOne.stockId}
+                        realizedStockItem={realizedOne}
+                        setTotalRealizedReturn={setTotalRealizedReturn}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                  <div className="notice-no-realized-stocks">
+                    <p>You haven't realized any stocks.</p>
+                  </div>
+                )}
+            </div>
+          </div>
         </React.Fragment>
       ) : (
-        <Spinner/>
-      )}
+          <Spinner />
+        )}
     </main>
   );
 }

@@ -79,7 +79,8 @@
   }
 }
 
-.notice-empty-stocklist {
+.notice-empty-stocklist,
+.notice-no-realized-stocks {
   margin: 2em auto;
 
   & > p {
