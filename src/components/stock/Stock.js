@@ -116,7 +116,7 @@ const Stock = ({
                   </tbody>
                 </table>) : (
                   <div className="notice-empty-stocklist">
-                    <p>The stock list is empty. Please Add Your Stock First!</p>
+                    <p>Stock list is empty. Start by adding your transactions!</p>
                   </div>
                 )}
             </div>
