@@ -79,6 +79,51 @@
   }
 }
 
+.notice-empty-stocklist {
+  margin: 2em auto;
+
+  & > p {
+    padding: 0.5em;
+    font-size: 2rem;
+    text-align: center;
+
+    @media screen and (min-width: 426px) and (max-width: 600px) {
+      font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 425px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  & > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em auto;
+    width: 10em;
+    padding: 0.5em;
+    font-size: 1.3rem;
+    border-radius: 0.3em;
+    border: none;
+    outline: none;
+    box-shadow: 1px 1px 4px $black;
+    text-align: center;
+    background: linear-gradient($orange, #d25f1d);
+    color: $white;
+
+    & > svg {
+      width: 28px;
+      height: 28px;
+      margin-right: 0.4em;
+    }
+  }
+
+  & > a:hover {
+    background: darken($orange, 13%);
+  }
+}
+
 .stocks-btn-container {
   display: flex;
   justify-content: center;
