@@ -226,8 +226,8 @@ const Dashboard = ({
           portfolio.status === 'loading' ? (
             <MainLoadingSpinner loadingText={'Loading portfolio list...'} />
           ) : (
-              <main className="notice-empty-portfolio-list">
-                <p>Portfolio list is empty. Would you like to create a new one?</p>
+              <main className="dashboard-notice-empty-portfolio-list">
+                <p>Portfolio list is empty. How about creating a new one?</p>
                 <Link to="/portfolios">
                   <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                     <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
