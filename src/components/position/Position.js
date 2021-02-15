@@ -48,8 +48,8 @@ const Position = ({
 
   useEffect(() => {
     if (PORTFOLIO_ID && TICKER) {
-      if (stock && (stock.stockGroupLoading === 'initial' ||
-        stock.stockGroupLoading === 'idle')) {
+      if (stock && (stock.stockGroupStatus === 'initial' ||
+        stock.stockGroupStatus === 'idle')) {
         getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
       }
     }
