@@ -79,6 +79,24 @@
   }
 }
 
+.notice-empty-stocklist {
+  margin: 2em auto;
+
+  & > p {
+    padding: 0.5em;
+    font-size: 2rem;
+    text-align: center;
+
+    @media screen and (min-width: 426px) and (max-width: 600px) {
+      font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: 425px) {
+      font-size: 1.2rem;
+    }
+  }
+}
+
 .stocks-btn-container {
   display: flex;
   justify-content: center;
