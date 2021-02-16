@@ -14,7 +14,7 @@ import {
   PORTFOLIO_CREATE_ERROR,
   PORTFOLIO_EDIT_ERROR,
   PORTFOLIO_DELETE_ERROR,
-  EMPTY_PORTFOLIO,
+  EMPTY_PORTFOLIO_LIST,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL
 } from '../actions/actionTypes'
@@ -79,7 +79,12 @@ export default function portfolioReducer(state = initialState, action) {
         ...state,
         portfolioListStatus: 'failed'
       };
-    case EMPTY_PORTFOLIO:
+    case EMPTY_PORTFOLIO_LIST:
+      return {
+        ...state,
+        portfolioListStatus: 'succeeded',
+        defaultPortfolioStatus: 'succeeded'
+      };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
       return {

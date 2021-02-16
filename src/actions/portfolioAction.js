@@ -14,7 +14,7 @@ import {
   PORTFOLIO_CREATE_ERROR,
   PORTFOLIO_EDIT_ERROR,
   PORTFOLIO_DELETE_ERROR,
-  EMPTY_PORTFOLIO
+  EMPTY_PORTFOLIO_LIST
 } from './actionTypes';
 import axios from 'axios';
 
@@ -50,7 +50,7 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
     });
   } catch (error) {
     console.error(error);
-    dispatch({ type: EMPTY_PORTFOLIO });
+    dispatch({ type: EMPTY_PORTFOLIO_LIST });
   }
 }
 
@@ -66,7 +66,7 @@ export const getDefaultPortfolio = () => async (dispatch) => {
     dispatch(getDefaultPortfolioName());
   } catch (error) {
     if (error.response.status === 404) { // if the user's portfolio does not exist
-      dispatch({ type: EMPTY_PORTFOLIO });
+      dispatch({ type: EMPTY_PORTFOLIO_LIST });
     }
     else {
       console.error(error);
