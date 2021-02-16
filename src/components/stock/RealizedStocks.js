@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Spinner from '../spinner/Spinner';
+import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import RealizedStockItem from './RealizedStockItem';
 import {
   getRealizedStocks
@@ -35,10 +36,7 @@ const RealizedStocks = ({
 
   return (
     <main className="realized-stock-main">
-      <div className="current-portfolio">
-        <span>Current Portfolio: </span>
-        <span>{portfolio.defaultPortfolioName}</span>
-      </div>
+      <CurrentPortfolioName />
       {true ? (
         <React.Fragment>
           <div className={`total-realized-value ${borderColorTotalRealizedReturn()}`}>

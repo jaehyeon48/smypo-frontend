@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import PortfolioItem from './PortfolioItem';
+import CurrentPortfolioName from './CurrentPortfolioName';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import {
@@ -77,10 +78,7 @@ const Portfolios = ({
   return (
     <React.Fragment>
       <main className="portfolio-main">
-        <div className="current-portfolio">
-          <span>Current Portfolio: </span>
-          <span>{portfolio.defaultPortfolioName}</span>
-        </div>
+        <CurrentPortfolioName />
         <Button
           btnType="button"
           btnText="Add New Portfolio"

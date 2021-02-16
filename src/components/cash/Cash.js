@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CashItem from './CashItem';
+import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import Modal from '../modal/Modal';
 import Button from '../button/Button';
 import AddCash from './AddCash';
@@ -60,10 +61,7 @@ const Cash = ({
   return (
     <React.Fragment>
       <main className="cash-main">
-        <div className="current-portfolio">
-          <span>Current Portfolio: </span>
-          <span>{portfolio.defaultPortfolioName}</span>
-        </div>
+        <CurrentPortfolioName />
         <Button
           btnType={'button'}
           btnText={'Add cash transaction'}

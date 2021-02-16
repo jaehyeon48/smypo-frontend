@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import StockItem from './StockItem';
+import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import AddTransaction from './AddTransaction';
@@ -62,10 +63,7 @@ const Stock = ({
 
   return (
     <main className="stock-main">
-      <div className="current-portfolio">
-        <span>Current Portfolio: </span>
-        <span>{portfolio.defaultPortfolioName}</span>
-      </div>
+      <CurrentPortfolioName />
       <div className="stocks-btn-container">
         <Button
           btnType={'button'}
