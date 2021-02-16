@@ -69,6 +69,7 @@ const Stock = ({
           btnType={'button'}
           btnText={'Add transaction'}
           onClickFunc={openAddTransactionModal}
+          isDisabled={portfolio && portfolio.portfolioList.length === 0}
         />
         <Button
           btnType={'button'}
@@ -112,10 +113,19 @@ const Stock = ({
                       />
                     ))}
                   </tbody>
-                </table>) : (
-                  <div className="notice-empty-stocklist">
-                    <p>Stock list is empty. Start by adding your transactions!</p>
-                  </div>
+                </table>
+              ) : (
+                  <React.Fragment>
+                    {portfolio && portfolio.portfolioList.length === 0 ? (
+                      <div className="notice-empty-portfolio-list">
+                        <p>Please add your portfolio first.</p>
+                      </div>
+                    ) : (
+                        <div className="notice-empty-stocklist">
+                          <p>Stock list is empty. Start by adding your transactions!</p>
+                        </div>
+                      )}
+                  </React.Fragment>
                 )}
             </div>
           </div>
