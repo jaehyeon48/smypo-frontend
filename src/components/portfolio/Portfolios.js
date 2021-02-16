@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import PortfolioItem from './PortfolioItem';
 import CurrentPortfolioName from './CurrentPortfolioName';
+import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import {
@@ -15,6 +16,8 @@ import { showAlert } from '../../actions/alertAction';
 
 const Portfolios = ({
   portfolio,
+  stock,
+  cash,
   loadPortfolios,
   getDefaultPortfolio,
   createPortfolio,
@@ -28,6 +31,7 @@ const Portfolios = ({
   const [isNameEmptyErr, setIsNameEmptyErr] = useState(false);
   const [isPfNameEmpty, setIsPfNameEmpty] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
 
   useEffect(() => {
     if (isNameEmptyErr && newPortfolioName.trim() !== '') {
@@ -37,6 +41,20 @@ const Portfolios = ({
       setIsPfNameEmpty(true);
     }
   }, [newPortfolioName, isNameEmptyErr]);
+
+  useEffect(() => {
+    if (portfolio && stock && cash && (
+      portfolio.portfolioListStatus === 'loading' ||
+      portfolio.defaultPortfolioStatus === 'loading' ||
+      stock.stockStatus === 'loading' ||
+      stock.stockGroupStatus === 'loading' ||
+      cash.cashListStatus === 'loading' ||
+      cash.totalCashStatus === 'loading')) {
+      setIsLoadingPortfolioData(true);
+    } else {
+      setIsLoadingPortfolioData(false);
+    }
+  }, [portfolio, stock, cash]);
 
   const handleAddPfName = (e) => {
     setNewPortfolioName(e.target.value);
@@ -85,6 +103,7 @@ const Portfolios = ({
           onClickFunc={openAddModal}
         />
         <div className="portfolios-container">
+          {isLoadingPortfolioData && <PortfolioDataSpinner />}
           <header className="portfolios-container__header">Portfolios</header>
           <div className="portfolios-table-wrapper">
             {portfolio.portfolioList.length > 0 ? (
@@ -104,6 +123,7 @@ const Portfolios = ({
                     key={portfolioItem.portfolioId}
                     portfolio={portfolioItem}
                     defaultPortfolio={portfolio.defaultPortfolio}
+                    isLoadingPortfolioData={isLoadingPortfolioData}
                   />
                 ))}
               </table>
@@ -174,7 +194,9 @@ Portfolios.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  portfolio: state.portfolio
+  portfolio: state.portfolio,
+  stock: state.stock,
+  cash: state.cash
 });
 
 export default connect(mapStateToProps, {

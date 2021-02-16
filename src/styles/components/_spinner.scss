@@ -18,3 +18,19 @@
   color: #505050;
   margin-bottom: 3em;
 }
+
+.portfolio-data-loading-spinner-wrapper {
+  position: absolute;
+  top: -50px;
+  display: flex;
+  align-items: center;
+
+  & > svg {
+    width: 50px;
+    height: 40px;
+  }
+}
+
+.portfolio-data-loading-progress {
+  color: #505050;
+}

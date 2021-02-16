@@ -13,6 +13,7 @@ import {
 import { showAlert } from '../../actions/alertAction';
 
 const PortfolioItem = ({
+  isLoadingPortfolioData,
   portfolio,
   defaultPortfolio,
   chooseDefaultPortfolio,
@@ -135,6 +136,7 @@ const PortfolioItem = ({
               btnType={'button'}
               btnText={'Set Default'}
               onClickFunc={handleChooseDefault}
+              isDisabled={isLoadingPortfolioData}
             />
           )}
       </td>
