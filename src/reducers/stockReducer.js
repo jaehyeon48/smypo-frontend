@@ -11,7 +11,9 @@ import {
   GET_SECTOR_ERROR,
   GET_REALIZED_STOCKS,
   GET_REALIZED_STOCKS_ERROR,
-  ADD_STOCK,
+  START_ADD_STOCK,
+  SUCCESS_ADD_STOCK,
+  FAIL_ADD_STOCK,
   EDIT_STOCK,
   DELETE_STOCK,
   SUCCESS_CALCULATE_RETURN,
@@ -33,6 +35,7 @@ const initialState = {
   isMarketOpen: false,
   stockStatus: 'initial',
   stockGroupStatus: 'initial',
+  addStockStatus: 'idle', // idle, processing, succeeded, failed
   calcProgress: 0 // progress of the calculating return process
 };
 
@@ -158,13 +161,29 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         calcProgress: 0
       };
+    case START_ADD_STOCK:
+      return {
+        ...state,
+        addStockStatus: 'processing'
+      };
+    case SUCCESS_ADD_STOCK:
+      return {
+        ...state,
+        stockStatus: 'idle',
+        stockGroupStatus: 'idle',
+        addStockStatus: 'succeeded'
+      };
+    case FAIL_ADD_STOCK:
+      return {
+        ...state,
+        addStockStatus: 'failed'
+      };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
       return {
         ...initialState
       };
     case GET_SECTOR_ERROR:
-    case ADD_STOCK:
     case EDIT_STOCK:
     case CLOSE_POSITION:
     case CLOSE_POSITION_ERROR:

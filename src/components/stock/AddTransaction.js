@@ -78,8 +78,8 @@ const AddTransaction = ({
       const addStockResult = await addStock(defaultPortfolio, formData, currentAvgCost);
 
       if (addStockResult === 0) {
-        window.location.reload();
         closeAddTransactionModal();
+        showAlert('Successfully added a transaction', 'success');
       }
       else {
         showAlert('Something went wrong. Please try again!', 'error');
