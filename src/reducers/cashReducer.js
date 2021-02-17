@@ -13,7 +13,8 @@ import {
   DELETE_CASH_ERROR,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
-  CHOOSE_DEFAULT_PORTFOLIO
+  CHOOSE_DEFAULT_PORTFOLIO,
+  SUCCESS_ADD_STOCK
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -69,6 +70,12 @@ export default function cashReducer(state = initialState, action) {
     case LOGOUT_FAIL:
       return {
         ...initialState
+      };
+    case SUCCESS_ADD_STOCK:
+      return {
+        ...state,
+        cashListStatus: 'idle',
+        totalCashStatus: 'idle'
       };
     case ADD_CASH:
     case EDIT_CASH:
