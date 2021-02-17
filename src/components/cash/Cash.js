@@ -15,7 +15,6 @@ import {
 
 const Cash = ({
   portfolio,
-  cashLoading,
   totalCash,
   cashList,
   getCash,
@@ -129,7 +128,6 @@ const Cash = ({
 
 Cash.propTypes = {
   defaultPortfolio: PropTypes.number,
-  cashLoading: PropTypes.bool,
   cashList: PropTypes.array,
   totalCash: PropTypes.number,
   getDefaultPortfolio: PropTypes.func,
@@ -139,7 +137,6 @@ Cash.propTypes = {
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,
-  cashLoading: state.cash.cashLoading,
   cashList: state.cash.cashList,
   totalCash: state.cash.totalCash
 });
