@@ -4,6 +4,7 @@ import { Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
 import PieChartIcon from '../icons/PieChartIcon';
+import CashCoinIcon from '../icons/CashCoinIcon';
 
 const ValuePieChart = ({
   stock,
@@ -91,7 +92,11 @@ const ValuePieChart = ({
     if (stockValueData.length > 0 && tickerLabels.length > 0) {
       let newColors = [];
       for (let i = 0; i < tickerLabels.length; i++) {
-        newColors.push(getRandomColor(i));
+        if (tickerLabels[i] === 'cash') {
+          newColors.push('#f7bd26');
+        } else {
+          newColors.push(getRandomColor(i));
+        }
       }
       setChartData((prevState) => ({
         ...prevState,
@@ -170,13 +175,21 @@ const ValuePieChart = ({
               >
                 <div
                   className="pie-chart-legend-color"
-                  style={{ backgroundColor: `${getRandomColor(legendData.index)}` }}
+                  style={{
+                    backgroundColor: `${legendData.ticker === 'cash' ?
+                      '#f7bd26' : getRandomColor(legendData.index)}`
+                  }}
                 ></div>
                 <div className="pie-chart-legend-content">
                   <span className={
                     legendData.ticker === 'cash' ?
                       'pie-chart-legend__ticker chart-legend-cash' : 'pie-chart-legend__ticker'}>
-                    {legendData.ticker}
+                    {legendData.ticker === 'cash' ? (
+                      <React.Fragment>
+                        <CashCoinIcon />
+                        cash
+                      </React.Fragment>
+                    ) : legendData.ticker}
                   </span>
                   <span>{legendData.weight.toFixed(2)}%</span>
                 </div>

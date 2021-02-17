@@ -190,8 +190,15 @@
 }
 
 .chart-legend-cash {
-  color: #bd07c0;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  margin-left: -0.3em;
+  margin-right: 0.6em;
+
+  & > svg {
+    width: 26px;
+    height: 26px;
+  }
 }
 
 .pie-chart-legend-color {
