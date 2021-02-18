@@ -12,8 +12,8 @@ import { showAlert } from '../../actions/alertAction';
 const AddTransaction = ({
   closeAddTransactionModal,
   defaultPortfolio,
-  totalCash,
-  stockList,
+  cash,
+  stock,
   addStock,
   showAlert
 }) => {
@@ -45,14 +45,15 @@ const AddTransaction = ({
   }, [ticker, companyName]);
 
   useEffect(() => {
-    if (stockList && stockList.length > 0 && ticker.trim() !== '' && transactionType === 'sell') {
-      const stockItem = stockList.filter(stock => stock.ticker === ticker.toLowerCase());
+    if (stock && stock.stockList &&
+      Object.keys(stock.stockList).length > 0 && ticker.trim() !== '' && transactionType === 'sell') {
+      const stockItem = Object.values(stock.stockList).filter(stock => stock.ticker === ticker.toLowerCase());
       if (stockItem[0]) {
         const avgCostOfStock = stockItem[0].avgCost;
         setCurrentAvgCost(avgCostOfStock);
       }
     }
-  }, [stockList, ticker, transactionType]);
+  }, [stock, ticker, transactionType]);
 
 
   const handleTickerInput = (e) => {
@@ -69,8 +70,10 @@ const AddTransaction = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (referCash && transactionType === 'buy' && totalCash < (price * quantity)) {
-      window.alert(`Not enough cash to make this purchase. You have ${totalCash} USD in this portfolio but need ${price * quantity} USD`);
+    if (referCash && transactionType === 'buy' && cash && cash.totalCash < (price * quantity)) {
+      window.alert(
+        `Not enough cash to make this purchase. You have ${cash.totalCash} USD in this portfolio but need ${price * quantity} USD`
+      );
       return;
     }
     else {
@@ -220,16 +223,14 @@ const AddTransaction = ({
 AddTransaction.propTypes = {
   closeAddTransactionModal: PropTypes.func,
   defaultPortfolio: PropTypes.number,
-  totalCash: PropTypes.number,
-  stockList: PropTypes.array,
   addStock: PropTypes.func,
   showAlert: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   defaultPortfolio: state.portfolio.defaultPortfolio,
-  totalCash: state.cash.totalCash,
-  stockList: state.stock.stockList
+  cash: state.cash,
+  stock: state.stock
 });
 
 export default connect(mapStateToProps, {

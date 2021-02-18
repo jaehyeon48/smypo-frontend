@@ -55,6 +55,16 @@ const EditCash = ({
               onChange={handleChange}
             />
           </label>
+          <label>Dividend
+          <input
+              type="radio"
+              name="transactionType"
+              className="transaction-type-cash"
+              value="dividend"
+              checked={transactionType === 'dividend'}
+              onChange={handleChange}
+            />
+          </label>
           <label>Purchased
           <input
               type="radio"
