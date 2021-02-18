@@ -15,8 +15,7 @@ import {
 
 const Cash = ({
   portfolio,
-  totalCash,
-  cashList,
+  cash,
   getCash,
   getTotalCash
 }) => {
@@ -30,16 +29,18 @@ const Cash = ({
   });
 
   useEffect(() => {
-    if (portfolio && portfolio.defaultPortfolio) {
+    if (portfolio && cash && ((
+      portfolio.defaultPortfolioStatus === 'initial' ||
+      portfolio.defaultPortfolioStatus === 'idle') ||
+      cash.cashListStatus === 'initial' ||
+      cash.cashListStatus === 'idle' ||
+      cash.totalCashStatus === 'initial' ||
+      cash.totalCashStatus === 'idle'
+    )) {
       getCash(portfolio.defaultPortfolio);
       getTotalCash(portfolio.defaultPortfolio);
     }
-  }, [portfolio, getCash, getTotalCash]);
-
-  useEffect(() => {
-    if (cashList.length > 0) {
-    }
-  }, [cashList]);
+  }, [portfolio, cash, getCash, getTotalCash]);
 
   const openAddCashModal = () => {
     setIsAddCashModalOpen(true);
@@ -68,14 +69,14 @@ const Cash = ({
         />
         <div className="cash-total-amount">
           <span>Total Cash</span>
-          <span>{totalCash}</span>
+          <span>{cash.totalCash}</span>
         </div>
         <div className="cash-items-container">
           <header className="cash-items__header">
             Cash
             </header>
           <div className="cash-table-wrapper">
-            {cashList && cashList.length > 0 ? (
+            {cash && cash.cashList.length > 0 ? (
               <table className="cash-table">
                 <thead>
                   <tr>
@@ -87,7 +88,7 @@ const Cash = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {cashList.map((cash) => (
+                  {cash.cashList.map((cash) => (
                     <CashItem
                       key={cash.cashId}
                       cashId={cash.cashId}
@@ -127,9 +128,6 @@ const Cash = ({
 }
 
 Cash.propTypes = {
-  defaultPortfolio: PropTypes.number,
-  cashList: PropTypes.array,
-  totalCash: PropTypes.number,
   getDefaultPortfolio: PropTypes.func,
   getCash: PropTypes.func,
   getTotalCash: PropTypes.func
@@ -137,8 +135,7 @@ Cash.propTypes = {
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,
-  cashList: state.cash.cashList,
-  totalCash: state.cash.totalCash
+  cash: state.cash
 });
 
 export default connect(mapStateToProps, {
