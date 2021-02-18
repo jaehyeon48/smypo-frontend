@@ -44,7 +44,7 @@ const AddCash = ({
     <div className="add-transaction-container">
       <form autoComplete="off" onSubmit={handleSubmit} className="add-transaction-form">
         <div className="transaction-type-container">
-          <label>DEPOSIT
+          <label>Deposit
           <input
               type="radio"
               name="transactionType"
@@ -54,7 +54,7 @@ const AddCash = ({
               onChange={handleChange}
             />
           </label>
-          <label>WITHDRAW
+          <label>Withdraw
           <input
               type="radio"
               name="transactionType"

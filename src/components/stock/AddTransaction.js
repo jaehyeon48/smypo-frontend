@@ -75,6 +75,13 @@ const AddTransaction = ({
     }
     else {
       // currentAvgCost is used when the user sells a stock
+      if (referCash) {
+        if (transactionType === 'buy') {
+          formData['transactionType'] = 'purchased';
+        } else if (transactionType === 'sell') {
+          formData['transactionType'] = 'sold';
+        }
+      }
       const addStockResult = await addStock(defaultPortfolio, formData, currentAvgCost);
 
       if (addStockResult === 0) {

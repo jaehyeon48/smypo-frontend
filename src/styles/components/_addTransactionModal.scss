@@ -46,12 +46,22 @@
 
 .transaction-type-container {
   margin-bottom: 1.8em;
+  display: flex;
+  flex-wrap: wrap;
 
   & > label {
     position: relative;
   }
 
-  & > label:first-child {
+  & > label:nth-child(1) {
+    margin-right: 2.4em;
+  }
+
+  & > label:nth-child(2) {
+    margin-right: 2.4em;
+  }
+
+  & > label:nth-child(3) {
     margin-right: 2.4em;
   }
 
@@ -61,23 +71,41 @@
     transform: scale(1.3);
     position: absolute;
     margin: 0;
-    top: 5px;
+    top: 3px;
   }
 
+  /* stock transaction radio buttons*/
   & > label:first-child > input[type='radio'] {
     left: 36px;
-  }
-
-  & > label:first-child > input[type='radio'].transaction-type-cash {
-    left: 72px;
   }
 
   & > label:last-child > input[type='radio'] {
     left: 42px;
   }
 
-  & > label:last-child > input[type='radio'].transaction-type-cash {
-    left: 97px;
+  /* cash transaction radio buttons */
+  & > label:nth-child(1) > input[type='radio'].transaction-type-cash {
+    left: 62px;
+  }
+
+  & > label:nth-child(2) > input[type='radio'].transaction-type-cash {
+    left: 78px;
+  }
+
+  & > label:nth-child(3) > input[type='radio'].transaction-type-cash {
+    left: 81px;
+  }
+
+  & > label:nth-child(4) > input[type='radio'].transaction-type-cash {
+    left: 38px;
+  }
+
+  @media screen and (max-width: 599px) {
+    flex-direction: column;
+
+    & > label + label {
+      margin-top: 0.5em;
+    }
   }
 }
 
