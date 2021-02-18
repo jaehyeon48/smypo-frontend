@@ -100,18 +100,23 @@ const Stock = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {Object.values(stock.stockList).map((stockItem) => (
-                      <StockItem
-                        key={stockItem.ticker}
-                        ticker={stockItem.ticker}
-                        price={stockItem.price}
-                        change={stockItem.change}
-                        avgCost={stockItem.avgCost}
-                        quantity={stockItem.quantity}
-                        dailyReturn={stockItem.dailyReturn}
-                        overallReturn={stockItem.overallReturn}
-                      />
-                    ))}
+                    {Object.values(stock.stockList).map((stockItem) => {
+                      if (stockItem && stockItem.quantity > 0) {
+                        return (
+                          <StockItem
+                            key={stockItem.ticker}
+                            ticker={stockItem.ticker}
+                            price={stockItem.price}
+                            change={stockItem.change}
+                            avgCost={stockItem.avgCost}
+                            quantity={stockItem.quantity}
+                            dailyReturn={stockItem.dailyReturn}
+                            overallReturn={stockItem.overallReturn}
+                          />
+                        );
+                      }
+                      return null;
+                    })}
                   </tbody>
                 </table>
               ) : (
