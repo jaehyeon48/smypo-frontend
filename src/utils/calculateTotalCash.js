@@ -1,10 +1,10 @@
 export const calculateTotalCashAmount = (cashList) => {
   let totalCashAmount = 0;
   cashList.forEach(cash => {
-    if (cash.transactionType === 'deposit') {
+    if (cash.transactionType === 'deposit' || cash.transactionType === 'sold') {
       totalCashAmount += cash.amount;
     }
-    else if (cash.transactionType === 'withdraw') {
+    else if (cash.transactionType === 'withdraw' || cash.transactionType === 'purchased') {
       totalCashAmount -= cash.amount;
     }
   });
