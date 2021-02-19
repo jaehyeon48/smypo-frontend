@@ -4,7 +4,8 @@
   margin: 0 auto 5em;
 }
 
-.stocks-container {
+.holdings-container,
+.held-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -20,13 +21,15 @@
   box-shadow: 2px 3px 3px #a7a7a7;
 }
 
-.stocks-table-wrapper {
+.holdings-table-wrapper,
+.held-table-wrapper {
   width: 100%;
   overflow: auto;
   max-height: 362px;
 }
 
-.stocks-container__header {
+.holdings-container__header,
+.held-container__header {
   position: absolute;
   font-size: 1.3rem;
   font-weight: 700;
@@ -49,7 +52,8 @@
   }
 }
 
-.stocks-table {
+.holdings-table,
+.held-table {
   background-color: inherit;
   width: 100%;
   border-collapse: collapse;

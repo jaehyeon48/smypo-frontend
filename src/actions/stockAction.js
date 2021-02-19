@@ -7,8 +7,9 @@ import {
   START_GET_STOCK_GROUP,
   SUCCESS_GET_STOCK_GROUP,
   FAIL_GET_STOCK_GROUP,
-  GET_REALIZED_STOCKS,
-  GET_REALIZED_STOCKS_ERROR,
+  START_GET_REALIZED_STOCKS,
+  SUCCESS_GET_REALIZED_STOCKS,
+  FAIL_GET_REALIZED_STOCKS,
   START_ADD_STOCK,
   SUCCESS_ADD_STOCK,
   FAIL_ADD_STOCK,
@@ -169,15 +170,16 @@ export const getStocksByTickerGroup = (portfolioId, ticker) => async (dispatch) 
 export const getRealizedStocks = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
+    dispatch({ type: START_GET_REALIZED_STOCKS });
     const realizedStocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/realized/${portfolioId}`, config);
 
     dispatch({
-      type: GET_REALIZED_STOCKS,
+      type: SUCCESS_GET_REALIZED_STOCKS,
       payload: realizedStocksResult.data
     });
   } catch (error) {
     console.error(error);
-    dispatch({ type: GET_REALIZED_STOCKS_ERROR });
+    dispatch({ type: FAIL_GET_REALIZED_STOCKS });
   }
 }
 

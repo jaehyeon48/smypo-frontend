@@ -9,8 +9,9 @@ import {
   FAIL_GET_STOCK_GROUP,
   GET_SECTOR,
   GET_SECTOR_ERROR,
-  GET_REALIZED_STOCKS,
-  GET_REALIZED_STOCKS_ERROR,
+  START_GET_REALIZED_STOCKS,
+  SUCCESS_GET_REALIZED_STOCKS,
+  FAIL_GET_REALIZED_STOCKS,
   START_ADD_STOCK,
   SUCCESS_ADD_STOCK,
   FAIL_ADD_STOCK,
@@ -35,6 +36,7 @@ const initialState = {
   isMarketOpen: false,
   stockStatus: 'initial',
   stockGroupStatus: 'initial',
+  realizedStockStatus: 'initial',
   addStockStatus: 'idle', // idle, processing, succeeded, failed
   calcProgress: 0 // progress of the calculating return process
 };
@@ -121,16 +123,21 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         stockGroupStatus: 'failed'
       };
-    case GET_REALIZED_STOCKS:
+    case START_GET_REALIZED_STOCKS:
       return {
         ...state,
-        realizedStocks: payload,
-        realizedStockLoading: false
+        realizedStockStatus: 'loading'
       };
-    case GET_REALIZED_STOCKS_ERROR:
+    case SUCCESS_GET_REALIZED_STOCKS:
       return {
         ...state,
-        realizedStockLoading: false
+        realizedStockStatus: 'succeeded',
+        realizedStocks: payload
+      };
+    case FAIL_GET_REALIZED_STOCKS:
+      return {
+        ...state,
+        realizedStockStatus: 'failed'
       };
     case SUCCESS_CALCULATE_RETURN:
       return {

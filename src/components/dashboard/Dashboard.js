@@ -10,6 +10,7 @@ import {
 import {
   checkMarketStatus,
   getStocks,
+  getRealizedStocks
 } from '../../actions/stockAction';
 import { getTotalCash } from '../../actions/cashAction';
 import ChartSolidIcon from '../icons/ChartSolidIcon';
@@ -30,6 +31,7 @@ const Dashboard = ({
   getDefaultPortfolio,
   checkMarketStatus,
   getStocks,
+  getRealizedStocks,
   getTotalCash,
 }) => {
   const [totalDailyReturn, setTotalDailyReturn] = useState(0);
@@ -64,12 +66,16 @@ const Dashboard = ({
         stock.stockStatus === 'idle')) {
         getStocks(defaultPortfolio);
       }
+      if (stock && (stock.realizedStockStatus === 'initial' ||
+        stock.realizedStockStatus === 'idle')) {
+        getRealizedStocks(defaultPortfolio);
+      }
       if (cash && (cash.totalCashStatus === 'initial' ||
         cash.totalCashStatus === 'idle')) {
         getTotalCash(defaultPortfolio);
       }
     }
-  }, [stock, cash, getStocks, getTotalCash, defaultPortfolio]);
+  }, [stock, cash, getStocks, getRealizedStocks, getTotalCash, defaultPortfolio]);
 
   useEffect(() => {
     if (stock && Object.keys(stock.stockList).length > 0) {
@@ -267,5 +273,6 @@ export default connect(mapStateToProps, {
   getDefaultPortfolio,
   checkMarketStatus,
   getStocks,
+  getRealizedStocks,
   getTotalCash
 })(memo(Dashboard));
