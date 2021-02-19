@@ -55,6 +55,7 @@ export const getStocks = (portfolioId) => async (dispatch, getState) => {
     const stocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/stocks/${portfolioId}`,
       config);
     const sortedStocks = await sortStocks(stocksResult.data);
+    if (sortedStocks.length > 0) { }
     const [calcResCode, calcResult] = await calculateReturnLogic(sortedStocks, getState(), dispatch);
     dispatch({
       type: SUCCESS_GET_STOCK_LIST,
@@ -197,7 +198,7 @@ export const closePosition = (portfolioId, ticker) => async (dispatch) => {
 }
 
 async function calculateReturnLogic(stocks, state, dispatch) {
-  if (stocks && stocks.length === 0) return;
+  if (stocks && stocks.length === 0) return [0, 0];
   const config = { withCredentials: true };
   let calculatedStocks = { ...stocks };
   let totalStuffsToDo = Object.keys(stocks).length;
