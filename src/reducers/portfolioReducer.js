@@ -34,8 +34,6 @@ export default function portfolioReducer(state = initialState, action) {
     case CHOOSE_DEFAULT_PORTFOLIO:
       return {
         ...state,
-        defaultPortfolioStatus: 'idle',
-        portfolioListStatus: 'idle',
         defaultPortfolio: payload
       };
     case START_LOAD_DEFAULT_PORTFOLIO:

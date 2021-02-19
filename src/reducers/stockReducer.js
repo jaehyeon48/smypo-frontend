@@ -77,8 +77,6 @@ export default function stockReducer(state = initialState, action) {
     case CHOOSE_DEFAULT_PORTFOLIO:
       return {
         ...state,
-        stockStatus: 'idle',
-        stockGroupStatus: 'idle',
         calcProgress: 0
       };
     case CHECK_MARKET_STATUS:

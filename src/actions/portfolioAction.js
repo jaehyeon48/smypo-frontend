@@ -16,6 +16,15 @@ import {
   PORTFOLIO_DELETE_ERROR,
   EMPTY_PORTFOLIO_LIST
 } from './actionTypes';
+import {
+  getStocks,
+  getRealizedStocks
+} from './stockAction';
+import {
+  getCash,
+  getTotalCash
+} from './cashAction';
+
 import axios from 'axios';
 
 
@@ -48,6 +57,10 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
       type: CHOOSE_DEFAULT_PORTFOLIO,
       payload: response.data.defaultPortfolioId
     });
+    dispatch(getStocks(portfolioId));
+    dispatch(getRealizedStocks(portfolioId));
+    dispatch(getCash(portfolioId));
+    dispatch(getTotalCash(portfolioId));
   } catch (error) {
     console.error(error);
     dispatch({ type: EMPTY_PORTFOLIO_LIST });

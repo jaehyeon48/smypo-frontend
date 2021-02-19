@@ -46,6 +46,11 @@ export const getTotalCash = (portfolioId) => async (dispatch) => {
         type: SUCCESS_GET_TOTAL_CASH,
         payload: totalCash
       });
+    } else {
+      dispatch({
+        type: SUCCESS_GET_TOTAL_CASH,
+        payload: 0
+      });
     }
   } catch (error) {
     console.error(error);
