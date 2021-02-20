@@ -12,13 +12,13 @@
 
   @media screen and (max-width: 570px) {
     & > h1 {
-      margin-top: 2em;
+      margin-top: 2.5em;
     }
   }
 
   @media screen and (max-width: 450px) {
     & > h1 {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
     }
   }
 }
@@ -51,7 +51,6 @@
 
 .chart-container > h1 {
   color: $card-color;
-  font-weight: 400;
 }
 
 .chart-wrapper {
@@ -187,6 +186,7 @@
   display: flex;
   align-items: center;
   margin: 0.4em 0.6em;
+  font-size: 0.9rem;
 }
 
 .pie-chart-legend-content .chart-legend-cash {
