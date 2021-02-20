@@ -10,7 +10,7 @@
 
 .navbar__main-logo {
   cursor: pointer;
-  margin: 1em 1em 1em 2em;
+  margin: 1em;
   width: 92px;
   height: 60px;
 }
@@ -108,7 +108,7 @@
   right: -48px;
   z-index: 99;
   width: 100vw;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   background-color: $nav-bg-color;
 
@@ -163,8 +163,8 @@
     padding: 0.5em;
 
     & > svg {
-      width: 1.3em;
-      height: 1.3em;
+      width: 1.1em;
+      height: 1.1em;
       margin-right: 0.3em;
     }
   }
@@ -178,7 +178,7 @@
   }
 
   & > .navbar__user-name-mobile {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #10bbc3;
 
@@ -203,7 +203,7 @@
     }
 
     & > li {
-      padding: 0.9em 0.5em;
+      padding: 1.2em 0.5em;
     }
 
     & > li a,
@@ -228,10 +228,11 @@
     &::before {
       right: 2.3em;
     }
+    font-size: 1rem;
 
     & > li a,
     & .navbar__sign-out {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 }
