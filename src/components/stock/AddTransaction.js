@@ -153,31 +153,31 @@ const AddTransaction = ({
         <div className="ticker-container">
           <label className="add-transaction-label">
             Ticker
-          <input
-              type="text"
-              name="ticker"
-              value={ticker}
-              onChange={handleChange}
-              onInput={handleTickerInput}
-              className="add-transaction-field"
-            />
+            <div className="auto-complete-field-wrapper">
+              <input
+                type="text"
+                name="ticker"
+                value={ticker}
+                onChange={handleChange}
+                onInput={handleTickerInput}
+                className="add-transaction-field"
+              />
+              {renderAutoComplete && <AutoCompleteResult
+                results={autoCompleteResults}
+                userInput={tickerInput}
+                handleClickItem={handleClickItem}
+              />}
+            </div>
           </label>
         </div>
         <label className="add-transaction-label">
           Company
-          <div className="auto-complete-field-wrapper">
-            <input
-              type="text"
-              value={companyName}
-              className="add-transaction-field"
-              disabled={true}
-            />
-            {renderAutoComplete && <AutoCompleteResult
-              results={autoCompleteResults}
-              userInput={tickerInput}
-              handleClickItem={handleClickItem}
-            />}
-          </div>
+          <input
+            type="text"
+            value={companyName}
+            className="add-transaction-field"
+            disabled={true}
+          />
         </label>
         <label className="add-transaction-label">
           Price
