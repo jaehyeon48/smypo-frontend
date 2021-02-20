@@ -49,7 +49,6 @@ const Position = ({
   useEffect(() => {
     if (PORTFOLIO_ID && TICKER) {
       if (!(TICKER in stock.stockGroup)) {
-        console.log(1);
         getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
       }
     }
@@ -59,7 +58,6 @@ const Position = ({
 
   useEffect(() => {
     (async () => {
-      console.log(2);
       const companyInfoResult = await getCompanyInfo(TICKER);
       setCompanyInfo(companyInfoResult);
     })();
