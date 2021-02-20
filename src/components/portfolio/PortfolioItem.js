@@ -34,7 +34,7 @@ const PortfolioItem = ({
     } else {
       setIsDefault(false);
     }
-  }, [defaultPortfolio]);
+  }, [portfolio.portfolioId, defaultPortfolio]);
 
   useEffect(() => {
     if (isNameEmptyErr && pfNameToBeEdited.trim() !== '') {
