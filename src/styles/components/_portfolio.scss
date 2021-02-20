@@ -26,8 +26,8 @@
 
   @media screen and (max-width: 425px) {
     & > button {
-      font-size: 1.1rem;
-      width: 12em;
+      font-size: 1rem;
+      width: 10em;
     }
   }
 }
@@ -169,9 +169,9 @@
 }
 
 .portfolio-item-default > button {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   padding: 0.3em 0.5em;
-  width: 6.3em;
+  width: 6em;
 }
 
 .portfolio-item__default-text {
@@ -184,7 +184,7 @@
   padding-right: 1em;
 
   & > button {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -193,7 +193,7 @@
   padding-right: 1em;
 
   & > button {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -201,7 +201,7 @@
   width: 90px;
 
   & > button {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 }
 
