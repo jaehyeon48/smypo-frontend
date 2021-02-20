@@ -25,8 +25,8 @@
 
   @media screen and (max-width: 425px) {
     & > button {
-      font-size: 1.1rem;
-      width: 12em;
+      font-size: 1rem;
+      width: 11em;
     }
   }
 }
@@ -39,7 +39,7 @@
   background-color: $white;
   box-shadow: 2px 3px 3px $dark-gray;
   border-radius: 0.3em;
-  margin: 2.4em auto;
+  margin: 2em auto;
   padding: 1rem;
   width: 73vw;
   max-width: 600px;
@@ -52,7 +52,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 }
 
@@ -137,7 +137,7 @@
   font-size: 1.2rem;
 
   & > td {
-    padding: 0.5em 0.2em;
+    padding: 0.5em 0.8em;
     border-bottom: 1px solid #ddd;
     text-align: left;
   }
@@ -173,18 +173,20 @@
 
 .cash-item > .cash-item-edit {
   width: 80px;
-  padding-right: 0.7em;
+  padding: 0.5em 1.2em 0.5em 0;
 
   & > button {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
+    width: 4em;
   }
 }
 
-.cash-item-delete {
+td.cash-item-delete {
   width: 100px;
+  padding: 0.5em 0.8em 0.5em 0;
 
   & > button {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
 }
 
