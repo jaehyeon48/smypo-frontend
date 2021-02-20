@@ -138,12 +138,15 @@
 }
 
 .auth__footer {
-  margin-top: 0.9em;
-  font-size: 1.2rem;
+  margin-top: 1.4em;
+  font-size: 1.1rem;
+  max-width: 17em;
 
   & > a {
     color: $main-color;
     transition: all 100ms ease;
+    display: inline-block;
+    width: 4em;
   }
 
   & > a:hover {
@@ -151,7 +154,6 @@
   }
 
   @media screen and (max-width: 425px) {
-    font-size: 1.1rem;
-    width: 11em;
+    font-size: 1rem;
   }
 }
