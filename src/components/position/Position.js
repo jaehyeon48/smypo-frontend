@@ -48,15 +48,18 @@ const Position = ({
 
   useEffect(() => {
     if (PORTFOLIO_ID && TICKER) {
-      if (stock && (stock.stockGroupStatus === 'initial' ||
-        stock.stockGroupStatus === 'idle')) {
+      if (!(TICKER in stock.stockGroup)) {
+        console.log(1);
         getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
       }
     }
-  }, [stock, PORTFOLIO_ID, TICKER, getStocksByTickerGroup]);
+  }, [stock.stockGroup, PORTFOLIO_ID, TICKER, getStocksByTickerGroup]);
+
+
 
   useEffect(() => {
     (async () => {
+      console.log(2);
       const companyInfoResult = await getCompanyInfo(TICKER);
       setCompanyInfo(companyInfoResult);
     })();
@@ -123,7 +126,7 @@ const Position = ({
         btnColor={'danger'}
         onClickFunc={handleClosePosition}
       />
-      {stock && stock.stockGroupLoading !== 'loading' ? (
+      {stock && stock.stockGroupStatus !== 'loading' ? (
         <div className="stock-group-container">
           <header className="stock-group__header">
             Transaction History

@@ -88,8 +88,7 @@ StockItem.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  stock: state.stock,
-  defaultPortfolio: state.portfolio.defaultPortfolio
+  stock: state.stock
 });
 
 export default connect(mapStateToProps)(StockItem);

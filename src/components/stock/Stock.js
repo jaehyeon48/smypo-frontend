@@ -151,6 +151,7 @@ const Stock = ({
                             quantity={stockItem.quantity}
                             dailyReturn={stockItem.dailyReturn}
                             overallReturn={stockItem.overallReturn}
+                            defaultPortfolio={portfolio.defaultPortfolio}
                           />
                         );
                       }
@@ -199,6 +200,7 @@ const Stock = ({
                             price={stockItem.price}
                             change={stockItem.change}
                             overallReturnData={calcTotalGainForHeldStock(stockItem.ticker)}
+                            defaultPortfolio={portfolio.defaultPortfolio}
                           />
                         );
                       }

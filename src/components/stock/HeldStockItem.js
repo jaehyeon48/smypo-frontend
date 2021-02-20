@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { findCompanyNameByTicker } from '../../utils/findNameByTicker';
@@ -41,8 +40,5 @@ const HeldStockItem = ({
   )
 }
 
-const mapStateToProps = (state) => ({
-  portfolio: state.portfolio
-});
 
-export default connect(mapStateToProps)(HeldStockItem);
+export default HeldStockItem;
