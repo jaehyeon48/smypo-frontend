@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Modal from '../modal/Modal';
@@ -223,12 +222,6 @@ const PortfolioItem = ({
     </tr>
   );
 }
-
-PortfolioItem.propTypes = {
-  editPortfolio: PropTypes.func,
-  deletePortfolio: PropTypes.func,
-  showAlert: PropTypes.func
-};
 
 export default connect(null, {
   editPortfolio,

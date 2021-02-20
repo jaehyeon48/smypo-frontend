@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import AvatarImage from '../avatar/AvatarImage';
@@ -124,12 +123,6 @@ const Profile = ({
       )}
     </React.Fragment>
   )
-}
-
-Profile.propTypes = {
-  user: PropTypes.object,
-  updateProfile: PropTypes.func,
-  loadUser: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({

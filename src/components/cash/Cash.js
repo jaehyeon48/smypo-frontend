@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import CashItem from './CashItem';
@@ -133,12 +132,6 @@ const Cash = ({
     </React.Fragment>
   );
 }
-
-Cash.propTypes = {
-  getDefaultPortfolio: PropTypes.func,
-  getCash: PropTypes.func,
-  getTotalCash: PropTypes.func
-};
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,

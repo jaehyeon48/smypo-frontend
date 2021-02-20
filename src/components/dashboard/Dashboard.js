@@ -1,5 +1,4 @@
 import React, { useState, useEffect, memo } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -254,19 +253,6 @@ const Dashboard = ({
     </React.Fragment>
   );
 }
-
-
-Dashboard.propTypes = {
-  theme: PropTypes.string,
-  totalCost: PropTypes.number,
-  defaultPortfolio: PropTypes.number,
-  loadPortfolios: PropTypes.func,
-  checkMarketStatus: PropTypes.func,
-  getDefaultPortfolio: PropTypes.func,
-  getStocks: PropTypes.func,
-  addTotalCost: PropTypes.func,
-  getTotalCash: PropTypes.func,
-};
 
 const mapStateToProps = (state) => ({
   theme: state.auth.theme,

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import Footer from '../footer/Footer';
@@ -50,11 +49,6 @@ const LandingPage = ({
       <Footer />
     </React.Fragment>
   );
-}
-
-LandingPage.propTypes = {
-  loading: PropTypes.bool,
-  isAuthenticated: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({

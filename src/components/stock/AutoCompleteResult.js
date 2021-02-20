@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const AutoCompleteResult = ({
   results,
@@ -38,11 +37,4 @@ const AutoCompleteResult = ({
     </div>
   )
 }
-
-AutoCompleteResult.propTypes = {
-  results: PropTypes.array,
-  userInput: PropTypes.string,
-  handleClickItem: PropTypes.func
-}
-
 export default AutoCompleteResult;

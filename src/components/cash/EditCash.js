@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
@@ -119,14 +118,6 @@ const EditCash = ({
     </div>
   );
 }
-
-EditCash.propTypes = {
-  currentPortfolio: PropTypes.number,
-  closeAddCashModal: PropTypes.func,
-  formData: PropTypes.object,
-  setFormData: PropTypes.func,
-  editCash: PropTypes.func
-};
 
 export default connect(null, {
   editCash,

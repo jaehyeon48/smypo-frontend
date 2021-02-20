@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
@@ -122,14 +121,6 @@ const EditTransaction = ({
     </div>
   );
 }
-
-EditTransaction.propTypes = {
-  formData: PropTypes.object,
-  setFormData: PropTypes.func,
-  stockList: PropTypes.array,
-  editStock: PropTypes.func,
-  deleteStock: PropTypes.func
-};
 
 const mapStateToProps = (state) => ({
   stockList: state.stock.stockList

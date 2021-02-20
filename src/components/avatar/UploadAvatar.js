@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { uploadAvatar } from '../../actions/userAction';
@@ -70,12 +69,6 @@ const UploadAvatar = ({
       </div>
     </div>
   )
-}
-
-UploadAvatar.propTypes = {
-  closeModalFunc: PropTypes.func,
-  uploadAvatar: PropTypes.func,
-  showAlert: PropTypes.func
 }
 
 export default connect(null, {

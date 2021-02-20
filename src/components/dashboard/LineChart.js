@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
@@ -83,10 +82,5 @@ const LineChart = ({
     </div>
   );
 }
-
-LineChart.propTypes = {
-  defaultPortfolioId: PropTypes.number,
-  get10DaysOfRecord: PropTypes.func
-};
 
 export default LineChart;

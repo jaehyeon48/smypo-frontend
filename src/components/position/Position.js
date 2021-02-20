@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -190,14 +189,6 @@ const Position = ({
     </main>
   );
 }
-
-Position.propTypes = {
-  match: PropTypes.object,
-  stockGroupLoading: PropTypes.bool,
-  getStocksByTickerGroup: PropTypes.func,
-  closePosition: PropTypes.func,
-  showAlert: PropTypes.func
-};
 
 const mapStateToProps = (state) => ({
   stock: state.stock

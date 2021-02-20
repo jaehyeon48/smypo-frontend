@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -243,13 +242,6 @@ const Stock = ({
     </main>
   );
 }
-
-Stock.propTypes = {
-  stock: PropTypes.object,
-  getTotalCash: PropTypes.func,
-  getStocks: PropTypes.func,
-  getDefaultPortfolio: PropTypes.func
-};
 
 const mapStateToProps = (state) => ({
   stock: state.stock,

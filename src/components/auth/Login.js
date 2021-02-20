@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import validator from 'validator';
 
 import Button from '../button/Button';
@@ -140,12 +139,6 @@ const Login = ({
     </React.Fragment>
   );
 }
-
-Login.propTypes = {
-  login: PropTypes.func,
-  showAlert: PropTypes.func,
-};
-
 
 export default connect(null, {
   login,

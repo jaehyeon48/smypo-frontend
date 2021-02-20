@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import tickerAutoComplete from '../../utils/tickerAutoComplete';
@@ -217,11 +216,6 @@ const AddTransaction = ({
       </form>
     </div>
   );
-}
-
-AddTransaction.propTypes = {
-  closeAddTransactionModal: PropTypes.func,
-  showAlert: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({

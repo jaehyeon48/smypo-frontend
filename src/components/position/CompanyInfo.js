@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import './companyInfo.css';
 
@@ -34,9 +33,5 @@ const CompanyInfo = ({
     </div>
   );
 }
-
-CompanyInfo.propTypes = {
-  companyInfo: PropTypes.object
-};
 
 export default CompanyInfo;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Button from '../button/Button';
 
@@ -60,16 +59,5 @@ const StockGroupItem = ({
     </React.Fragment>
   )
 }
-
-StockGroupItem.propTypes = {
-  stockId: PropTypes.number,
-  price: PropTypes.number,
-  quantity: PropTypes.number,
-  transactionType: PropTypes.string,
-  transactionDate: PropTypes.string,
-  formData: PropTypes.object,
-  openEditModal: PropTypes.func,
-  setFormData: PropTypes.func
-};
 
 export default StockGroupItem;

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
@@ -105,12 +104,6 @@ const AddCash = ({
     </div>
   );
 }
-
-AddCash.propTypes = {
-  defaultPortfolio: PropTypes.number,
-  closeAddCashModal: PropTypes.func,
-  addCash: PropTypes.func
-};
 
 const mapStateToProps = (state) => ({
   defaultPortfolio: state.portfolio.defaultPortfolio

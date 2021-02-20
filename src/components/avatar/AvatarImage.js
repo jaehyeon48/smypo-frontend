@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import defaultAvatar from '../../images/default_avatar.png';
@@ -19,10 +18,6 @@ const AvatarImage = ({
       />
     </div>
   )
-}
-
-AvatarImage.propTypes = {
-  avatar: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({

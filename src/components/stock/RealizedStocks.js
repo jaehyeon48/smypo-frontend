@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Spinner from '../spinner/Spinner';
@@ -86,12 +85,6 @@ const RealizedStocks = ({
     </main>
   );
 }
-
-RealizedStocks.propTypes = {
-  getRealizedStocks: PropTypes.func,
-  getDefaultPortfolio: PropTypes.func,
-  realizedStocks: PropTypes.array,
-};
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,

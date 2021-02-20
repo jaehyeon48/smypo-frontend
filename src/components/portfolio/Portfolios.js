@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import PortfolioItem from './PortfolioItem';
@@ -191,13 +190,6 @@ const Portfolios = ({
     </React.Fragment>
   );
 }
-
-Portfolios.propTypes = {
-  loadPortfolios: PropTypes.func,
-  getDefaultPortfolio: PropTypes.func,
-  createPortfolio: PropTypes.func,
-  showAlert: PropTypes.func
-};
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,

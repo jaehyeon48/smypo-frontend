@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, useHistory, Link } from 'react-router-dom';
 
@@ -179,12 +178,6 @@ const Navbar = ({
     </React.Fragment>
   );
 }
-
-Navbar.propTypes = {
-  loading: PropTypes.bool,
-  isAuthenticated: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   loading: state.auth.loading,

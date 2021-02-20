@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -75,17 +74,6 @@ const StockItem = ({
     </tr>
   )
 }
-
-StockItem.propTypes = {
-  ticker: PropTypes.string,
-  avgCost: PropTypes.number,
-  quantity: PropTypes.number,
-  defaultPortfolio: PropTypes.number,
-  totalDailyPL: PropTypes.number,
-  totalOverallPL: PropTypes.number,
-  setTotalDailyPL: PropTypes.func,
-  setTotalOverallPL: PropTypes.func,
-};
 
 const mapStateToProps = (state) => ({
   stock: state.stock
