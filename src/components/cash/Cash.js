@@ -29,18 +29,25 @@ const Cash = ({
   });
 
   useEffect(() => {
-    if (portfolio && cash && ((
+    if (
       portfolio.defaultPortfolioStatus === 'initial' ||
-      portfolio.defaultPortfolioStatus === 'idle') ||
+      portfolio.defaultPortfolioStatus === 'idle' ||
       cash.cashListStatus === 'initial' ||
       cash.cashListStatus === 'idle' ||
       cash.totalCashStatus === 'initial' ||
       cash.totalCashStatus === 'idle'
-    )) {
+    ) {
       getCash(portfolio.defaultPortfolio);
       getTotalCash(portfolio.defaultPortfolio);
     }
-  }, [portfolio, cash, getCash, getTotalCash]);
+  }, [
+    portfolio.defaultPortfolio,
+    portfolio.defaultPortfolioStatus,
+    cash.cashListStatus,
+    cash.totalCashStatus,
+    getCash,
+    getTotalCash
+  ]);
 
   const openAddCashModal = () => {
     setIsAddCashModalOpen(true);

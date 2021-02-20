@@ -47,65 +47,73 @@ const Dashboard = ({
   }, [checkMarketStatus]);
 
   useEffect(() => {
-    if (portfolio && (portfolio.defaultPortfolioStatus === 'initial' ||
-      portfolio.defaultPortfolioStatus === 'idle')) {
+    if (portfolio.defaultPortfolioStatus === 'initial' ||
+      portfolio.defaultPortfolioStatus === 'idle') {
       getDefaultPortfolio();
     }
-  }, [portfolio, getDefaultPortfolio]);
+  }, [portfolio.defaultPortfolioStatus, getDefaultPortfolio]);
 
   useEffect(() => {
-    if (portfolio && (portfolio.portfolioListStatus === 'initial' ||
-      portfolio.portfolioListStatus === 'idle')) {
+    if (portfolio.portfolioListStatus === 'initial' ||
+      portfolio.portfolioListStatus === 'idle') {
       loadPortfolios();
     }
-  }, [portfolio, loadPortfolios]);
+  }, [portfolio.portfolioListStatus, loadPortfolios]);
 
   useEffect(() => {
     if (defaultPortfolio) {
-      if (stock && (stock.stockStatus === 'initial' ||
-        stock.stockStatus === 'idle')) {
+      if (stock.stockStatus === 'initial' ||
+        stock.stockStatus === 'idle') {
         getStocks(defaultPortfolio);
       }
-      if (stock && (stock.realizedStockStatus === 'initial' ||
-        stock.realizedStockStatus === 'idle')) {
+      if (stock.realizedStockStatus === 'initial' ||
+        stock.realizedStockStatus === 'idle') {
         getRealizedStocks(defaultPortfolio);
       }
-      if (cash && (cash.totalCashStatus === 'initial' ||
-        cash.totalCashStatus === 'idle')) {
+      if (cash.totalCashStatus === 'initial' ||
+        cash.totalCashStatus === 'idle') {
         getTotalCash(defaultPortfolio);
       }
     }
-  }, [stock, cash, getStocks, getRealizedStocks, getTotalCash, defaultPortfolio]);
+  }, [
+    stock.stockStatus,
+    stock.realizedStockStatus,
+    cash.totalCashStatus,
+    getStocks,
+    getRealizedStocks,
+    getTotalCash,
+    defaultPortfolio
+  ]);
 
   useEffect(() => {
-    if (stock && Object.keys(stock.stockList).length > 0) {
+    if (Object.keys(stock.stockList).length > 0) {
       let sumOfCost = 0;
       for (const stockInfo of Object.values(stock.stockList)) {
         sumOfCost += (stockInfo.avgCost * stockInfo.quantity);
       }
       setTotalCost(parseFloat(sumOfCost.toFixed(2)));
     }
-  }, [stock]);
+  }, [stock.stockList]);
 
   useEffect(() => {
-    if (stock && Object.keys(stock.stockList).length > 0) {
+    if (Object.keys(stock.stockList).length > 0) {
       let sumOfDailyReturn = 0;
       for (const stockInfo of Object.values(stock.stockList)) {
         sumOfDailyReturn += stockInfo.dailyReturn;
       }
       setTotalDailyReturn(parseFloat(sumOfDailyReturn.toFixed(2)));
     }
-  }, [stock]);
+  }, [stock.stockList]);
 
   useEffect(() => {
-    if (stock && Object.keys(stock.stockList).length > 0) {
+    if (Object.keys(stock.stockList).length > 0) {
       let sumOfOverallReturn = 0;
       for (const stockInfo of Object.values(stock.stockList)) {
         sumOfOverallReturn += stockInfo.overallReturn;
       }
       setTotalOverallReturn(parseFloat(sumOfOverallReturn.toFixed(2)));
     }
-  }, [stock]);
+  }, [stock.stockList]);
 
   useEffect(() => {
     setDailyReturnPercent((totalDailyReturn / (totalOverallReturn + totalCost - totalDailyReturn) * 100));
@@ -126,7 +134,7 @@ const Dashboard = ({
     else {
       setCashToDisplay(cash.totalCash);
     }
-  }, [cash]);
+  }, [cash.totalCash]);
 
   const colorReturnItem = (value) => {
     if (value > 0) return 'return-positive';

@@ -43,18 +43,24 @@ const Portfolios = ({
   }, [newPortfolioName, isNameEmptyErr]);
 
   useEffect(() => {
-    if (portfolio && stock && cash && (
-      portfolio.portfolioListStatus === 'loading' ||
+    if (portfolio.portfolioListStatus === 'loading' ||
       portfolio.defaultPortfolioStatus === 'loading' ||
       stock.stockStatus === 'loading' ||
       stock.stockGroupStatus === 'loading' ||
       cash.cashListStatus === 'loading' ||
-      cash.totalCashStatus === 'loading')) {
+      cash.totalCashStatus === 'loading') {
       setIsLoadingPortfolioData(true);
     } else {
       setIsLoadingPortfolioData(false);
     }
-  }, [portfolio, stock, cash]);
+  }, [
+    portfolio.portfolioListStatus,
+    portfolio.defaultPortfolioStatus,
+    stock.stockStatus,
+    stock.stockGroupStatus,
+    cash.cashListStatus,
+    cash.totalCashStatus
+  ]);
 
   const handleAddPfName = (e) => {
     setNewPortfolioName(e.target.value);

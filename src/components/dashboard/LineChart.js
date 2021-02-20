@@ -28,7 +28,7 @@ const LineChart = ({
       const record = await get10DaysOfRecord(defaultPortfolioId);
       setRecordData(record);
     })();
-  }, []);
+  }, [defaultPortfolioId]);
 
   useEffect(() => {
     if (recordData.length > 0) {

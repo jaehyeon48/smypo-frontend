@@ -35,7 +35,7 @@ const SectorPieChart = ({
 
   const sectorLabels = useMemo(() => {
     let newSectorLabelsArray = [];
-    if (stock && Object.keys(stock.stockList).length > 0) {
+    if (Object.keys(stock.stockList).length > 0) {
       for (const stockItem of Object.values(stock.stockList)) {
         if (stockItem.quantity > 0) {
           if (newSectorLabelsArray.length === 0) {
@@ -52,7 +52,7 @@ const SectorPieChart = ({
       newSectorLabelsArray.sort((a, b) => a.localeCompare(b));
     }
     return newSectorLabelsArray;
-  }, [stock]);
+  }, [stock.stockList]);
 
   // calculate font size based on viewport size
   // useEffect(() => {
@@ -64,7 +64,7 @@ const SectorPieChart = ({
   // }, []);
 
   useEffect(() => {
-    if (stock && Object.keys(stock.stockList).length > 0) {
+    if (Object.keys(stock.stockList).length > 0) {
       let newSectorsArray = [];
       let i = 0
       for (const stockItem of Object.values(stock.stockList)) {
@@ -75,7 +75,7 @@ const SectorPieChart = ({
       }
       setSectors(newSectorsArray);
     }
-  }, [stock]);
+  }, [stock.stockList]);
 
   // make legend
   useEffect(() => {

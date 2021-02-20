@@ -35,42 +35,54 @@ const Stock = ({
   const [isHeldStocksExist, setIsHeldStocksExist] = useState(false);
 
   useEffect(() => {
-    if (portfolio && (portfolio.defaultPortfolioStatus === 'initial' ||
-      portfolio.defaultPortfolioStatus === 'idle')) {
+    if (portfolio.defaultPortfolioStatus === 'initial' ||
+      portfolio.defaultPortfolioStatus === 'idle') {
       getDefaultPortfolio();
     }
-  }, [portfolio, getDefaultPortfolio, getDefaultPortfolioName]);
+  }, [
+    portfolio.defaultPortfolioStatus,
+    getDefaultPortfolio,
+    getDefaultPortfolioName
+  ]);
 
   useEffect(() => {
     if (portfolio.defaultPortfolio) {
-      if (stock && (stock.stockStatus === 'initial' ||
-        stock.stockStatus === 'idle')) {
+      if (stock.stockStatus === 'initial' ||
+        stock.stockStatus === 'idle') {
         getStocks(portfolio.defaultPortfolio);
       }
-      if (stock && (stock.realizedStockStatus === 'initial' ||
-        stock.realizedStockStatus === 'idle')) {
+      if (stock.realizedStockStatus === 'initial' ||
+        stock.realizedStockStatus === 'idle') {
         getRealizedStocks(portfolio.defaultPortfolio);
       }
-      if (cash && (cash.totalCashStatus === 'initial' ||
-        cash.totalCashStatus === 'idle')) {
+      if (cash.totalCashStatus === 'initial' ||
+        cash.totalCashStatus === 'idle') {
         // use total cash when adding a new transaction
         getTotalCash(portfolio.defaultPortfolio);
       }
     }
-  }, [portfolio, stock, cash, getStocks, getRealizedStocks, getTotalCash]);
+  }, [
+    portfolio.defaultPortfolio,
+    stock.stockStatus,
+    stock.realizedStockStatus,
+    cash.totalCashStatus,
+    getStocks,
+    getRealizedStocks,
+    getTotalCash
+  ]);
 
   useEffect(() => {
-    if (stock && stock.stockList) {
+    if (Object.keys(stock.stockList).length > 0) {
       if (Object.values(stock.stockList).filter((stockItem) => stockItem.quantity === 0).length > 0) {
         setIsHeldStocksExist(true);
       } else {
         setIsHeldStocksExist(false);
       }
     }
-  }, [stock]);
+  }, [stock.stockList]);
 
   const calcTotalGainForHeldStock = useCallback((ticker) => {
-    if (stock && stock.realizedStocks) {
+    if (stock.realizedStocks) {
       const heldStockData = Object.values(stock.realizedStocks).filter(
         (stockItem) => stockItem.ticker === ticker.toUpperCase());
       let sumOfGainForEachTransaction = 0;
@@ -86,7 +98,7 @@ const Stock = ({
       ];
     }
     return [0, 0];
-  }, [stock]);
+  }, [stock.realizedStocks]);
 
   const openAddTransactionModal = () => {
     setIsAddTransactionModalOpen(true);

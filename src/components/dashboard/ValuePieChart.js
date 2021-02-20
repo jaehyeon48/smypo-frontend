@@ -8,7 +8,7 @@ import CashCoinIcon from '../icons/CashCoinIcon';
 
 const ValuePieChart = ({
   stock,
-  totalCash
+  cash
 }) => {
   const [chartData, setChartData] = useState({
     labels: [],
@@ -46,9 +46,9 @@ const ValuePieChart = ({
 
   // insert ticker into the chart's data label array
   useEffect(() => {
-    if (stock && Object.keys(stock.stockList).length > 0) {
+    if (Object.keys(stock.stockList).length > 0) {
       let newTickerLabels = [];
-      if (totalCash > 0) {
+      if (cash.totalCash > 0) {
         newTickerLabels.push('cash');
       }
       for (const stockItem of Object.values(stock.stockList)) {
@@ -58,11 +58,11 @@ const ValuePieChart = ({
       }
       setTickerLabels(newTickerLabels);
     }
-  }, [stock, totalCash]);
+  }, [stock.stockList, cash.totalCash]);
 
   // calculate each stock's (and cash) value
   useEffect(() => {
-    if (stock && Object.keys(stock.stockList).length > 0) {
+    if (Object.keys(stock.stockList).length > 0) {
       let filteredStockList = {};
       for (const [ticker, stockItem] of Object.entries(stock.stockList)) {
         if (stockItem.quantity > 0) {
@@ -71,8 +71,8 @@ const ValuePieChart = ({
       }
       let newChartData = [];
       // cash always comes at the first position
-      if (totalCash > 0) {
-        newChartData.push(totalCash);
+      if (cash.totalCash > 0) {
+        newChartData.push(cash.totalCash);
       }
       for (const stockItem of Object.values(stock.stockList)) {
         if (stockItem.overallReturn !== null && stockItem.quantity > 0) {
@@ -85,7 +85,7 @@ const ValuePieChart = ({
       }
       setStockValueData(newChartData);
     }
-  }, [stock, totalCash]);
+  }, [stock.stockList, cash.totalCash]);
 
   // initialize stock's returns into chart data
   useEffect(() => {
@@ -212,7 +212,7 @@ const ValuePieChart = ({
 
 const mapStateToProps = (state) => ({
   stock: state.stock,
-  totalCash: state.cash.totalCash
+  cash: state.cash
 });
 
 export default connect(mapStateToProps)(ValuePieChart);
