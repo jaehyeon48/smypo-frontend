@@ -13,12 +13,13 @@
   max-width: fit-content;
   left: 0;
   right: 0;
-  margin: 9vh auto;
+  margin: 6vh auto;
   padding: 3em 4em;
   background-color: white;
   overflow: auto;
   border-radius: 0.2em;
   box-shadow: 4px 5px 5px $black;
+  max-height: 88vh;
 
   @media screen and (max-width: 768px) {
     padding: 2.6em 3.6em;
