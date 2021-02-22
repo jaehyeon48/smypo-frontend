@@ -79,5 +79,3 @@ export const EDIT_CASH = 'EDIT_CASH';
 export const EDIT_CASH_ERROR = 'EDIT_CASH_ERROR';
 export const DELETE_CASH = 'DELETE_CASH';
 export const DELETE_CASH_ERROR = 'DELETE_CASH_ERROR';
-
-
