@@ -18,6 +18,8 @@ import {
   getDefaultPortfolio,
   getDefaultPortfolioName
 } from '../../actions/portfolioAction';
+import setBodyOverflowHidden from '../../utils/setBodyOverflowHidden';
+import setBodyOverflowVisible from '../../utils/setBodyOverflowVisible';
 
 const Stock = ({
   stock,
@@ -101,10 +103,12 @@ const Stock = ({
 
   const openAddTransactionModal = () => {
     setIsAddTransactionModalOpen(true);
+    setBodyOverflowHidden();
   }
 
   const closeAddTransactionModal = () => {
     setIsAddTransactionModalOpen(false);
+    setBodyOverflowVisible();
   }
 
   const redirectToRealizedStocks = () => {

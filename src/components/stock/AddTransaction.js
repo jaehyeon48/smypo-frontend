@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import tickerAutoComplete from '../../utils/tickerAutoComplete';
 import AutoCompleteResult from './AutoCompleteResult';
 import Button from '../button/Button';
+import CartIcon from '../icons/CartIcon';
+import HandHoldingUSDIcon from '../icons/HandHoldingUSDIcon';
 
 import { addStock } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';
@@ -105,116 +107,128 @@ const AddTransaction = ({
   }
 
   return (
-    <div className="add-transaction-container">
-      <form autoComplete="off" onSubmit={handleSubmit} className="add-transaction-form">
-        <div className="transaction-type-container">
-          <label>BUY
-          <input
-              type="radio"
-              name="transactionType"
-              value="buy"
-              checked={transactionType === 'buy'}
-              onChange={handleChange}
-            />
-          </label>
-          <label>SELL
-          <input
-              type="radio"
-              name="transactionType"
-              value="sell"
-              checked={transactionType === 'sell'}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="refer-cash-container">
-          {transactionType === 'buy' ? (
+    <React.Fragment>
+      <header className="add-transaction-header">Add Transaction</header>
+      <div className="add-transaction-container">
+        <form autoComplete="off" onSubmit={handleSubmit} className="add-transaction-form">
+          <div className="transaction-type-container">
+            <p className="type-container-title">Type</p>
             <label>
               <input
-                type="checkbox"
-                name="referCash"
-                value={referCash}
+                type="radio"
+                name="transactionType"
+                value="buy"
+                checked={transactionType === 'buy'}
                 onChange={handleChange}
-              /> Withdraw cash from portfolio to purchase
+              />
+              <div className="radio-box">
+                <CartIcon />
+                Buy
+              </div>
             </label>
-          ) : (
+            <label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="sell"
+                checked={transactionType === 'sell'}
+                onChange={handleChange}
+              />
+              <div className="radio-box">
+                <HandHoldingUSDIcon />
+                Sell
+              </div>
+            </label>
+          </div>
+          <div className="refer-cash-container">
+            {transactionType === 'buy' ? (
               <label>
                 <input
                   type="checkbox"
                   name="referCash"
                   value={referCash}
                   onChange={handleChange}
-                /> Deposit cash to portfolio from sale
+                /> Withdraw cash from portfolio to purchase
               </label>
-            )}
-        </div>
-        <div className="ticker-container">
-          <label className="add-transaction-label">
-            Ticker
+            ) : (
+                <label>
+                  <input
+                    type="checkbox"
+                    name="referCash"
+                    value={referCash}
+                    onChange={handleChange}
+                  /> Deposit cash to portfolio from sale
+                </label>
+              )}
+          </div>
+          <div className="ticker-container">
+            <label className="add-transaction-label">
+              Ticker
             <div className="auto-complete-field-wrapper">
-              <input
-                type="text"
-                name="ticker"
-                value={ticker}
-                onChange={handleChange}
-                onInput={handleTickerInput}
-                className="add-transaction-field"
-              />
-              {renderAutoComplete && <AutoCompleteResult
-                results={autoCompleteResults}
-                userInput={tickerInput}
-                handleClickItem={handleClickItem}
-              />}
-            </div>
+                <input
+                  type="text"
+                  name="ticker"
+                  value={ticker}
+                  onChange={handleChange}
+                  onInput={handleTickerInput}
+                  className="add-transaction-field"
+                />
+                {renderAutoComplete && <AutoCompleteResult
+                  results={autoCompleteResults}
+                  userInput={tickerInput}
+                  handleClickItem={handleClickItem}
+                />}
+              </div>
+            </label>
+          </div>
+          <label className="add-transaction-label">
+            Company
+          <input
+              type="text"
+              value={companyName}
+              className="add-transaction-field"
+              disabled={true}
+            />
           </label>
-        </div>
-        <label className="add-transaction-label">
-          Company
+          <label className="add-transaction-label">
+            Price
           <input
-            type="text"
-            value={companyName}
-            className="add-transaction-field"
-            disabled={true}
-          />
-        </label>
-        <label className="add-transaction-label">
-          Price
+              type="number"
+              name="price"
+              value={price}
+              onChange={handleChange}
+              min="0"
+              step="0.01"
+              className="add-transaction-field"
+            />
+          </label>
+          <label className="add-transaction-label">
+            Quantity
           <input
-            type="number"
-            name="price"
-            value={price}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-            className="add-transaction-field"
-          />
-        </label>
-        <label className="add-transaction-label">
-          Quantity
+              type="number"
+              name="quantity"
+              value={quantity}
+              onChange={handleChange}
+              className="add-transaction-field"
+            />
+          </label>
+          <label className="add-transaction-label">
+            Date
           <input
-            type="number"
-            name="quantity"
-            value={quantity}
-            onChange={handleChange}
-            className="add-transaction-field"
+              type="date"
+              name="transactionDate"
+              value={transactionDate}
+              onChange={handleChange}
+              className="add-transaction-date-field"
+            />
+          </label>
+          <Button
+            btnType={'submit'}
+            btnText={'Add transaction'}
           />
-        </label>
-        <label className="add-transaction-label">
-          Date
-          <input
-            type="date"
-            name="transactionDate"
-            value={transactionDate}
-            onChange={handleChange}
-            className="add-transaction-date-field"
-          />
-        </label>
-        <Button
-          btnType={'submit'}
-          btnText={'Add transaction'}
-        />
-      </form>
-    </div>
+        </form>
+      </div>
+    </React.Fragment>
   );
 }
 
