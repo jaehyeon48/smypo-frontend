@@ -7,7 +7,7 @@
 
   & > button {
     font-size: 1.1rem;
-    width: 11em;
+    width: 9em;
     margin: 0 auto;
   }
 
@@ -23,12 +23,19 @@
   display: flex;
   justify-content: center;
   margin: 0.8em 0 0.9em;
-  font-size: 2.7rem;
+  font-size: 2.2rem;
 
   & > span:first-child {
     color: #2662e8;
     margin-right: 0.4em;
     cursor: pointer;
+  }
+
+  & > span:last-child {
+    max-width: 30%;
+    word-break: break-word;
+    max-height: 148px;
+    overflow-y: hidden;
   }
 
   @media screen and (min-width: 551px) and (max-width: 768px) {
@@ -52,7 +59,7 @@
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
-  margin: 5em auto;
+  margin: 4em auto;
   padding: 3.5em 1.3em 2em;
   width: 80vw;
   max-height: 450px;
@@ -65,7 +72,7 @@
 
 .stock-group__header {
   position: absolute;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   border-radius: $card-border-radius;
   top: -13px;
@@ -172,7 +179,9 @@
   padding-right: 0.7em;
 
   & > button {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    padding: 0.4em 0.5em;
+    width: 4em;
   }
 }
 
@@ -180,6 +189,8 @@
   width: 100px;
 
   & > button {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    padding: 0.4em 0.5em;
+    width: 4.7em;
   }
 }

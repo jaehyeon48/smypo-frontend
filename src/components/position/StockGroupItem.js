@@ -55,7 +55,6 @@ const StockGroupItem = ({
           />
         </td>
       </tr>
-
     </React.Fragment>
   )
 }

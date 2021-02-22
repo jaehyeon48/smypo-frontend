@@ -10,10 +10,10 @@ import {
   START_GET_REALIZED_STOCKS,
   SUCCESS_GET_REALIZED_STOCKS,
   FAIL_GET_REALIZED_STOCKS,
-  START_ADD_STOCK,
   SUCCESS_ADD_STOCK,
   FAIL_ADD_STOCK,
-  EDIT_STOCK,
+  SUCCESS_EDIT_STOCK,
+  FAIL_EDIT_STOCK,
   DELETE_STOCK,
   SUCCESS_CALCULATE_RETURN,
   FAIL_CALCULATE_RETURN,
@@ -96,7 +96,6 @@ export const addStock = (portfolioId, formData, currentAvgCost) => async (dispat
 
   try {
     const reqBody = JSON.stringify({ portfolioId, ...formData, currentAvgCost });
-    dispatch({ type: START_ADD_STOCK });
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/stock`, reqBody, config);
     dispatch({ type: SUCCESS_ADD_STOCK });
     return 0;
@@ -118,9 +117,10 @@ export const editStock = (formData, currentAvgCost) => async (dispatch) => {
   try {
     const reqBody = JSON.stringify({ price, quantity, transactionDate, transactionType, currentAvgCost });
     await axios.put(`${process.env.REACT_APP_SERVER_URL}/stock/${stockId}`, reqBody, config);
-    dispatch({ type: EDIT_STOCK });
+    dispatch({ type: SUCCESS_EDIT_STOCK });
     return 0;
   } catch (error) {
+    dispatch({ type: FAIL_EDIT_STOCK });
     console.error(error);
     return -1;
   }

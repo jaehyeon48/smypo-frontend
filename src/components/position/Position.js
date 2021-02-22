@@ -17,6 +17,8 @@ import { getCompanyInfo } from '../../utils/getCompanyInfo';
 import EditTransaction from './EditTransaction';
 import CompanyInfo from './CompanyInfo';
 import StockGroupLoadingSpinner from '../spinners/StockGroupLoadingSpinner';
+import setBodyOverflowVisible from '../../utils/setBodyOverflowVisible';
+import setBodyOverflowHidden from '../../utils/setBodyOverflowHidden';
 
 const Position = ({
   match,
@@ -47,11 +49,19 @@ const Position = ({
 
   useEffect(() => {
     if (PORTFOLIO_ID && TICKER) {
-      if (!(TICKER in stock.stockGroup)) {
+      if (!(TICKER in stock.stockGroup) ||
+        stock.stockGroupStatus === 'initial' ||
+        stock.stockGroupStatus === 'idle') {
         getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
       }
     }
-  }, [stock.stockGroup, PORTFOLIO_ID, TICKER, getStocksByTickerGroup]);
+  }, [
+    stock.stockGroup,
+    stock.stockGroupStatus,
+    PORTFOLIO_ID,
+    TICKER,
+    getStocksByTickerGroup
+  ]);
 
 
 
@@ -64,10 +74,12 @@ const Position = ({
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
+    setBodyOverflowHidden();
   }
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
+    setBodyOverflowVisible();
   }
 
   const openInfoModal = () => {
@@ -171,6 +183,7 @@ const Position = ({
           <EditTransaction
             formData={formData}
             setFormData={setFormData}
+            closeEditModal={closeEditModal}
           />
         </Modal>
       )}

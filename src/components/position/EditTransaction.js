@@ -6,6 +6,7 @@ import {
   editStock,
   deleteStock
 } from '../../actions/stockAction';
+import { showAlert } from '../../actions/alertAction';
 import CartIcon from '../icons/CartIcon';
 import HandHoldingUSDIcon from '../icons/HandHoldingUSDIcon';
 
@@ -14,6 +15,7 @@ const EditTransaction = ({
   setFormData,
   stockList,
   editStock,
+  closeEditModal,
   deleteStock
 }) => {
   const [currentAvgCost, setCurrentAvgCost] = useState(0);
@@ -40,96 +42,102 @@ const EditTransaction = ({
     e.preventDefault();
     const editResult = await editStock(formData, currentAvgCost);
     if (editResult === 0) {
-      window.location.reload();
+      showAlert('Successfully edited a transaction record.', 'success');
+    } else {
+
     }
+    closeEditModal();
   }
 
 
   return (
-    <div className="add-transaction-container">
-      <form autoComplete="off" onSubmit={handleEditStock} className="add-transaction-form">
-        <div className="transaction-type-container">
-          <p className="type-container-title">Type</p>
-          <label>
-            <input
-              type="radio"
-              name="transactionType"
-              value="buy"
-              checked={transactionType === 'buy'}
-              onChange={handleChange}
-            />
-            <div className="radio-box">
-              <CartIcon />
+    <React.Fragment>
+      <header className="add-transaction-header">Edit Transaction</header>
+      <div className="add-transaction-container">
+        <form autoComplete="off" onSubmit={handleEditStock} className="add-transaction-form">
+          <div className="transaction-type-container">
+            <p className="type-container-title">Type</p>
+            <label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="buy"
+                checked={transactionType === 'buy'}
+                onChange={handleChange}
+              />
+              <div className="radio-box">
+                <CartIcon />
                 Buy
               </div>
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="transactionType"
-              value="sell"
-              checked={transactionType === 'sell'}
-              onChange={handleChange}
-            />
-            <div className="radio-box">
-              <HandHoldingUSDIcon />
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="sell"
+                checked={transactionType === 'sell'}
+                onChange={handleChange}
+              />
+              <div className="radio-box">
+                <HandHoldingUSDIcon />
                 Sell
               </div>
-          </label>
-        </div>
-        <div className="ticker-container">
-          <label className="add-transaction-label">
-            Ticker
+            </label>
+          </div>
+          <div className="ticker-container">
+            <label className="add-transaction-label">
+              Ticker
           <input
-              type="text"
-              name="ticker"
-              value={ticker}
+                type="text"
+                name="ticker"
+                value={ticker}
+                className="add-transaction-field"
+                disabled={true}
+              />
+            </label>
+          </div>
+          <label className="add-transaction-label">
+            Price
+          <input
+              type="number"
+              name="price"
+              value={price}
+              onChange={handleChange}
+              min="0"
+              step="0.01"
               className="add-transaction-field"
-              disabled={true}
+              required={true}
             />
           </label>
-        </div>
-        <label className="add-transaction-label">
-          Price
+          <label className="add-transaction-label">
+            Quantity
           <input
-            type="number"
-            name="price"
-            value={price}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-            className="add-transaction-field"
-            required={true}
-          />
-        </label>
-        <label className="add-transaction-label">
-          Quantity
+              type="number"
+              name="quantity"
+              value={quantity}
+              onChange={handleChange}
+              className="add-transaction-field"
+              required={true}
+            />
+          </label>
+          <label className="add-transaction-label">
+            Date
           <input
-            type="number"
-            name="quantity"
-            value={quantity}
-            onChange={handleChange}
-            className="add-transaction-field"
-            required={true}
+              type="date"
+              name="transactionDate"
+              value={transactionDate}
+              onChange={handleChange}
+              className="add-transaction-date-field"
+            />
+          </label>
+          <Button
+            btnType={'submit'}
+            btnText={'Edit transaction'}
+            btnColor={'warning'}
           />
-        </label>
-        <label className="add-transaction-label">
-          Date
-          <input
-            type="date"
-            name="transactionDate"
-            value={transactionDate}
-            onChange={handleChange}
-            className="add-transaction-date-field"
-          />
-        </label>
-        <Button
-          btnType={'submit'}
-          btnText={'Edit transaction'}
-          btnColor={'warning'}
-        />
-      </form>
-    </div>
+        </form>
+      </div>
+    </React.Fragment>
   );
 }
 

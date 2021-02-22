@@ -12,10 +12,10 @@ import {
   START_GET_REALIZED_STOCKS,
   SUCCESS_GET_REALIZED_STOCKS,
   FAIL_GET_REALIZED_STOCKS,
-  START_ADD_STOCK,
   SUCCESS_ADD_STOCK,
   FAIL_ADD_STOCK,
-  EDIT_STOCK,
+  SUCCESS_EDIT_STOCK,
+  FAIL_EDIT_STOCK,
   DELETE_STOCK,
   SUCCESS_CALCULATE_RETURN,
   FAIL_CALCULATE_RETURN,
@@ -37,7 +37,6 @@ const initialState = {
   stockStatus: 'initial',
   stockGroupStatus: 'initial',
   realizedStockStatus: 'initial',
-  addStockStatus: 'idle', // idle, processing, succeeded, failed
   calcProgress: 0 // progress of the calculating return process
 };
 
@@ -166,22 +165,17 @@ export default function stockReducer(state = initialState, action) {
         ...state,
         calcProgress: 0
       };
-    case START_ADD_STOCK:
-      return {
-        ...state,
-        addStockStatus: 'processing'
-      };
     case SUCCESS_ADD_STOCK:
+    case SUCCESS_EDIT_STOCK:
       return {
         ...state,
         stockStatus: 'idle',
         stockGroupStatus: 'idle',
-        addStockStatus: 'succeeded'
       };
     case FAIL_ADD_STOCK:
+    case FAIL_EDIT_STOCK:
       return {
-        ...state,
-        addStockStatus: 'failed'
+        ...state
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
@@ -189,7 +183,6 @@ export default function stockReducer(state = initialState, action) {
         ...initialState
       };
     case GET_SECTOR_ERROR:
-    case EDIT_STOCK:
     case CLOSE_POSITION:
     case CLOSE_POSITION_ERROR:
     case CHECK_MARKET_STATUS_ERROR:
