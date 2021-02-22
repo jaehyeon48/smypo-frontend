@@ -30,7 +30,7 @@ const LineChart = ({
   }, [defaultPortfolioId]);
 
   useEffect(() => {
-    if (recordData.length > 0) {
+    if (recordData && recordData.length > 0) {
       const dateLabels = [];
       const totalValueData = [];
       recordData.forEach((record) => {
