@@ -6,10 +6,15 @@
   height: 100vh;
 }
 
-.main-loading-spinner,
-.stock-loading-spinner {
+.main-loading-spinner {
   width: 160px;
   height: 160px;
+  margin-top: 6em;
+}
+
+.stock-loading-spinner {
+  width: 120px;
+  height: 120px;
   margin-top: 6em;
 }
 
