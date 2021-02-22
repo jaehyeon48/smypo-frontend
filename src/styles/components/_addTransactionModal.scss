@@ -1,5 +1,5 @@
 .add-transaction-container {
-  margin: 0 auto 0.5em;
+  margin: 0 auto;
   padding: 1em;
   width: 57em;
   max-width: 70vw;
@@ -65,7 +65,7 @@
     width: 100%;
     color: #4a4a4a;
     font-size: 1.2rem;
-    margin-bottom: 0.3em;
+    margin: 0 0 0.3em 0;
   }
 
   & > label {
