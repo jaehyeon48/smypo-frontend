@@ -6,6 +6,8 @@ import {
   editStock,
   deleteStock
 } from '../../actions/stockAction';
+import CartIcon from '../icons/CartIcon';
+import HandHoldingUSDIcon from '../icons/HandHoldingUSDIcon';
 
 const EditTransaction = ({
   formData,
@@ -47,23 +49,32 @@ const EditTransaction = ({
     <div className="add-transaction-container">
       <form autoComplete="off" onSubmit={handleEditStock} className="add-transaction-form">
         <div className="transaction-type-container">
-          <label>BUY
-          <input
+          <p className="type-container-title">Type</p>
+          <label>
+            <input
               type="radio"
               name="transactionType"
               value="buy"
               checked={transactionType === 'buy'}
               onChange={handleChange}
             />
+            <div className="radio-box">
+              <CartIcon />
+                Buy
+              </div>
           </label>
-          <label>SELL
-          <input
+          <label>
+            <input
               type="radio"
               name="transactionType"
               value="sell"
               checked={transactionType === 'sell'}
               onChange={handleChange}
             />
+            <div className="radio-box">
+              <HandHoldingUSDIcon />
+                Sell
+              </div>
           </label>
         </div>
         <div className="ticker-container">
