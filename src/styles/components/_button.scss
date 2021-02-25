@@ -1,11 +1,9 @@
 .button {
   padding: 0.5em;
-  font-size: 1.3rem;
-  border-radius: 0.3em;
+  font-size: 1rem;
   border: none;
   outline: none;
   width: 100%;
-  box-shadow: 1px 1px 4px $black;
   cursor: pointer;
 }
 
@@ -19,46 +17,46 @@
 }
 
 .button--default {
-  background: linear-gradient($main-color, #15a559);
+  background: #38a86f;
   color: $white;
 
   &:hover {
-    background: darken($main-color, 13%);
+    background: darken(#38a86f, 5%);
   }
 }
 
 .button--primary {
-  background: linear-gradient($primary, #118597);
+  background: #3389ca;
   color: $white;
 
   &:hover {
-    background: darken($primary, 13%);
+    background: darken(#3389ca, 5%);
   }
 }
 
 .button--white {
-  background: linear-gradient($white, #dadada);
+  background: $white;
 
   &:hover {
-    background: darken($white, 15%);
+    background: darken($white, 5%);
   }
 }
 
 .button--warning {
-  background: linear-gradient($orange, #d25f1d);
+  background: #dc8042;
   color: $white;
 
   &:hover {
-    background: darken($orange, 13%);
+    background: darken(#dc8042, 5%);
   }
 }
 
 .button--danger {
-  background: linear-gradient($danger, #b92534);
+  background: #d03e4b;
   color: $white;
 
   &:hover {
-    background: darken($danger, 13%);
+    background: darken(#d03e4b, 5%);
   }
 }
 
