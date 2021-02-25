@@ -55,12 +55,41 @@
   }
 }
 
+.cash-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 80vw;
+  max-width: $max-width * 0.55;
+  margin: 1em auto;
+
+  & > button {
+    width: 240px;
+  }
+
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+    margin: 1em auto 3em;
+
+    & > button {
+      font-size: 0.9rem;
+      width: 220px;
+    }
+  }
+
+  @media screen and (max-width: 375px) {
+    & > button {
+      font-size: 0.8rem;
+      width: 200px;
+    }
+  }
+}
+
 .cash-items-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
-  margin: 2em auto 5em;
+  margin: 0.5em auto 3em;
   padding: 3.5em 1.3em 2em;
   width: 80vw;
   max-height: 450px;

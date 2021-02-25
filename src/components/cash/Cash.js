@@ -68,53 +68,57 @@ const Cash = ({
     <React.Fragment>
       <main className="cash-main">
         <CurrentPortfolioName />
-        <Button
-          btnType={'button'}
-          btnText={'Add cash transaction'}
-          onClickFunc={openAddCashModal}
-        />
         <div className="cash-total-amount">
           <span>Total Cash</span>
           <span>{cash.totalCash}</span>
         </div>
-        <div className="cash-items-container">
-          <header className="cash-items__header">
-            Cash
-            </header>
-          <div className="cash-table-wrapper">
-            {cash && cash.cashList.length > 0 ? (
-              <table className="cash-table">
-                <thead>
-                  <tr>
-                    <th className="cash-item__type-header">Type</th>
-                    <th className="cash-item__amount-header">Amount</th>
-                    <th className="cash-item__date-header">Date</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cash.cashList.map((cash) => (
-                    <CashItem
-                      key={cash.cashId}
-                      cashId={cash.cashId}
-                      amount={cash.amount}
-                      transactionType={cash.transactionType}
-                      transactionDate={new Date(cash.transactionDate).toJSON().slice(0, 10)}
-                      formData={formData}
-                      setFormData={setFormData}
-                      openEditCashModal={openEditCashModal}
-                    />
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-                <div className="notice-no-cash">
-                  <p>Cash list is empty.</p>
-                </div>
-              )}
+        <section className="cash-list-section">
+          <div className="cash-btn-container">
+            <Button
+              btnType={'button'}
+              btnText={'Add cash transaction'}
+              onClickFunc={openAddCashModal}
+            />
           </div>
-        </div>
+          <div className="cash-items-container">
+            <header className="cash-items__header">
+              Cash
+            </header>
+            <div className="cash-table-wrapper">
+              {cash && cash.cashList.length > 0 ? (
+                <table className="cash-table">
+                  <thead>
+                    <tr>
+                      <th className="cash-item__type-header">Type</th>
+                      <th className="cash-item__amount-header">Amount</th>
+                      <th className="cash-item__date-header">Date</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cash.cashList.map((cash) => (
+                      <CashItem
+                        key={cash.cashId}
+                        cashId={cash.cashId}
+                        amount={cash.amount}
+                        transactionType={cash.transactionType}
+                        transactionDate={new Date(cash.transactionDate).toJSON().slice(0, 10)}
+                        formData={formData}
+                        setFormData={setFormData}
+                        openEditCashModal={openEditCashModal}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                  <div className="notice-no-cash">
+                    <p>Cash list is empty.</p>
+                  </div>
+                )}
+            </div>
+          </div>
+        </section>
         {isAddCashModalOpen && (
           <Modal closeModalFunc={closeAddCashModal}>
             <AddCash closeAddCashModal={closeAddCashModal} />
