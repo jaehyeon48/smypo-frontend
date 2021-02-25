@@ -118,22 +118,22 @@ const Stock = ({
   return (
     <main className="stock-main">
       <CurrentPortfolioName />
-      <div className="stocks-btn-container">
-        <Button
-          btnType={'button'}
-          btnText={'Add transaction'}
-          onClickFunc={openAddTransactionModal}
-          isDisabled={portfolio && portfolio.portfolioList.length === 0}
-        />
-        <Button
-          btnType={'button'}
-          btnText={'Realized stocks'}
-          btnColor={'primary'}
-          onClickFunc={redirectToRealizedStocks}
-        />
-      </div>
       {stock && stock.stockStatus !== 'loading' ? (
-        <React.Fragment>
+        <section className="stocks-info-section">
+          <div className="stocks-btn-container">
+            <Button
+              btnType={'button'}
+              btnText={'Add transaction'}
+              onClickFunc={openAddTransactionModal}
+              isDisabled={portfolio && portfolio.portfolioList.length === 0}
+            />
+            <Button
+              btnType={'button'}
+              btnText={'Realized stocks'}
+              btnColor={'primary'}
+              onClickFunc={redirectToRealizedStocks}
+            />
+          </div>
           <div className="holdings-container">
             <header className="holdings-container__header">
               Holdings
@@ -241,7 +241,7 @@ const Stock = ({
           {isAddTransactionModalOpen && <Modal closeModalFunc={closeAddTransactionModal} overflowY={true}>
             <AddTransaction closeAddTransactionModal={closeAddTransactionModal} />
           </Modal>}
-        </React.Fragment>
+        </section>
       ) : <StockLoadingSpinner loadingProgress={stock.calcProgress} />}
     </main>
   );

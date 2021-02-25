@@ -4,13 +4,18 @@
   margin: 0 auto 5em;
 }
 
-.holdings-container,
-.held-container {
+.stocks-info-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 2em;
+}
+
+@mixin stock-container() {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   position: relative;
-  margin: 5em auto 3em;
   padding: 3.5em 1.3em 2em;
   width: 88vw;
   max-width: $max-width * 0.75;
@@ -19,6 +24,16 @@
   color: #202425;
   border-radius: 0.3em;
   box-shadow: 2px 3px 3px #a7a7a7;
+}
+
+.holdings-container {
+  @include stock-container();
+  margin: 1em auto 3em;
+}
+
+.held-container {
+  @include stock-container();
+  margin: 5em auto 3em;
 }
 
 .holdings-table-wrapper,
@@ -104,31 +119,34 @@
 
 .stocks-btn-container {
   display: flex;
-  justify-content: center;
-  margin: 3em auto;
+  width: 88vw;
+  justify-content: flex-end;
+  margin: 1em auto 0;
 
   & > button {
-    width: 8.7em;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    width: 170px;
   }
 
   & > button:first-child {
-    margin-right: 5em;
+    margin-right: 1em;
   }
 
-  @media screen and (max-width: 599px) {
-    flex-direction: column;
-    align-items: center;
-
-    & > button:first-child {
-      margin-right: 0;
-      margin-bottom: 2em;
+  @media screen and (max-width: 768px) {
+    & > button {
+      font-size: 0.9rem;
     }
   }
 
-  @media screen and (max-width: 500px) {
-    & > button {
-      font-size: 1rem;
+  @media screen and (max-width: 570px) {
+    flex-direction: column;
+    margin: 0 auto 2em;
+    width: initial;
+
+    & > button:first-child {
+      margin-right: 0;
+      margin-bottom: 0.8em;
     }
   }
 }
