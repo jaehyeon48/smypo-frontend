@@ -264,59 +264,81 @@
 
 .total-realized-value {
   display: flex;
-  font-size: 1.7rem;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.2rem;
   background-color: $card-bg-color;
-  box-shadow: 3px 4px 3px $dark-gray;
+  box-shadow: 2px 3px 3px $dark-gray;
   border-radius: $card-border-radius * 2;
-  padding: 0.7em 0.6em;
-  width: 70vw;
+  padding: 0 1em;
+  width: 560px;
+  height: 55px;
   max-width: 700px;
   margin: 0.7em auto 1.5em;
-  text-align: center;
 
-  @media screen and (max-width: 1024px) {
-    box-shadow: 2px 3px 3px $dark-gray;
+  & > span:first-child {
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
   }
 
-  @media screen and (min-width: 451px) and (max-width: 768px) {
-    font-size: 1.5rem;
+  & > div > span {
+    display: inline-block;
+    max-width: 249px;
+    overflow-wrap: anywhere;
   }
 
-  @media screen and (max-width: 450px) {
-    font-size: 1.3rem;
+  @media screen and (min-width: 571px) and (max-width: 768px) {
+    font-size: 1.1rem;
+    width: 460px;
+
+    & > div > span {
+      max-width: 175px;
+    }
+  }
+
+  @media screen and (max-width: 570px) {
+    flex-direction: column;
+    font-size: 1.1rem;
+    padding: 1em;
+    width: 80vw;
+    height: initial;
+  }
+
+  @media screen and (max-width: 375px) {
+    font-size: 1rem;
   }
 }
 
-.total-realized-value > span:first-child {
-  margin-bottom: 1rem;
+.total-realized-value-crossbar {
+  width: 1px;
+  height: 100%;
+  border-left: 1px solid #dbdbdb;
+  margin: 0 1em;
+
+  @media screen and (max-width: 570px) {
+    border-left: none;
+    border-top: 1px solid #dbdbdb;
+    width: 65vw;
+    margin: 0.2em 0;
+  }
 }
 
 .total-return-positive--border {
-  border-bottom: 0.4em solid #009e54;
+  border-right: 0.4em solid #009e54;
 
-  @media screen and (max-width: 1024px) {
-    border-left: 0.5em solid #009e54;
-    border-bottom: 1px solid $blue-white;
+  @media screen and (max-width: 570px) {
+    border-right: none;
+    border-bottom: 0.4em solid #009e54;
   }
 }
 
 .total-return-negative--border {
   border-bottom: 0.4em solid #eb142a;
-
-  @media screen and (max-width: 1024px) {
-    border-left: 0.5em solid #eb142a;
-    border-bottom: 1px solid $blue-white;
-  }
 }
 
 .total-return-zero--border {
   border-bottom: 0.4em solid #525252;
-
-  @media screen and (max-width: 1024px) {
-    border-left: 0.5em solid #525252;
-    border-bottom: 1px solid $blue-white;
-  }
 }
 
 .realized-stocks-container {

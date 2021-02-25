@@ -40,6 +40,7 @@ const RealizedStocks = ({
         <React.Fragment>
           <div className={`total-realized-value ${borderColorTotalRealizedReturn()}`}>
             <span>Total Realized Value</span>
+            <div className="total-realized-value-crossbar"></div>
             <div>
               <span className={colorTotalRealizedReturn()}>
                 {totalRealizedReturn.toFixed(2)}
