@@ -126,7 +126,8 @@
   & > button {
     font-size: 1rem;
     text-transform: uppercase;
-    width: 170px;
+    width: 175px;
+    font-weight: 700;
   }
 
   & > button:first-child {
@@ -134,15 +135,13 @@
   }
 
   @media screen and (max-width: 768px) {
-    & > button {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media screen and (max-width: 570px) {
     flex-direction: column;
     margin: 0 auto 2em;
     width: initial;
+
+    & > button {
+      font-size: 0.9rem;
+    }
 
     & > button:first-child {
       margin-right: 0;
