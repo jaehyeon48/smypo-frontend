@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import Button from '../button/Button';
 import { addCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
+import DepositIcon from '../icons/DepositIcon';
+import WithdrawIcon from '../icons/WithdrawIcon';
+import DividendIcon from '../icons/DividendIcon';
 
 const AddCash = ({
   defaultPortfolio,
@@ -40,68 +43,81 @@ const AddCash = ({
   }
 
   return (
-    <div className="add-transaction-container">
-      <form autoComplete="off" onSubmit={handleSubmit} className="add-transaction-form">
-        <div className="transaction-type-container">
-          <label>Deposit
+    <React.Fragment>
+      <header className="add-transaction-header">Add Cash Transaction</header>
+      <div className="add-transaction-container">
+        <form autoComplete="off" onSubmit={handleSubmit} className="add-transaction-form">
+          <div className="transaction-type-container cash-type-container">
+            <p className="type-container-title">Type</p>
+            <label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="deposit"
+                checked={transactionType === 'deposit'}
+                onChange={handleChange}
+              />
+              <div className="radio-box">
+                <DepositIcon />
+                Deposit
+              </div>
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="withdraw"
+                checked={transactionType === 'withdraw'}
+                onChange={handleChange}
+              />
+              <div className="radio-box">
+                <WithdrawIcon />
+                Withdraw
+              </div>
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="dividend"
+                checked={transactionType === 'dividend'}
+                onChange={handleChange}
+              />
+              <div className="radio-box">
+                <DividendIcon />
+                Dividend
+              </div>
+            </label>
+          </div>
+          <label className="add-transaction-label">
+            AMOUNT
           <input
-              type="radio"
-              name="transactionType"
-              className="transaction-type-cash"
-              value="deposit"
-              checked={transactionType === 'deposit'}
+              type="number"
+              name="amount"
+              min="0"
+              step="0.01"
+              value={amount}
               onChange={handleChange}
+              className="add-transaction-field"
             />
           </label>
-          <label>Withdraw
+          <label className="add-transaction-label">
+            Date
           <input
-              type="radio"
-              name="transactionType"
-              className="transaction-type-cash"
-              value="withdraw"
-              checked={transactionType === 'withdraw'}
+              type="date"
+              name="transactionDate"
+              value={transactionDate}
               onChange={handleChange}
+              className="add-transaction-date-field"
             />
           </label>
-          <label>Dividend
-          <input
-              type="radio"
-              name="transactionType"
-              className="transaction-type-cash"
-              value="dividend"
-              checked={transactionType === 'dividend'}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <label className="add-transaction-label">
-          AMOUNT
-          <input
-            type="number"
-            name="amount"
-            min="0"
-            step="0.01"
-            value={amount}
-            onChange={handleChange}
-            className="add-transaction-field"
+          <Button
+            btnType={'submit'}
+            btnText={'Add transaction'}
           />
-        </label>
-        <label className="add-transaction-label">
-          Date
-          <input
-            type="date"
-            name="transactionDate"
-            value={transactionDate}
-            onChange={handleChange}
-            className="add-transaction-date-field"
-          />
-        </label>
-        <Button
-          btnType={'submit'}
-          btnText={'Add transaction'}
-        />
-      </form>
-    </div>
+        </form>
+      </div>
+    </React.Fragment>
   );
 }
 

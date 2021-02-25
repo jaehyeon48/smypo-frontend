@@ -65,15 +65,10 @@
     width: 100%;
     color: #4a4a4a;
     font-size: 1.2rem;
-    margin: 0 0 0.3em 0;
   }
 
-  & > label {
-    position: relative;
-  }
-
-  & > label + label {
-    margin-left: 2.4em;
+  & > label:not(:last-child) {
+    margin-right: 1em;
   }
 
   & > label > input[type='radio'] {
@@ -91,6 +86,9 @@
       border: 1px solid #aab5d1;
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 8em;
+      margin-top: 0.5em;
 
       & > svg {
         width: 22px;
@@ -99,13 +97,18 @@
       }
     }
 
-    &[value='buy']:checked + .radio-box {
+    &[value='buy']:checked + .radio-box,
+    &[value='deposit']:checked + .radio-box,
+    &[value='dividend']:checked + .radio-box,
+    &[value='sold']:checked + .radio-box {
       background-color: lighten($main-color, 30%);
       color: darken($main-color, 20%);
       border: 1px solid $main-color;
     }
 
-    &[value='sell']:checked + .radio-box {
+    &[value='sell']:checked + .radio-box,
+    &[value='withdraw']:checked + .radio-box,
+    &[value='purchased']:checked + .radio-box {
       background-color: lighten($danger, 30%);
       color: darken($danger, 20%);
       border: 1px solid $danger;
@@ -154,6 +157,12 @@
 
     & > label > input[type='radio'] + .radio-box {
       font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 460px) {
+    &.cash-type-container > label:not(:last-child) {
+      margin-right: 5em;
     }
   }
 
