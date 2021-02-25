@@ -37,7 +37,7 @@
   font-size: 1.7rem;
   background-color: $card-bg-color;
   box-shadow: 2px 3px 3px $dark-gray;
-  border-radius: 0.3em;
+  border-radius: $card-border-radius;
   margin: 2em auto;
   padding: 1rem;
   width: 73vw;
@@ -96,7 +96,7 @@
   max-width: $max-width * 0.55;
   background-color: $card-bg-color;
   color: #202425;
-  border-radius: 0.3em;
+  border-radius: $card-border-radius;
   box-shadow: 2px 3px 3px #a7a7a7;
 }
 

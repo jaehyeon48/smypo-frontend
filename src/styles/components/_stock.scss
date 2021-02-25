@@ -22,7 +22,7 @@
   max-height: 450px;
   background-color: $card-bg-color;
   color: #202425;
-  border-radius: 0.3em;
+  border-radius: $card-border-radius;
   box-shadow: 2px 3px 3px #a7a7a7;
 }
 
@@ -331,7 +331,7 @@
   max-width: $max-width * 0.6;
   background-color: $card-bg-color;
   color: #202425;
-  border-radius: 0.3em;
+  border-radius: $card-border-radius;
   box-shadow: 2px 3px 3px #a7a7a7;
 }
 
