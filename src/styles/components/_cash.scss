@@ -57,13 +57,13 @@
     text-overflow: ellipsis;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (min-width: 571px) and (max-width: 768px) {
     font-size: 1.1rem;
     width: 370px;
     height: 48px;
   }
 
-  @media screen and (max-width: 570px) {
+  @media screen and (min-width: 451px) and (max-width: 570px) {
     font-size: 1rem;
     width: 310px;
     height: 45px;
