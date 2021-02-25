@@ -62,7 +62,7 @@
   width: 80vw;
   max-height: 450px;
   max-width: $max-width * 0.55;
-  background-color: #f4f6f6;
+  background-color: $card-bg-color;
   color: #202425;
   border-radius: 0.3em;
   box-shadow: 2px 3px 3px #a7a7a7;
@@ -111,7 +111,7 @@
     color: #3b434c;
     position: sticky;
     top: 0px;
-    background-color: #f4f6f6;
+    background-color: $card-bg-color;
   }
 
   @media screen and (min-width: 451px) and (max-width: 768px) {

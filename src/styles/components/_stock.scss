@@ -15,7 +15,7 @@
   width: 88vw;
   max-width: $max-width * 0.75;
   max-height: 450px;
-  background-color: #f4f6f6;
+  background-color: $card-bg-color;
   color: #202425;
   border-radius: 0.3em;
   box-shadow: 2px 3px 3px #a7a7a7;
@@ -67,7 +67,7 @@
     color: #3b434c;
     top: 0px;
     position: sticky;
-    background-color: #f4f6f6;
+    background-color: $card-bg-color;
   }
 
   @media screen and (min-width: 451px) and (max-width: 768px) {
@@ -246,8 +246,7 @@
   display: flex;
   font-size: 1.7rem;
   flex-direction: column;
-  border: 1px solid $blue-white;
-  background-color: #edeff2;
+  background-color: $card-bg-color;
   box-shadow: 3px 4px 3px $dark-gray;
   border-radius: $card-border-radius * 2;
   padding: 0.7em 0.6em;
@@ -310,7 +309,7 @@
   width: 80vw;
   max-height: 450px;
   max-width: $max-width * 0.6;
-  background-color: #f4f6f6;
+  background-color: $card-bg-color;
   color: #202425;
   border-radius: 0.3em;
   box-shadow: 2px 3px 3px #a7a7a7;
@@ -355,7 +354,7 @@
     color: #3b434c;
     position: sticky;
     top: 0px;
-    background-color: #f4f6f6;
+    background-color: $card-bg-color;
   }
 
   @media screen and (min-width: 451px) and (max-width: 768px) {
