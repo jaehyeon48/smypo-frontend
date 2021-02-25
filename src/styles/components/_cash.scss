@@ -49,24 +49,33 @@
   & > span:first-child {
     font-weight: 700;
     text-transform: uppercase;
+    text-align: center;
   }
 
   & > span:last-child {
+    display: inline-block;
     max-width: 263px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
   }
 
   @media screen and (min-width: 571px) and (max-width: 768px) {
     font-size: 1.1rem;
     width: 370px;
     height: 48px;
+
+    & > span:last-child {
+      max-width: 188px;
+    }
   }
 
   @media screen and (min-width: 451px) and (max-width: 570px) {
     font-size: 1rem;
     width: 310px;
     height: 45px;
+
+    & > span:last-child {
+      max-width: 145px;
+    }
   }
 
   @media screen and (max-width: 450px) {
