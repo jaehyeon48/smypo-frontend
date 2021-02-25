@@ -1,7 +1,7 @@
 .stock-main {
   max-width: $max-width;
   min-height: 100vh;
-  margin: 0 auto 5em;
+  margin: 0 auto 3em;
 }
 
 .stocks-info-section {
@@ -29,11 +29,15 @@
 .holdings-container {
   @include stock-container();
   margin: 1em auto 3em;
+
+  @media screen and (max-width: 768px) {
+    margin: 2em auto 1em;
+  }
 }
 
 .held-container {
   @include stock-container();
-  margin: 5em auto 3em;
+  margin: 3em auto;
 }
 
 .holdings-table-wrapper,
@@ -120,14 +124,13 @@
 .stocks-btn-container {
   display: flex;
   width: 88vw;
+  max-width: $max-width * 0.75;
   justify-content: flex-end;
   margin: 1em auto 0;
 
   & > button {
     font-size: 1rem;
-    text-transform: uppercase;
     width: 175px;
-    font-weight: 700;
   }
 
   & > button:first-child {
