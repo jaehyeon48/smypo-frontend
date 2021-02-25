@@ -39,7 +39,9 @@ const EditCash = ({
     <React.Fragment>
       <header className="add-transaction-header">Edit Cash Transaction</header>
       <div className="add-transaction-container">
-        <form autoComplete="off" onSubmit={handleSubmit} className="add-transaction-form">
+        <form autoComplete="off"
+          onSubmit={handleSubmit}
+          className="add-transaction-form edit-cash-form">
           <div className="transaction-type-container cash-type-container">
             <p className="type-container-title">Type</p>
             <label className="edit-cash-label">

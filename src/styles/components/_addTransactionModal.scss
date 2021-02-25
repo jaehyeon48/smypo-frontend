@@ -12,27 +12,51 @@
   font-weight: 700;
 }
 
+@mixin transaction-button {
+  margin: 1.3em auto 1em;
+  font-size: 1.1rem;
+
+  @media screen and (max-width: 599px) {
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 375px) {
+    font-size: 0.9rem;
+  }
+}
+
 .add-transaction-form {
   display: flex;
   flex-direction: column;
 
   & > button {
-    margin: 1.3em auto 1em;
-    font-size: 1.1rem;
-    width: 194px;
+    @include transaction-button();
+    width: 210px;
+  }
+
+  &.edit-cash-form > button {
+    @include transaction-button();
+    width: 250px;
   }
 
   @media screen and (max-width: 599px) {
     & > button {
-      font-size: 1rem;
-      width: 188px;
+      width: 190px;
+    }
+
+    &.edit-cash-form > button {
+      width: 228px;
     }
   }
 
   @media screen and (max-width: 375px) {
     & > button {
-      font-size: 0.9rem;
       width: 180px;
+    }
+
+    &.edit-cash-form > button {
+      font-size: 0.8rem;
+      width: 200px;
     }
   }
 }
