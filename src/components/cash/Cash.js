@@ -70,6 +70,7 @@ const Cash = ({
         <CurrentPortfolioName />
         <div className="cash-total-amount">
           <span>Total Cash</span>
+          <div className="cash-total-amount-crossbar"></div>
           <span>{cash.totalCash}</span>
         </div>
         <section className="cash-list-section">
