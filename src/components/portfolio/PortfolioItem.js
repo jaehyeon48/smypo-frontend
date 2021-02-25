@@ -159,7 +159,7 @@ const PortfolioItem = ({
         <Button
           btnType={'button'}
           btnText={'Detail'}
-          btnColor={'blue'}
+          btnColor={'primary'}
         />
       </td>
       {isEditModalOpen && (
