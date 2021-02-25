@@ -3,7 +3,7 @@
   align-items: center;
   flex-direction: column;
   max-width: $max-width * 0.9;
-  min-height: 100vh;
+  min-height: calc(100vh - 155px - 91px);
   margin: 0 auto 6em;
 }
 
@@ -174,7 +174,6 @@
 
 .dashboard-notice-empty-portfolio-list {
   max-width: $max-width;
-  min-height: 100vh;
   margin: 2em auto;
 
   & > p {

@@ -1,7 +1,7 @@
 .stock-main {
   max-width: $max-width;
-  min-height: 100vh;
   margin: 0 auto 3em;
+  min-height: calc(100vh - 155px - 91px);
 }
 
 .stocks-info-section {
@@ -258,7 +258,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: calc(100vh - 155px - 91px);
   max-width: $max-width;
 }
 
