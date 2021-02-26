@@ -102,42 +102,46 @@ const Portfolios = ({
     <React.Fragment>
       <main className="portfolio-main">
         <CurrentPortfolioName />
-        <Button
-          btnType="button"
-          btnText="Add New Portfolio"
-          onClickFunc={openAddModal}
-        />
-        <div className="portfolios-container">
-          {isLoadingPortfolioData && <PortfolioDataSpinner />}
-          <header className="portfolios-container__header">Portfolios</header>
-          <div className="portfolios-table-wrapper">
-            {portfolio.portfolioList.length > 0 ? (
-              <table className="portfolio-table">
-                <thead>
-                  <tr>
-                    <th className="portfolio-item__name-header">Name</th>
-                    <th className="portfolio-item__privacy-header">Privacy</th>
-                    <th className="portfolio-item__default-header">Default</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                {portfolio.portfolioList.map((portfolioItem) => (
-                  <PortfolioItem
-                    key={portfolioItem.portfolioId}
-                    portfolio={portfolioItem}
-                    defaultPortfolio={portfolio.defaultPortfolio}
-                    isLoadingPortfolioData={isLoadingPortfolioData}
-                  />
-                ))}
-              </table>
-            ) : (
-                <div className="notice-empty-portfolio-list">
-                  <p>Portfolio list is empty.</p>
-                </div>)}
+        <section className="portfolio-list-section">
+          <div className="portfolios-btn-container">
+            <Button
+              btnType="button"
+              btnText="Add New Portfolio"
+              onClickFunc={openAddModal}
+            />
           </div>
-        </div>
+          <div className="portfolios-container">
+            {isLoadingPortfolioData && <PortfolioDataSpinner />}
+            <header className="portfolios-container__header">Portfolios</header>
+            <div className="portfolios-table-wrapper">
+              {portfolio.portfolioList.length > 0 ? (
+                <table className="portfolio-table">
+                  <thead>
+                    <tr>
+                      <th className="portfolio-item__name-header">Name</th>
+                      <th className="portfolio-item__privacy-header">Privacy</th>
+                      <th className="portfolio-item__default-header">Default</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  {portfolio.portfolioList.map((portfolioItem) => (
+                    <PortfolioItem
+                      key={portfolioItem.portfolioId}
+                      portfolio={portfolioItem}
+                      defaultPortfolio={portfolio.defaultPortfolio}
+                      isLoadingPortfolioData={isLoadingPortfolioData}
+                    />
+                  ))}
+                </table>
+              ) : (
+                  <div className="notice-empty-portfolio-list">
+                    <p>Portfolio list is empty.</p>
+                  </div>)}
+            </div>
+          </div>
+        </section>
       </main>
       {isAddModalOpen &&
         <Modal closeModalFunc={closeAddModal}>
