@@ -99,6 +99,7 @@
 
   &:focus {
     box-shadow: 0 0 0 2px $form-focus;
+    background-color: #f4f9ff;
   }
 
   @media screen and (min-width: 601px) and (max-width: 968px) {
