@@ -252,21 +252,14 @@
   margin: 2em auto 1em;
 
   & > button {
-    margin-top: 1.5em;
-    font-size: 1.4rem;
-    width: 20em;
+    margin-top: 2em;
+    font-size: 1rem;
+    width: 12em;
   }
 
-  @media screen and (min-width: 769px) and (max-width: 1024px) {
+  @media screen and (max-width: 768px) {
     & > button {
-      margin-top: 1.7em;
-      width: 13em;
-    }
-  }
-
-  @media screen and (min-width: 601px) and (max-width: 768px) {
-    & > button {
-      width: 12em;
+      width: 9.5em;
     }
   }
 
@@ -274,59 +267,43 @@
     flex-direction: column;
 
     & > button {
-      font-size: 1.1rem;
-      width: 14em;
-      margin-top: 2em;
+      font-size: 1rem;
+      width: 9em;
+      margin-top: 2.5em;
     }
   }
 
-  @media screen and (max-width: 384px) {
-    left: -3vw;
-  }
-
-  @media screen and (max-width: 350px) {
-    left: -8vw;
-  }
-
-  @media screen and (max-width: 324px) {
-    left: -12vw;
+  @media screen and (max-width: 450px) {
+    & > button {
+      font-size: 0.9rem;
+    }
   }
 }
 
 .portfolio-form-field {
-  font-size: 1.6rem;
-  padding: 0.5em;
+  font-size: 1.3rem;
+  padding: 0.3em;
   border: 1px solid $light-gray;
   outline: none;
   border-radius: 0.2em;
   transition: all 0.2s ease;
-  width: 27em;
+  width: 70vw;
+  max-width: $max-width * 0.5;
   background: transparent;
   position: relative;
   z-index: 1;
 
   &:focus {
     box-shadow: 0 0 0 2px $form-focus;
-  }
-
-  @media screen and (min-width: 769px) and (max-width: 1024px) {
-    font-size: 1.5rem;
-    width: 20em;
+    background-color: #f4f9ff;
   }
 
   @media screen and (min-width: 601px) and (max-width: 768px) {
-    font-size: 1.3rem;
-    width: 21em;
+    font-size: 1.1rem;
   }
 
   @media screen and (max-width: 600px) {
-    font-size: 1.3rem;
-    width: 13.7em;
-  }
-
-  @media screen and (max-width: 425px) {
-    font-size: 1.2rem;
-    width: 13em;
+    font-size: 1rem;
   }
 }
 
@@ -340,10 +317,10 @@
 
 .portfolio-form-label {
   position: absolute;
-  top: 15px;
+  top: 10px;
   left: 10px;
   color: darken($light-gray, 13%);
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   z-index: 0;
   transition: all 0.25s ease;
 
@@ -354,24 +331,23 @@
     color: darken($form-focus, 12%);
   }
 
-  @media screen and (min-width: 769px) and (max-width: 1024px) {
-    font-size: 1.5rem;
-  }
-
   @media screen and (min-width: 601px) and (max-width: 768px) {
-    top: 13px;
-    font-size: 1.3rem;
-  }
-
-  @media screen and (max-width: 600px) {
-    font-size: 1.2rem;
-    top: 12px;
-    left: 7px;
+    top: 7px;
+    font-size: 1.1rem;
 
     .portfolio-form-field:focus + &,
     .portfolio-form-field[data-is-empty='false'] + & {
-      top: -24px;
-      color: darken($form-focus, 12%);
+      top: -23px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: 1rem;
+    top: 7px;
+
+    .portfolio-form-field:focus + &,
+    .portfolio-form-field[data-is-empty='false'] + & {
+      top: -23px;
     }
   }
 }
@@ -390,16 +366,16 @@
   display: flex;
   align-items: center;
   padding: 0.4em 0.6em;
-  font-size: 1.2rem;
-  border-radius: 0.3em;
+  font-size: 1rem;
+  border-radius: 0.1em;
   border: none;
   outline: none;
-  box-shadow: 1px 1px 4px #000000;
+  box-shadow: 1px 1px 4px $dark-gray;
   cursor: pointer;
 
   & > svg {
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.4em;
+    height: 1.4em;
     margin-right: 0.3em;
   }
 
@@ -408,40 +384,19 @@
   }
 
   @media screen and (max-width: 600px) {
-    font-size: 1rem;
-  }
+    font-size: 0.9rem;
 
-  @media screen and (max-width: 425px) {
+    & > svg {
+      width: 1.2em;
+      height: 1.2em;
+    }
   }
 }
 
 .pf-privacy-checked {
-  background: linear-gradient($form-focus, #0d505e);
+  background-color: #3389ca;
   color: $white;
-}
-
-.pf-add-btn {
-  color: var(--white-color);
-  width: 100px;
-  background-color: #1dc956;
-  border-bottom: 3px solid #2f8e4e;
-  -webkit-box-shadow: inset 0 -3px #2f8e4e;
-  box-shadow: inset 0 -3px #2f8e4e;
-}
-
-.pf-add-btn:hover {
-  background-color: var(--dark-green-color);
-}
-
-.pf-edit-btn {
-  color: var(--white-color);
-  background-color: #f8803b;
-  border-bottom: 3px solid var(--dark-orange-color);
-  box-shadow: inset 0 -3px var(--dark-orange-color);
-}
-
-.pf-edit-btn:hover {
-  background-color: var(--dark-orange-color);
+  font-weight: 700;
 }
 
 .notice-pf-name-error {
