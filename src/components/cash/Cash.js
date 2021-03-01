@@ -7,6 +7,7 @@ import Modal from '../modal/Modal';
 import Button from '../button/Button';
 import AddCash from './AddCash';
 import EditCash from './EditCash';
+import { getDefaultPortfolio } from '../../actions/portfolioAction';
 import {
   getTotalCash,
   getCash
@@ -28,20 +29,24 @@ const Cash = ({
   });
 
   useEffect(() => {
-    if (
-      portfolio.defaultPortfolioStatus === 'initial' ||
-      portfolio.defaultPortfolioStatus === 'idle' ||
+    if (portfolio.defaultPortfolioStatus === 'initial' ||
+      portfolio.defaultPortfolioStatus === 'idle') {
+      getDefaultPortfolio();
+    }
+  }, [portfolio.defaultPortfolioStatus]);
+
+  useEffect(() => {
+    if (portfolio.defaultPortfolio && (
       cash.cashListStatus === 'initial' ||
       cash.cashListStatus === 'idle' ||
       cash.totalCashStatus === 'initial' ||
       cash.totalCashStatus === 'idle'
-    ) {
+    )) {
       getCash(portfolio.defaultPortfolio);
       getTotalCash(portfolio.defaultPortfolio);
     }
   }, [
     portfolio.defaultPortfolio,
-    portfolio.defaultPortfolioStatus,
     cash.cashListStatus,
     cash.totalCashStatus,
     getCash,
