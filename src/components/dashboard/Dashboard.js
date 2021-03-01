@@ -15,7 +15,8 @@ import { getTotalCash } from '../../actions/cashAction';
 import ChartSolidIcon from '../icons/ChartSolidIcon';
 import ChartRegularIcon from '../icons/ChartRegularIcon';
 import SackDollarIcon from '../icons/SackDollarIcon';
-import ValuePieChart from './ValuePieChart';
+// import ValuePieChart from './ValuePieChart';
+import ValuePieChart from '../charts/ValuePieChart';
 import SectorPieChart from './SectorPieChart';
 import LineChart from './LineChart';
 import MainLoadingSpinner from '../spinners/MainLoadingSpinner';
@@ -40,6 +41,7 @@ const Dashboard = ({
   const [totalCost, setTotalCost] = useState(0);
   const [cashToDisplay, setCashToDisplay] = useState(cash.totalCash);
   const [totalValue, setTotalValue] = useState(0);
+  const [isStockListEmpty, setIsStockListEmpty] = useState(true);
 
   useEffect(() => {
     checkMarketStatus();
@@ -135,6 +137,19 @@ const Dashboard = ({
     }
   }, [cash.totalCash]);
 
+  useEffect(() => {
+    if (stock.stockList) {
+      if (Object.keys(stock.stockList).length === 0 ||
+        Object.values(stock.stockList)
+          .reduce((stockItem1, stockItem2) => stockItem1.quantity + stockItem2.quantity) === 0
+      ) {
+        setIsStockListEmpty(true);
+      } else {
+        setIsStockListEmpty(false);
+      }
+    }
+  }, [stock.stockList]);
+
   const colorReturnItem = (value) => {
     if (value > 0) return 'return-positive';
     else if (value < 0) return 'return-negative';
@@ -154,7 +169,7 @@ const Dashboard = ({
           <main className="dashboard-main">
             {stock && stock.stockStatus !== 'loading' ? (
               <React.Fragment>
-                {Object.keys(stock.stockList).length > 0 ? (
+                {!isStockListEmpty ? (
                   <React.Fragment>
                     <div className="display-return-container">
                       <div
@@ -213,7 +228,7 @@ const Dashboard = ({
                     </div>
                     {stock && Object.values(stock.stockList).length > 0 && (
                       <div className="dashboard-pie-charts">
-                        <ValuePieChart />
+                        <ValuePieChart totalValue={totalValue} />
                         <SectorPieChart />
                       </div>
                     )}

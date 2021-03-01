@@ -32,7 +32,7 @@
     width: 47%;
   }
 
-  @media screen and (max-width: 1439px) {
+  @media screen and (max-width: 1023px) {
     flex-direction: column;
     justify-content: initial;
     align-items: center;
@@ -51,6 +51,67 @@
 
 .chart-container > h1 {
   color: $card-color;
+}
+
+.pie-chart-svg {
+  margin: 1em 0 2em;
+  $svg-size: 360px;
+  width: $svg-size;
+  height: $svg-size;
+
+  & > g {
+    position: relative;
+    z-index: 1;
+    transform: translate($svg-size / 2, $svg-size / 2);
+  }
+
+  @media screen and (min-width: 451px) and (max-width: 1023px) {
+    $svg-size: 290px;
+    width: $svg-size;
+    height: $svg-size;
+
+    & > g {
+      transform: translate($svg-size / 2, $svg-size / 2);
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    $svg-size: 230px;
+    width: $svg-size;
+    height: $svg-size;
+
+    & > g {
+      transform: translate($svg-size / 2, $svg-size / 2);
+    }
+  }
+}
+
+.chart-loading-notice {
+  display: flex;
+  align-items: center;
+  height: 360px;
+  margin: 1em 0 2em;
+
+  @media screen and (max-width: 1023px) {
+    height: 10vh;
+  }
+}
+
+@mixin chart-text {
+  font-size: 0.8rem;
+  fill: #fff;
+  font-weight: 700;
+
+  @media screen and (max-width: 450px) {
+    font-size: 0.7rem;
+  }
+}
+
+.chart-text-ticker {
+  @include chart-text();
+}
+.chart-text-ratio {
+  @include chart-text();
 }
 
 .chart-wrapper {
