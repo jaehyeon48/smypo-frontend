@@ -107,42 +107,15 @@
   }
 }
 
-.chart-text-ticker {
+.chart-text-ticker,
+.chart-text-sector {
   @include chart-text();
 }
+
 .chart-text-ratio {
   @include chart-text();
 }
 
-.chart-wrapper {
-  position: relative;
-  padding: 1rem;
-
-  @media screen and (min-width: 1440px) {
-    width: 400px;
-    height: 400px;
-  }
-
-  @media screen and (min-width: 769px) and (max-width: 1439px) {
-    width: 430px;
-    height: 430px;
-  }
-
-  @media screen and (min-width: 451px) and (max-width: 768px) {
-    width: 370px;
-    height: 370px;
-  }
-
-  @media screen and (min-width: 360px) and (max-width: 450px) {
-    width: 350px;
-    height: 350px;
-  }
-
-  @media screen and (max-width: 359px) {
-    width: 300px;
-    height: 300px;
-  }
-}
 
 .asset-chart {
   width: 96.2%;
@@ -222,70 +195,4 @@
   margin: 1rem 0;
   font-size: 1.5rem;
   color: var(--highlight-color);
-}
-
-.chart-content {
-  display: flex;
-
-  @media screen and (max-width: 675px) {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-.pie-chart-legend {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: $card-color;
-  margin: 0.6em;
-  max-height: 350px;
-  overflow: auto;
-}
-
-.pie-chart-legend-item {
-  display: flex;
-  align-items: center;
-  margin: 0.4em 0.6em;
-  font-size: 0.9rem;
-}
-
-.pie-chart-legend-content .chart-legend-cash {
-  display: flex;
-  align-items: center;
-  margin-left: -0.3em;
-  margin-right: 0.6em;
-
-  & > svg {
-    width: 26px;
-    height: 26px;
-  }
-}
-
-.pie-chart-legend-color {
-  width: 28px;
-  height: 14px;
-  margin-right: 0.35em;
-}
-
-.pie-chart-legend-content {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-@mixin pie-chart-legend__span {
-  font-weight: 600;
-  margin-right: 0.3em;
-  text-align: left;
-}
-
-.pie-chart-legend__ticker {
-  @include pie-chart-legend__span;
-  width: 5em;
-}
-
-.pie-chart-legend__sector {
-  @include pie-chart-legend__span;
-  width: 10em;
 }
