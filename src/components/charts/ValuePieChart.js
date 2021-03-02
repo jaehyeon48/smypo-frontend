@@ -49,7 +49,7 @@ const ChartLabel = ({
         alignmentBaseline="middle"
         transform={`translate(${translateX} ${translateY + 15})`}
       >
-        {(parseFloat(data.ratio) * 100).toFixed(3)}%
+        {parseFloat((parseFloat(data.ratio) * 100).toFixed(3)).toString()}%
       </text>
     </React.Fragment>
   );
