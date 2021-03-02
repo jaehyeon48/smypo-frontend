@@ -72,7 +72,7 @@ const ValuePieChart = ({
   const [shouldRenderChart, setShouldRenderChart] = useState(false);
 
   function generateChartColor(i) {
-    const colors = ['#FB7068', '#F49B50', '#32C08C', '#5BAEDC', '#855AE9', '#E955AA', '#F2C650', '#1DBE50', '#3489D6', '#C244E1', '#e2ea49'];
+    const colors = ['#FB7068', '#F49B50', '#32C08C', '#5BAEDC', '#855AE9', '#E955AA', '#F2C650', '#1DBE50', '#3489D6', '#C244E1', '#F5D77D'];
     if (i === 0) {
       return colors[0];
     }
