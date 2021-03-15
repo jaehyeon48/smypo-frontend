@@ -7,7 +7,7 @@ import { getHistoryRecord } from '../../utils/getHistoryRecord';
 const LineChart = ({
   defaultPortfolioId
 }) => {
-  const lineChartSvgRef = useRef(null);
+  const lineChartContainerRef = useRef(null);
   const [recordData, setRecordData] = useState([]);
   // use "chartData" instead of "recordData" due to the empty
   // values inside of "recordData"
@@ -33,11 +33,17 @@ const LineChart = ({
   }, [recordData]);
 
   useEffect(() => {
-    if (lineChartSvgRef.current &&
+    if (lineChartContainerRef.current &&
       recordData && recordData.length > 0 &&
       dateArr && dateArr.length > 0) {
-      const margin = { top: 10, right: 1, bottom: 27, left: 80 }
-      const svgSizeData = lineChartSvgRef.current.getBoundingClientRect();
+      let margin = { top: 0, right: 30, bottom: 40, left: 80 }
+      const viewWidth = document.body.offsetWidth;
+
+      if (viewWidth < 450) {
+        margin.left = 30;
+      }
+
+      const svgSizeData = lineChartContainerRef.current.getBoundingClientRect();
       const width = svgSizeData.width - margin.left - margin.right;
       const height = svgSizeData.height - margin.top - margin.bottom;
 
@@ -50,7 +56,7 @@ const LineChart = ({
       const yScale = y.domain(d3.extent(recordData, (d) => d.totalValue));
 
       const makeXGridLines = () => d3.axisBottom(xScale).ticks(20);
-      const makeYGridLines = () => d3.axisLeft(yScale).ticks(10);
+      const makeYGridLines = () => d3.axisLeft(yScale).ticks(3);
 
       const line = d3.line()
         .x((d) => xScale(d.recordDate))
@@ -61,42 +67,47 @@ const LineChart = ({
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
-        .attr('transform', `translate(${margin.left}, 0)`);
+        .attr('transform', `translate(${margin.left}, 10)`);
 
       // make x grid lines
-      svg.append('g')
-        .attr('class', 'grid')
-        .attr('transform', `translate(0, ${height})`)
-        .call(makeXGridLines().tickSize(-width).tickFormat(''));
+      // svg.append('g')
+      //   .attr('class', 'grid')
+      //   .attr('transform', `translate(0, ${height})`)
+      //   .call(makeXGridLines().tickSize(-width).tickFormat(''));
 
-      // make y grid lines
-      svg.append('g')
-        .attr('class', 'grid')
-        .call(makeYGridLines().tickSize(-width).tickFormat(''));
+      // // make y grid lines
+      // svg.append('g')
+      //   .attr('class', 'grid')
+      //   .call(makeYGridLines().tickSize(-width).tickFormat(''));
 
       // add x axis
       svg.append('g')
         .attr('class', 'x-axis')
         .attr('transform', `translate(0, ${height})`)
-        .call(d3.axisBottom(xScale).ticks(25));
+        .call(d3.axisBottom(xScale).tickSizeInner(-height).tickSizeOuter(0));
 
-      if (svgSizeData.width < 470) {
+      if (viewWidth < 769) {
         svg.selectAll('text')
           .attr('transform', 'rotate(300)');
       }
 
       // add y axis
       svg.append('g')
-        .call(d3.axisLeft(yScale));
+        .attr('class', 'y-axis')
+        .call(d3.axisLeft(yScale).tickSizeInner(-width).tickSizeOuter(0));
+
+      const lineGroup = svg.append('g')
+        .attr('class', 'line-group')
+      // .attr('transform', 'translate(0, 10)');
 
       // add line
-      svg.append('path')
+      lineGroup.append('path')
         .datum(recordData)
         .attr('class', 'path-line')
         .attr('d', line)
 
       // add circles (dots)
-      svg.selectAll('circles')
+      lineGroup.selectAll('circles')
         .data(recordData)
         .enter()
         .append('circle')
@@ -106,7 +117,7 @@ const LineChart = ({
         .attr('r', 4)
 
     }
-  }, [recordData, dateArr, lineChartSvgRef]);
+  }, [recordData, dateArr, lineChartContainerRef]);
 
 
   return (
@@ -115,8 +126,10 @@ const LineChart = ({
         <LineChartIcon />
       </div>
       <h1>Asset History</h1>
-      <svg className="line-chart-svg" ref={lineChartSvgRef}>
-      </svg>
+      <div className="line-chart-container" ref={lineChartContainerRef}>
+        <svg className="line-chart-svg">
+        </svg>
+      </div>
     </div>
   );
 }

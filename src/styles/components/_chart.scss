@@ -88,7 +88,7 @@
   }
 }
 
-.line-chart-svg {
+.line-chart-container {
   width: 99%;
   height: 95%;
 }
@@ -99,21 +99,23 @@
   stroke-width: 3;
 }
 
-.grid line {
+.x-axis .tick line,
+.y-axis .tick line {
   stroke: $light-gray;
-  stroke-opacity: 0.5;
-  shape-rendering: crispEdges;
-}
-
-.x-axis g {
-  @media screen and (max-width: 450px) {
-    // transform: rotate(300deg);
-  }
+  stroke-opacity: 0.7;
 }
 
 .tick {
   font-family: 'Nunito Sans';
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+
+  @media screen and (min-width:451px) and (max-width: 768px) {
+    font-size: 0.6rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 0.5rem;
+  }
 }
 
 .line-dot {
