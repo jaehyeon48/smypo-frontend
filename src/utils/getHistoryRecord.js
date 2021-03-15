@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const get10DaysOfRecord = async (portfolioId) => {
+export const getHistoryRecord = async (portfolioId) => {
   const config = { withCredentials: true };
 
   try {
@@ -14,7 +14,8 @@ export const get10DaysOfRecord = async (portfolioId) => {
 
 const convertToDateString = (records) => {
   records.forEach((record) => {
-    record.recordDate = new Date(record.recordDate).toDateString().slice(4, 10)
+    record.recordDate = record.recordDate.slice(2, 10).replaceAll('-', '/');
+    // record.recordDate = new Date(record.recordDate);
   });
 
   return records;

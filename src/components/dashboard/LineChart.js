@@ -4,7 +4,7 @@ import 'chartjs-plugin-datalabels';
 
 
 import LineChartIcon from '../icons/LineChartIcon';
-import { get10DaysOfRecord } from '../../utils/getRecordData';
+// import { get10DaysOfRecord } from '../../utils/getRecordData';
 
 const LineChart = ({
   defaultPortfolioId
@@ -24,8 +24,8 @@ const LineChart = ({
 
   useEffect(() => {
     (async () => {
-      const record = await get10DaysOfRecord(defaultPortfolioId);
-      setRecordData(record);
+      // const record = await get10DaysOfRecord(defaultPortfolioId);
+      // setRecordData(record);
     })();
   }, [defaultPortfolioId]);
 

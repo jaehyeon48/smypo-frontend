@@ -88,6 +88,39 @@
   }
 }
 
+.line-chart-svg {
+  width: 99%;
+  height: 95%;
+}
+
+.path-line {
+  fill: none;
+  stroke: #0874D9;
+  stroke-width: 3;
+}
+
+.grid line {
+  stroke: $light-gray;
+  stroke-opacity: 0.5;
+  shape-rendering: crispEdges;
+}
+
+.x-axis g {
+  @media screen and (max-width: 450px) {
+    // transform: rotate(300deg);
+  }
+}
+
+.tick {
+  font-family: 'Nunito Sans';
+  font-size: 0.8rem;
+}
+
+.line-dot {
+  fill: #0874D9;
+  stroke: #0874D9;
+}
+
 .chart-loading-notice {
   display: flex;
   align-items: center;
