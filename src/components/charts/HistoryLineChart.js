@@ -12,6 +12,8 @@ const LineChart = ({
   // use "chartData" instead of "recordData" due to the empty
   // values inside of "recordData"
   const [dateArr, setDateArr] = useState([]);
+  // use maxTotalValue for line chart's layout (left margin)
+  const [maxTotalValue, setMaxTotalValue] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -23,10 +25,15 @@ const LineChart = ({
   useEffect(() => {
     if (recordData && recordData.length > 0) {
       let dateArrData = [];
+      let maxTotalValueData = 0;
       for (const record of recordData) {
+        if (record.totalValue > maxTotalValueData) {
+          maxTotalValueData = record.totalValue;
+        }
         dateArrData.push(record.recordDate);
       }
       setDateArr(dateArrData);
+      setMaxTotalValue(maxTotalValueData);
     }
   }, [recordData]);
 
@@ -34,20 +41,56 @@ const LineChart = ({
     if (lineChartContainerRef.current &&
       recordData && recordData.length > 0 &&
       dateArr && dateArr.length > 0) {
-      let margin = { top: 0, right: 30, bottom: 40, left: 80 }
+      let margin = { top: 0, right: 30, bottom: 40, left: 30 }
       let circleRadius = 4;
       const viewWidth = document.body.offsetWidth;
 
-      if (viewWidth < 769) {
+      if (maxTotalValue > 999) {
+        if (maxTotalValue < 100000) { // 0.1 mil
+          margin.left = 40;
+        } else if (maxTotalValue < 1000000) { // 1 mil
+          margin.left = 50;
+        } else if (maxTotalValue < 100000000) { // 0.1B
+          margin.left = 70;
+        } else { // over 0.1B
+          margin.left = 80;
+        }
+      }
+
+      if (451 < viewWidth && viewWidth < 769) {
         margin.bottom = 50;
         margin.left = 60;
         margin.right = 10;
         circleRadius = 3;
+
+        if (maxTotalValue > 999) {
+          if (maxTotalValue < 100000) { // 0.1 mil
+            margin.left = 30;
+          } else if (maxTotalValue < 1000000) { // 1 mil
+            margin.left = 40;
+          } else if (maxTotalValue < 100000000) { // 0.1B
+            margin.left = 55;
+          } else { // over 0.1B
+            margin.left = 70;
+          }
+        }
       } else if (viewWidth < 450) {
         margin.bottom = 60;
-        margin.left = 50;
+        margin.left = 20;
         margin.right = 10;
         circleRadius = 2;
+
+        if (maxTotalValue > 999) {
+          if (maxTotalValue < 100000) { // 0.1 mil
+            margin.left = 30;
+          } else if (maxTotalValue < 1000000) { // 1 mil
+            margin.left = 40;
+          } else if (maxTotalValue < 100000000) { // 0.1B
+            margin.left = 50;
+          } else { // over 0.1B
+            margin.left = 60;
+          }
+        }
       }
 
       const svgSizeData = lineChartContainerRef.current.getBoundingClientRect();
@@ -78,6 +121,9 @@ const LineChart = ({
         .attr('class', 'x-axis')
         .attr('transform', `translate(0, ${height})`)
         .call(d3.axisBottom(xScale).tickSizeInner(-height).tickSizeOuter(0));
+
+      svg.selectAll('.x-axis text')
+        .attr('transform', 'translate(0, 3)');
 
       if (viewWidth < 769) {
         svg.selectAll('.x-axis text')
@@ -116,7 +162,7 @@ const LineChart = ({
         .attr('cy', (d) => yScale(d.totalValue))
         .attr('r', circleRadius)
     }
-  }, [recordData, dateArr, lineChartContainerRef]);
+  }, [maxTotalValue, recordData, dateArr, lineChartContainerRef]);
 
 
   return (
