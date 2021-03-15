@@ -97,6 +97,10 @@
   fill: none;
   stroke: #0874D9;
   stroke-width: 3;
+
+  @media screen and (max-width: 450px) {
+    stroke-width: 1.5;
+  }
 }
 
 .x-axis .tick line,
@@ -109,12 +113,8 @@
   font-family: 'Nunito Sans';
   font-size: 0.7rem;
 
-  @media screen and (min-width:451px) and (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     font-size: 0.6rem;
-  }
-
-  @media screen and (max-width: 450px) {
-    font-size: 0.5rem;
   }
 }
 

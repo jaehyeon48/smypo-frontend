@@ -13,8 +13,6 @@ const LineChart = ({
   // values inside of "recordData"
   const [dateArr, setDateArr] = useState([]);
 
-
-
   useEffect(() => {
     (async () => {
       const record = await getHistoryRecord(defaultPortfolioId);
@@ -37,10 +35,19 @@ const LineChart = ({
       recordData && recordData.length > 0 &&
       dateArr && dateArr.length > 0) {
       let margin = { top: 0, right: 30, bottom: 40, left: 80 }
+      let circleRadius = 4;
       const viewWidth = document.body.offsetWidth;
 
-      if (viewWidth < 450) {
-        margin.left = 30;
+      if (viewWidth < 769) {
+        margin.bottom = 50;
+        margin.left = 60;
+        margin.right = 10;
+        circleRadius = 3;
+      } else if (viewWidth < 450) {
+        margin.bottom = 60;
+        margin.left = 50;
+        margin.right = 10;
+        circleRadius = 2;
       }
 
       const svgSizeData = lineChartContainerRef.current.getBoundingClientRect();
@@ -55,9 +62,6 @@ const LineChart = ({
         .range([height, 0]);
       const yScale = y.domain(d3.extent(recordData, (d) => d.totalValue));
 
-      const makeXGridLines = () => d3.axisBottom(xScale).ticks(20);
-      const makeYGridLines = () => d3.axisLeft(yScale).ticks(3);
-
       const line = d3.line()
         .x((d) => xScale(d.recordDate))
         .y((d) => yScale(d.totalValue))
@@ -69,17 +73,6 @@ const LineChart = ({
         .append('g')
         .attr('transform', `translate(${margin.left}, 10)`);
 
-      // make x grid lines
-      // svg.append('g')
-      //   .attr('class', 'grid')
-      //   .attr('transform', `translate(0, ${height})`)
-      //   .call(makeXGridLines().tickSize(-width).tickFormat(''));
-
-      // // make y grid lines
-      // svg.append('g')
-      //   .attr('class', 'grid')
-      //   .call(makeYGridLines().tickSize(-width).tickFormat(''));
-
       // add x axis
       svg.append('g')
         .attr('class', 'x-axis')
@@ -87,8 +80,11 @@ const LineChart = ({
         .call(d3.axisBottom(xScale).tickSizeInner(-height).tickSizeOuter(0));
 
       if (viewWidth < 769) {
-        svg.selectAll('text')
-          .attr('transform', 'rotate(300)');
+        svg.selectAll('.x-axis text')
+          .attr('transform', 'translate(-15, 12), rotate(330)');
+      } else if (viewWidth < 450) {
+        svg.selectAll('.x-axis text')
+          .attr('transform', 'translate(-10, 20), rotate(300)');
       }
 
       // add y axis
@@ -96,9 +92,13 @@ const LineChart = ({
         .attr('class', 'y-axis')
         .call(d3.axisLeft(yScale).tickSizeInner(-width).tickSizeOuter(0));
 
+      if (viewWidth < 450) {
+        svg.selectAll('.y-axis text')
+          .attr('transform', 'translate(-2, -3), rotate(320)');
+      }
+
       const lineGroup = svg.append('g')
         .attr('class', 'line-group')
-      // .attr('transform', 'translate(0, 10)');
 
       // add line
       lineGroup.append('path')
@@ -114,8 +114,7 @@ const LineChart = ({
         .attr('class', 'line-dot')
         .attr('cx', (d) => xScale(d.recordDate))
         .attr('cy', (d) => yScale(d.totalValue))
-        .attr('r', 4)
-
+        .attr('r', circleRadius)
     }
   }, [recordData, dateArr, lineChartContainerRef]);
 
