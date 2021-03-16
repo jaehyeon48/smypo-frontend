@@ -172,18 +172,6 @@
   }
 }
 
-.line-chart-wrapper {
-  position: relative;
-  width: 90%;
-  height: 81%;
-  padding: 1rem;
-
-  @media screen and (max-width: 768px) {
-    width: 98%;
-    height: 82%;
-  }
-}
-
 .pie-chart-icon,
 .line-chart-icon {
   width: 3.7em;
