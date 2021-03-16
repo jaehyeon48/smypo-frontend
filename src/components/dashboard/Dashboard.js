@@ -18,7 +18,6 @@ import SackDollarIcon from '../icons/SackDollarIcon';
 import ValuePieChart from '../charts/ValuePieChart';
 import SectorPieChart from '../charts/SectorPieChart';
 import HistoryLineChart from '../charts/HistoryLineChart';
-import LineChart from './LineChart';
 import MainLoadingSpinner from '../spinners/MainLoadingSpinner';
 import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
 
@@ -232,7 +231,6 @@ const Dashboard = ({
                       <SectorPieChart />
                     </div>
                   )}
-                  {/* <LineChart defaultPortfolioId={defaultPortfolio} /> */}
                   <HistoryLineChart defaultPortfolioId={defaultPortfolio} />
                 </React.Fragment>
               ) : (
