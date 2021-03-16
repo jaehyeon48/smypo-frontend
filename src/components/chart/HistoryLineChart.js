@@ -57,11 +57,11 @@ const LineChart = ({
         }
       }
 
-      if (451 < viewWidth && viewWidth < 769) {
+      if (450 <= viewWidth && viewWidth < 769) {
         margin.bottom = 50;
         margin.left = 60;
         margin.right = 10;
-        circleRadius = 3;
+        circleRadius = 4;
 
         if (maxTotalValue > 999) {
           if (maxTotalValue < 100000) { // 0.1 mil
@@ -78,7 +78,7 @@ const LineChart = ({
         margin.bottom = 60;
         margin.left = 20;
         margin.right = 10;
-        circleRadius = 2;
+        circleRadius = 3;
 
         if (maxTotalValue > 999) {
           if (maxTotalValue < 100000) { // 0.1 mil
@@ -115,6 +115,22 @@ const LineChart = ({
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
         .attr('transform', `translate(${margin.left}, 10)`);
+
+      // define tooltips
+      const tooltipBox = d3.select('.line-chart-container')
+        .append('div')
+        .attr('class', 'line-tooltip-box')
+        .style('display', 'none');
+
+      let tooltipBoxXOffset = 24;
+      let tooltipBoxYOffset = 45;
+
+      if (450 <= viewWidth && viewWidth < 769) {
+        tooltipBoxXOffset = 34;
+      } else if (viewWidth < 450) {
+        tooltipBoxXOffset = 22;
+        tooltipBoxYOffset = 33;
+      }
 
       // add x axis
       svg.append('g')
@@ -157,10 +173,24 @@ const LineChart = ({
         .data(recordData)
         .enter()
         .append('circle')
-        .attr('class', 'line-dot')
+        .attr('class', 'line-circle')
         .attr('cx', (d) => xScale(d.recordDate))
         .attr('cy', (d) => yScale(d.totalValue))
         .attr('r', circleRadius)
+        .on('mouseover', (event, data) => {
+          tooltipBox
+            .style('top', `${yScale(data.totalValue) - tooltipBoxYOffset}px`)
+            .style('left', `${xScale(data.recordDate) - tooltipBoxXOffset}px`)
+            .style('display', 'block')
+            .html(
+              `<p>${data.recordDate}</p>
+              <p>Daily Return: ${data.dailyReturn}</p>
+              <p>Total Asset: ${data.totalValue}</p>`
+            );
+        })
+        .on('mouseout', () => {
+          tooltipBox.style('display', 'none');
+        });
     }
   }, [maxTotalValue, recordData, dateArr, lineChartContainerRef]);
 
