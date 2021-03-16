@@ -15,9 +15,9 @@ import { getTotalCash } from '../../actions/cashAction';
 import ChartSolidIcon from '../icons/ChartSolidIcon';
 import ChartRegularIcon from '../icons/ChartRegularIcon';
 import SackDollarIcon from '../icons/SackDollarIcon';
-import ValuePieChart from '../charts/ValuePieChart';
-import SectorPieChart from '../charts/SectorPieChart';
-import HistoryLineChart from '../charts/HistoryLineChart';
+import ValuePieChart from '../chart/ValuePieChart';
+import SectorPieChart from '../chart/SectorPieChart';
+import HistoryLineChart from '../chart/HistoryLineChart';
 import MainLoadingSpinner from '../spinners/MainLoadingSpinner';
 import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
 
