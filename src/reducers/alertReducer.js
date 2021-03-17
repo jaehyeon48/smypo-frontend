@@ -24,9 +24,7 @@ export default function alertReducer(state = initialState, action) {
       };
     case HIDE_ALERT:
     case LOGOUT_SUCCESS:
-      return {
-        ...initialState
-      };
+      return { ...initialState };
     default:
       return state;
   }

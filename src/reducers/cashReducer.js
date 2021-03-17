@@ -61,9 +61,7 @@ export default function cashReducer(state = initialState, action) {
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
-      return {
-        ...initialState
-      };
+      return { ...initialState };
     case SUCCESS_ADD_STOCK:
       return {
         ...state,

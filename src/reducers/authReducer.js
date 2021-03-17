@@ -86,10 +86,7 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: false
       };
     case LOGOUT_SUCCESS:
-      return {
-        ...initialState,
-        status: 'idle'
-      }
+      return { ...initialState };
     case LOGOUT_FAIL:
       return {
         ...initialState,

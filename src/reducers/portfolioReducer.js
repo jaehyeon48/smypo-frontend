@@ -85,9 +85,7 @@ export default function portfolioReducer(state = initialState, action) {
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
-      return {
-        ...initialState
-      };
+      return { ...initialState };
     case PORTFOLIO_CREATE_ERROR:
     case PORTFOLIO_EDIT_ERROR:
     case PORTFOLIO_DELETE_ERROR:

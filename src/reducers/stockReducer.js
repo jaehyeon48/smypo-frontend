@@ -179,9 +179,7 @@ export default function stockReducer(state = initialState, action) {
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
-      return {
-        ...initialState
-      };
+      return { ...initialState };
     case GET_SECTOR_ERROR:
     case CLOSE_POSITION:
     case CLOSE_POSITION_ERROR:
