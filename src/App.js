@@ -26,9 +26,7 @@ import { loadUser } from './actions/authAction';
 
 export default function App() {
   useEffect(() => {
-    if (store.getState().auth.status !== 'succeeded') {
-      store.dispatch(loadUser());
-    }
+    store.dispatch(loadUser());
   }, []);
 
   return (
