@@ -9,7 +9,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if (auth.status === 'loading') {
+        if (auth.isAuthenticated && auth.status === 'loading') {
           return <MainLoadingSpinner loadingText={'Loading user data...'} />
         }
         else {
