@@ -26,7 +26,9 @@ import { loadUser } from './actions/authAction';
 
 export default function App() {
   useEffect(() => {
-    store.dispatch(loadUser());
+    if (store.getState().auth.isAuthenticated) {
+      store.dispatch(loadUser());
+    }
   }, []);
 
   return (
