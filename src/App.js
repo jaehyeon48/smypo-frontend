@@ -23,11 +23,19 @@ import './app.css';
 import './styles/index.scss';
 
 import { loadUser } from './actions/authAction';
+import { getRealTimeStockPrice } from './actions/stockAction';
 
 export default function App() {
   useEffect(() => {
     if (store.getState().auth.isAuthenticated) {
       store.dispatch(loadUser());
+    }
+  }, []);
+
+  useEffect(() => {
+    const stockState = store.getState().stock;
+    if (!stockState.isSSEDisconnected) {
+      store.dispatch(getRealTimeStockPrice(Object.keys(stockState.stockList)));
     }
   }, []);
 

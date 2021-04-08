@@ -8,6 +8,7 @@ import {
   FAIL_LOGIN,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  DISCONNECT_SSE
 } from './actionTypes';
 import axios from 'axios';
 
@@ -39,13 +40,12 @@ export const login = (formData) => async (dispatch) => {
 
   try {
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, reqBody, config);
-
     dispatch({ type: SUCCESS_LOGIN });
     dispatch(loadUser());
     return 0;
   } catch (error) {
     dispatch({ type: FAIL_LOGIN });
-    return error.response.data.errorMsg;
+    return -1;
   }
 }
 
@@ -74,6 +74,7 @@ export const logout = () => async (dispatch) => {
   try {
     await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/logout`, { withCredentials: true });
     dispatch({ type: LOGOUT_SUCCESS });
+    dispatch({ type: DISCONNECT_SSE });
   } catch (error) {
     dispatch({
       type: LOGOUT_FAIL,

@@ -26,7 +26,9 @@ import {
   UPDATE_PROGRESS,
   DONE_PROGRESS,
   FAIL_PROGRESS,
-  CHOOSE_DEFAULT_PORTFOLIO
+  CHOOSE_DEFAULT_PORTFOLIO,
+  GET_REALTIME_PRICE,
+  DISCONNECT_SSE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -34,6 +36,7 @@ const initialState = {
   stockGroup: {},
   realizedStocks: [],
   isMarketOpen: false,
+  isSSEDisconnected: true,
   stockStatus: 'initial',
   stockGroupStatus: 'initial',
   realizedStockStatus: 'initial',
@@ -69,6 +72,7 @@ const sortByTicker = (a, b) => {
 //   return true;
 // }
 
+let evtSource = null;
 export default function stockReducer(state = initialState, action) {
   const { type, payload } = action;
 
@@ -100,6 +104,39 @@ export default function stockReducer(state = initialState, action) {
         stockList: [],
         stockStatus: 'failed'
       };
+    case GET_REALTIME_PRICE:
+      const { realtimeTicker, realtimePrice, realtimeChange } = payload;
+      // initialize evtSource to close it after logging out
+      evtSource = payload.evtSource;
+      // if the data is invalid, skip
+      if (isNaN(realtimePrice) || isNaN(realtimeChange)) {
+        return { ...state };
+      }
+      const targetTickerData = state.stockList[realtimeTicker];
+      return {
+        ...state,
+        isSSEDisconnected: false,
+        stockList: {
+          ...state.stockList,
+          [realtimeTicker]: {
+            ...state.stockList[realtimeTicker],
+            change: realtimeChange,
+            price: realtimePrice,
+            dailyReturn: calcDailyReturnHelper(realtimeChange, targetTickerData.quantity),
+            overallReturn: calcOverallReturnHelper(realtimePrice, targetTickerData.avgCost, targetTickerData.quantity)
+          }
+        }
+      };
+    case DISCONNECT_SSE:
+      if (evtSource !== null) {
+        evtSource.close();
+        return {
+          ...state,
+          isSSEDisconnected: true
+        }
+      } else {
+        return { ...state };
+      }
     case START_GET_STOCK_GROUP:
       return {
         ...state,
@@ -179,6 +216,7 @@ export default function stockReducer(state = initialState, action) {
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
+      // console.log(evtSource);
       return { ...initialState };
     case GET_SECTOR_ERROR:
     case CLOSE_POSITION:
@@ -188,4 +226,14 @@ export default function stockReducer(state = initialState, action) {
     default:
       return state;
   }
+}
+
+// calculating daily return of each ticker helper function
+function calcDailyReturnHelper(change, quantity) {
+  return parseFloat((change * quantity).toFixed(2));
+}
+
+// calculating overall return of each ticker helper function
+function calcOverallReturnHelper(price, avgCost, quantity) {
+  return parseFloat(((price - avgCost) * quantity).toFixed(2));
 }

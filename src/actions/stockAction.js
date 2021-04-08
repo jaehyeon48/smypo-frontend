@@ -23,7 +23,8 @@ import {
   CLOSE_POSITION_ERROR,
   UPDATE_PROGRESS,
   DONE_PROGRESS,
-  FAIL_PROGRESS
+  FAIL_PROGRESS,
+  GET_REALTIME_PRICE
 } from './actionTypes';
 
 import axios from 'axios';
@@ -61,6 +62,7 @@ export const getStocks = (portfolioId) => async (dispatch, getState) => {
       type: SUCCESS_GET_STOCK_LIST,
       payload: calcResult
     });
+    dispatch(getRealTimeStockPrice(Object.keys(calcResult)));
     if (calcResCode === -1) {
       dispatch({ type: FAIL_CALCULATE_RETURN });
     }
@@ -141,7 +143,7 @@ export const deleteStock = (stockId) => async (dispatch) => {
 
 // calculate realtime daily & overall return
 export const calculateReturn = (stocks) => async (dispatch, getState) => {
-  const [calcResCode, calcResult] = await calculateReturnLogic(stocks, getState());
+  const [calcResCode, calcResult] = await calculateReturnLogic(stocks, getState(), dispatch);
   if (calcResCode === 0) {
     dispatch({
       type: SUCCESS_CALCULATE_RETURN,
@@ -181,6 +183,29 @@ export const getRealizedStocks = (portfolioId) => async (dispatch) => {
   } catch (error) {
     console.error(error);
     dispatch({ type: FAIL_GET_REALIZED_STOCKS });
+  }
+}
+
+export const getRealTimeStockPrice = (tickers) => async (dispatch, getState) => {
+  tickers = tickers.join(',');
+  if (tickers === '') return; // if the stockList is empty
+
+  const evtSource = new EventSource(`https://cloud-sse.iexapis.com/stable/stocksUSNoUTP5Second?token=${process.env.REACT_APP_IEX_API_KEY}&symbols=${tickers}`);
+
+  evtSource.onmessage = function (event) {
+    const realtimeData = JSON.parse(event.data)[0];
+    const realtimeTicker = realtimeData?.symbol.toLowerCase();
+    const realtimeChange = parseFloat(realtimeData?.change.toFixed(2));
+    const realtimePrice = parseFloat(realtimeData?.iexRealtimePrice.toFixed(2));
+
+    dispatch({
+      type: GET_REALTIME_PRICE,
+      payload: { realtimeTicker, realtimePrice, realtimeChange, evtSource }
+    });
+  }
+
+  evtSource.onerror = function (err) {
+    console.log(err);
   }
 }
 
