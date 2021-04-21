@@ -62,7 +62,9 @@ export const getStocks = (portfolioId) => async (dispatch, getState) => {
       type: SUCCESS_GET_STOCK_LIST,
       payload: calcResult
     });
-    dispatch(getRealTimeStockPrice(Object.keys(calcResult)));
+    if (getState().stock.isMarketOpen) {
+      dispatch(getRealTimeStockPrice(Object.keys(calcResult)));
+    }
     if (calcResCode === -1) {
       dispatch({ type: FAIL_CALCULATE_RETURN });
     }
