@@ -14,7 +14,8 @@ import {
   PORTFOLIO_CREATE_ERROR,
   PORTFOLIO_EDIT_ERROR,
   PORTFOLIO_DELETE_ERROR,
-  EMPTY_PORTFOLIO_LIST
+  EMPTY_PORTFOLIO_LIST,
+  DISCONNECT_SSE
 } from './actionTypes';
 import {
   getStocks,
@@ -57,6 +58,8 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
       type: CHOOSE_DEFAULT_PORTFOLIO,
       payload: response.data.defaultPortfolioId
     });
+    // disconnect previous SSE connection when changing portfolio
+    dispatch({ type: DISCONNECT_SSE });
     dispatch(getStocks(portfolioId));
     dispatch(getRealizedStocks(portfolioId));
     dispatch(getCash(portfolioId));
