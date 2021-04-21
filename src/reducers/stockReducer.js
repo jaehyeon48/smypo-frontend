@@ -53,25 +53,6 @@ const sortByTicker = (a, b) => {
   return 0;
 }
 
-/* compare each property but daily & overall returns in previous stock list 
- * and current stock list (which is passed by payload) and returns false if 
- * two stock lists are different.
-*/
-// const compareStockList = (prevStockList, nextStockList) => {
-//   if (Object.keys(prevStockList).length !== Object.keys(nextStockList).length) return false;
-
-//   for (const [ticker, stockItem] of Object.entries(prevStockList)) {
-//     if prevStockList[ticker]
-//   }
-//   for (let i = 0; i < prevStockList.length; i++) {
-//     if (prevStockList[i].ticker !== nextStockList[i].ticker) return false;
-//     if (prevStockList[i].avgCost !== nextStockList[i].avgCost) return false;
-//     if (prevStockList[i].quantity !== nextStockList[i].quantity) return false;
-//     if (prevStockList[i].sector !== nextStockList[i].sector) return false;
-//   }
-//   return true;
-// }
-
 let evtSource = null;
 export default function stockReducer(state = initialState, action) {
   const { type, payload } = action;
