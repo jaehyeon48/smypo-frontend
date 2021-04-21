@@ -122,8 +122,8 @@ export default function stockReducer(state = initialState, action) {
             ...state.stockList[realtimeTicker],
             change: realtimeChange,
             price: realtimePrice,
-            dailyReturn: calcDailyReturnHelper(realtimeChange, targetTickerData.quantity),
-            overallReturn: calcOverallReturnHelper(realtimePrice, targetTickerData.avgCost, targetTickerData.quantity)
+            dailyReturn: calcDailyReturnHelper(realtimeChange, targetTickerData?.quantity),
+            overallReturn: calcOverallReturnHelper(realtimePrice, targetTickerData?.avgCost, targetTickerData?.quantity)
           }
         }
       };
