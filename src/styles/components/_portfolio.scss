@@ -40,12 +40,12 @@
   margin: 1em auto;
 
   & > button {
-    width: 240px;
+    width: 225px;
   }
 
   @media screen and (max-width: 768px) {
     justify-content: center;
-    margin: 1em auto 3em;
+    margin: 1em auto 4em;
 
     & > button {
       font-size: 0.9rem;
