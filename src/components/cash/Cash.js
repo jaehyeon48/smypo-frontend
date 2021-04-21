@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import CashItem from './CashItem';
 import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
+import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import Modal from '../modal/Modal';
 import Button from '../button/Button';
 import AddCash from './AddCash';
@@ -15,12 +16,14 @@ import {
 
 const Cash = ({
   portfolio,
+  stock,
   cash,
   getCash,
   getTotalCash
 }) => {
   const [isAddCashModalOpen, setIsAddCashModalOpen] = useState(false);
   const [isEditCashModalOpen, setIsEditCashModalOpen] = useState(false);
+  const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
   const [formData, setFormData] = useState({
     cashId: '',
     amount: '',
@@ -51,6 +54,26 @@ const Cash = ({
     cash.totalCashStatus,
     getCash,
     getTotalCash
+  ]);
+
+  useEffect(() => {
+    if (portfolio.portfolioListStatus === 'loading' ||
+      portfolio.defaultPortfolioStatus === 'loading' ||
+      stock.stockStatus === 'loading' ||
+      stock.stockGroupStatus === 'loading' ||
+      cash.cashListStatus === 'loading' ||
+      cash.totalCashStatus === 'loading') {
+      setIsLoadingPortfolioData(true);
+    } else {
+      setIsLoadingPortfolioData(false);
+    }
+  }, [
+    portfolio.portfolioListStatus,
+    portfolio.defaultPortfolioStatus,
+    stock.stockStatus,
+    stock.stockGroupStatus,
+    cash.cashListStatus,
+    cash.totalCashStatus
   ]);
 
   const openAddCashModal = () => {
@@ -84,9 +107,11 @@ const Cash = ({
               btnType={'button'}
               btnText={'Add cash transaction'}
               onClickFunc={openAddCashModal}
+              isDisabled={isLoadingPortfolioData}
             />
           </div>
           <div className="cash-items-container">
+            {isLoadingPortfolioData && <PortfolioDataSpinner />}
             <header className="cash-items__header">
               Cash
             </header>
@@ -118,10 +143,10 @@ const Cash = ({
                   </tbody>
                 </table>
               ) : (
-                  <div className="notice-no-cash">
-                    <p>Cash list is empty.</p>
-                  </div>
-                )}
+                <div className="notice-no-cash">
+                  <p>Cash list is empty.</p>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -145,6 +170,7 @@ const Cash = ({
 
 const mapStateToProps = (state) => ({
   portfolio: state.portfolio,
+  stock: state.stock,
   cash: state.cash
 });
 
