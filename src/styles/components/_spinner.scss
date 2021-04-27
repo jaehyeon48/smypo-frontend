@@ -34,6 +34,16 @@
     width: 50px;
     height: 40px;
   }
+
+  @media screen and (max-width: 375px) {
+    font-size: 14px;
+    top: -53px;
+
+    & > svg {
+      width: 40px;
+      height: 30px;
+    }
+  }
 }
 
 .portfolio-data-loading-progress {
