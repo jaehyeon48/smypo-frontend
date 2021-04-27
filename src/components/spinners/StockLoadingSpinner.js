@@ -1,7 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-
-const StockLoadingSpinner = ({ loadingProgress }) => {
+const StockLoadingSpinner = ({ stock }) => {
   return (
     <div className="stock-loading-spinner-wrapper">
       <svg
@@ -17,9 +17,13 @@ const StockLoadingSpinner = ({ loadingProgress }) => {
           <animate attributeName="opacity" repeatCount="indefinite" dur="1.4925373134328357s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" />
         </circle>
       </svg>
-      <p className="stock-loading-progress">Loading stock list... {loadingProgress}%</p>
+      <p className="stock-loading-progress">Loading stock list... {stock.calcProgress}%</p>
     </div>
   )
 }
 
-export default StockLoadingSpinner;
+const mapStateToProps = (state) => ({
+  stock: state.stock
+});
+
+export default connect(mapStateToProps)(StockLoadingSpinner);

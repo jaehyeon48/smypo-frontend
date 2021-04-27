@@ -246,7 +246,7 @@ const Dashboard = ({
                 </div>
               )}
             </React.Fragment>
-          ) : <StockLoadingSpinner loadingProgress={stock.calcProgress} />}
+          ) : <StockLoadingSpinner />}
           <div className="portfolio-actions">
           </div>
         </main>

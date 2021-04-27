@@ -175,18 +175,18 @@ const Stock = ({
                   </tbody>
                 </table>
               ) : (
-                  <React.Fragment>
-                    {portfolio && portfolio.portfolioList.length === 0 ? (
-                      <div className="notice-empty-portfolio-list">
-                        <p>Please add your portfolio first.</p>
-                      </div>
-                    ) : (
-                        <div className="notice-empty-stocklist">
-                          <p>Stock list is empty. Start by adding your transactions!</p>
-                        </div>
-                      )}
-                  </React.Fragment>
-                )}
+                <React.Fragment>
+                  {portfolio && portfolio.portfolioList.length === 0 ? (
+                    <div className="notice-empty-portfolio-list">
+                      <p>Please add your portfolio first.</p>
+                    </div>
+                  ) : (
+                    <div className="notice-empty-stocklist">
+                      <p>Stock list is empty. Start by adding your transactions!</p>
+                    </div>
+                  )}
+                </React.Fragment>
+              )}
             </div>
           </div>
           <div className="held-container">
@@ -224,25 +224,25 @@ const Stock = ({
                   </tbody>
                 </table>
               ) : (
-                  <React.Fragment>
-                    {portfolio && portfolio.portfolioList.length === 0 ? (
-                      <div className="notice-empty-portfolio-list">
-                        <p>Please add your portfolio first.</p>
-                      </div>
-                    ) : (
-                        <div className="notice-empty-stocklist">
-                          <p>There are no stocks you previously held.</p>
-                        </div>
-                      )}
-                  </React.Fragment>
-                )}
+                <React.Fragment>
+                  {portfolio && portfolio.portfolioList.length === 0 ? (
+                    <div className="notice-empty-portfolio-list">
+                      <p>Please add your portfolio first.</p>
+                    </div>
+                  ) : (
+                    <div className="notice-empty-stocklist">
+                      <p>There are no stocks you previously held.</p>
+                    </div>
+                  )}
+                </React.Fragment>
+              )}
             </div>
           </div>
           {isAddTransactionModalOpen && <Modal closeModalFunc={closeAddTransactionModal} overflowY={true}>
             <AddTransaction closeAddTransactionModal={closeAddTransactionModal} />
           </Modal>}
         </section>
-      ) : <StockLoadingSpinner loadingProgress={stock.calcProgress} />}
+      ) : <StockLoadingSpinner />}
     </main>
   );
 }
