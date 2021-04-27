@@ -27,27 +27,32 @@
 
   & > span:first-child {
     color: #2662e8;
-    margin-right: 0.4em;
+    margin-right: 0.2em;
     cursor: pointer;
   }
 
   & > span:last-child {
     font-size: 2.2rem;
-    max-width: 30%;
-    word-break: break-word;
+    padding: 0 0.4em;
+    word-break: break-all;
     max-height: 148px;
     overflow-y: hidden;
+    text-align: center;
   }
 
-  @media screen and (max-width: 550px) {
-    font-size: 1.8rem;
+  @media screen and (max-width: 768px) {
+    font-size: 1.7rem;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1.2em;
+    margin-bottom: 0.8em;
     text-align: center;
 
     & > span:first-child {
       margin-right: 0;
+    }
+
+    & > span:last-child {
+      font-size: 1.7rem;
     }
   }
 }
@@ -65,11 +70,11 @@
 }
 
 .position-price-text {
-  margin-right: 0.4em;
+  margin-right: 0.7em;
 }
 
 .position-price[data-ischgpositive='false'] {
-  margin-right: 0.4em;
+  margin-right: 0.45em;
 }
 
 .stock-group-container {
