@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import Spinner from '../spinner/Spinner';
+import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
 import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import RealizedStockItem from './RealizedStockItem';
 import {
@@ -73,16 +73,16 @@ const RealizedStocks = ({
                   </tbody>
                 </table>
               ) : (
-                  <div className="notice-no-realized-stocks">
-                    <p>You haven't realized any stocks.</p>
-                  </div>
-                )}
+                <div className="notice-no-realized-stocks">
+                  <p>You haven't realized any stocks.</p>
+                </div>
+              )}
             </div>
           </div>
         </React.Fragment>
       ) : (
-          <Spinner />
-        )}
+        <StockLoadingSpinner />
+      )}
     </main>
   );
 }
