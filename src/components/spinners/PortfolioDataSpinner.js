@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const PortfolioDataSpinner = () => {
+const PortfolioDataSpinner = ({ stock }) => {
   return (
     <div className="portfolio-data-loading-spinner-wrapper">
       <svg
@@ -21,12 +22,16 @@ const PortfolioDataSpinner = () => {
           </g>
         </g>
       </svg>
-      <p className="portfolio-data-loading-progress">Loading portfolio data...</p>
+      <p className="portfolio-data-loading-progress">Loading portfolio data... ({stock.calcProgress}%)</p>
     </div>
   )
 }
 
-export default PortfolioDataSpinner
+const mapStateToProps = (state) => ({
+  stock: state.stock
+});
+
+export default connect(mapStateToProps)(PortfolioDataSpinner);
 
 
 
