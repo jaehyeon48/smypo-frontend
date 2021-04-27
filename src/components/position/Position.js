@@ -37,6 +37,9 @@ const Position = ({
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [toDeleteStockId, setToDeleteStockId] = useState(null);
+  const [currentPrice, setCurrentPrice] = useState(0);
+  const [currentPriceChg, setCurrentPriceChg] = useState(0);
+  const [dailyReturnPercent, setDailyReturnPercent] = useState(0);
   const [formData, setFormData] = useState({
     stockId: '',
     ticker: TICKER.toUpperCase(),
@@ -63,6 +66,18 @@ const Position = ({
     getStocksByTickerGroup
   ]);
 
+  useEffect(() => {
+    setCurrentPrice(stock.stockList[TICKER]?.price);
+  }, [stock, TICKER]);
+
+  useEffect(() => {
+    setCurrentPriceChg(stock.stockList[TICKER]?.change);
+  }, [stock, TICKER]);
+
+  useEffect(() => {
+    console.log(currentPrice, currentPriceChg)
+    setDailyReturnPercent(parseFloat((currentPriceChg / currentPrice) * 100).toFixed(2));
+  }, [stock, TICKER, currentPrice, currentPriceChg]);
 
 
   useEffect(() => {
@@ -98,6 +113,12 @@ const Position = ({
     setIsConfirmModalOpen(false);
   }
 
+  const colorPrice = (priceData) => {
+    if (priceData > 0) return 'stock-item--return-positive';
+    else if (priceData < 0) return 'stock-item--return-negative';
+    else return 'stock-item--return-zero';
+  }
+
   const handleClosePosition = async () => {
     if (window.confirm('Do you really want to close this position?')) {
       const closePositionResult = await closePosition(PORTFOLIO_ID, TICKER);
@@ -129,6 +150,18 @@ const Position = ({
         <span onClick={openInfoModal}>{TICKER.toUpperCase()}</span>
         <span>{companyInfo && companyInfo.companyName}</span>
       </header>
+      <div className="position-price-container">
+        <span className="position-price-text">Current Price: </span>
+        <span
+          className={`position-price ${colorPrice(currentPriceChg)}`}
+          data-ischgpositive={currentPriceChg >= 0}
+        >
+          {currentPrice}
+        </span>
+        <span className={`position-price-percent ${colorPrice(currentPriceChg)}`}>
+          ({dailyReturnPercent}%)
+        </span>
+      </div>
       <Button
         btnType={'button'}
         btnText={'Close position'}
@@ -172,12 +205,12 @@ const Position = ({
               </table>
             </div>
           ) : (
-              <div>Transaction list is empty.</div>
-            )}
+            <div>Transaction list is empty.</div>
+          )}
         </div>
       ) : (
-          <StockGroupLoadingSpinner />
-        )}
+        <StockGroupLoadingSpinner />
+      )}
       {isEditModalOpen && (
         <Modal closeModalFunc={closeEditModal}>
           <EditTransaction
