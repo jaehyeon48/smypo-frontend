@@ -60,6 +60,7 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
     });
     // disconnect previous SSE connection when changing portfolio
     dispatch({ type: DISCONNECT_SSE });
+    dispatch(getDefaultPortfolioName());
     dispatch(getStocks(portfolioId));
     dispatch(getRealizedStocks(portfolioId));
     dispatch(getCash(portfolioId));
