@@ -26,7 +26,7 @@
 
 .portfolio-data-loading-spinner-wrapper {
   position: absolute;
-  top: -50px;
+  top: 8px;
   display: flex;
   align-items: center;
 
@@ -35,14 +35,17 @@
     height: 40px;
   }
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 768px) {
     font-size: 14px;
-    top: -53px;
 
     & > svg {
       width: 40px;
       height: 30px;
     }
+  }
+
+  @media screen and (max-width: 570px) {
+    top: 27px;
   }
 }
 

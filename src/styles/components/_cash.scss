@@ -136,12 +136,6 @@
   color: #202425;
   border-radius: $card-border-radius;
   box-shadow: 2px 3px 3px #a7a7a7;
-
-  & > .portfolio-data-loading-spinner-wrapper {
-    @media screen and (min-width: 769px) and (max-width: 895px) {
-      left: 145px;
-    }
-  }
 }
 
 .cash-items__header {
@@ -171,6 +165,7 @@
   width: 100%;
   overflow: auto;
   max-height: 362px;
+  margin-top: 0.7em;
 }
 
 .cash-table {
