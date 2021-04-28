@@ -4,6 +4,10 @@
   width: 57em;
   max-width: 70vw;
   overflow-y: auto;
+
+  @media screen and (max-width: 768px) {
+    max-width: 76vw;
+  }
 }
 
 .add-transaction-header {
