@@ -136,9 +136,9 @@ const Portfolios = ({
                   ))}
                 </table>
               ) : (
-                  <div className="notice-empty-portfolio-list">
-                    <p>Portfolio list is empty.</p>
-                  </div>)}
+                <div className="notice-empty-portfolio-list">
+                  <p>Portfolio list is empty.</p>
+                </div>)}
             </div>
           </div>
         </section>
