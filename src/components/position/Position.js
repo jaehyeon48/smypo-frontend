@@ -6,6 +6,7 @@ import StockGroupItem from './StockGroupItem';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
+import StockLogo from '../stock/StockLogo';
 import {
   getStocks,
   getStocksByTickerGroup,
@@ -147,8 +148,20 @@ const Position = ({
   return (
     <main className="position-main">
       <header className="position-header">
-        <span onClick={openInfoModal}>{TICKER.toUpperCase()}</span>
-        <span>{companyInfo && companyInfo.companyName}</span>
+        <div className="position-header__logo-container">
+          <StockLogo ticker={TICKER.toUpperCase()} />
+        </div>
+        <span
+          className="position-header__ticker"
+          onClick={openInfoModal}
+        >
+          {TICKER.toUpperCase()}
+        </span>
+        <span
+          className="position-header__company-name"
+        >
+          {companyInfo && companyInfo.companyName}
+        </span>
       </header>
       <div className="position-price-container">
         <span className="position-price-text">Current Price: </span>

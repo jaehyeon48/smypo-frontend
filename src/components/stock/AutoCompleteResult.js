@@ -1,4 +1,5 @@
 import React from 'react';
+import StockLogo from '../stock/StockLogo';
 
 const AutoCompleteResult = ({
   results,
@@ -13,7 +14,7 @@ const AutoCompleteResult = ({
           className="auto-complete-item"
           onClick={() => handleClickItem(result.ticker, result.name)}
         >
-          <div>
+          <div className="auto-complete__ticker">
             {result.ticker.slice(0, userInput.length).toUpperCase() === userInput.toUpperCase() ?
               <React.Fragment>
                 <span className="match-words">{result.ticker.slice(0, userInput.length)}</span>
@@ -21,6 +22,9 @@ const AutoCompleteResult = ({
               </React.Fragment> : (
                 <span>{result.ticker}</span>
               )}
+            <span className="auto-complete__stock-logo">
+              <StockLogo ticker={result.ticker.toUpperCase()} />
+            </span>
           </div>
           <div>
             {result.name.slice(0, userInput.length).toUpperCase() === userInput.toUpperCase() ?

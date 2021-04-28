@@ -21,17 +21,18 @@
 
 .position-header {
   display: flex;
+  align-items: center;
   justify-content: center;
   margin: 0.8em 0 0.3em;
   font-size: 2.2rem;
 
-  & > span:first-child {
+  & > .position-header__ticker {
     color: #2662e8;
     margin-right: 0.2em;
     cursor: pointer;
   }
 
-  & > span:last-child {
+  & > .position-header__company-name {
     font-size: 2.2rem;
     padding: 0 0.4em;
     word-break: break-all;
@@ -55,6 +56,17 @@
       font-size: 1.7rem;
     }
   }
+}
+
+.position-header__logo-container {
+  display: flex;
+  align-items: center;
+  margin-right: 0.3em;
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  border: 1px solid #cfd9e6;
+  border-radius: 5%;
 }
 
 .position-price-container {

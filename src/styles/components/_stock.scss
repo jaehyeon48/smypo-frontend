@@ -465,3 +465,15 @@
   overflow-x: auto;
   padding-left: 9px !important;
 }
+
+.stock-logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 5%;
+}
+
+.stock-logo-img::before {
+  content: '';
+}

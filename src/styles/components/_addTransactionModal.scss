@@ -338,6 +338,21 @@
   top: 43px;
 }
 
+.auto-complete__ticker {
+  display: flex;
+  align-items: center;
+}
+
+.auto-complete__stock-logo {
+  display: inline-block;
+  margin-left: 0.2em;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 1px solid #cfd9e6;
+  border-radius: 5%;
+}
+
 .auto-complete-item {
   background-color: $white;
   font-size: 1.1rem;
@@ -350,16 +365,8 @@
   transition: all 0.2s;
   cursor: pointer;
 
-  & > div:not(:last-child) {
-    margin-bottom: 0.15em;
-  }
-
   @media screen and (max-width: 768px) {
     font-size: 1rem;
-
-    & > div:not(:last-child) {
-      margin-bottom: 0.3em;
-    }
   }
 
   @media screen and (max-width: 450px) {
