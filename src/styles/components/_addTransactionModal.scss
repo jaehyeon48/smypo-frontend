@@ -330,7 +330,7 @@
   position: absolute;
   z-index: 999;
   width: 100%;
-  background-color: #f6f9ff;
+  background-color: #f7f7f7;
   border: 1px solid $blue-white;
   padding: 5px;
   max-height: 420px;
@@ -340,41 +340,46 @@
 
 .auto-complete-item {
   background-color: $white;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: $black;
   border-radius: 0.2em;
-  margin: 1.4em 0;
+  margin: 0.9em 0;
   padding: 0.5em;
   width: 98%;
-  box-shadow: 2px 3px 2px 2px $light-gray;
-  border: 1px solid #c4c1ff;
+  box-shadow: 0 0 7px 0 $light-gray;
+  transition: all 0.2s;
   cursor: pointer;
 
   & > div:not(:last-child) {
     margin-bottom: 0.15em;
   }
 
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 768px) {
     font-size: 1rem;
 
     & > div:not(:last-child) {
       margin-bottom: 0.3em;
     }
   }
+
+  @media screen and (max-width: 450px) {
+    font-size: 0.9rem;
+  }
 }
 
 .auto-complete-item:hover {
-  background-color: $light-gray;
-  box-shadow: 0 0 0 1px #aba7f8;
+  transform: translateY(-3px) scale(1.01);
+  color: #018def;
 }
 
 .auto-complete-item-exchange {
-  font-size: 0.9rem;
-  margin-top: 0.2em;
+  font-size: 0.8rem;
+  margin-top: 0.5em;
+  color: #4f575f;
 
-  @media screen and (max-width: 599px) {
-    font-size: 0.8rem;
-    margin-top: 0.3em;
+  @media screen and (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-top: 0.5em;
   }
 }
 
