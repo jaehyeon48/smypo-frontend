@@ -22,17 +22,17 @@ const AddTransaction = ({
     ticker: '',
     price: '',
     quantity: '',
-    companyName: '',
     referCash: false,
     transactionDate: new Date().toJSON().slice(0, 10),
     transactionType: 'buy'
   });
+  const [companyName, setCompanyName] = useState('');
   const [currentAvgCost, setCurrentAvgCost] = useState(0);
   const [tickerInput, setTickerInput] = useState('');
   const [autoCompleteResults, setAutoCompleteResults] = useState([]);
   const [renderAutoComplete, setRenderAutoComplete] = useState(false);
 
-  const { ticker, price, quantity, companyName, referCash, transactionDate, transactionType } = formData;
+  const { ticker, price, quantity, referCash, transactionDate, transactionType } = formData;
 
   useEffect(() => {
     if (autoCompleteResults.length > 0) setRenderAutoComplete(true);
@@ -40,10 +40,11 @@ const AddTransaction = ({
   }, [autoCompleteResults]);
 
   useEffect(() => {
+    // if the ticker is empty (in case the user deletes the ticker input)
     if (ticker.trim() === '' && companyName !== '') {
-      setFormData({ ...formData, companyName: '' });
+      setCompanyName('');
     }
-  }, [ticker, companyName, formData]);
+  }, [ticker, companyName]);
 
   useEffect(() => {
     if (Object.keys(stock.stockList).length > 0 && ticker.trim() !== '' && transactionType === 'sell') {
@@ -63,8 +64,10 @@ const AddTransaction = ({
     setAutoCompleteResults(tickerResult);
   }
 
+  // in case the user clicks one of the auto-completion results
   const handleClickItem = (ticker, companyName) => {
-    setFormData({ ...formData, ticker, companyName });
+    setFormData({ ...formData, ticker });
+    setCompanyName(companyName);
     setRenderAutoComplete(false);
   }
 
@@ -151,15 +154,15 @@ const AddTransaction = ({
                 /> Withdraw cash from portfolio to purchase
               </label>
             ) : (
-                <label>
-                  <input
-                    type="checkbox"
-                    name="referCash"
-                    value={referCash}
-                    onChange={handleChange}
-                  /> Deposit cash to portfolio from sale
-                </label>
-              )}
+              <label>
+                <input
+                  type="checkbox"
+                  name="referCash"
+                  value={referCash}
+                  onChange={handleChange}
+                /> Deposit cash to portfolio from sale
+              </label>
+            )}
           </div>
           <div className="ticker-container">
             <label className="add-transaction-label">
