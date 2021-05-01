@@ -10,7 +10,7 @@ import StockLogo from '../stock/StockLogo';
 import {
   getStocks,
   getStocksByTickerGroup,
-  closePosition
+  deleteQuote
 } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';
 import { deleteStock } from '../../actions/stockAction';
@@ -26,17 +26,19 @@ const Position = ({
   stock,
   getStocks,
   getStocksByTickerGroup,
-  closePosition,
+  deleteQuote,
   deleteStock,
   showAlert
 }) => {
   let history = useHistory();
   const PORTFOLIO_ID = match.params.portfolioId;
   const TICKER = match.params.ticker;
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  // 'DT' for Delete Transaction
+  const [isDTConfirmModalOpen, setIsDTConfirmModalOpen] = useState(false);
+  // 'CP' for Close Position
+  const [isCPConfirmModalOpen, setISCPConfirmModalOpen] = useState(false);
   const [toDeleteStockId, setToDeleteStockId] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [currentPriceChg, setCurrentPriceChg] = useState(0);
@@ -105,12 +107,20 @@ const Position = ({
     setIsInfoModalOpen(false);
   }
 
-  const openConfirmModal = () => {
-    setIsConfirmModalOpen(true);
+  const openCPConfirmModal = () => {
+    setISCPConfirmModalOpen(true);
   }
 
-  const handleCloseConfirmModal = () => {
-    setIsConfirmModalOpen(false);
+  const openDTConfirmModal = () => {
+    setIsDTConfirmModalOpen(true);
+  }
+
+  const closeCPConfirmModal = () => {
+    setISCPConfirmModalOpen(false);
+  }
+
+  const handleCloseDTConfirmModal = () => {
+    setIsDTConfirmModalOpen(false);
   }
 
   const colorPrice = (priceData) => {
@@ -119,16 +129,14 @@ const Position = ({
     else return 'stock-item--return-zero';
   }
 
-  const handleClosePosition = async () => {
-    if (window.confirm('Do you really want to close this position?')) {
-      const closePositionResult = await closePosition(PORTFOLIO_ID, TICKER);
-      if (closePositionResult === 0) {
-        history.push('/stocks');
-        window.location.reload();
-      }
-      else if (closePositionResult === -1) {
-        showAlert('Something went wrong. Please try again!', 'fail');
-      }
+  const handleDeleteQuote = async () => {
+    const deleteQuoteRes = await deleteQuote(PORTFOLIO_ID, TICKER);
+    if (deleteQuoteRes === 0) {
+      getStocks(PORTFOLIO_ID);
+      history.push('/stocks');
+    } else {
+      closeCPConfirmModal();
+      showAlert('Something went wrong. Please try again.', 'error');
     }
   }
 
@@ -137,7 +145,7 @@ const Position = ({
     if (res === 0) {
       getStocks(PORTFOLIO_ID);
       getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
-      handleCloseConfirmModal();
+      handleCloseDTConfirmModal();
     }
     else {
       showAlert('error', 'Something went wrong. Please try again.')
@@ -176,9 +184,9 @@ const Position = ({
       </div>
       <Button
         btnType={'button'}
-        btnText={'Close position'}
+        btnText={'Delete quote'}
         btnColor={'danger'}
-        onClickFunc={handleClosePosition}
+        onClickFunc={openCPConfirmModal}
       />
       {stock && stock.stockGroupStatus !== 'loading' ? (
         <div className="stock-group-container">
@@ -209,7 +217,7 @@ const Position = ({
                       transactionDate={new Date(stockItem.transactionDate).toJSON().slice(0, 10)}
                       formData={formData}
                       openEditModal={openEditModal}
-                      openConfirmModal={openConfirmModal}
+                      openConfirmModal={openDTConfirmModal}
                       setFormData={setFormData}
                       setToDeleteStockId={setToDeleteStockId}
                     />))}
@@ -237,11 +245,18 @@ const Position = ({
           <CompanyInfo companyInfo={companyInfo} />
         </Modal>
       )} */}
-      {isConfirmModalOpen && (
+      {isCPConfirmModalOpen && (
+        <ConfirmModal
+          confirmMsg={'Do you really want to close this position?'}
+          confirmAction={handleDeleteQuote}
+          closeModalFunc={closeCPConfirmModal}
+        />
+      )}
+      {isDTConfirmModalOpen && (
         <ConfirmModal
           confirmMsg={'Do you really want to delete this transaction record?'}
           confirmAction={handleDeleteTransaction}
-          closeModalFunc={handleCloseConfirmModal}
+          closeModalFunc={handleCloseDTConfirmModal}
         />
       )}
     </main>
@@ -255,7 +270,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getStocksByTickerGroup,
   getStocks,
-  closePosition,
+  deleteQuote,
   deleteStock,
   showAlert
 })(Position);

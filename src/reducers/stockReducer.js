@@ -17,8 +17,8 @@ import {
   DELETE_STOCK,
   SUCCESS_CALCULATE_RETURN,
   FAIL_CALCULATE_RETURN,
-  CLOSE_POSITION,
-  CLOSE_POSITION_ERROR,
+  DELETE_QUOTE,
+  DELETE_QUOTE_ERROR,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
   UPDATE_PROGRESS,
@@ -178,8 +178,8 @@ export default function stockReducer(state = initialState, action) {
     case LOGOUT_FAIL:
       // console.log(evtSource);
       return { ...initialState };
-    case CLOSE_POSITION:
-    case CLOSE_POSITION_ERROR:
+    case DELETE_QUOTE:
+    case DELETE_QUOTE_ERROR:
     case CHECK_MARKET_STATUS_ERROR:
     case DELETE_STOCK:
     default:

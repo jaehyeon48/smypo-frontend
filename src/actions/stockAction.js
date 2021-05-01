@@ -17,8 +17,8 @@ import {
   DELETE_STOCK,
   SUCCESS_CALCULATE_RETURN,
   FAIL_CALCULATE_RETURN,
-  CLOSE_POSITION,
-  CLOSE_POSITION_ERROR,
+  DELETE_QUOTE,
+  DELETE_QUOTE_ERROR,
   UPDATE_PROGRESS,
   DONE_PROGRESS,
   FAIL_PROGRESS,
@@ -194,15 +194,15 @@ export const getRealTimeStockPrice = (tickers) => async (dispatch, getState) => 
   }
 }
 
-export const closePosition = (portfolioId, ticker) => async (dispatch) => {
+export const deleteQuote = (portfolioId, ticker) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
     await axios.delete(`${process.env.REACT_APP_SERVER_URL}/stock/${portfolioId}/${ticker}`, config);
-    dispatch({ type: CLOSE_POSITION });
+    dispatch({ type: DELETE_QUOTE });
     return 0;
   } catch (error) {
     console.error(error);
-    dispatch({ type: CLOSE_POSITION_ERROR });
+    dispatch({ type: DELETE_QUOTE_ERROR });
     return -1;
   }
 }
