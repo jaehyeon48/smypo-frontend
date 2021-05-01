@@ -22,15 +22,24 @@ const Portfolios = ({
   createPortfolio,
   showAlert
 }) => {
-  useEffect(() => { loadPortfolios() }, [loadPortfolios]);
-  useEffect(() => { getDefaultPortfolio() }, [getDefaultPortfolio]);
-
   const [newPortfolioName, setNewPortfolioName] = useState('');
   const [privacy, setPrivacy] = useState('public');
   const [isNameEmptyErr, setIsNameEmptyErr] = useState(false);
   const [isPfNameEmpty, setIsPfNameEmpty] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
+
+  useEffect(() => {
+    if (portfolio.portfolioListStatus !== 'succeeded') {
+      loadPortfolios();
+    }
+  }, [portfolio, loadPortfolios]);
+
+  useEffect(() => {
+    if (portfolio.defaultPortfolioStatus !== 'succeeded') {
+      getDefaultPortfolio();
+    }
+  }, [portfolio, getDefaultPortfolio]);
 
   useEffect(() => {
     if (isNameEmptyErr && newPortfolioName.trim() !== '') {
