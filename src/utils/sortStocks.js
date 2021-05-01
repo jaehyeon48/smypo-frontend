@@ -35,8 +35,7 @@ const organizeGroupedStocks = async (ticker, stockData) => {
   stockData.forEach(share => {
     if (share.transactionType === 'sell') {
       sellQty += share.quantity;
-    }
-    else if (share.transactionType === 'buy') {
+    } else { // share.transactionType === 'buy'
       const shareQty = share.quantity - sellQty;
       if (shareQty > 0) {
         totalCost += share.price * shareQty;
@@ -59,12 +58,10 @@ const organizeGroupedStocks = async (ticker, stockData) => {
 }
 
 const getSectorInfo = async (ticker) => {
-  const config = { withCredentials: true };
-
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/sector/${ticker}`, config);
+    const response = await axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/company?token=${process.env.REACT_APP_IEX_API_KEY}`);
 
-    return response.data;
+    return response.data.sector;
   } catch (error) {
     console.error(error);
   }
