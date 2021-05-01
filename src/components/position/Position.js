@@ -76,7 +76,6 @@ const Position = ({
   }, [stock, TICKER]);
 
   useEffect(() => {
-    console.log(currentPrice, currentPriceChg)
     setDailyReturnPercent(parseFloat((currentPriceChg / currentPrice) * 100).toFixed(2));
   }, [stock, TICKER, currentPrice, currentPriceChg]);
 
