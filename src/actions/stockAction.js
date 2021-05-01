@@ -17,8 +17,6 @@ import {
   DELETE_STOCK,
   SUCCESS_CALCULATE_RETURN,
   FAIL_CALCULATE_RETURN,
-  GET_SECTOR_ERROR,
-  GET_SECTOR,
   CLOSE_POSITION,
   CLOSE_POSITION_ERROR,
   UPDATE_PROGRESS,
@@ -72,22 +70,6 @@ export const getStocks = (portfolioId) => async (dispatch, getState) => {
   } catch (error) {
     console.error(error);
     dispatch({ type: FAIL_GET_STOCK_LIST });
-  }
-}
-
-export const getSectorInfo = (ticker) => async (dispatch) => {
-  const config = { withCredentials: true };
-
-  try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/sector/${ticker}`, config);
-
-    dispatch({
-      type: GET_SECTOR,
-      payload: { ticker, sector: response.data }
-    });
-  } catch (error) {
-    console.error(error);
-    dispatch({ type: GET_SECTOR_ERROR });
   }
 }
 

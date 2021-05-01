@@ -7,8 +7,6 @@ import {
   START_GET_STOCK_GROUP,
   SUCCESS_GET_STOCK_GROUP,
   FAIL_GET_STOCK_GROUP,
-  GET_SECTOR,
-  GET_SECTOR_ERROR,
   START_GET_REALIZED_STOCKS,
   SUCCESS_GET_REALIZED_STOCKS,
   FAIL_GET_REALIZED_STOCKS,
@@ -42,16 +40,6 @@ const initialState = {
   realizedStockStatus: 'initial',
   calcProgress: 0 // progress of the calculating return process
 };
-
-const sortByTicker = (a, b) => {
-  if (a.ticker > b.ticker) {
-    return 1;
-  }
-  if (a.ticker < b.ticker) {
-    return -1;
-  }
-  return 0;
-}
 
 let evtSource = null;
 export default function stockReducer(state = initialState, action) {
@@ -163,15 +151,6 @@ export default function stockReducer(state = initialState, action) {
       return {
         ...state,
       };
-    case GET_SECTOR:
-      const targetStockObj = state.stockList.filter(stock => stock.ticker === payload.ticker);
-      const otherStockObjs = state.stockList.filter(stock => stock.ticker !== payload.ticker);
-      targetStockObj[0].sector = payload.sector;
-      const newStockList = [...targetStockObj, ...otherStockObjs].sort(sortByTicker);
-      return {
-        ...state,
-        stockList: newStockList
-      };
     case UPDATE_PROGRESS:
       return {
         ...state,
@@ -199,7 +178,6 @@ export default function stockReducer(state = initialState, action) {
     case LOGOUT_FAIL:
       // console.log(evtSource);
       return { ...initialState };
-    case GET_SECTOR_ERROR:
     case CLOSE_POSITION:
     case CLOSE_POSITION_ERROR:
     case CHECK_MARKET_STATUS_ERROR:
