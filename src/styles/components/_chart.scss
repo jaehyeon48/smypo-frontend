@@ -96,7 +96,7 @@
 
 .path-line {
   fill: none;
-  stroke: #0874D9;
+  stroke: #0874d9;
   stroke-width: 3;
 
   @media screen and (max-width: 450px) {
@@ -111,7 +111,7 @@
 }
 
 .tick {
-  font-family: 'Nunito Sans';
+  font-family: 'Inter';
   font-size: 0.7rem;
 
   @media screen and (max-width: 768px) {
@@ -120,8 +120,8 @@
 }
 
 .line-circle {
-  fill: #0874D9;
-  stroke: #0874D9;
+  fill: #0874d9;
+  stroke: #0874d9;
   &:hover {
     cursor: pointer;
   }
@@ -131,10 +131,10 @@
   & > p {
     margin-top: 0.2em;
   }
-  position: absolute;			
+  position: absolute;
   text-align: center;
-  width: 130px;		
-  padding: 0.3em 0.5em;				
+  width: 130px;
+  padding: 0.3em 0.5em;
   font-size: 0.7rem;
   background-color: #374e8b;
   color: #fff;
