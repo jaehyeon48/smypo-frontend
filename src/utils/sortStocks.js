@@ -1,44 +1,38 @@
 import axios from 'axios';
 
 export const sortStocks = async (stocksList) => {
-  if (stocksList && stocksList.length === 0) return [];
+  if (stocksList && stocksList.length === 0) return {};
   let organizedShares = {};
   const groupedStocks = groupStocksByTickerName(stocksList);
   for (let [ticker, value] of Object.entries(groupedStocks)) {
-    // organizedShares.push(await organizeGroupedStocks(ticker, value));
     organizedShares[ticker] = await organizeGroupedStocks(ticker, value);
   }
   return organizedShares;
 }
 
+// ticker별로 stock grouping하여 각각의 stock데이터 저장
 const groupStocksByTickerName = (stocks) => {
   const stockGroup = {}
-  const tickers = [];
-  stocks.forEach(share => {
-    const tickerOfShare = share.ticker.toLowerCase();
-    const isTickerExist = tickers.findIndex(ticker => ticker === tickerOfShare);
-    if (isTickerExist === -1) tickers.push(tickerOfShare);
-  });
-
-  tickers.forEach(ticker => {
-    stockGroup[ticker] = [];
-  });
-
-  stocks.forEach(share => {
-    stockGroup[share.ticker.toLowerCase()].push(share);
+  stocks.forEach(stockData => {
+    const ticker = stockData.ticker.toLowerCase();
+    if (ticker in stockGroup) {
+      stockGroup[ticker].push(stockData);
+    } else {
+      stockGroup[ticker] = [stockData];
+    }
   });
   return stockGroup;
 };
 
-const organizeGroupedStocks = async (ticker, shareInfo) => {
-  shareInfo.sort((a, b) => (a.transactionType < b.transactionType) ? 1 : ((b.transactionType < a.transactionType) ? -1 : 0));
+// 각 종목별 평균 매수가, 보유량 등을 계산
+const organizeGroupedStocks = async (ticker, stockData) => {
   const share = {};
   let totalCost = 0;
   let totalQty = 0;
   share.ticker = ticker;
 
   let sellQty = 0;
-  shareInfo.forEach(share => {
+  stockData.forEach(share => {
     if (share.transactionType === 'sell') {
       sellQty += share.quantity;
     }
@@ -58,7 +52,6 @@ const organizeGroupedStocks = async (ticker, shareInfo) => {
 
   share.avgCost = totalQty > 0 ? parseFloat((totalCost / totalQty).toFixed(2)) : 0;
   share.quantity = (totalQty <= 0 ? 0 : totalQty);
-
   share.dailyReturn = null;
   share.overallReturn = null;
   share.sector = await getSectorInfo(share.ticker);
