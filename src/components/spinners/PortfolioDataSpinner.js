@@ -22,7 +22,12 @@ const PortfolioDataSpinner = ({ stock }) => {
           </g>
         </g>
       </svg>
-      <p className="portfolio-data-loading-progress">Loading portfolio data... ({stock.calcProgress}%)</p>
+      <p className="portfolio-data-loading-progress">
+        {stock.calcProgress > 0 ?
+          `Loading stock data... ${stock.calcProgress}%` :
+          'preparing stock data...'
+        }
+      </p>
     </div>
   )
 }

@@ -51,17 +51,18 @@ export const getStocks = (portfolioId) => async (dispatch, getState) => {
     dispatch({ type: START_GET_STOCK_LIST });
     dispatch({
       type: UPDATE_PROGRESS,
-      payload: 3
+      payload: 0
     });
-    const stocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/stocks/${portfolioId}`,
-      config);
+    const stocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/stocks/${portfolioId}`, config);
     const sortedStocks = await sortStocks(stocksResult.data);
-    if (sortedStocks.length > 0) { }
+
     const [calcResCode, calcResult] = await calculateReturnLogic(sortedStocks, getState(), dispatch);
     dispatch({
       type: SUCCESS_GET_STOCK_LIST,
       payload: calcResult
     });
+
+    // if the market is currently open, connect SSE
     if (getState().stock.isMarketOpen) {
       dispatch(getRealTimeStockPrice(Object.keys(calcResult)));
     }
@@ -232,22 +233,20 @@ async function calculateReturnLogic(stocks, state, dispatch) {
   let finishedStuffs = 0;
   try {
     for (const [ticker, stockItem] of Object.entries(stocks)) {
-      finishedStuffs += 0.3;
-      dispatch({
-        type: UPDATE_PROGRESS,
-        payload: (3 + parseFloat((finishedStuffs / totalStuffsToDo) * 100)).toFixed(0)
-      });
       let stockPriceForDailyReturn = 0;
       let stockPriceForOverallReturn = 0;
+      let priceDataRes;
+
+      // get realtime price data or closed price data 
       if (state.stock.isMarketOpen) {
-        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/realTime/${ticker}`, config);
-        stockPriceForDailyReturn = res.data.change;
-        stockPriceForOverallReturn = res.data.price;
+        priceDataRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/realTime/${ticker}`, config);
       } else {
-        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/close/${ticker}`, config);
-        stockPriceForDailyReturn = res.data.change;
-        stockPriceForOverallReturn = res.data.price;
+        priceDataRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/close/${ticker}`, config);
       }
+      stockPriceForDailyReturn = priceDataRes.data.change;
+      stockPriceForOverallReturn = priceDataRes.data.price;
+
+      // calculate daily return and overall return
       const dailyReturnVal = parseFloat((stockPriceForDailyReturn * stockItem.quantity).toFixed(2));
       const overallReturnVal = parseFloat(((stockPriceForOverallReturn - stockItem.avgCost) * stockItem.quantity).toFixed(2));
       calculatedStocks[ticker].dailyReturn = dailyReturnVal;
@@ -255,13 +254,15 @@ async function calculateReturnLogic(stocks, state, dispatch) {
       // add 'price' property for later use
       calculatedStocks[ticker].change = stockPriceForDailyReturn;
       calculatedStocks[ticker].price = stockPriceForOverallReturn;
-      finishedStuffs += 0.7;
+
+      // done current task
+      finishedStuffs += 1;
       if (totalStuffsToDo === finishedStuffs) {
         dispatch({ type: DONE_PROGRESS });
       } else {
         dispatch({
           type: UPDATE_PROGRESS,
-          payload: (3 + parseFloat((finishedStuffs / totalStuffsToDo) * 100)).toFixed(0)
+          payload: (parseFloat((finishedStuffs / totalStuffsToDo) * 100)).toFixed(0)
         });
       }
     }
