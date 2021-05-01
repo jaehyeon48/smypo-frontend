@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 export const getCompanyInfo = async (ticker) => {
-  const config = { withCredentials: true };
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/info/${ticker}`, config);
+    const response = await axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/company?token=${process.env.REACT_APP_IEX_API_KEY}`);
     return response.data;
   } catch (error) {
     console.error(error);
