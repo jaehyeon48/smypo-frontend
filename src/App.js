@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 
 import { store, persistor } from './store';
@@ -28,7 +27,6 @@ import { loadUser } from './actions/authAction';
 import { getRealTimeStockPrice } from './actions/stockAction';
 
 export default function App() {
-  const history = createBrowserHistory();
   useEffect(() => {
     if (store.getState().auth.isAuthenticated) {
       store.dispatch(loadUser());
