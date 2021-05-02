@@ -53,7 +53,7 @@ const CashItem = ({
       <td className="cash-item-type">{transactionType}</td>
       <td className="cash-item-amount">{amount}</td>
       <td className="cash-item-date">{transactionDate.slice(2)}</td>
-      <td className="cash-item-note">
+      <td className="cash-item-memo">
         <NoteIcon />
       </td>
       <td className="cash-item-edit">
