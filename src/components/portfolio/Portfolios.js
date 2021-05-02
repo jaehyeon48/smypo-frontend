@@ -117,6 +117,7 @@ const Portfolios = ({
             <ModalButton
               btnType="button"
               btnText="Add New Portfolio"
+              isDisabled={isLoadingPortfolioData}
               openModalFunc={openAddModal}
             />
           </div>

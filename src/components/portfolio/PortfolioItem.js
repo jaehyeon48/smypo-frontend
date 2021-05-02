@@ -148,6 +148,7 @@ const PortfolioItem = ({
           btnType={'button'}
           btnText={'Edit'}
           btnColor={'warning'}
+          isDisabled={isLoadingPortfolioData}
           openModalFunc={openPfEditModal}
         />
       </td>
@@ -156,6 +157,7 @@ const PortfolioItem = ({
           btnType={'button'}
           btnText={'Delete'}
           btnColor={'danger'}
+          isDisabled={isLoadingPortfolioData}
           openModalFunc={openDeleteConfirmModal}
         />
       </td>

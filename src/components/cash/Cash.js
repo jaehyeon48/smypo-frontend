@@ -153,6 +153,7 @@ const Cash = ({
                         setFormData={setFormData}
                         openMemoModal={openMemoModal}
                         openEditCashModal={openEditCashModal}
+                        isLoadingPortfolioData={isLoadingPortfolioData}
                       />
                     ))}
                   </tbody>

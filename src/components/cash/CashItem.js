@@ -17,6 +17,7 @@ const CashItem = ({
   setFormData,
   openMemoModal,
   openEditCashModal,
+  isLoadingPortfolioData,
   deleteCash,
   defaultPortfolio,
   showAlert
@@ -65,6 +66,7 @@ const CashItem = ({
           btnType={'button'}
           btnText={'Edit'}
           btnColor={'warning'}
+          isDisabled={isLoadingPortfolioData}
           openModalFunc={handleOpenEditCashModal}
         />
       </td>
@@ -73,6 +75,7 @@ const CashItem = ({
           btnType={'button'}
           btnText={'Delete'}
           btnColor={'danger'}
+          isDisabled={isLoadingPortfolioData}
           openModalFunc={openConfirmModal}
         />
       </td>
