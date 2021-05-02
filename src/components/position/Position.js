@@ -202,6 +202,7 @@ const Position = ({
                     <th className="stock-group-item__amount-header">price</th>
                     <th className="stock-group-item__quantity-header">Quantity</th>
                     <th className="stock-group-item__date-header">Date</th>
+                    <th className="stock-group-item__memo-header">Memo</th>
                     <th></th>
                     <th></th>
                   </tr>

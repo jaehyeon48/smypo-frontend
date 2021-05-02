@@ -209,6 +209,25 @@
   min-width: 135px;
 }
 
+.stock-group-item__memo-header {
+  min-width: 70px;
+}
+
+.stock-group-item-memo {
+  & > svg {
+    width: 22px;
+    height: 22px;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  & > svg:hover {
+    color: #66ccb5;
+    transform: translateY(-4px);
+  }
+}
+
 .stock-group-item > .stock-group-item-edit {
   width: 80px;
   padding-right: 0.7em;

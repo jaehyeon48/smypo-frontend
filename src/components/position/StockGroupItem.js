@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '../button/Button';
+import NoteIcon from '../icons/NoteIcon';
 
 const StockGroupItem = ({
   stockId,
@@ -38,6 +39,9 @@ const StockGroupItem = ({
         <td className="stock-group-item-price">{price}</td>
         <td className="stock-group-item-quantity">{quantity}</td>
         <td className="stock-group-item-date">{transactionDate.slice(2)}</td>
+        <td className="stock-group-item-memo">
+          <NoteIcon />
+        </td>
         <td className="stock-group-item-edit">
           <Button
             btnType={'button'}
