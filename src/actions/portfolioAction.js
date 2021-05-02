@@ -122,8 +122,6 @@ export const createPortfolio = (portfolioName, privacy) => async (dispatch) => {
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio`, reqBody, config);
 
     dispatch({ type: CREATE_PORTFOLIO });
-    dispatch(loadPortfolios());
-    dispatch(getDefaultPortfolio());
   } catch (error) {
     console.error(error);
     dispatch({ type: PORTFOLIO_CREATE_ERROR });
