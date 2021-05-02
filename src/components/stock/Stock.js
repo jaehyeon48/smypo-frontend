@@ -6,6 +6,7 @@ import StockItem from './StockItem';
 import HeldStockItem from './HeldStockItem';
 import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import Button from '../button/Button';
+import ModalButton from '../modal/ModalButton';
 import Modal from '../modal/Modal';
 import AddTransaction from './AddTransaction';
 import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
@@ -18,8 +19,6 @@ import {
   getDefaultPortfolio,
   getDefaultPortfolioName
 } from '../../actions/portfolioAction';
-import setBodyOverflowHidden from '../../utils/setBodyOverflowHidden';
-import setBodyOverflowVisible from '../../utils/setBodyOverflowVisible';
 
 const Stock = ({
   stock,
@@ -103,12 +102,10 @@ const Stock = ({
 
   const openAddTransactionModal = () => {
     setIsAddTransactionModalOpen(true);
-    setBodyOverflowHidden();
   }
 
   const closeAddTransactionModal = () => {
     setIsAddTransactionModalOpen(false);
-    setBodyOverflowVisible();
   }
 
   const redirectToRealizedStocks = () => {
@@ -121,10 +118,10 @@ const Stock = ({
       {stock && stock.stockStatus !== 'loading' ? (
         <section className="stocks-info-section">
           <div className="stocks-btn-container">
-            <Button
+            <ModalButton
               btnType={'button'}
               btnText={'Add transaction'}
-              onClickFunc={openAddTransactionModal}
+              openModalFunc={openAddTransactionModal}
               isDisabled={portfolio && portfolio.portfolioList.length === 0}
             />
             <Button

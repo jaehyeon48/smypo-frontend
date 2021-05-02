@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
+import ModalButton from '../modal/ModalButton';
 import ConfirmModal from '../modal/ConfirmModal';
 import NoteIcon from '../icons/NoteIcon';
 import { deleteCash } from '../../actions/cashAction';
@@ -57,19 +58,19 @@ const CashItem = ({
         <NoteIcon />
       </td>
       <td className="cash-item-edit">
-        <Button
+        <ModalButton
           btnType={'button'}
           btnText={'Edit'}
           btnColor={'warning'}
-          onClickFunc={handleOpenEditCashModal}
+          openModalFunc={handleOpenEditCashModal}
         />
       </td>
       <td className="cash-item-delete">
-        <Button
+        <ModalButton
           btnType={'button'}
           btnText={'Delete'}
           btnColor={'danger'}
-          onClickFunc={openConfirmModal}
+          openModalFunc={openConfirmModal}
         />
       </td>
       {isConfirmModalOpen && (

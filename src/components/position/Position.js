@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import StockGroupItem from './StockGroupItem';
-import Button from '../button/Button';
+import ModalButton from '../modal/ModalButton';
 import Modal from '../modal/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
 import StockLogo from '../stock/StockLogo';
@@ -18,8 +18,6 @@ import { getCompanyInfo } from '../../utils/getCompanyInfo';
 import EditTransaction from './EditTransaction';
 import CompanyInfo from './CompanyInfo';
 import StockGroupLoadingSpinner from '../spinners/StockGroupLoadingSpinner';
-import setBodyOverflowVisible from '../../utils/setBodyOverflowVisible';
-import setBodyOverflowHidden from '../../utils/setBodyOverflowHidden';
 
 const Position = ({
   match,
@@ -91,12 +89,10 @@ const Position = ({
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
-    setBodyOverflowHidden();
   }
 
   const closeEditModal = () => {
     setIsEditModalOpen(false);
-    setBodyOverflowVisible();
   }
 
   const openInfoModal = () => {
@@ -182,11 +178,11 @@ const Position = ({
           ({dailyReturnPercent}%)
         </span>
       </div>
-      <Button
+      <ModalButton
         btnType={'button'}
         btnText={'Delete quote'}
         btnColor={'danger'}
-        onClickFunc={openCPConfirmModal}
+        openModalFunc={openCPConfirmModal}
       />
       {stock && stock.stockGroupStatus !== 'loading' ? (
         <div className="stock-group-container">

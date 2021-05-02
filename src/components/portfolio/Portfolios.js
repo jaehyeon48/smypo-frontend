@@ -5,6 +5,7 @@ import PortfolioItem from './PortfolioItem';
 import CurrentPortfolioName from './CurrentPortfolioName';
 import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import Button from '../button/Button';
+import ModalButton from '../modal/ModalButton';
 import Modal from '../modal/Modal';
 import {
   loadPortfolios,
@@ -113,10 +114,10 @@ const Portfolios = ({
         <CurrentPortfolioName />
         <section className="portfolio-list-section">
           <div className="portfolios-btn-container">
-            <Button
+            <ModalButton
               btnType="button"
               btnText="Add New Portfolio"
-              onClickFunc={openAddModal}
+              openModalFunc={openAddModal}
             />
           </div>
           <div className="portfolios-container">

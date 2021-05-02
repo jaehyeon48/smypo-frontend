@@ -6,6 +6,7 @@ import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import Modal from '../modal/Modal';
 import Button from '../button/Button';
+import ModalButton from '../modal/ModalButton';
 import AddCash from './AddCash';
 import EditCash from './EditCash';
 import { getDefaultPortfolio } from '../../actions/portfolioAction';
@@ -103,11 +104,11 @@ const Cash = ({
         </div>
         <section className="cash-list-section">
           <div className="cash-btn-container">
-            <Button
+            <ModalButton
               btnType={'button'}
               btnText={'Add cash transaction'}
-              onClickFunc={openAddCashModal}
               isDisabled={isLoadingPortfolioData}
+              openModalFunc={openAddCashModal}
             />
           </div>
           <div className="cash-items-container">

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '../button/Button';
+import ModalButton from '../modal/ModalButton';
 import NoteIcon from '../icons/NoteIcon';
 
 const StockGroupItem = ({
@@ -43,19 +43,19 @@ const StockGroupItem = ({
           <NoteIcon />
         </td>
         <td className="stock-group-item-edit">
-          <Button
+          <ModalButton
             btnType={'button'}
             btnText={'Edit'}
             btnColor={'warning'}
-            onClickFunc={handleOpenEditModal}
+            openModalFunc={handleOpenEditModal}
           />
         </td>
         <td className="stock-group-item-delete">
-          <Button
+          <ModalButton
             btnType={'button'}
             btnText={'Delete'}
             btnColor={'danger'}
-            onClickFunc={handleOpenConfirmModal}
+            openModalFunc={handleOpenConfirmModal}
           />
         </td>
       </tr>
