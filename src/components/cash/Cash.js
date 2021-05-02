@@ -123,8 +123,9 @@ const Cash = ({
                       <th className="cash-item__type-header">Type</th>
                       <th className="cash-item__amount-header">Amount</th>
                       <th className="cash-item__date-header">Date</th>
-                      <th></th>
-                      <th></th>
+                      <th className="cash-item__memo-header">Memo</th>
+                      <th></th> {/* table header for edit button*/}
+                      <th></th> {/* table header for delete button*/}
                     </tr>
                   </thead>
                   <tbody>

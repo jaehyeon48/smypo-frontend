@@ -238,6 +238,25 @@
   min-width: 135px;
 }
 
+.cash-item__memo-header {
+  min-width: 70px;
+}
+
+.cash-item > .cash-item-note {
+  & > svg {
+    width: 22px;
+    height: 22px;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  & > svg:hover {
+    color: #66ccb5;
+    transform: translateY(-4px);
+  }
+}
+
 .cash-item > .cash-item-edit {
   width: 80px;
   padding: 0.5em 1.2em 0.5em 0;

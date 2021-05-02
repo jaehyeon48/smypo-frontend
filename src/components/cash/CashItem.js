@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Button from '../button/Button';
 import ConfirmModal from '../modal/ConfirmModal';
+import NoteIcon from '../icons/NoteIcon';
 import { deleteCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -52,6 +53,9 @@ const CashItem = ({
       <td className="cash-item-type">{transactionType}</td>
       <td className="cash-item-amount">{amount}</td>
       <td className="cash-item-date">{transactionDate.slice(2)}</td>
+      <td className="cash-item-note">
+        <NoteIcon />
+      </td>
       <td className="cash-item-edit">
         <Button
           btnType={'button'}
