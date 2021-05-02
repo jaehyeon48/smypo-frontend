@@ -17,7 +17,7 @@ const EditCash = ({
   editCash,
   showAlert
 }) => {
-  const { amount, transactionType, transactionDate } = formData;
+  const { amount, cashMemo, transactionType, transactionDate } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -29,7 +29,10 @@ const EditCash = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const addCashResult = await editCash(formData);
-    if (addCashResult !== 0) {
+    if (addCashResult === 0) {
+      showAlert('Successfully modified the cash transaction.', 'success');
+      closeEditCashModal();
+    } else {
       showAlert('Something went wrong. Please try again!', 'fail');
       closeEditCashModal();
     }
@@ -133,6 +136,15 @@ const EditCash = ({
               onChange={handleChange}
               className="add-transaction-date-field"
             />
+          </label>
+          <label className="add-transaction-label">
+            Memo
+          <textarea
+              name="cashMemo"
+              value={cashMemo ?? ''}
+              onChange={handleChange}
+              className="add-transaction-field"
+            ></textarea>
           </label>
           <Button
             btnType={'submit'}

@@ -70,6 +70,11 @@ export default function cashReducer(state = initialState, action) {
       };
     case ADD_CASH:
     case EDIT_CASH:
+      return {
+        ...state,
+        cashListStatus: 'idle',
+        totalCashStatus: 'idle'
+      };
     case DELETE_CASH:
       return {
         ...state,

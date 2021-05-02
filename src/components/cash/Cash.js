@@ -29,6 +29,7 @@ const Cash = ({
   const [formData, setFormData] = useState({
     cashId: '',
     amount: '',
+    cashMemo: '',
     transactionType: 'deposit',
     transactionDate: new Date().toJSON().slice(0, 10)
   });

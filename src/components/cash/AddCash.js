@@ -16,11 +16,12 @@ const AddCash = ({
 }) => {
   const [formData, setFormData] = useState({
     amount: '',
+    cashMemo: '',
     transactionType: 'deposit',
     transactionDate: new Date().toJSON().slice(0, 10)
   });
 
-  const { amount, transactionType, transactionDate } = formData;
+  const { amount, cashMemo, transactionType, transactionDate } = formData;
 
   const handleChange = (e) => {
     setFormData({
@@ -110,6 +111,15 @@ const AddCash = ({
               onChange={handleChange}
               className="add-transaction-date-field"
             />
+          </label>
+          <label className="add-transaction-label">
+            Memo
+          <textarea
+              name="cashMemo"
+              value={cashMemo}
+              onChange={handleChange}
+              className="add-transaction-field"
+            ></textarea>
           </label>
           <Button
             btnType={'submit'}

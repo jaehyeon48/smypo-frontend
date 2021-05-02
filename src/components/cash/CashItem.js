@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { connect } from 'react-redux';
 
 import ModalButton from '../modal/ModalButton';
@@ -43,6 +43,7 @@ const CashItem = ({
       ...formData,
       cashId,
       amount,
+      cashMemo,
       transactionDate,
       transactionType
     });
