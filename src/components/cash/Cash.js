@@ -5,7 +5,6 @@ import CashItem from './CashItem';
 import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import Modal from '../modal/Modal';
-import Button from '../button/Button';
 import ModalButton from '../modal/ModalButton';
 import AddCash from './AddCash';
 import EditCash from './EditCash';
@@ -24,7 +23,9 @@ const Cash = ({
 }) => {
   const [isAddCashModalOpen, setIsAddCashModalOpen] = useState(false);
   const [isEditCashModalOpen, setIsEditCashModalOpen] = useState(false);
+  const [isMemoModalOpen, setIsMemoModalOpen] = useState(false);
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
+  const [memoData, setMemoData] = useState(false);
   const [formData, setFormData] = useState({
     cashId: '',
     amount: '',
@@ -93,6 +94,15 @@ const Cash = ({
     setIsEditCashModalOpen(false);
   }
 
+  const openMemoModal = (memoData) => {
+    document.body.style.overflow = 'hidden';
+    setMemoData(memoData);
+    setIsMemoModalOpen(true);
+  }
+  const closeMemoModal = () => {
+    setIsMemoModalOpen(false);
+  }
+
   return (
     <React.Fragment>
       <main className="cash-main">
@@ -135,10 +145,12 @@ const Cash = ({
                         key={cash.cashId}
                         cashId={cash.cashId}
                         amount={cash.amount}
+                        cashMemo={cash.memo}
                         transactionType={cash.transactionType}
                         transactionDate={new Date(cash.transactionDate).toJSON().slice(0, 10)}
                         formData={formData}
                         setFormData={setFormData}
+                        openMemoModal={openMemoModal}
                         openEditCashModal={openEditCashModal}
                       />
                     ))}
@@ -163,6 +175,14 @@ const Cash = ({
               closeEditCashModal={closeEditCashModal}
               formData={formData}
               setFormData={setFormData} />
+          </Modal>
+        )}
+        {isMemoModalOpen && (
+          <Modal closeModalFunc={closeMemoModal}>
+            <div className="cash-memo-container">
+              <header className="cash-memo-header">Cash Memo</header>
+              <p className="cash-memo-content">{memoData}</p>
+            </div>
           </Modal>
         )}
       </main>

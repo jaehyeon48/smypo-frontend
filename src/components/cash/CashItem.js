@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import Button from '../button/Button';
 import ModalButton from '../modal/ModalButton';
 import ConfirmModal from '../modal/ConfirmModal';
 import NoteIcon from '../icons/NoteIcon';
@@ -11,10 +10,12 @@ import { showAlert } from '../../actions/alertAction';
 const CashItem = ({
   amount,
   cashId,
+  cashMemo,
   transactionType,
   transactionDate,
   formData,
   setFormData,
+  openMemoModal,
   openEditCashModal,
   deleteCash,
   defaultPortfolio,
@@ -37,7 +38,6 @@ const CashItem = ({
     }
   }
 
-
   const handleOpenEditCashModal = () => {
     setFormData({
       ...formData,
@@ -55,7 +55,9 @@ const CashItem = ({
       <td className="cash-item-amount">{amount}</td>
       <td className="cash-item-date">{transactionDate.slice(2)}</td>
       <td className="cash-item-memo">
-        <NoteIcon />
+        <span onClick={() => openMemoModal(cashMemo)}>
+          <NoteIcon />
+        </span>
       </td>
       <td className="cash-item-edit">
         <ModalButton
