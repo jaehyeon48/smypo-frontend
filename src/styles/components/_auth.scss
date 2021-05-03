@@ -8,34 +8,40 @@
   /* title */
   & > h1 {
     margin: 0;
-    font-size: 4rem;
+    font-size: 3.4rem;
     color: $main-color;
 
-    @media screen and (min-width: 601px) and (max-width: 768px) {
-      font-size: 3.6rem;
+    @media screen and (min-width: 451px) and (max-width: 768px) {
+      font-size: 2.8rem;
     }
 
-    @media screen and (min-width: 440px) and (max-width: 600px) {
-      font-size: 3rem;
-    }
-
-    @media screen and (max-width: 439px) {
-      font-size: 2.7rem;
+    @media screen and (max-width: 450px) {
+      font-size: 2.3rem;
     }
   }
 
   /* subtitle */
   & > p {
     margin-left: 0.2em;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
 
-    @media screen and (min-width: 440px) and (max-width: 600px) {
-      font-size: 1.5rem;
+    @media screen and (min-width: 451px) and (max-width: 768px) {
+      font-size: 1.3rem;
     }
 
-    @media screen and (max-width: 439px) {
-      font-size: 1.4rem;
+    @media screen and (max-width: 450px) {
+      font-size: 1.2rem;
     }
+  }
+}
+
+.auth__signup-names {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4em;
+
+  & .auth__form-group {
+    width: 49%;
   }
 }
 
@@ -62,25 +68,27 @@
 .auth__form-group {
   position: relative;
 
-  &:not(:first-child) {
-    margin-top: 4em;
-  }
-
-  @media screen and (max-width: 439px) {
+  @media screen and (max-width: 450px) {
     & > button {
       font-size: 1.1rem;
     }
   }
 }
 
+.auth__form > .auth__form-group + .auth__form-group {
+  margin-top: 4em;
+}
+
 .auth__form-label {
   position: absolute;
   top: -29px;
   left: 3px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 
-  @media screen and (max-width: 439px) {
-    font-size: 1.2rem;
+  @media screen and (max-width: 768px) {
+    top: -26px;
+    left: 2px;
+    font-size: 1.1rem;
   }
 }
 
@@ -89,7 +97,7 @@
 }
 
 .auth__form-field {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 10px;
   width: 100%;
   border: 1px solid $light-gray;
@@ -100,30 +108,28 @@
   &:focus {
     box-shadow: 0 0 0 2px $form-focus;
     background-color: #f4f9ff;
+    border: 1px solid transparent;
   }
 
-  @media screen and (min-width: 601px) and (max-width: 968px) {
-    font-size: 1.4rem;
-  }
-
-  @media screen and (min-width: 440px) and (max-width: 600px) {
-    font-size: 1.3rem;
-  }
-
-  @media screen and (max-width: 439px) {
+  @media screen and (min-width: 451px) and (max-width: 768px) {
     font-size: 1.2rem;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 1.1rem;
   }
 }
 
 .form-field--error {
   box-shadow: 0 0 0 2px $danger;
+  border: 1px solid transparent;
 }
 
 .auth__checkbox-container {
   display: flex;
   align-items: center;
   font-size: 1.1rem;
-  margin-top: 1.5em;
+  margin: 1.5em 0 1em;
 
   & > input[type='checkbox'] {
     margin-left: 0.2em;
@@ -157,4 +163,8 @@
   @media screen and (max-width: 425px) {
     font-size: 1rem;
   }
+}
+
+.auth__dup-err {
+  color: $danger;
 }

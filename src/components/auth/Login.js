@@ -13,26 +13,23 @@ const Login = ({
   showAlert
 }) => {
   const [loginFormData, setLoginFormData] = useState({
-    email: '',
+    userEnteredId: '', // could be username or email
     password: ''
   });
-  const [emailErr, setEmailErr] = useState(false);
+  const [enteredIdError, setEnteredIdError] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [isFirstSubmit, setIsFirstSubmit] = useState(true);
-
   const [showPassword, setShowPassword] = useState(false);
 
-  const { email, password } = loginFormData;
+  const { userEnteredId, password } = loginFormData;
 
   useEffect(() => {
-    if (!isFirstSubmit && !validator.isEmail(email)) {
-      setEmailErr(true);
+    if (!isFirstSubmit) {
+      if (userEnteredId.trim() === '') setEnteredIdError(true);
+      else setEnteredIdError(false);
     }
-    else if (!isFirstSubmit && validator.isEmail(email)) {
-      setEmailErr(false);
-    }
-  }, [isFirstSubmit, emailErr, email]);
+  }, [isFirstSubmit, enteredIdError, userEnteredId]);
 
 
   useEffect(() => {
@@ -46,13 +43,13 @@ const Login = ({
 
 
   useEffect(() => {
-    if (!isFirstSubmit && (emailErr || passwordErr)) {
+    if (!isFirstSubmit && (enteredIdError || passwordErr)) {
       setIsSubmitDisabled(true);
     }
     else {
       setIsSubmitDisabled(false);
     }
-  }, [isFirstSubmit, emailErr, passwordErr]);
+  }, [isFirstSubmit, enteredIdError, passwordErr]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -60,8 +57,8 @@ const Login = ({
     if (isFirstSubmit) {
       setIsFirstSubmit(false);
       setIsSubmitDisabled(true);
-      if (!validator.isEmail(email)) {
-        setEmailErr(true);
+      if (!validator.isEmail(userEnteredId)) {
+        setEnteredIdError(true);
       }
       if (!validator.isLength(password, { min: 4 })) {
         setPasswordErr(true);
@@ -99,13 +96,13 @@ const Login = ({
         <h1>LOGIN</h1>
         <form className="auth__form" onSubmit={handleSubmit}>
           <div className="auth__form-group">
-            <label className={emailErr ? "auth__form-label form-label--error" : "auth__form-label"}>Email</label>
+            <label className={enteredIdError ? "auth__form-label form-label--error" : "auth__form-label"}>Username or email</label>
             <input
               type="text"
-              className={emailErr ? "auth__form-field form-field--error" : "auth__form-field"}
-              name="email"
-              value={email}
-              placeholder="Email"
+              className={enteredIdError ? "auth__form-field form-field--error" : "auth__form-field"}
+              name="userEnteredId"
+              value={userEnteredId}
+              placeholder="Username or email"
               onChange={handleChange}
             />
           </div>
@@ -133,7 +130,7 @@ const Login = ({
           </div>
         </form>
         <div className="auth__footer">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+          New to SMYPO.com? <Link to="/signup">Sign Up</Link>
         </div>
       </main>
     </React.Fragment>

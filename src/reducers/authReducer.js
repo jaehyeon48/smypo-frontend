@@ -37,6 +37,7 @@ export default function authReducer(state = initialState, action) {
         firstName,
         lastName,
         email,
+        username,
         avatar,
         theme,
         lang,
@@ -51,6 +52,7 @@ export default function authReducer(state = initialState, action) {
           firstName,
           lastName,
           email,
+          username,
           avatar,
           lang,
           currency

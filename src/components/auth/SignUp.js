@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 import validator from 'validator';
 
 import Button from '../button/Button';
-
+import {
+  checkUsernameAvailability,
+  checkEmailAvailability
+} from '../../utils/checkingAvailability';
 import { signUp } from '../../actions/authAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -16,18 +19,22 @@ const SignUp = ({
     firstName: '',
     lastName: '',
     email: '',
+    username: '',
     password: ''
   });
   const [firstNameErr, setFirstNameErr] = useState(false);
   const [lastNameErr, setLastNameErr] = useState(false);
+  const [usernameErr, setUsernameErr] = useState(false);
+  const [usernameDupErr, setUsernameDupErr] = useState(false); // Dup for Duplicate
   const [emailErr, setEmailErr] = useState(false);
+  const [emailDupErr, setEmailDupErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [isFirstSubmit, setIsFirstSubmit] = useState(true);
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { firstName, lastName, email, password } = signUpFormData;
+  const { firstName, lastName, email, username, password } = signUpFormData;
 
   useEffect(() => {
     if (!isFirstSubmit && firstName.trim() === '') {
@@ -60,23 +67,42 @@ const SignUp = ({
 
 
   useEffect(() => {
-    if (!isFirstSubmit && !validator.isLength(password, { min: 4 })) {
+    if (!isFirstSubmit && username.trim() === '') {
+      setUsernameErr(true);
+    }
+    else if (!isFirstSubmit && username.trim() !== '') {
+      setUsernameErr(false);
+    }
+  }, [isFirstSubmit, usernameErr, username]);
+
+
+  useEffect(() => {
+    if (!isFirstSubmit && !validator.isLength(password, { min: 8 })) {
       setPasswordErr(true);
     }
-    else if (!isFirstSubmit && validator.isLength(password, { min: 4 })) {
+    else if (!isFirstSubmit && validator.isLength(password, { min: 8 })) {
       setPasswordErr(false);
     }
   }, [isFirstSubmit, passwordErr, password]);
 
-
   useEffect(() => {
-    if (!isFirstSubmit && (firstNameErr || lastNameErr || emailErr || passwordErr)) {
+    if (usernameDupErr || emailDupErr) {
       setIsSubmitDisabled(true);
-    }
-    else {
+    } else {
       setIsSubmitDisabled(false);
     }
-  }, [isFirstSubmit, firstNameErr, lastNameErr, emailErr, passwordErr]);
+  }, [usernameDupErr, emailDupErr]);
+
+  useEffect(() => {
+    if (!isFirstSubmit && (firstNameErr || lastNameErr ||
+      emailErr || usernameErr || passwordErr)) {
+      setIsSubmitDisabled(true);
+    } else {
+      setIsSubmitDisabled(false);
+    }
+  }, [isFirstSubmit, firstNameErr,
+    lastNameErr, emailErr,
+    usernameErr, passwordErr]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -92,6 +118,9 @@ const SignUp = ({
       }
       if (!validator.isEmail(email)) {
         setEmailErr(true);
+      }
+      if (username.trim() === '') {
+        setUsernameErr(true);
       }
       if (!validator.isLength(password, { min: 4 })) {
         setPasswordErr(true);
@@ -122,44 +151,79 @@ const SignUp = ({
     setShowPassword(!showPassword);
   }
 
+  async function handleUsernameAvailability() {
+    const checkRes = await checkUsernameAvailability(username.trim());
+    if (checkRes === 0 || username.trim() === '') { // if the username does not exist
+      setUsernameDupErr(false);
+    } else { // if the username already exists
+      setUsernameDupErr(true);
+    }
+  }
+
+  async function handleEmailAvailability() {
+    const checkRes = await checkEmailAvailability(email.trim());
+    if (checkRes === 0 || email.trim() === '') { // if the email does not exist
+      setEmailDupErr(false);
+    } else { // if the email already exists
+      setEmailDupErr(true);
+    }
+  }
+
   return (
     <React.Fragment>
       <main className="auth__form-container">
         <p>Join SMYPO.com</p>
         <h1>CREATE YOUR ACCOUNT</h1>
         <form className="auth__form" onSubmit={handleSubmit}>
-          <div className="auth__form-group">
-            <label className={firstNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>First Name</label>
-            <input
-              type="text"
-              className={firstNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
-              name="firstName"
-              value={firstName}
-              placeholder="First Name"
-              onChange={handleChange}
-            />
+          <div className="auth__signup-names">
+            <div className="auth__form-group">
+              <label className={firstNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>First Name</label>
+              <input
+                type="text"
+                className={firstNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
+                name="firstName"
+                value={firstName}
+                placeholder="First Name"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="auth__form-group">
+              <label className={lastNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>Last Name</label>
+              <input
+                type="text"
+                className={lastNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
+                name="lastName"
+                value={lastName}
+                placeholder="Last Name"
+                onChange={handleChange}
+              />
+            </div>
           </div>
           <div className="auth__form-group">
-            <label className={lastNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>Last Name</label>
+            <label className={usernameErr || usernameDupErr ? "auth__form-label form-label--error" : "auth__form-label"}>Username</label>
             <input
               type="text"
-              className={lastNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
-              name="lastName"
-              value={lastName}
-              placeholder="Last Name"
+              className={usernameErr || usernameDupErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              name="username"
+              value={username}
+              placeholder="Username"
               onChange={handleChange}
+              onKeyUp={handleUsernameAvailability}
             />
+            {usernameDupErr && <small className="auth__dup-err">This username is taken. Try another.</small>}
           </div>
           <div className="auth__form-group">
-            <label className={emailErr ? "auth__form-label form-label--error" : "auth__form-label"}>Email</label>
+            <label className={emailErr || emailDupErr ? "auth__form-label form-label--error" : "auth__form-label"}>Email</label>
             <input
-              type="text"
-              className={emailErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              type="email"
+              className={emailErr || emailDupErr ? "auth__form-field form-field--error" : "auth__form-field"}
               name="email"
               value={email}
               placeholder="Email"
               onChange={handleChange}
+              onKeyUp={handleEmailAvailability}
             />
+            {emailDupErr && <small className="auth__dup-err">This email is taken. Try another.</small>}
           </div>
           <div className="auth__form-group">
             <label className={passwordErr ? "auth__form-label form-label--error" : "auth__form-label"}>Password</label>

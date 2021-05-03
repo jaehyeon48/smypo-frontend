@@ -16,7 +16,6 @@ export const loadUser = () => async dispatch => {
   dispatch({ type: BEGIN_LOAD_USER });
   try {
     const loadResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth`, { withCredentials: true });
-
     dispatch({
       type: SUCCESS_LOAD_USER,
       payload: loadResponse.data
