@@ -192,12 +192,11 @@
   }
 
   & > .navbar__user-name-mobile {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #10bbc3;
+    font-size: 1.2rem;
 
     @media screen and (max-width: 768px) {
       display: flex;
+      flex-direction: column;
     }
 
     @media screen and (min-width: 769px) {

@@ -125,7 +125,10 @@ const Navbar = ({
         <AvatarImage />
         {isProfileDropdownOpen && (
           <ul className="navbar__profile-dropdown">
-            <li className="navbar__user-name-mobile">{user && user.firstName} {user && user.lastName}</li>
+            <li className="navbar__user-name-mobile">
+              <p className="navbar__user-name-welcome">Welcome!</p>
+              <p className="navbar__user-name-content">{user?.username}</p>
+            </li>
             <li>
               <Link to="/dashboard">
                 <AnalyticsIcon />
