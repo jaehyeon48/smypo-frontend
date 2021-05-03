@@ -132,6 +132,28 @@
   }
 }
 
+@mixin notice-empty-btn-style {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1em auto;
+  padding: 0.4em;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  width: 14em;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: 'Roboto';
+  font-weight: 500;
+  background: #38a86f;
+  color: $white;
+
+  &:hover {
+    background: darken(#38a86f, 5%);
+  }
+}
+
 .dashboard-notice-empty-stocklist {
   margin: 2em auto;
 
@@ -150,20 +172,7 @@
   }
 
   & > a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1em auto;
-    width: 10em;
-    padding: 0.5em;
-    font-size: 1rem;
-    border-radius: 0.3em;
-    border: none;
-    outline: none;
-    box-shadow: 1px 1px 4px $black;
-    text-align: center;
-    background: linear-gradient($main-color, #15a559);
-    color: $white;
+    @include notice-empty-btn-style();
 
     & > svg {
       width: 16px;
@@ -172,15 +181,12 @@
       margin-bottom: 2px;
     }
   }
-
-  & > a:hover {
-    background: darken($main-color, 13%);
-  }
 }
 
 .dashboard-notice-empty-portfolio-list {
   max-width: $max-width;
   margin: 2em auto;
+  min-height: calc(100vh - 92px - 218px); // subtract navbar, footer height
 
   & > p {
     padding: 0.7em;
@@ -193,20 +199,7 @@
   }
 
   & > a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1em auto;
-    width: 11em;
-    padding: 0.5em;
-    font-size: 1rem;
-    border-radius: 0.3em;
-    border: none;
-    outline: none;
-    box-shadow: 1px 1px 4px $black;
-    text-align: center;
-    background: linear-gradient($main-color, #15a559);
-    color: $white;
+    @include notice-empty-btn-style();
 
     & > svg {
       width: 16px;
@@ -214,10 +207,6 @@
       margin-right: 0.4em;
       margin-bottom: 2px;
     }
-  }
-
-  & > a:hover {
-    background: darken($main-color, 13%);
   }
 }
 
