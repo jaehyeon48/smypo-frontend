@@ -209,6 +209,7 @@ const SignUp = ({
               placeholder="Username"
               onChange={handleChange}
               onKeyUp={handleUsernameAvailability}
+              onBlur={handleUsernameAvailability}
             />
             {usernameDupErr && <small className="auth__dup-err">This username is taken. Try another.</small>}
           </div>
@@ -222,6 +223,7 @@ const SignUp = ({
               placeholder="Email"
               onChange={handleChange}
               onKeyUp={handleEmailAvailability}
+              onBlur={handleEmailAvailability}
             />
             {emailDupErr && <small className="auth__dup-err">This email is taken. Try another.</small>}
           </div>
