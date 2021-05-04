@@ -145,8 +145,6 @@ export const editPortfolio = ({
     await axios.put(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, reqBody, config);
 
     dispatch({ type: EDIT_PORTFOLIO });
-    dispatch(loadPortfolios());
-    dispatch(getDefaultPortfolio());
   } catch (error) {
     console.error(error);
     dispatch({ type: PORTFOLIO_EDIT_ERROR });
@@ -158,10 +156,10 @@ export const deletePortfolio = (portfolioId) => async (dispatch) => {
     await axios.delete(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, { withCredentials: true });
 
     dispatch({ type: DELETE_PORTFOLIO });
-    dispatch(loadPortfolios());
-    dispatch(getDefaultPortfolio());
+    return 0;
   } catch (error) {
     dispatch({ type: PORTFOLIO_DELETE_ERROR });
     console.error(error.response);
+    return -1;
   }
 }

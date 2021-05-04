@@ -80,13 +80,18 @@ export default function portfolioReducer(state = initialState, action) {
     case EMPTY_PORTFOLIO_LIST:
       return {
         ...state,
+        defaultPortfolio: null,
+        defaultPortfolioName: '',
         portfolioListStatus: 'succeeded',
         defaultPortfolioStatus: 'succeeded'
       };
     case CREATE_PORTFOLIO:
+    case DELETE_PORTFOLIO:
+    case EDIT_PORTFOLIO:
       return {
         ...state,
-        portfolioListStatus: 'idle'
+        portfolioListStatus: 'idle',
+        defaultPortfolioStatus: 'idle'
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
@@ -94,8 +99,6 @@ export default function portfolioReducer(state = initialState, action) {
     case PORTFOLIO_CREATE_ERROR:
     case PORTFOLIO_EDIT_ERROR:
     case PORTFOLIO_DELETE_ERROR:
-    case EDIT_PORTFOLIO:
-    case DELETE_PORTFOLIO:
     default:
       return state;
   };

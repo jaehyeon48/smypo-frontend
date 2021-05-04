@@ -104,9 +104,14 @@ const PortfolioItem = ({
     }
   }
 
-  const handleDeletePortfolio = () => {
-    deletePortfolio(portfolio.portfolioId);
-    showAlert('The portfolio has been deleted successfully.', 'success');
+  const handleDeletePortfolio = async () => {
+    const deleteRes = await deletePortfolio(portfolio.portfolioId);
+    if (deleteRes === 0) {
+      showAlert('The portfolio has been deleted successfully.', 'success');
+    } else {
+      showAlert('Something wrong happened. Please try again.', 'error');
+    }
+    closeDeleteConfirmModal();
   }
 
   return (

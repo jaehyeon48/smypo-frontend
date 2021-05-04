@@ -38,8 +38,8 @@ const AddPortfolioModal = ({
     }
     else {
       createPortfolio(newPortfolioName, privacy);
-      closeAddModal();
       showAlert('Portfolio was successfully added!', 'success');
+      closeAddModal();
     }
   }
 
