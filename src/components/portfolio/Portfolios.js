@@ -93,14 +93,16 @@ const Portfolios = ({
                       <th></th>
                     </tr>
                   </thead>
-                  {portfolio.portfolioList.map((portfolioItem) => (
-                    <PortfolioItem
-                      key={portfolioItem.portfolioId}
-                      portfolio={portfolioItem}
-                      defaultPortfolio={portfolio.defaultPortfolio}
-                      isLoadingPortfolioData={isLoadingPortfolioData}
-                    />
-                  ))}
+                  <tbody>
+                    {portfolio.portfolioList.map((portfolioItem) => (
+                      <PortfolioItem
+                        key={portfolioItem.portfolioId}
+                        portfolio={portfolioItem}
+                        defaultPortfolio={portfolio.defaultPortfolio}
+                        isLoadingPortfolioData={isLoadingPortfolioData}
+                      />
+                    ))}
+                  </tbody>
                 </table>
               ) : (
                 <div className="notice-empty-portfolio-list">

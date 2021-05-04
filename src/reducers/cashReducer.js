@@ -63,22 +63,13 @@ export default function cashReducer(state = initialState, action) {
     case LOGOUT_FAIL:
       return { ...initialState };
     case SUCCESS_ADD_STOCK:
-      return {
-        ...state,
-        cashListStatus: 'idle',
-        totalCashStatus: 'idle'
-      };
     case ADD_CASH:
     case EDIT_CASH:
-      return {
-        ...state,
-        cashListStatus: 'idle',
-        totalCashStatus: 'idle'
-      };
     case DELETE_CASH:
       return {
         ...state,
-        cashLoading: true
+        cashListStatus: 'idle',
+        totalCashStatus: 'idle'
       };
     case ADD_CASH_ERROR:
     case EDIT_CASH_ERROR:

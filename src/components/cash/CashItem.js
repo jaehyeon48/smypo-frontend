@@ -1,11 +1,6 @@
-import React, { memo, useState } from 'react';
-import { connect } from 'react-redux';
-
+import React from 'react';
 import ModalButton from '../modal/ModalButton';
-import ConfirmModal from '../modal/ConfirmModal';
 import NoteIcon from '../icons/NoteIcon';
-import { deleteCash } from '../../actions/cashAction';
-import { showAlert } from '../../actions/alertAction';
 
 const CashItem = ({
   amount,
@@ -16,29 +11,11 @@ const CashItem = ({
   formData,
   setFormData,
   openMemoModal,
+  openConfirmModal,
+  setCashIdToDelete,
   openEditCashModal,
-  isLoadingPortfolioData,
-  deleteCash,
-  defaultPortfolio,
-  showAlert
+  isLoadingPortfolioData
 }) => {
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-
-  const openConfirmModal = () => {
-    setIsConfirmModalOpen(true);
-  }
-
-  const closeConfirmModal = () => {
-    setIsConfirmModalOpen(false);
-  }
-
-  const handleDeleteCash = async () => {
-    const deleteResult = await deleteCash(cashId, defaultPortfolio);
-    if (deleteResult !== 0) {
-      showAlert('Something went wrong. Please try again!', 'error');
-    }
-  }
-
   const handleOpenEditCashModal = () => {
     setFormData({
       ...formData,
@@ -49,6 +26,11 @@ const CashItem = ({
       transactionType
     });
     openEditCashModal();
+  }
+
+  const handleOpenConfirmModal = () => {
+    setCashIdToDelete(cashId);
+    openConfirmModal();
   }
 
   return (
@@ -76,25 +58,11 @@ const CashItem = ({
           btnText={'Delete'}
           btnColor={'danger'}
           isDisabled={isLoadingPortfolioData}
-          openModalFunc={openConfirmModal}
+          openModalFunc={handleOpenConfirmModal}
         />
       </td>
-      {isConfirmModalOpen && (
-        <ConfirmModal
-          confirmMsg={'Do you really want to delete the transaction record?'}
-          confirmAction={handleDeleteCash}
-          closeModalFunc={closeConfirmModal}
-        />
-      )}
     </tr>
   );
 }
 
-const mapStateToProps = (state) => ({
-  defaultPortfolio: state.portfolio.defaultPortfolio
-});
-
-export default connect(mapStateToProps, {
-  deleteCash,
-  showAlert
-})(CashItem);
+export default CashItem;

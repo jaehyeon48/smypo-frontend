@@ -5,27 +5,34 @@ import CashItem from './CashItem';
 import CurrentPortfolioName from '../portfolio/CurrentPortfolioName';
 import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import Modal from '../modal/Modal';
+import ConfirmModal from '../modal/ConfirmModal';
 import ModalButton from '../modal/ModalButton';
 import AddCash from './AddCash';
 import EditCash from './EditCash';
 import { getDefaultPortfolio } from '../../actions/portfolioAction';
 import {
   getTotalCash,
-  getCash
+  getCash,
+  deleteCash
 } from '../../actions/cashAction';
+import { showAlert } from '../../actions/alertAction';
 
 const Cash = ({
   portfolio,
   stock,
   cash,
   getCash,
-  getTotalCash
+  getTotalCash,
+  deleteCash,
+  showAlert
 }) => {
   const [isAddCashModalOpen, setIsAddCashModalOpen] = useState(false);
   const [isEditCashModalOpen, setIsEditCashModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isMemoModalOpen, setIsMemoModalOpen] = useState(false);
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
   const [memoData, setMemoData] = useState(false);
+  const [cashIdToDelete, setCashIdToDelete] = useState(0);
   const [formData, setFormData] = useState({
     cashId: '',
     amount: '',
@@ -79,6 +86,16 @@ const Cash = ({
     cash.totalCashStatus
   ]);
 
+  const handleDeleteCash = async () => {
+    const deleteResult = await deleteCash(cashIdToDelete, portfolio.defaultPortfolio);
+    if (deleteResult !== 0) {
+      showAlert('Something went wrong. Please try again!', 'error');
+    } else {
+      showAlert('Successfully deleted cash transaction record.', 'success');
+      closeConfirmModal();
+    }
+  }
+
   const openAddCashModal = () => {
     setIsAddCashModalOpen(true);
   }
@@ -93,6 +110,14 @@ const Cash = ({
 
   const closeEditCashModal = () => {
     setIsEditCashModalOpen(false);
+  }
+
+  const openConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+  }
+
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
   }
 
   const openMemoModal = (memoData) => {
@@ -136,8 +161,8 @@ const Cash = ({
                       <th className="cash-item__amount-header">Amount</th>
                       <th className="cash-item__date-header">Date</th>
                       <th className="cash-item__memo-header">Memo</th>
-                      <th></th> {/* table header for edit button*/}
-                      <th></th> {/* table header for delete button*/}
+                      <th></th>{/* table header for edit button*/}
+                      <th></th>{/* table header for delete button*/}
                     </tr>
                   </thead>
                   <tbody>
@@ -152,6 +177,8 @@ const Cash = ({
                         formData={formData}
                         setFormData={setFormData}
                         openMemoModal={openMemoModal}
+                        openConfirmModal={openConfirmModal}
+                        setCashIdToDelete={setCashIdToDelete}
                         openEditCashModal={openEditCashModal}
                         isLoadingPortfolioData={isLoadingPortfolioData}
                       />
@@ -179,6 +206,13 @@ const Cash = ({
               setFormData={setFormData} />
           </Modal>
         )}
+        {isConfirmModalOpen && (
+          <ConfirmModal
+            confirmMsg={'Do you really want to delete the transaction record?'}
+            confirmAction={handleDeleteCash}
+            closeModalFunc={closeConfirmModal}
+          />
+        )}
         {isMemoModalOpen && (
           <Modal closeModalFunc={closeMemoModal}>
             <div className="cash-memo-container">
@@ -200,5 +234,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getCash,
-  getTotalCash
+  getTotalCash,
+  deleteCash,
+  showAlert
 })(Cash);
