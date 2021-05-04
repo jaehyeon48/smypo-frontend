@@ -22,15 +22,15 @@ const Portfolios = ({
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
 
   useEffect(() => {
-    if (portfolio.portfolioListStatus !== 'succeeded' &&
-      portfolio.portfolioListStatus !== 'loading') {
+    if (portfolio.portfolioListStatus === 'initial' &&
+      portfolio.portfolioListStatus === 'idle') {
       loadPortfolios();
     }
   }, [portfolio, loadPortfolios]);
 
   useEffect(() => {
-    if (portfolio.defaultPortfolioStatus !== 'succeeded' &&
-      portfolio.defaultPortfolioStatus !== 'loading') {
+    if (portfolio.defaultPortfolioStatus === 'initial' &&
+      portfolio.defaultPortfolioStatus === 'idle') {
       getDefaultPortfolio();
     }
   }, [portfolio, getDefaultPortfolio]);
