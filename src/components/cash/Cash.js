@@ -120,11 +120,13 @@ const Cash = ({
     setIsConfirmModalOpen(false);
   }
 
-  const openMemoModal = (memoData) => {
+  const openMemoModal = (memoData, isMemoEmpty) => {
+    if (isMemoEmpty) return;
     document.body.style.overflow = 'hidden';
     setMemoData(memoData);
     setIsMemoModalOpen(true);
   }
+
   const closeMemoModal = () => {
     setIsMemoModalOpen(false);
   }

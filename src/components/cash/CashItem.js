@@ -38,8 +38,9 @@ const CashItem = ({
       <td className="cash-item-type">{transactionType}</td>
       <td className="cash-item-amount">{amount}</td>
       <td className="cash-item-date">{transactionDate.slice(2)}</td>
-      <td className="cash-item-memo">
-        <span onClick={() => openMemoModal(cashMemo)}>
+      <td className={cashMemo?.trim() === '' ? "cash-item-memo-empty" : "cash-item-memo"}>
+        {/* <td className="cash-item-memo"> */}
+        <span onClick={() => openMemoModal(cashMemo, cashMemo?.trim() === '')}>
           <NoteIcon />
         </span>
       </td>
