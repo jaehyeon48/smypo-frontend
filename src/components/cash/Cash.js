@@ -31,7 +31,7 @@ const Cash = ({
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isMemoModalOpen, setIsMemoModalOpen] = useState(false);
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
-  const [memoData, setMemoData] = useState(false);
+  const [memoData, setMemoData] = useState('');
   const [cashIdToDelete, setCashIdToDelete] = useState(0);
   const [formData, setFormData] = useState({
     cashId: '',
