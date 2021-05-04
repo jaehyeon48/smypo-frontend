@@ -64,7 +64,7 @@
 }
 
 .button--light-gray {
-  background: linear-gradient($light-gray, #b1b1b1);
+  background: $light-gray;
 
   &:hover {
     background: darken($light-gray, 13%);
