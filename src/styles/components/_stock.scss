@@ -108,15 +108,15 @@
 
   & > p {
     padding: 0.5em;
-    font-size: 2rem;
+    font-size: 1.7rem;
     text-align: center;
 
-    @media screen and (min-width: 426px) and (max-width: 600px) {
-      font-size: 1.5rem;
+    @media screen and (min-width: 451px) and (max-width: 768px) {
+      font-size: 1.3rem;
     }
 
-    @media screen and (max-width: 425px) {
-      font-size: 1.2rem;
+    @media screen and (max-width: 450px) {
+      font-size: 1.1rem;
     }
   }
 }
