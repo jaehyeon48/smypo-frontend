@@ -38,13 +38,21 @@ export const login = (formData) => async (dispatch) => {
   const reqBody = JSON.stringify(formData);
 
   try {
-    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, reqBody, config);
-    dispatch({ type: SUCCESS_LOGIN });
-    dispatch(loadUser());
-    return 0;
+    const loginRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`, reqBody, config);
+    if (loginRes.data[0] === 0) {
+      dispatch({ type: SUCCESS_LOGIN });
+      dispatch(loadUser());
+      return 0;
+    } else if (loginRes.data[0] === -1) { // id(username or email) or pw is invalid
+      dispatch({ type: FAIL_LOGIN });
+      return -1;
+    } else { // server error
+      dispatch({ type: FAIL_LOGIN });
+      return -2;
+    }
   } catch (error) {
     dispatch({ type: FAIL_LOGIN });
-    return -1;
+    return -2;
   }
 }
 

@@ -33,10 +33,10 @@ const Login = ({
 
 
   useEffect(() => {
-    if (!isFirstSubmit && !validator.isLength(password, { min: 4 })) {
+    if (!isFirstSubmit && !validator.isLength(password, { min: 8 })) {
       setPasswordErr(true);
     }
-    else if (!isFirstSubmit && validator.isLength(password, { min: 4 })) {
+    else if (!isFirstSubmit && validator.isLength(password, { min: 8 })) {
       setPasswordErr(false);
     }
   }, [isFirstSubmit, passwordErr, password]);
@@ -60,20 +60,24 @@ const Login = ({
       if (!validator.isEmail(userEnteredId)) {
         setEnteredIdError(true);
       }
-      if (!validator.isLength(password, { min: 4 })) {
+      if (!validator.isLength(password, { min: 8 })) {
         setPasswordErr(true);
       }
       else {
         const loginResult = await login(loginFormData);
-        if (loginResult !== 0) {
-          showAlert(loginResult, 'error');
+        if (loginResult === -1) {
+          showAlert('Incorrect username(or email) or password', 'error');
+        } else if (loginResult === -2) {
+          showAlert('Server Error happened. Please try again.', 'error');
         }
       }
     }
     else {
       const loginResult = await login(loginFormData);
-      if (loginResult !== 0) {
-        showAlert(loginResult, 'error');
+      if (loginResult === -1) {
+        showAlert('Incorrect username(or email) or password', 'error');
+      } else if (loginResult === -2) {
+        showAlert('Server Error happened. Please try again.', 'error');
       }
     }
   }
