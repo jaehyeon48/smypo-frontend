@@ -37,6 +37,8 @@ const Position = ({
   const [isDTConfirmModalOpen, setIsDTConfirmModalOpen] = useState(false);
   // 'CP' for Close Position
   const [isCPConfirmModalOpen, setISCPConfirmModalOpen] = useState(false);
+  const [isMemoModalOpen, setIsMemoModalOpen] = useState(false);
+  const [memoData, setMemoData] = useState('');
   const [toDeleteStockId, setToDeleteStockId] = useState(null);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [currentPriceChg, setCurrentPriceChg] = useState(0);
@@ -46,6 +48,7 @@ const Position = ({
     ticker: TICKER.toUpperCase(),
     price: '',
     quantity: '',
+    stockMemo: '',
     transactionType: '',
     transactionDate: ''
   });
@@ -117,6 +120,17 @@ const Position = ({
 
   const handleCloseDTConfirmModal = () => {
     setIsDTConfirmModalOpen(false);
+  }
+
+  const openMemoModal = (memoData, isMemoEmpty) => {
+    if (isMemoEmpty) return;
+    document.body.style.overflow = 'hidden';
+    setMemoData(memoData);
+    setIsMemoModalOpen(true);
+  }
+
+  const closeMemoModal = () => {
+    setIsMemoModalOpen(false);
   }
 
   const colorPrice = (priceData) => {
@@ -210,10 +224,12 @@ const Position = ({
                       stockId={stockItem.stockId}
                       price={stockItem.price}
                       quantity={stockItem.quantity}
+                      stockMemo={stockItem.memo}
                       transactionType={stockItem.transactionType}
                       transactionDate={new Date(stockItem.transactionDate).toJSON().slice(0, 10)}
                       formData={formData}
                       openEditModal={openEditModal}
+                      openMemoModal={openMemoModal}
                       openConfirmModal={openDTConfirmModal}
                       setFormData={setFormData}
                       setToDeleteStockId={setToDeleteStockId}
@@ -255,6 +271,14 @@ const Position = ({
           confirmAction={handleDeleteTransaction}
           closeModalFunc={handleCloseDTConfirmModal}
         />
+      )}
+      {isMemoModalOpen && (
+        <Modal closeModalFunc={closeMemoModal}>
+          <div className="memo-container">
+            <header className="memo-header">Stock Memo</header>
+            <p className="memo-content">{memoData}</p>
+          </div>
+        </Modal>
       )}
     </main>
   );

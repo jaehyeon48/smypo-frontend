@@ -213,7 +213,7 @@
   min-width: 70px;
 }
 
-.stock-group-item-memo {
+@mixin stock-group-item-memo {
   & svg {
     width: 22px;
     height: 22px;
@@ -225,6 +225,24 @@
   & svg:hover {
     color: #66ccb5;
     transform: translateY(-4px);
+  }
+}
+
+.stock-group-item-memo {
+  @include stock-group-item-memo();
+}
+
+.stock-group-item-memo-empty {
+  @include stock-group-item-memo();
+
+  & svg {
+    color: $light-gray;
+    cursor: not-allowed;
+  }
+
+  & svg:hover {
+    color: $light-gray;
+    transform: none;
   }
 }
 

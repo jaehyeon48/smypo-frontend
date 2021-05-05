@@ -15,11 +15,10 @@ const EditTransaction = ({
   setFormData,
   stockList,
   editStock,
-  closeEditModal,
-  deleteStock
+  closeEditModal
 }) => {
   const [currentAvgCost, setCurrentAvgCost] = useState(0);
-  const { ticker, price, quantity, transactionType, transactionDate } = formData;
+  const { ticker, price, quantity, stockMemo, transactionType, transactionDate } = formData;
 
   useEffect(() => {
     if (stockList && stockList.length > 0 && ticker.trim() !== '' && transactionType === 'sell') {
@@ -40,6 +39,7 @@ const EditTransaction = ({
 
   const handleEditStock = async (e) => {
     e.preventDefault();
+    console.log(formData);
     const editResult = await editStock(formData, currentAvgCost);
     if (editResult === 0) {
       showAlert('Successfully edited a transaction record.', 'success');
@@ -129,6 +129,15 @@ const EditTransaction = ({
               onChange={handleChange}
               className="add-transaction-date-field"
             />
+          </label>
+          <label className="add-transaction-label">
+            Memo
+          <textarea
+              name="stockMemo"
+              value={stockMemo ?? ''}
+              onChange={handleChange}
+              className="add-transaction-field"
+            ></textarea>
           </label>
           <Button
             btnType={'submit'}

@@ -7,10 +7,12 @@ const StockGroupItem = ({
   stockId,
   price,
   quantity,
+  stockMemo,
   transactionType,
   transactionDate,
   formData,
   openEditModal,
+  openMemoModal,
   openConfirmModal,
   setFormData,
   setToDeleteStockId
@@ -21,6 +23,7 @@ const StockGroupItem = ({
       stockId,
       price,
       quantity,
+      stockMemo,
       transactionType,
       transactionDate
     });
@@ -39,8 +42,10 @@ const StockGroupItem = ({
         <td className="stock-group-item-price">{price}</td>
         <td className="stock-group-item-quantity">{quantity}</td>
         <td className="stock-group-item-date">{transactionDate.slice(2)}</td>
-        <td className="stock-group-item-memo">
-          <NoteIcon />
+        <td className={stockMemo?.trim() === '' ? "stock-group-item-memo-empty" : "stock-group-item-memo"}>
+          <span onClick={() => openMemoModal(stockMemo, stockMemo?.trim() === '')}>
+            <NoteIcon />
+          </span>
         </td>
         <td className="stock-group-item-edit">
           <ModalButton

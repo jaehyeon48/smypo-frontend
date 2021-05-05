@@ -100,9 +100,9 @@ export const editStock = (formData, currentAvgCost) => async (dispatch) => {
     },
     withCredentials: true
   };
-  const { stockId, price, quantity, transactionDate, transactionType } = formData;
+  const { stockId, price, quantity, stockMemo, transactionDate, transactionType } = formData;
   try {
-    const reqBody = JSON.stringify({ price, quantity, transactionDate, transactionType, currentAvgCost });
+    const reqBody = JSON.stringify({ price, quantity, stockMemo, transactionDate, transactionType, currentAvgCost });
     await axios.put(`${process.env.REACT_APP_SERVER_URL}/stock/${stockId}`, reqBody, config);
     dispatch({ type: SUCCESS_EDIT_STOCK });
     return 0;

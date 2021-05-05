@@ -22,6 +22,7 @@ const AddTransaction = ({
     ticker: '',
     price: '',
     quantity: '',
+    stockMemo: '',
     referCash: false,
     transactionDate: new Date().toJSON().slice(0, 10),
     transactionType: 'buy'
@@ -32,7 +33,9 @@ const AddTransaction = ({
   const [autoCompleteResults, setAutoCompleteResults] = useState([]);
   const [renderAutoComplete, setRenderAutoComplete] = useState(false);
 
-  const { ticker, price, quantity, referCash, transactionDate, transactionType } = formData;
+  const { ticker, price, quantity, stockMemo,
+    referCash, transactionDate, transactionType
+  } = formData;
 
   useEffect(() => {
     if (autoCompleteResults.length > 0) setRenderAutoComplete(true);
@@ -224,6 +227,15 @@ const AddTransaction = ({
               onChange={handleChange}
               className="add-transaction-date-field"
             />
+          </label>
+          <label className="add-transaction-label">
+            Memo
+          <textarea
+              name="stockMemo"
+              value={stockMemo}
+              onChange={handleChange}
+              className="add-transaction-field"
+            ></textarea>
           </label>
           <Button
             btnType={'submit'}
