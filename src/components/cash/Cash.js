@@ -217,9 +217,9 @@ const Cash = ({
         )}
         {isMemoModalOpen && (
           <Modal closeModalFunc={closeMemoModal}>
-            <div className="cash-memo-container">
-              <header className="cash-memo-header">Cash Memo</header>
-              <p className="cash-memo-content">{memoData}</p>
+            <div className="memo-container">
+              <header className="memo-header">Cash Memo</header>
+              <p className="memo-content">{memoData}</p>
             </div>
           </Modal>
         )}
