@@ -22,14 +22,14 @@ const Portfolios = ({
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
 
   useEffect(() => {
-    if (portfolio.portfolioListStatus === 'initial' &&
+    if (portfolio.portfolioListStatus === 'initial' ||
       portfolio.portfolioListStatus === 'idle') {
       loadPortfolios();
     }
   }, [portfolio, loadPortfolios]);
 
   useEffect(() => {
-    if (portfolio.defaultPortfolioStatus === 'initial' &&
+    if (portfolio.defaultPortfolioStatus === 'initial' ||
       portfolio.defaultPortfolioStatus === 'idle') {
       getDefaultPortfolio();
     }
