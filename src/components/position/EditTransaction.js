@@ -7,6 +7,7 @@ import {
   deleteStock
 } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';
+import { closeModalWrapper } from '../../utils/closeModalWrapper';
 import CartIcon from '../icons/CartIcon';
 import HandHoldingUSDIcon from '../icons/HandHoldingUSDIcon';
 
@@ -15,9 +16,14 @@ const EditTransaction = ({
   setFormData,
   stockList,
   editStock,
+  showAlert,
   closeEditModal
 }) => {
   const [currentAvgCost, setCurrentAvgCost] = useState(0);
+  const [isFirstSubmit, setIsFirstSubmit] = useState(false);
+  const [priceErr, setPriceErr] = useState(false);
+  const [qtyErr, setQtyErr] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
   const { ticker, price, quantity, stockMemo, transactionType, transactionDate } = formData;
 
   useEffect(() => {
@@ -30,6 +36,22 @@ const EditTransaction = ({
     }
   }, [stockList, ticker, transactionType]);
 
+  // form validation
+  useEffect(() => {
+    if (isFirstSubmit) {
+      if (price === '') setPriceErr(true);
+      else setPriceErr(false);
+
+      if (quantity === '') setQtyErr(true);
+      else setQtyErr(false);
+    }
+  }, [isFirstSubmit, ticker, price, quantity]);
+
+  useEffect(() => {
+    if (priceErr || qtyErr) setDisableBtn(true);
+    else setDisableBtn(false);
+  }, [priceErr, qtyErr]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -39,14 +61,18 @@ const EditTransaction = ({
 
   const handleEditStock = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setIsFirstSubmit(true);
+    if (ticker.trim() === '' ||
+      price === '' ||
+      quantity === '') return;
+
     const editResult = await editStock(formData, currentAvgCost);
     if (editResult === 0) {
       showAlert('Successfully edited a transaction record.', 'success');
     } else {
-
+      showAlert('Failed to edit the record. Please try again.', 'error');
     }
-    closeEditModal();
+    closeModalWrapper(closeEditModal);
   }
 
 
@@ -96,7 +122,7 @@ const EditTransaction = ({
               />
             </label>
           </div>
-          <label className="add-transaction-label">
+          <label className={priceErr ? "add-transaction-label--error" : "add-transaction-label"}>
             Price
           <input
               type="number"
@@ -105,19 +131,17 @@ const EditTransaction = ({
               onChange={handleChange}
               min="0"
               step="0.01"
-              className="add-transaction-field"
-              required={true}
+              className={priceErr ? "add-transaction-field--error" : "add-transaction-field"}
             />
           </label>
-          <label className="add-transaction-label">
+          <label className={qtyErr ? "add-transaction-label--error" : "add-transaction-label"}>
             Quantity
           <input
               type="number"
               name="quantity"
               value={quantity}
               onChange={handleChange}
-              className="add-transaction-field"
-              required={true}
+              className={qtyErr ? "add-transaction-field--error" : "add-transaction-field"}
             />
           </label>
           <label className="add-transaction-label">
@@ -143,6 +167,7 @@ const EditTransaction = ({
             btnType={'submit'}
             btnText={'Edit transaction'}
             btnColor={'warning'}
+            isDisabled={disableBtn}
           />
         </form>
       </div>
@@ -156,5 +181,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   editStock,
-  deleteStock
+  deleteStock,
+  showAlert
 })(EditTransaction);

@@ -16,6 +16,7 @@ import {
   deleteCash
 } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
+import { closeModalWrapper } from '../../utils/closeModalWrapper';
 
 const Cash = ({
   portfolio,
@@ -92,7 +93,7 @@ const Cash = ({
       showAlert('Something went wrong. Please try again!', 'error');
     } else {
       showAlert('Successfully deleted cash transaction record.', 'success');
-      closeConfirmModal();
+      closeModalWrapper(closeConfirmModal);
     }
   }
 

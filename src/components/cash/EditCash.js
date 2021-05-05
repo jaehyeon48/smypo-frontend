@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
 import { editCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
+import { closeModalWrapper } from '../../utils/closeModalWrapper';
 import DepositIcon from '../icons/DepositIcon';
 import WithdrawIcon from '../icons/WithdrawIcon';
 import DividendIcon from '../icons/DividendIcon';
@@ -17,7 +18,24 @@ const EditCash = ({
   editCash,
   showAlert
 }) => {
+  const [isFirstSubmit, setIsFirstSubmit] = useState(false);
+  const [amountErr, setAmountErr] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
+
   const { amount, cashMemo, transactionType, transactionDate } = formData;
+
+  // form validation
+  useEffect(() => {
+    if (isFirstSubmit) {
+      if (amount === '') setAmountErr(true);
+      else setAmountErr(false);
+    }
+  }, [isFirstSubmit, amount]);
+
+  useEffect(() => {
+    if (amountErr) setDisableBtn(true);
+    else setDisableBtn(false);
+  }, [amountErr]);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,14 +46,16 @@ const EditCash = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsFirstSubmit(true);
+    if (amount === '') return;
+
     const addCashResult = await editCash(formData);
     if (addCashResult === 0) {
       showAlert('Successfully modified the cash transaction.', 'success');
-      closeEditCashModal();
     } else {
       showAlert('Something went wrong. Please try again!', 'fail');
-      closeEditCashModal();
     }
+    closeModalWrapper(closeEditCashModal);
   }
 
   return (
@@ -114,16 +134,16 @@ const EditCash = ({
             </label>
           </div>
           <div className="ticker-container">
-            <label className="add-transaction-label">
+            <label className={amountErr ? "add-transaction-label--error" : "add-transaction-label"}>
               AMOUNT
-          <input
+            <input
                 type="number"
                 name="amount"
                 min="0"
                 step="0.01"
                 value={amount}
                 onChange={handleChange}
-                className="add-transaction-field"
+                className={amountErr ? "add-transaction-field--error" : "add-transaction-field"}
               />
             </label>
           </div>
@@ -150,6 +170,7 @@ const EditCash = ({
             btnType={'submit'}
             btnText={'Edit cash transaction'}
             btnColor={'warning'}
+            isDisabled={disableBtn}
           />
         </form>
       </div>

@@ -225,10 +225,9 @@
   }
 }
 
-.add-transaction-label {
+@mixin add-transaction-label {
   margin: 1em 0;
   font-size: 1.2rem;
-  color: #4a4a4a;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -249,7 +248,17 @@
   }
 }
 
-.add-transaction-field {
+.add-transaction-label {
+  @include add-transaction-label();
+  color: #4a4a4a;
+}
+
+.add-transaction-label--error {
+  @include add-transaction-label();
+  color: $danger;
+}
+
+@mixin add-transaction-field {
   width: 70%;
   font-size: 1.3rem;
   padding: 0.4em;
@@ -257,7 +266,6 @@
   border-radius: 0.2rem;
   transition: all 100ms ease;
   background-color: #fff;
-  border: 1px solid #aab5d1;
 
   &:focus {
     box-shadow: 0 0 0 1px $form-focus;
@@ -296,6 +304,17 @@
       font-size: 1rem;
     }
   }
+}
+
+.add-transaction-field {
+  @include add-transaction-field();
+  border: 1px solid #aab5d1;
+}
+
+.add-transaction-field--error {
+  @include add-transaction-field();
+  box-shadow: 0 0 0 2px $danger;
+  border: 1px solid transparent;
 }
 
 .add-transaction-date-field {

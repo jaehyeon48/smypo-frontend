@@ -6,7 +6,7 @@ import AutoCompleteResult from './AutoCompleteResult';
 import Button from '../button/Button';
 import CartIcon from '../icons/CartIcon';
 import HandHoldingUSDIcon from '../icons/HandHoldingUSDIcon';
-
+import { closeModalWrapper } from '../../utils/closeModalWrapper';
 import { addStock } from '../../actions/stockAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -32,6 +32,11 @@ const AddTransaction = ({
   const [tickerInput, setTickerInput] = useState('');
   const [autoCompleteResults, setAutoCompleteResults] = useState([]);
   const [renderAutoComplete, setRenderAutoComplete] = useState(false);
+  const [isFirstSubmit, setIsFirstSubmit] = useState(false);
+  const [tickerErr, setTickerErr] = useState(false);
+  const [priceErr, setPriceErr] = useState(false);
+  const [qtyErr, setQtyErr] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
 
   const { ticker, price, quantity, stockMemo,
     referCash, transactionDate, transactionType
@@ -59,6 +64,25 @@ const AddTransaction = ({
     }
   }, [stock.stockList, ticker, transactionType]);
 
+  // form validation
+  useEffect(() => {
+    if (isFirstSubmit) {
+      if (ticker.trim() === '') setTickerErr(true);
+      else setTickerErr(false);
+
+      if (price.trim() === '') setPriceErr(true);
+      else setPriceErr(false);
+
+      if (quantity.trim() === '') setQtyErr(true);
+      else setQtyErr(false);
+    }
+  }, [isFirstSubmit, ticker, price, quantity]);
+
+  useEffect(() => {
+    if (tickerErr || priceErr || qtyErr) setDisableBtn(true);
+    else setDisableBtn(false);
+  }, [tickerErr, priceErr, qtyErr]);
+
 
   const handleTickerInput = (e) => {
     setTickerInput(e.target.value);
@@ -76,6 +100,11 @@ const AddTransaction = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsFirstSubmit(true);
+    if (ticker.trim() === '' ||
+      price.trim() === '' ||
+      quantity.trim() === '') return;
+
     if (referCash && transactionType === 'buy' && cash && cash.totalCash < (price * quantity)) {
       window.alert(
         `Not enough cash to make this purchase. You have ${cash.totalCash} USD in this portfolio but need ${price * quantity} USD`
@@ -85,15 +114,13 @@ const AddTransaction = ({
     else {
       // currentAvgCost is used when the user sells a stock
       const addStockResult = await addStock(portfolio.defaultPortfolio, formData, currentAvgCost);
-
       if (addStockResult === 0) {
-        closeAddTransactionModal();
         showAlert('Successfully added a transaction', 'success');
       }
       else {
         showAlert('Something went wrong. Please try again!', 'error');
-        closeAddTransactionModal();
       }
+      closeModalWrapper(closeAddTransactionModal);
     }
   }
 
@@ -168,7 +195,7 @@ const AddTransaction = ({
             )}
           </div>
           <div className="ticker-container">
-            <label className="add-transaction-label">
+            <label className={tickerErr ? "add-transaction-label--error" : "add-transaction-label"}>
               Ticker
             <div className="auto-complete-field-wrapper">
                 <input
@@ -177,7 +204,7 @@ const AddTransaction = ({
                   value={ticker}
                   onChange={handleChange}
                   onInput={handleTickerInput}
-                  className="add-transaction-field"
+                  className={tickerErr ? "add-transaction-field--error" : "add-transaction-field"}
                 />
                 {renderAutoComplete && <AutoCompleteResult
                   results={autoCompleteResults}
@@ -196,7 +223,7 @@ const AddTransaction = ({
               disabled={true}
             />
           </label>
-          <label className="add-transaction-label">
+          <label className={priceErr ? "add-transaction-label--error" : "add-transaction-label"}>
             Price
           <input
               type="number"
@@ -205,17 +232,17 @@ const AddTransaction = ({
               onChange={handleChange}
               min="0"
               step="0.01"
-              className="add-transaction-field"
+              className={priceErr ? "add-transaction-field--error" : "add-transaction-field"}
             />
           </label>
-          <label className="add-transaction-label">
+          <label className={qtyErr ? "add-transaction-label--error" : "add-transaction-label"}>
             Quantity
           <input
               type="number"
               name="quantity"
               value={quantity}
               onChange={handleChange}
-              className="add-transaction-field"
+              className={priceErr ? "add-transaction-field--error" : "add-transaction-field"}
             />
           </label>
           <label className="add-transaction-label">
@@ -240,6 +267,7 @@ const AddTransaction = ({
           <Button
             btnType={'submit'}
             btnText={'Add transaction'}
+            isDisabled={disableBtn}
           />
         </form>
       </div>

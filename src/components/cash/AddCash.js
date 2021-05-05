@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Button from '../button/Button';
 import { addCash } from '../../actions/cashAction';
 import { showAlert } from '../../actions/alertAction';
+import { closeModalWrapper } from '../../utils/closeModalWrapper';
 import DepositIcon from '../icons/DepositIcon';
 import WithdrawIcon from '../icons/WithdrawIcon';
 import DividendIcon from '../icons/DividendIcon';
@@ -14,14 +15,30 @@ const AddCash = ({
   addCash,
   showAlert
 }) => {
+  const [isFirstSubmit, setIsFirstSubmit] = useState(false);
+  const [amountErr, setAmountErr] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
+
   const [formData, setFormData] = useState({
     amount: '',
     cashMemo: '',
     transactionType: 'deposit',
     transactionDate: new Date().toJSON().slice(0, 10)
   });
-
   const { amount, cashMemo, transactionType, transactionDate } = formData;
+
+  // form validation
+  useEffect(() => {
+    if (isFirstSubmit) {
+      if (amount.trim() === '') setAmountErr(true);
+      else setAmountErr(false);
+    }
+  }, [isFirstSubmit, amount]);
+
+  useEffect(() => {
+    if (amountErr) setDisableBtn(true);
+    else setDisableBtn(false);
+  }, [amountErr]);
 
   const handleChange = (e) => {
     setFormData({
@@ -32,15 +49,16 @@ const AddCash = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsFirstSubmit(true);
+    if (amount.trim() === '') return;
+
     const addCashResult = await addCash(defaultPortfolio, formData);
     if (addCashResult === 0) {
-      closeAddCashModal();
       showAlert('Successfully added a cash record.', 'success');
-    }
-    else {
+    } else {
       showAlert('Something went wrong. Please try again!', 'error');
-      closeAddCashModal();
     }
+    closeModalWrapper(closeAddCashModal);
   }
 
   return (
@@ -90,7 +108,7 @@ const AddCash = ({
               </div>
             </label>
           </div>
-          <label className="add-transaction-label">
+          <label className={amountErr ? "add-transaction-label--error" : "add-transaction-label"}>
             AMOUNT
           <input
               type="number"
@@ -99,7 +117,7 @@ const AddCash = ({
               step="0.01"
               value={amount}
               onChange={handleChange}
-              className="add-transaction-field"
+              className={amountErr ? "add-transaction-field--error" : "add-transaction-field"}
             />
           </label>
           <label className="add-transaction-label">
@@ -124,6 +142,7 @@ const AddCash = ({
           <Button
             btnType={'submit'}
             btnText={'Add transaction'}
+            isDisabled={disableBtn}
           />
         </form>
       </div>

@@ -16,6 +16,7 @@ import { showAlert } from '../../actions/alertAction';
 import { deleteStock } from '../../actions/stockAction';
 import { getCompanyInfo } from '../../utils/getCompanyInfo';
 import EditTransaction from './EditTransaction';
+import { closeModalWrapper } from '../../utils/closeModalWrapper';
 import CompanyInfo from './CompanyInfo';
 import StockGroupLoadingSpinner from '../spinners/StockGroupLoadingSpinner';
 
@@ -142,10 +143,11 @@ const Position = ({
   const handleDeleteQuote = async () => {
     const deleteQuoteRes = await deleteQuote(PORTFOLIO_ID, TICKER);
     if (deleteQuoteRes === 0) {
+      document.body.style.overflow = 'visible';
       getStocks(PORTFOLIO_ID);
       history.push('/stocks');
     } else {
-      closeCPConfirmModal();
+      closeModalWrapper(closeCPConfirmModal);
       showAlert('Something went wrong. Please try again.', 'error');
     }
   }
@@ -155,7 +157,7 @@ const Position = ({
     if (res === 0) {
       getStocks(PORTFOLIO_ID);
       getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
-      handleCloseDTConfirmModal();
+      closeModalWrapper(handleCloseDTConfirmModal);
     }
     else {
       showAlert('error', 'Something went wrong. Please try again.')
