@@ -1,47 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-
 import Modal from '../modal/Modal';
 import Button from '../button/Button';
 import UnLockedLockIcon from '../icons/UnLockedLockIcon';
 import LockedLockIcon from '../icons/LockedLockIcon';
-import { createPortfolio } from '../../actions/portfolioAction';
+
+import { editPortfolio } from '../../actions/portfolioAction';
 import { showAlert } from '../../actions/alertAction';
 
-const AddPortfolioModal = ({
-  closeAddModal,
-  createPortfolio,
+const EditPortfolioModal = ({
+  closeEditModal,
+  origPfId,
+  origPfName,
+  origPfPrivacy,
+  editPortfolio,
   showAlert
 }) => {
-  const [newPortfolioName, setNewPortfolioName] = useState('');
-  const [isNameEmptyErr, setIsNameEmptyErr] = useState(false);
+  const [pfNameToBeEdited, setPfNameToBeEdited] = useState(origPfName);
   const [isPfNameEmpty, setIsPfNameEmpty] = useState(false);
-  const [privacy, setPrivacy] = useState('public');
+  const [isNameEmptyErr, setIsNameEmptyErr] = useState(false);
+  const [privacy, setPrivacy] = useState(origPfPrivacy);
 
   useEffect(() => {
-    if (isNameEmptyErr && newPortfolioName.trim() !== '') {
+    if (isNameEmptyErr && pfNameToBeEdited.trim() !== '') {
       setIsPfNameEmpty(false);
     }
-    else if (isNameEmptyErr && newPortfolioName.trim() === '') {
+    else if (isNameEmptyErr && pfNameToBeEdited.trim() === '') {
       setIsPfNameEmpty(true);
     }
-  }, [newPortfolioName, isNameEmptyErr]);
+  }, [pfNameToBeEdited, isNameEmptyErr]);
 
-  const handleAddPfName = (e) => {
-    setNewPortfolioName(e.target.value);
+  const handleChangePfName = (e) => {
+    setPfNameToBeEdited(e.target.value);
   }
 
-  const handleAddPortfolio = async () => {
+  const handleEditPortfolio = async () => {
     setIsNameEmptyErr(false);
     setIsPfNameEmpty(false);
-    if (newPortfolioName.trim() === '') {
+    if (pfNameToBeEdited.trim() === '') {
       setIsPfNameEmpty(true);
       setIsNameEmptyErr(true);
     }
     else {
-      createPortfolio(newPortfolioName, privacy);
-      showAlert('Portfolio was successfully added!', 'success');
-      closeAddModal();
+      editPortfolio({
+        portfolioId: origPfId,
+        newPortfolioName: pfNameToBeEdited,
+        newPortfolioPrivacy: privacy
+      });
+      closeEditModal();
+      showAlert('The portfolio has been updated successfully.', 'success');
     }
   }
 
@@ -54,17 +61,16 @@ const AddPortfolioModal = ({
   }
 
   return (
-    <Modal closeModalFunc={closeAddModal}>
+    <Modal closeModalFunc={closeEditModal}>
       <div className="portfolio-form">
-        <header className="portfolio-form__header">Create New Portfolio</header>
+        <header className="portfolio-form__header">Edit Portfolio</header>
         <label
           className={`portfolio-form-label${isPfNameEmpty ? '--error' : ''}`}
         >New Portfolio Name
         <input
             type="text"
-            value={newPortfolioName}
-            onChange={handleAddPfName}
-            data-is-empty={newPortfolioName.length === 0}
+            value={pfNameToBeEdited}
+            onChange={handleChangePfName}
             className={`portfolio-form-field${isPfNameEmpty ? '--error' : ''}`}
           />
         </label>
@@ -75,29 +81,30 @@ const AddPortfolioModal = ({
             onClick={privacyToPublic}
           >
             <UnLockedLockIcon />
-            Public
-          </button>
+                Public
+            </button>
           <button
             type="button"
             className={`pf-privacy-btn${privacy === 'private' ? '--checked' : ''}`}
             onClick={privacyToPrivate}
           >
             <LockedLockIcon />
-            Private
+              Private
           </button>
         </div>
         <Button
           btnType={'button'}
-          btnText={'CREATE'}
-          onClickFunc={handleAddPortfolio}
+          btnText={'EDIT'}
+          btnColor={'warning'}
+          onClickFunc={handleEditPortfolio}
           isDisabled={isPfNameEmpty}
         />
       </div>
     </Modal>
-  );
+  )
 }
 
 export default connect(null, {
-  createPortfolio,
+  editPortfolio,
   showAlert
-})(AddPortfolioModal);
+})(EditPortfolioModal);

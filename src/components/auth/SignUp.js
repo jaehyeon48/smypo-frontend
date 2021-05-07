@@ -177,10 +177,10 @@ const SignUp = ({
         <form className="auth__form" onSubmit={handleSubmit}>
           <div className="auth__signup-names">
             <div className="auth__form-group">
-              <label className={firstNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>First Name</label>
+              <label className={`auth__form-label${firstNameErr ? '--error' : ''}`}>First Name</label>
               <input
                 type="text"
-                className={firstNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
+                className={`auth__form-field${firstNameErr ? '--error' : ''}`}
                 name="firstName"
                 value={firstName}
                 placeholder="First Name"
@@ -188,10 +188,10 @@ const SignUp = ({
               />
             </div>
             <div className="auth__form-group">
-              <label className={lastNameErr ? "auth__form-label form-label--error" : "auth__form-label"}>Last Name</label>
+              <label className={`auth__form-label${lastNameErr ? '--error' : ''}`}>Last Name</label>
               <input
                 type="text"
-                className={lastNameErr ? "auth__form-field form-field--error" : "auth__form-field"}
+                className={`auth__form-field${lastNameErr ? '--error' : ''}`}
                 name="lastName"
                 value={lastName}
                 placeholder="Last Name"
@@ -200,10 +200,10 @@ const SignUp = ({
             </div>
           </div>
           <div className="auth__form-group">
-            <label className={usernameErr || usernameDupErr ? "auth__form-label form-label--error" : "auth__form-label"}>Username</label>
+            <label className={`auth__form-label${usernameErr || usernameDupErr ? '--error' : ''}`}>Username</label>
             <input
               type="text"
-              className={usernameErr || usernameDupErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              className={`auth__form-field${usernameErr || usernameDupErr ? '--error' : ''}`}
               name="username"
               value={username}
               placeholder="Username"
@@ -214,10 +214,10 @@ const SignUp = ({
             {usernameDupErr && <small className="auth__dup-err">This username is taken. Try another.</small>}
           </div>
           <div className="auth__form-group">
-            <label className={emailErr || emailDupErr ? "auth__form-label form-label--error" : "auth__form-label"}>Email</label>
+            <label className={`auth__form-label${emailErr || emailDupErr ? '--error' : ''}`}>Email</label>
             <input
               type="email"
-              className={emailErr || emailDupErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              className={`auth__form-field${emailErr || emailDupErr ? '--error' : ''}`}
               name="email"
               value={email}
               placeholder="Email"
@@ -228,10 +228,10 @@ const SignUp = ({
             {emailDupErr && <small className="auth__dup-err">This email is taken. Try another.</small>}
           </div>
           <div className="auth__form-group">
-            <label className={passwordErr ? "auth__form-label form-label--error" : "auth__form-label"}>Password</label>
+            <label className={`auth__form-label${passwordErr ? '--error' : ''}`}>Password</label>
             <input
               type={showPassword ? "text" : "password"}
-              className={passwordErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              className={`auth__form-field${passwordErr ? '--error' : ''}`}
               name="password"
               value={password}
               placeholder="Password"

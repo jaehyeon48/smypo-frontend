@@ -6,6 +6,7 @@ import CurrentPortfolioName from './CurrentPortfolioName';
 import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import ModalButton from '../modal/ModalButton';
 import AddPortfolioModal from './AddPortfolioModal';
+import EditPortfolioModal from './EditPortfolioModal';
 import {
   loadPortfolios,
   getDefaultPortfolio
@@ -19,7 +20,11 @@ const Portfolios = ({
   getDefaultPortfolio
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
+  const [toBeEditedPfId, setToBeEditedPfId] = useState('');
+  const [toBeEditedPfName, setToBeEditedPfName] = useState('');
+  const [toBeEditedPfPrivacy, setToBeEditedPfPrivacy] = useState('');
 
   useEffect(() => {
     if (portfolio.portfolioListStatus === 'initial' ||
@@ -66,6 +71,17 @@ const Portfolios = ({
     // setNewPortfolioName('');
   }
 
+  const openEditModal = (pfId, pfName, pfPrivacy) => {
+    setToBeEditedPfId(pfId);
+    setToBeEditedPfName(pfName);
+    setToBeEditedPfPrivacy(pfPrivacy);
+    setIsEditModalOpen(true);
+  }
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  }
+
   return (
     <React.Fragment>
       <main className="portfolio-main">
@@ -99,8 +115,9 @@ const Portfolios = ({
                     {portfolio.portfolioList.map((portfolioItem) => (
                       <PortfolioItem
                         key={portfolioItem.portfolioId}
-                        portfolio={portfolioItem}
+                        thisPortfolio={portfolioItem}
                         defaultPortfolio={portfolio.defaultPortfolio}
+                        openEditModal={openEditModal}
                         isLoadingPortfolioData={isLoadingPortfolioData}
                       />
                     ))}
@@ -115,6 +132,12 @@ const Portfolios = ({
         </section>
       </main>
       {isAddModalOpen && <AddPortfolioModal closeAddModal={closeAddModal} />}
+      {isEditModalOpen && <EditPortfolioModal
+        closeEditModal={closeEditModal}
+        origPfId={toBeEditedPfId}
+        origPfName={toBeEditedPfName}
+        origPfPrivacy={toBeEditedPfPrivacy}
+      />}
     </React.Fragment>
   );
 }

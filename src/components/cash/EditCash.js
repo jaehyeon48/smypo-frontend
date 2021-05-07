@@ -134,7 +134,7 @@ const EditCash = ({
             </label>
           </div>
           <div className="ticker-container">
-            <label className={amountErr ? "add-transaction-label--error" : "add-transaction-label"}>
+            <label className={`add-transaction-label${amountErr ? '--error' : ''}`}>
               AMOUNT
             <input
                 type="number"
@@ -143,7 +143,7 @@ const EditCash = ({
                 step="0.01"
                 value={amount}
                 onChange={handleChange}
-                className={amountErr ? "add-transaction-field--error" : "add-transaction-field"}
+                className={`add-transaction-field${amountErr ? '--error' : ''}`}
               />
             </label>
           </div>

@@ -108,7 +108,7 @@ const AddCash = ({
               </div>
             </label>
           </div>
-          <label className={amountErr ? "add-transaction-label--error" : "add-transaction-label"}>
+          <label className={`add-transaction-label${amountErr ? '--error' : ''}`}>
             AMOUNT
           <input
               type="number"
@@ -117,7 +117,7 @@ const AddCash = ({
               step="0.01"
               value={amount}
               onChange={handleChange}
-              className={amountErr ? "add-transaction-field--error" : "add-transaction-field"}
+              className={`add-transaction-field${amountErr ? '--error' : ''}`}
             />
           </label>
           <label className="add-transaction-label">

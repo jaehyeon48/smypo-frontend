@@ -235,11 +235,13 @@
   }
 }
 
-.portfolio-privacy-icon {
-  width: 18px;
-  height: 18px;
-  margin-left: 0.2em;
-  margin-bottom: -0.1em;
+.portfolio-item__privacy-icon {
+  & > svg {
+    width: 18px;
+    height: 18px;
+    margin-left: 0.2em;
+    margin-bottom: -0.1em;
+  }
 }
 
 .portfolio-form {
@@ -281,18 +283,22 @@
   }
 }
 
-.portfolio-form-field {
+.portfolio-form__header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+@mixin portfolio-form-field {
   font-size: 1.3rem;
   padding: 0.3em;
+  margin-top: 0.3em;
   border: 1px solid $light-gray;
   outline: none;
   border-radius: 0.2em;
   transition: all 0.2s ease;
   width: 70vw;
   max-width: $max-width * 0.5;
-  background: transparent;
-  position: relative;
-  z-index: 1;
 
   &:focus {
     box-shadow: 0 0 0 2px $form-focus;
@@ -308,52 +314,33 @@
   }
 }
 
-.portfolio-form-field-error {
+.portfolio-form-field {
+  @include portfolio-form-field();
+}
+
+.portfolio-form-field--error {
+  @include portfolio-form-field();
   box-shadow: 0 0 0 2px $danger;
+  border: 1px solid transparent;
 
   &:focus {
     box-shadow: 0 0 0 2px $danger;
   }
 }
 
-.portfolio-form-label {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  color: darken($light-gray, 13%);
+@mixin portfolio-form-label {
+  display: flex;
+  flex-direction: column;
   font-size: 1.3rem;
-  z-index: 0;
   transition: all 0.25s ease;
-
-  .portfolio-form-field:focus + &,
-  .portfolio-form-field[data-is-empty='false'] + & {
-    top: -30px;
-    left: 2px;
-    color: darken($form-focus, 12%);
-  }
-
-  @media screen and (min-width: 601px) and (max-width: 768px) {
-    top: 7px;
-    font-size: 1.1rem;
-
-    .portfolio-form-field:focus + &,
-    .portfolio-form-field[data-is-empty='false'] + & {
-      top: -23px;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    font-size: 1rem;
-    top: 7px;
-
-    .portfolio-form-field:focus + &,
-    .portfolio-form-field[data-is-empty='false'] + & {
-      top: -23px;
-    }
-  }
 }
 
-.portfolio-form-field:focus + .portfolio-form-label-error {
+.portfolio-form-label {
+  @include portfolio-form-label();
+}
+
+.portfolio-form-label--error {
+  @include portfolio-form-label();
   color: $danger;
 }
 
@@ -363,7 +350,7 @@
   margin-top: 1em;
 }
 
-.pf-privacy-btn {
+@mixin pf-privacy-btn {
   display: flex;
   align-items: center;
   padding: 0.4em 0.6em;
@@ -396,7 +383,12 @@
   }
 }
 
-.pf-privacy-checked {
+.pf-privacy-btn {
+  @include pf-privacy-btn();
+}
+
+.pf-privacy-btn--checked {
+  @include pf-privacy-btn();
   background-color: #3389ca;
   color: $white;
 }

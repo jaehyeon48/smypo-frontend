@@ -195,7 +195,7 @@ const AddTransaction = ({
             )}
           </div>
           <div className="ticker-container">
-            <label className={tickerErr ? "add-transaction-label--error" : "add-transaction-label"}>
+            <label className={`add-transaction-label${tickerErr ? '--error' : ''}`}>
               Ticker
             <div className="auto-complete-field-wrapper">
                 <input
@@ -204,7 +204,7 @@ const AddTransaction = ({
                   value={ticker}
                   onChange={handleChange}
                   onInput={handleTickerInput}
-                  className={tickerErr ? "add-transaction-field--error" : "add-transaction-field"}
+                  className={`add-transaction-field${tickerErr ? '--error' : ''}`}
                 />
                 {renderAutoComplete && <AutoCompleteResult
                   results={autoCompleteResults}
@@ -223,7 +223,7 @@ const AddTransaction = ({
               disabled={true}
             />
           </label>
-          <label className={priceErr ? "add-transaction-label--error" : "add-transaction-label"}>
+          <label className={`add-transaction-label${priceErr ? '--error' : ''}`}>
             Price
           <input
               type="number"
@@ -232,17 +232,17 @@ const AddTransaction = ({
               onChange={handleChange}
               min="0"
               step="0.01"
-              className={priceErr ? "add-transaction-field--error" : "add-transaction-field"}
+              className={`add-transaction-field${priceErr ? '--error' : ''}`}
             />
           </label>
-          <label className={qtyErr ? "add-transaction-label--error" : "add-transaction-label"}>
+          <label className={`add-transaction-label${qtyErr ? '--error' : ''}`}>
             Quantity
           <input
               type="number"
               name="quantity"
               value={quantity}
               onChange={handleChange}
-              className={priceErr ? "add-transaction-field--error" : "add-transaction-field"}
+              className={`add-transaction-field${qtyErr ? '--error' : ''}`}
             />
           </label>
           <label className="add-transaction-label">

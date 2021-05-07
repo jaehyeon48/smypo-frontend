@@ -16,7 +16,7 @@ const Login = ({
     userEnteredId: '', // could be username or email
     password: ''
   });
-  const [enteredIdError, setEnteredIdError] = useState(false);
+  const [enteredIdErr, setEnteredIdErr] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [isFirstSubmit, setIsFirstSubmit] = useState(true);
@@ -26,10 +26,10 @@ const Login = ({
 
   useEffect(() => {
     if (!isFirstSubmit) {
-      if (userEnteredId.trim() === '') setEnteredIdError(true);
-      else setEnteredIdError(false);
+      if (userEnteredId.trim() === '') setEnteredIdErr(true);
+      else setEnteredIdErr(false);
     }
-  }, [isFirstSubmit, enteredIdError, userEnteredId]);
+  }, [isFirstSubmit, enteredIdErr, userEnteredId]);
 
 
   useEffect(() => {
@@ -43,13 +43,13 @@ const Login = ({
 
 
   useEffect(() => {
-    if (!isFirstSubmit && (enteredIdError || passwordErr)) {
+    if (!isFirstSubmit && (enteredIdErr || passwordErr)) {
       setIsSubmitDisabled(true);
     }
     else {
       setIsSubmitDisabled(false);
     }
-  }, [isFirstSubmit, enteredIdError, passwordErr]);
+  }, [isFirstSubmit, enteredIdErr, passwordErr]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -58,7 +58,7 @@ const Login = ({
       setIsFirstSubmit(false);
       setIsSubmitDisabled(true);
       if (!validator.isEmail(userEnteredId)) {
-        setEnteredIdError(true);
+        setEnteredIdErr(true);
       }
       if (!validator.isLength(password, { min: 8 })) {
         setPasswordErr(true);
@@ -100,10 +100,10 @@ const Login = ({
         <h1>LOGIN</h1>
         <form className="auth__form" onSubmit={handleSubmit}>
           <div className="auth__form-group">
-            <label className={enteredIdError ? "auth__form-label form-label--error" : "auth__form-label"}>Username or email</label>
+            <label className={`auth__form-label${enteredIdErr ? '--error' : ''}`}>Username or email</label>
             <input
               type="text"
-              className={enteredIdError ? "auth__form-field form-field--error" : "auth__form-field"}
+              className={`auth__form-field${enteredIdErr ? '--error' : ''}`}
               name="userEnteredId"
               value={userEnteredId}
               placeholder="Username or email"
@@ -111,10 +111,10 @@ const Login = ({
             />
           </div>
           <div className="auth__form-group">
-            <label className={passwordErr ? "auth__form-label form-label--error" : "auth__form-label"}>Password</label>
+            <label className={`auth__form-label${passwordErr ? '--error' : ''}`}>Password</label>
             <input
               type={showPassword ? "text" : "password"}
-              className={passwordErr ? "auth__form-field form-field--error" : "auth__form-field"}
+              className={`auth__form-field${passwordErr ? '--error' : ''}`}
               name="password"
               value={password}
               placeholder="Password"

@@ -122,7 +122,7 @@ const EditTransaction = ({
               />
             </label>
           </div>
-          <label className={priceErr ? "add-transaction-label--error" : "add-transaction-label"}>
+          <label className={`add-transaction-label${priceErr ? '--error' : ''}`}>
             Price
           <input
               type="number"
@@ -131,17 +131,17 @@ const EditTransaction = ({
               onChange={handleChange}
               min="0"
               step="0.01"
-              className={priceErr ? "add-transaction-field--error" : "add-transaction-field"}
+              className={`add-transaction-field${priceErr ? '--error' : ''}`}
             />
           </label>
-          <label className={qtyErr ? "add-transaction-label--error" : "add-transaction-label"}>
+          <label className={`add-transaction-label${qtyErr ? '--error' : ''}`}>
             Quantity
           <input
               type="number"
               name="quantity"
               value={quantity}
               onChange={handleChange}
-              className={qtyErr ? "add-transaction-field--error" : "add-transaction-field"}
+              className={`add-transaction-field${qtyErr ? '--error' : ''}`}
             />
           </label>
           <label className="add-transaction-label">
