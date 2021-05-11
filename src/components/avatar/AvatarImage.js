@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import defaultAvatar from '../../images/default_avatar.png';
-import './avatarImage.css';
 
-const AVATAR_URL = 'https://tyros.cf/avatars';
+const AVATAR_URL = 'https://www.smypo.com/avatars';
 
 const AvatarImage = ({
   user
