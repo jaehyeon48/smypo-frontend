@@ -164,7 +164,6 @@ const ValueBarChart = ({
                     chartData={chartData}
                     ratioData={ratioData}
                     data={d}
-                    idx={i}
                     barPadding={barPadding}
                     viewWidth={viewWidth}
                     width={width}
@@ -192,7 +191,6 @@ const ValueBarChart = ({
                     chartData={reversedChartData}
                     ratioData={ratioData}
                     data={d}
-                    idx={i}
                     barPadding={barPadding}
                     viewWidth={viewWidth}
                     width={width}
@@ -337,9 +335,8 @@ const Rect = ({
 // 'idx' is used for selecting color
 const Text = ({
   chartData, ratioData,
-  data, idx,
-  viewWidth, barPadding,
-  width, height }) => {
+  data, viewWidth,
+  barPadding, width, height }) => {
   if (viewWidth >= 769) {
     const x = d3.scaleBand()
       .rangeRound([0, width])
