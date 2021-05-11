@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import ConfirmModal from '../modal/ConfirmModal';
 import Button from '../button/Button';
 import ModalButton from '../modal/ModalButton';
 import UnLockedLockIcon from '../icons/UnLockedLockIcon';
@@ -19,10 +18,10 @@ const PortfolioItem = ({
   defaultPortfolio,
   chooseDefaultPortfolio,
   openEditModal,
+  openConfirmModal,
   deletePortfolio,
   showAlert
 }) => {
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isDefault, setIsDefault] = useState(false);
 
   useEffect(() => {
@@ -32,14 +31,6 @@ const PortfolioItem = ({
       setIsDefault(false);
     }
   }, [thisPortfolio.portfolioId, defaultPortfolio]);
-
-  const openDeleteConfirmModal = () => {
-    setIsConfirmModalOpen(true);
-  }
-
-  const closeDeleteConfirmModal = () => {
-    setIsConfirmModalOpen(false);
-  }
 
   const openEditModalWrapper = () => {
     openEditModal(
@@ -56,16 +47,6 @@ const PortfolioItem = ({
     if (!isDefault) {
       chooseDefaultPortfolio(thisPortfolio.portfolioId);
     }
-  }
-
-  const handleDeletePortfolio = async () => {
-    const deleteRes = await deletePortfolio(thisPortfolio.portfolioId);
-    if (deleteRes === 0) {
-      showAlert('The portfolio has been deleted successfully.', 'success');
-    } else {
-      showAlert('Something wrong happened. Please try again.', 'error');
-    }
-    closeDeleteConfirmModal();
   }
 
   return (
@@ -117,7 +98,7 @@ const PortfolioItem = ({
           btnText={'Delete'}
           btnColor={'danger'}
           isDisabled={isLoadingPortfolioData}
-          openModalFunc={openDeleteConfirmModal}
+          openModalFunc={() => openConfirmModal(thisPortfolio.portfolioId)}
         />
       </td>
       <td className="portfolio-item-detail">
@@ -133,13 +114,7 @@ const PortfolioItem = ({
           btnColor={'primary'}
         />
       </td>
-      {isConfirmModalOpen && (
-        <ConfirmModal
-          confirmMsg={'Do you really want to delete this portfolio?'}
-          confirmAction={handleDeletePortfolio}
-          closeModalFunc={closeDeleteConfirmModal}
-        />
-      )}
+
     </tr>
   );
 }

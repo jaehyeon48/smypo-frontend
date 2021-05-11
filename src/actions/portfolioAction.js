@@ -153,13 +153,13 @@ export const editPortfolio = ({
 
 export const deletePortfolio = (portfolioId) => async (dispatch) => {
   try {
-    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, { withCredentials: true });
-
+    // 'deleteRes' contains newly chosen portfolioId
+    const deleteRes = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, { withCredentials: true });
     dispatch({ type: DELETE_PORTFOLIO });
-    return 0;
+    return [0, deleteRes.data];
   } catch (error) {
     dispatch({ type: PORTFOLIO_DELETE_ERROR });
     console.error(error.response);
-    return -1;
+    return [-1, null];
   }
 }

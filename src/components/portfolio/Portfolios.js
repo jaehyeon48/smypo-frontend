@@ -7,20 +7,29 @@ import PortfolioDataSpinner from '../spinners/PortfolioDataSpinner';
 import ModalButton from '../modal/ModalButton';
 import AddPortfolioModal from './AddPortfolioModal';
 import EditPortfolioModal from './EditPortfolioModal';
+import ConfirmModal from '../modal/ConfirmModal';
 import {
   loadPortfolios,
-  getDefaultPortfolio
+  chooseDefaultPortfolio,
+  getDefaultPortfolio,
+  deletePortfolio
 } from '../../actions/portfolioAction';
+import { showAlert } from '../../actions/alertAction';
 
 const Portfolios = ({
   portfolio,
   stock,
   cash,
   loadPortfolios,
-  getDefaultPortfolio
+  chooseDefaultPortfolio,
+  getDefaultPortfolio,
+  deletePortfolio,
+  showAlert
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [toDeletePortfolioId, setToDeletePortfolioId] = useState(0);
   const [isLoadingPortfolioData, setIsLoadingPortfolioData] = useState(false);
   const [toBeEditedPfId, setToBeEditedPfId] = useState('');
   const [toBeEditedPfName, setToBeEditedPfName] = useState('');
@@ -82,6 +91,29 @@ const Portfolios = ({
     setIsEditModalOpen(false);
   }
 
+  const openDeleteConfirmModal = (portfolioId) => {
+    setToDeletePortfolioId(portfolioId);
+    setIsConfirmModalOpen(true);
+  }
+
+  const closeDeleteConfirmModal = () => {
+    setToDeletePortfolioId(0);
+    setIsConfirmModalOpen(false);
+  }
+
+  const handleDeletePortfolio = async () => {
+    const deleteRes = await deletePortfolio(toDeletePortfolioId);
+    if (deleteRes[0] === 0) {
+      showAlert('The portfolio has been deleted successfully.', 'success');
+      if (deleteRes[1] !== -1) {
+        chooseDefaultPortfolio(deleteRes[1]);
+      }
+    } else {
+      showAlert('Something wrong happened. Please try again.', 'error');
+    }
+    closeDeleteConfirmModal();
+  }
+
   return (
     <React.Fragment>
       <main className="portfolio-main">
@@ -118,6 +150,7 @@ const Portfolios = ({
                         thisPortfolio={portfolioItem}
                         defaultPortfolio={portfolio.defaultPortfolio}
                         openEditModal={openEditModal}
+                        openConfirmModal={openDeleteConfirmModal}
                         isLoadingPortfolioData={isLoadingPortfolioData}
                       />
                     ))}
@@ -138,6 +171,13 @@ const Portfolios = ({
         origPfName={toBeEditedPfName}
         origPfPrivacy={toBeEditedPfPrivacy}
       />}
+      {isConfirmModalOpen && (
+        <ConfirmModal
+          confirmMsg={'Do you really want to delete this portfolio?'}
+          confirmAction={handleDeletePortfolio}
+          closeModalFunc={closeDeleteConfirmModal}
+        />
+      )}
     </React.Fragment>
   );
 }
@@ -150,5 +190,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   loadPortfolios,
-  getDefaultPortfolio
+  chooseDefaultPortfolio,
+  getDefaultPortfolio,
+  deletePortfolio,
+  showAlert
 })(Portfolios);

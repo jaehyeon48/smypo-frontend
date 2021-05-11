@@ -86,12 +86,16 @@ export default function portfolioReducer(state = initialState, action) {
         defaultPortfolioStatus: 'succeeded'
       };
     case CREATE_PORTFOLIO:
-    case DELETE_PORTFOLIO:
     case EDIT_PORTFOLIO:
       return {
         ...state,
         portfolioListStatus: 'idle',
         defaultPortfolioStatus: 'idle'
+      };
+    case DELETE_PORTFOLIO:
+      return {
+        ...state,
+        portfolioListStatus: 'idle'
       };
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:
