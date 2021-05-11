@@ -209,7 +209,6 @@ export const deleteQuote = (portfolioId, ticker) => async (dispatch) => {
 
 async function calculateReturnLogic(stocks, state, dispatch) {
   if (stocks && stocks.length === 0) return [0, 0];
-  const config = { withCredentials: true };
   let calculatedStocks = { ...stocks };
   let totalStuffsToDo = Object.keys(stocks).length;
   let finishedStuffs = 0;
@@ -217,16 +216,24 @@ async function calculateReturnLogic(stocks, state, dispatch) {
     for (const [ticker, stockItem] of Object.entries(stocks)) {
       let stockPriceForDailyReturn = 0;
       let stockPriceForOverallReturn = 0;
-      let priceDataRes;
+      let priceData;
 
       // get realtime price data or closed price data 
       if (state.stock.isMarketOpen) {
-        priceDataRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/realTime/${ticker}`, config);
+        const priceRes = await axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=${process.env.REACT_APP_IEX_API_KEY}`);
+        priceData = {
+          change: priceRes.data.change,
+          price: priceRes.data.iexRealtimePrice
+        }
       } else {
-        priceDataRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/close/${ticker}`, config);
+        const priceRes = await axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=${process.env.REACT_APP_IEX_API_KEY}`);
+        priceData = {
+          change: priceRes.data.change,
+          price: priceRes.data.latestPrice
+        }
       }
-      stockPriceForDailyReturn = priceDataRes.data.change;
-      stockPriceForOverallReturn = priceDataRes.data.price;
+      stockPriceForDailyReturn = priceData.change;
+      stockPriceForOverallReturn = priceData.price;
 
       // calculate daily return and overall return
       const dailyReturnVal = parseFloat((stockPriceForDailyReturn * stockItem.quantity).toFixed(2));
