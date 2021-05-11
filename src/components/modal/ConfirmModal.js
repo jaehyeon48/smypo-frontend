@@ -11,6 +11,12 @@ const ConfirmModal = ({
     document.body.style.overflow = 'visible';
     closeModalFunc();
   }
+
+  const handleConfirmAction = () => {
+    document.body.style.overflow = 'visible';
+    confirmAction();
+  }
+
   return (
     <Modal closeModalFunc={closeModalFunc}>
       <div className="delete-confirm-content">
@@ -31,7 +37,7 @@ const ConfirmModal = ({
             btnType={'button'}
             btnText={'Delete'}
             btnColor={'danger'}
-            onClickFunc={confirmAction}
+            onClickFunc={handleConfirmAction}
           />
         </div>
       </div>
