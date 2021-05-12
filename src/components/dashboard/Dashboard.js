@@ -15,7 +15,7 @@ import { getTotalCash } from '../../actions/cashAction';
 import ChartSolidIcon from '../icons/ChartSolidIcon';
 import ChartRegularIcon from '../icons/ChartRegularIcon';
 import SackDollarIcon from '../icons/SackDollarIcon';
-import ValuePieChart from '../chart/ValuePieChart';
+import ValueBarChart from '../chart/ValueBarChart';
 import SectorPieChart from '../chart/SectorPieChart';
 import HistoryLineChart from '../chart/HistoryLineChart';
 import MainLoadingSpinner from '../spinners/MainLoadingSpinner';
@@ -226,10 +226,14 @@ const Dashboard = ({
                     </div>
                   </div>
                   {stock && Object.values(stock.stockList).length > 0 && (
-                    <div className="dashboard-pie-charts">
-                      <ValuePieChart totalValue={totalValue} />
+                    <React.Fragment>
+                      <ValueBarChart
+                        stockList={stock.stockList}
+                        totalValue={totalValue}
+                        totalCash={cashToDisplay}
+                      />
                       <SectorPieChart />
-                    </div>
+                    </React.Fragment>
                   )}
                   <HistoryLineChart defaultPortfolioId={defaultPortfolio} />
                 </React.Fragment>

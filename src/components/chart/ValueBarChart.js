@@ -115,7 +115,7 @@ const ValueBarChart = ({
 
 
   return (
-    <div className="chart-container bar-chart">
+    <div className="chart-container value-chart">
       <div className="bar-chart-icon">
         <BarChartIcon />
       </div>

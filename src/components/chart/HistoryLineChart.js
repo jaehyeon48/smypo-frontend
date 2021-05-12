@@ -143,10 +143,7 @@ const LineChart = ({
 
       if (viewWidth < 769) {
         svg.selectAll('.x-axis text')
-          .attr('transform', 'translate(-15, 12), rotate(330)');
-      } else if (viewWidth < 450) {
-        svg.selectAll('.x-axis text')
-          .attr('transform', 'translate(-10, 20), rotate(300)');
+          .attr('transform', 'translate(-7, 25), rotate(-90)');
       }
 
       // add y axis
@@ -202,8 +199,12 @@ const LineChart = ({
       </div>
       <h1>Asset History</h1>
       <div className="line-chart-container" ref={lineChartContainerRef}>
-        <svg className="line-chart-svg">
-        </svg>
+        {recordData?.length > 0 ? (
+          <svg className="line-chart-svg">
+          </svg>
+        ) : (
+          <p>History data does not exist.</p>
+        )}
       </div>
     </div>
   );

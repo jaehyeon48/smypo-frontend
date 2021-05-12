@@ -5,6 +5,8 @@
   justify-content: center;
   position: relative;
   margin: 2em;
+  width: 96.3%;
+  max-width: 96.2vw;
   border-radius: $card-border-radius;
   text-align: center;
   background-color: $card-bg-color;
@@ -16,7 +18,13 @@
     font-size: 1.8rem;
   }
 
+  @media screen and (max-width: 768px) {
+    width: 97%;
+  }
+
   @media screen and (max-width: 570px) {
+    height: 34em;
+
     & > h1 {
       margin-top: 2em;
     }
@@ -29,35 +37,74 @@
   }
 }
 
-.dashboard-pie-charts {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+.value-chart {
+  height: 28em;
+}
 
-  & > div {
-    width: 47%;
-  }
+.asset-chart {
+  height: 30em;
 
-  @media screen and (max-width: 1023px) {
-    flex-direction: column;
-    justify-content: initial;
-    align-items: center;
-
-    & > div {
-      width: 97%;
-    }
-  }
-
-  @media screen and (max-width: 699px) {
-    & > div {
-      width: 95%;
-    }
+  @media screen and (max-width: 768px) {
+    height: 33em;
   }
 }
 
-.pie-chart-svg {
-  margin: 1em 0 2em;
-  $svg-size: 360px;
+text {
+  font-family: 'Inter';
+}
+
+@mixin value-chart-axis-mobile {
+  @media screen and (max-width: 450px) {
+    font-size: 0.8rem;
+  }
+}
+
+.value-chart-ticker-axis .tick text {
+  font-weight: 700;
+  font-size: 1rem;
+  @include value-chart-axis-mobile();
+}
+
+.value-chart-ratio-axis .tick text {
+  font-size: 0.9rem;
+  @include value-chart-axis-mobile();
+}
+
+.value-bar-text {
+  font-size: 0.9rem;
+  text-anchor: middle;
+
+  @media screen and (max-width: 450px) {
+    font-size: 0.7rem;
+    text-anchor: start;
+    alignment-baseline: central;
+  }
+}
+
+.sector-chart-contents {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 0.5em 0 1em;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.sector-chart-labels {
+  width: 320px;
+  height: 165px;
+  margin: auto 0;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+}
+
+.sector-chart-svg {
+  $svg-size: 370px;
   width: $svg-size;
   height: $svg-size;
 
@@ -88,6 +135,7 @@
   }
 }
 
+.value-chart-container,
 .line-chart-container {
   width: 99%;
   height: 95%;
@@ -108,15 +156,6 @@
 .y-axis .tick line {
   stroke: $light-gray;
   stroke-opacity: 0.7;
-}
-
-.tick {
-  font-family: 'Inter';
-  font-size: 0.7rem;
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.6rem;
-  }
 }
 
 .line-circle {
@@ -177,26 +216,8 @@
   @include chart-text();
 }
 
-.asset-chart {
-  width: 96.2%;
-  height: 30em;
-
-  @media screen and (max-width: 768px) {
-    width: 97%;
-  }
-
-  @media screen and (max-width: 570px) {
-    height: 34em;
-  }
-
-  @media screen and (max-width: 450px) {
-    & > h1 {
-      font-size: 1.7rem;
-    }
-  }
-}
-
 .pie-chart-icon,
+.bar-chart-icon,
 .line-chart-icon {
   width: 3.7em;
   height: 3.7em;

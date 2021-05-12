@@ -4,107 +4,10 @@ import * as d3 from 'd3';
 
 import PieChartIcon from '../icons/PieChartIcon';
 
-const Arc = ({
-  renderingData,
-  index,
-  createArc,
-  generateChartColor
-}) => {
-  return (
-    <g className="arc">
-      <path
-        className="arc"
-        d={createArc(renderingData)}
-        fill={generateChartColor(index)} />
-    </g>
-  );
-}
-
-const ChartLabel = ({
-  renderingData,
-  outerRadius,
-  totalSectorCount
-}) => {
-  const textRef = useRef(null);
-  const { data, startAngle, endAngle } = renderingData;
-  const { cos, sin, PI } = Math;
-  let r = outerRadius / 2 + outerRadius * 0.26;
-  let a = (startAngle + endAngle) / 2 - PI / 2;
-  const translateX = cos(a) * r;
-  const translateY = sin(a) * r;
-
-  const wrapText = useCallback((text) => {
-    if (text && text.length > 13) {
-      let splittedText = text.split(" ");
-      let lenSplittedText = splittedText.length;
-      if (lenSplittedText > 5) {
-        splittedText = splittedText.slice(0, 5);
-        // set length of 6 including '...' string (but not actually append it)
-        lenSplittedText = 6
-      }
-      let textElems = "";
-      for (let i = 0; i < lenSplittedText; i++) {
-        if (lenSplittedText === 6 && i === lenSplittedText - 2) {
-          textElems += `<tspan x=0 y=${i * 11}>${splittedText[i]}...</tspan>`;
-          break;
-        } else {
-          textElems += `<tspan x=0 y=${i * 11}>${splittedText[i]}</tspan>`;
-        }
-      }
-      if (textRef.current) {
-        textRef.current.innerHTML = textElems;
-      }
-      return "";
-    } else {
-      return text;
-    }
-  }, [textRef]);
-
-  const sectorRatioPos = useCallback((text) => {
-    if (text && text.length > 13) {
-      let splittedText = text.split(" ");
-      if (splittedText.length > 5) {
-        return 42;
-      } else {
-        return (splittedText.length - 1) * 10;
-      }
-    } else {
-      return 0;
-    }
-  }, []);
-
-  return (
-    <React.Fragment>
-      <text
-        className="chart-text-sector"
-        transform={textRef.current && totalSectorCount === 1 ?
-          `translate(${translateX} ${translateY - (textRef.current.childElementCount + 1) * 10})` :
-          `translate(${translateX} ${translateY})`}
-        textAnchor="middle"
-        alignmentBaseline="middle"
-        ref={textRef}
-      >
-        {wrapText(data.sector)}
-      </text>
-      <text
-        className="chart-text-ratio"
-        textAnchor="middle"
-        alignmentBaseline="middle"
-        transform={textRef.current && totalSectorCount === 1 ?
-          `translate(${translateX} ${translateY + (textRef.current.childElementCount + 1) * 1.7})` :
-          `translate(${translateX} ${translateY + 15})`}
-        y={totalSectorCount !== 1 ? sectorRatioPos(data.sector) : undefined}
-      >
-        {parseFloat((parseFloat(data.ratio) * 100).toFixed(3)).toString()}%
-      </text>
-    </React.Fragment>
-  );
-}
-
 const SectorPieChart = ({
   stock
 }) => {
-  const pieChartSvgRef = useRef(null);
+  const sectorChartRef = useRef(null);
   // 'sectorLabels' contains each unique sector names (no duplicates)
   const [sectorLabels, setSectorLabels] = useState([]);
   // 'sectorCount' contains the number of each sectors
@@ -115,13 +18,8 @@ const SectorPieChart = ({
   const [shouldRenderChart, setShouldRenderChart] = useState(false);
 
   function generateChartColor(i) {
-    const colors = ['#4D636F', '#32C08C', '#5BAEDC', '#855AE9', '#E955AA', '#F2C650', '#1DBE50', '#FE857E', '#3489D6', '#C244E1', '#F49B50',];
-    if (i === 0) {
-      return colors[0];
-    }
-    else {
-      return colors[i % 11];
-    }
+    const colors = ['#FE857E', '#F49B50', '#F2C650', '#38CE7F', '#5BAEDC', '#855AE9'];
+    return colors[i];
   }
 
   // calculate each sector's count
@@ -165,17 +63,28 @@ const SectorPieChart = ({
 
   // zip each sector name's with their count
   useEffect(() => {
-    let totalSectorCount = Object.keys(sectorCount).length;
-    if (sectorLabels.length > 0 && totalSectorCount > 0 &&
-      sectorLabels.length === totalSectorCount) {
-      const newChartData = [];
+    let totalSectorCount = Object.values(sectorCount).reduce((accum, curVal) => accum + curVal, 0);
+    const sectorLabelsLen = sectorLabels.length;
+    if (sectorLabelsLen > 0 && totalSectorCount > 0) {
+      let newChartData = [];
       for (const sector of sectorLabels) {
         newChartData.push({
           sector,
-          ratio: totalSectorCount === 1 ? 1 : sectorCount[sector] / totalSectorCount
+          ratio: sectorCount[sector] / totalSectorCount
         });
       }
-      setChartData(newChartData);
+      newChartData.sort((a, b) => b.ratio - a.ratio); // sort by ratio in desc
+      // Except for the top 5, compress the rest into one
+      if (sectorLabelsLen > 5) {
+        let compressed = { sector: 'others' };
+        const sumOtherValues = newChartData.slice(5).reduce((accum, curVal) => accum + curVal.ratio, 0);
+        compressed['ratio'] = sumOtherValues;
+        let compressedNewChartData = newChartData.slice(0, 5);
+        compressedNewChartData.push(compressed);
+        setChartData(compressedNewChartData);
+      } else {
+        setChartData(newChartData);
+      }
     }
   }, [sectorLabels, sectorCount]);
 
@@ -192,10 +101,10 @@ const SectorPieChart = ({
 
   useEffect(() => {
     if (shouldRenderChart) {
-      const svgSize = pieChartSvgRef.current.getBoundingClientRect().width;
+      const svgSize = sectorChartRef.current.getBoundingClientRect().width;
       setOuterRadius(svgSize / 2);
     }
-  }, [shouldRenderChart, pieChartSvgRef]);
+  }, [shouldRenderChart, sectorChartRef]);
 
   const createPie = d3
     .pie()
@@ -209,44 +118,150 @@ const SectorPieChart = ({
 
   const pieData = useMemo(() => createPie(chartData), [createPie, chartData]);
   return (
-    <div className="chart-container">
+    <div className="chart-container sector-chart">
       <div className="pie-chart-icon">
         <PieChartIcon />
       </div>
       <h1>Distribution By Sector</h1>
       {shouldRenderChart ? (
-        <svg className="pie-chart-svg" ref={pieChartSvgRef}>
-          <g>
-            {pieData && pieData.length > 0 && (
-              pieData.map((data, i) => (
-                <Arc
-                  key={i}
-                  index={i}
-                  renderingData={data}
-                  createArc={createArc}
+        <div className="sector-chart-contents">
+          <svg className="sector-chart-labels">
+            <g>
+              {chartData.map((data, i) => (
+                <ChartTextLabel
+                  key={data.sector}
+                  data={data}
                   generateChartColor={generateChartColor}
-                  outerRadius={outerRadius}
+                  idx={i}
                 />
-              ))
-            )}
-          </g>
-          <g>
-            {pieData && pieData.length > 0 && (
-              pieData.map((data, i) => (
-                <ChartLabel
-                  key={i}
-                  renderingData={data}
-                  outerRadius={outerRadius}
-                  totalSectorCount={Object.keys(sectorCount).length}
-                />
-              ))
-            )}
-          </g>
-        </svg>
+              ))}
+            </g>
+          </svg>
+          <svg className="sector-chart-svg" ref={sectorChartRef}>
+            <g>
+              {pieData?.length > 0 &&
+                pieData.map((data, i) => (
+                  <Arc
+                    key={i}
+                    index={i}
+                    renderingData={data}
+                    createArc={createArc}
+                    generateChartColor={generateChartColor}
+                    outerRadius={outerRadius}
+                  />
+                ))}
+            </g>
+            <g>
+              {pieData?.length > 0 &&
+                pieData.map((data, i) => (
+                  <ChartRatioLabel
+                    key={i}
+                    renderingData={data}
+                    outerRadius={outerRadius}
+                  />
+                ))}
+            </g>
+          </svg>
+        </div>
       ) : (
-          <p className="chart-loading-notice">loading...</p>
-        )}
+        <p className="chart-loading-notice">loading...</p>
+      )}
     </div>
+  );
+}
+
+const Arc = ({
+  renderingData,
+  index,
+  createArc,
+  generateChartColor
+}) => {
+  return (
+    <g className="arc">
+      <path
+        className="arc"
+        d={createArc(renderingData)}
+        fill={generateChartColor(index)} />
+    </g>
+  );
+}
+
+// 'data' for current data
+const ChartTextLabel = ({ data, idx, generateChartColor }) => {
+  const viewWidth = document.body.offsetWidth;
+
+  const calcTranslateY = (index) => {
+    if (viewWidth >= 769) {
+      return 30 * idx;
+    } else {
+      return 24 * idx;
+    }
+  }
+
+  const calcRectWidth = (index) => {
+    if (viewWidth >= 769) {
+      return 34;
+    } else {
+      return 30;
+    }
+  }
+
+  const calcRectHeight = () => {
+    if (viewWidth >= 769) {
+      return 12;
+    } else {
+      return 10;
+    }
+  }
+
+  const truncateText = (text) => {
+    if (viewWidth >= 769 && text.length > 33) {
+      return text.slice(0, 30) + '...';
+    }
+    return text;
+  }
+
+  return (
+    <g
+      transform={`translate(0, ${calcTranslateY(idx)})`}
+    >
+      <rect
+        fill={generateChartColor(idx)}
+        width={calcRectWidth()}
+        height={calcRectHeight()}
+      ></rect>
+      <text
+        className="sector-chart-label__text"
+        x={calcRectWidth() + 1}
+        y={calcRectHeight()}
+      >
+        {truncateText(data.sector)}
+        <title>{data.sector}</title>
+      </text>
+    </g>
+  );
+}
+
+const ChartRatioLabel = ({
+  renderingData,
+  outerRadius
+}) => {
+  const { data, startAngle, endAngle } = renderingData;
+  const { cos, sin, PI } = Math;
+  let r = outerRadius / 2 + outerRadius * 0.26;
+  let a = (startAngle + endAngle) / 2 - PI / 2;
+  const translateX = cos(a) * r;
+  const translateY = sin(a) * r;
+
+  return (
+    <text
+      className="chart-text-ratio"
+      textAnchor="middle"
+      alignmentBaseline="middle"
+      transform={`translate(${translateX} ${translateY})`}
+    >
+      {(data.ratio * 100).toFixed(2)}%
+    </text>
   );
 }
 
