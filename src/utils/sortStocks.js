@@ -1,4 +1,5 @@
 import axios from 'axios';
+import sectorList from '../sectorList/sectorList';
 
 export const sortStocks = async (stocksList) => {
   if (stocksList && stocksList.length === 0) return {};
@@ -58,6 +59,10 @@ const organizeGroupedStocks = async (ticker, stockData) => {
 }
 
 const getSectorInfo = async (ticker) => {
+  ticker = ticker.toUpperCase();
+  if (ticker in sectorList && sectorList[ticker] !== '') {
+    return sectorList[ticker];
+  }
   try {
     const response = await axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/company?token=${process.env.REACT_APP_IEX_API_KEY}`);
 
