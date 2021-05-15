@@ -85,6 +85,9 @@ export const addStock = (portfolioId, formData, currentAvgCost) => async (dispat
     const reqBody = JSON.stringify({ portfolioId, ...formData, currentAvgCost });
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/stock`, reqBody, config);
     dispatch({ type: SUCCESS_ADD_STOCK });
+    if (formData.transactionType === 'sell') {
+      dispatch(getRealizedStocks(portfolioId));
+    }
     return 0;
   } catch (error) {
     dispatch({ type: FAIL_ADD_STOCK });
