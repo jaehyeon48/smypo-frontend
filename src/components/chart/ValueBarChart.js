@@ -24,11 +24,16 @@ const ValueBarChart = ({
 
   // set ticker data
   useEffect(() => {
+    let result = [];
     if (totalCash > 0) {
-      setTickers(['cash', ...Object.keys(stockList)]);
-    } else {
-      setTickers([...Object.keys(stockList)]);
+      result.push('cash');
     }
+    for (const [ticker, entry] of Object.entries(stockList)) {
+      if (entry.quantity > 0) {
+        result.push(ticker);
+      }
+    }
+    setTickers(result);
   }, [stockList, totalCash]);
 
   // calculate each stock's (and cash) value ratio
@@ -54,10 +59,8 @@ const ValueBarChart = ({
 
   // reconcile ticker and ratio data, and add a color data
   useEffect(() => {
-    const stockListLen = Object.keys(stockList).length;
     if (tickers.length > 0 && ratioData.length > 0
-      && tickers.length === ratioData.length
-      && (tickers.length === stockListLen || tickers.length === stockListLen + 1)) { // + 1 for 'cash'
+      && tickers.length === ratioData.length) {
       let zipped = [];
       for (let i = 0; i < tickers.length; i++) {
         zipped.push({
