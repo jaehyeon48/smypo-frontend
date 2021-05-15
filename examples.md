@@ -1,73 +1,66 @@
 # Login Page
 
-<figure>
 <img src="./examples/login_page.png" alt="login page example."/>
-<figcaption align="center">Login page</figcaption>
-</figure>
+<p align="center">Login page</p>
 
 # Signup Page
 
-<figure>
 <img src="./examples/signup_page.png" alt="signup page example."/>
-<figcaption align="center">Signup page</figcaption>
-</figure>
+<p align="center">Signup Page</p>
 
 # Dashboard Page
 
-<figure>
 <img src="./examples/dashboard_page_1.png" alt="dashboard page example 1."/>
-<figcaption align="center">Dashboard page 1 - showing returns, distribution by value bar chart</figcaption>
-</figure>
-<figure>
-<br />
+<p align="center">Dashboard page 1 - showing returns, distribution by value bar chart</p>
+<p></p>
+
 <img src="./examples/dashboard_page_2.png" alt="dashboard page example 2."/>
-<figcaption align="center">Dashboard page 2 - showing distribution by sector pie chart</figcaption>
-</figure>
-<br />
+<p align="center">Dashboard page 2 - showing distribution by sector pie chart</p>
+<p></p>
+
 <img src="./examples/dashboard_page_3.png" alt="dashboard page example 3."/>
-<figcaption align="center">Dashboard page 3 - showing asset history line chart</figcaption>
-</figure>
+<p align="center">Dashboard page 3 - showing asset history line chart</p>
+<p></p>
 
 # Stock list Page
 
 <img src="./examples/stocklist_page_1.png" alt="stock list page example 1."/>
-<figcaption align="center">Stock list page 1 - showing current holding stock list</figcaption>
-</figure>
-<br />
+<p align="center">Stock list page 1 - showing current holding stock list</p>
+<p></p>
+
 <img src="./examples/stocklist_page_2.png" alt="stock list page example 2."/>
-<figcaption align="center">Stock list page 2 - showing previously held stock list</figcaption>
-</figure>
-<br />
+<p align="center">Stock list page 2 - showing previously held stock list</p>
+<p></p>
+
 <img src="./examples/add_stock_transaction.png" alt="add stock transaction example."/>
-<figcaption align="center">Stock list page 3 - Add a stock transaction example</figcaption>
-</figure>
-<br />
+<p align="center">Stock list page 3 - Add a stock transaction example</p>
+<p></p>
+
 <img src="./examples/autocomplete.png" alt="autocomplete example."/>
-<figcaption align="center">Stock list page 4 - Auto-complete function of the add a stock transaction example</figcaption>
-</figure>
+<p align="center">Stock list page 4 - Auto-complete function of the add a stock transaction example</p>
+<p></p>
 
 # Realized Stock List Page
 
 <img src="./examples/realized_stocks_page.png" alt="realized stock page example."/>
-<figcaption align="center">Realized stock list page</figcaption>
-</figure>
+<p align="center">Realized stock list page</p>
+<p></p>
 
 # Portfolio List Page
 
 <img src="./examples/portfolio_page.png" alt="portfolio list page example."/>
-<figcaption align="center">Portfolio list page - showing the account's portfolio list</figcaption>
-</figure>
-<br />
+<p align="center">Portfolio list page - showing the account's portfolio list</p>
+<p></p>
+
 <img src="./examples/add_new_portfolio.png" alt="Add a new portfolio example."/>
-<figcaption align="center">Portfolio list page - Add a new portfolio example</figcaption>
-</figure>
+<p align="center">Portfolio list page - Add a new portfolio example</p>
+<p></p>
 
 # Cash List Page
 
 <img src="./examples/cash_page.png" alt="cash page example."/>
-<figcaption align="center">Cash list page</figcaption>
-</figure>
-<br />
+<p align="center">Cash list page - showing add a new cash transaction example</p>
+<p></p>
+
 <img src="./examples/add_cash_transaction.png" alt="add a cash transaction example."/>
-<figcaption align="center">Cash list page - showing add a new cash transaction example</figcaption>
-</figure>
+<p align="center">Realized stock list page</p>
