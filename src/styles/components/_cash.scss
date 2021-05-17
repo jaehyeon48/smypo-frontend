@@ -1,9 +1,6 @@
 .cash-main {
-  display: flex;
-  flex-direction: column;
+  @include main-page();
   margin: 0 auto;
-  min-height: calc(100vh - 155px - 91px);
-  max-width: $max-width;
 
   & > button {
     font-size: 1.4rem;

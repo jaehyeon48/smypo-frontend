@@ -1,7 +1,6 @@
 .stock-main {
-  max-width: $max-width;
+  @include main-page();
   margin: 0 auto 3em;
-  min-height: calc(100vh - 155px - 91px);
 }
 
 .stocks-info-section {
@@ -255,11 +254,8 @@
 
 /* realized info */
 .realized-stock-main {
-  display: flex;
-  flex-direction: column;
+  @include main-page();
   margin: 0 auto;
-  min-height: calc(100vh - 155px - 91px);
-  max-width: $max-width;
 }
 
 .total-realized-value {

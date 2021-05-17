@@ -1,9 +1,6 @@
 .dashboard-main {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  @include main-page();
   max-width: $max-width * 0.9;
-  min-height: calc(100vh - 155px - 91px);
   margin: 0 auto 6em;
 }
 
