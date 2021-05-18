@@ -120,7 +120,7 @@ const Login = ({
               placeholder="Password"
               onChange={handleChange}
             />
-            <small className="auth-form-text">Password must be at least 8 characters long. </small>
+            <small className="auth-form-text">Password must be at least 8 characters long and must contain at least one special character.</small>
           </div>
           <label className="auth__checkbox-container">Show password
             <input type="checkbox" onClick={handleShowPassword} />
