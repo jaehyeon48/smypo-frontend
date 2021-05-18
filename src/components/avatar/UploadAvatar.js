@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import Button from '../button/Button';
 import { uploadAvatar } from '../../actions/userAction';
 import { showAlert } from '../../actions/alertAction';
 import './uploadAvatar.css';
@@ -12,7 +13,7 @@ const UploadAvatar = ({
 }) => {
   const [avatarImage, setAvatarImage] = useState();
   const [previewUrl, setPreviewUrl] = useState();
-  const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
   const filePickerRef = useRef();
 
@@ -34,14 +35,21 @@ const UploadAvatar = ({
     }
     else {
       setIsValid(false);
+      setPreviewUrl('');
     }
   }
 
   const handleUploadAvatar = async () => {
     if (isValid) {
+      if (!avatarImage) {
+        setIsValid(false);
+        return;
+      }
       await uploadAvatar(avatarImage);
-      closeModalFunc(false);
-      showAlert('Avatar was successfully edited!', 'success');
+      closeModalFunc();
+      showAlert('Successfully updated your avatar.', 'success');
+    } else {
+      setIsValid(false);
     }
   }
 
@@ -59,13 +67,19 @@ const UploadAvatar = ({
         onChange={handlePickedImage}
       />
       <div className="image-upload">
-        <div className="image-upload-preview" onClick={handlePickingImage}>
+        <div
+          className={`image-upload-preview${!isValid ? '--error' : ''}`}
+          onClick={handlePickingImage}>
           {previewUrl ? <img src={previewUrl} alt="avatar preview" /> : <p>Click here to choose an image.</p>}
         </div>
-        <button
-          className="btn btn-upload-avatar"
-          onClick={handleUploadAvatar}
-          disabled={!isValid}>EDIT AVATAR</button>
+        {!isValid && <small className="notice-choose-avatar">Please choose an image.</small>}
+        <Button
+          btnType="button"
+          btnColor="warning"
+          btnText="Edit Avatar"
+          onClickFunc={handleUploadAvatar}
+          isDisabled={!isValid}
+        />
       </div>
     </div>
   )

@@ -11,7 +11,7 @@ const AvatarImage = ({
   return (
     <div className="avatar-container">
       <img
-        src={user && user.avatar ? `${AVATAR_URL}/${user.avatar}` : defaultAvatar}
+        src={user && user.avatar ? `${AVATAR_URL}/${user.userId}/${user.avatar}` : defaultAvatar}
         alt="user's avatar"
         className="avatar-image"
       />

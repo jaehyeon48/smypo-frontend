@@ -9,9 +9,13 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
   UPLOAD_AVATAR,
-  AVATAR_ERROR,
+  FAIL_UPLOAD_AVATAR,
+  DELETE_AVATAR,
+  FAIL_DELETE_AVATAR,
   UPDATE_USER,
-  FAIL_UPDATE_USER
+  FAIL_UPDATE_USER,
+  UPDATE_PASSWORD,
+  FAIL_UPDATE_PASSWORD
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -81,7 +85,7 @@ export default function authReducer(state = initialState, action) {
         status: 'failed',
         isAuthenticated: false
       };
-    case AVATAR_ERROR:
+    case FAIL_UPLOAD_AVATAR:
       return {
         ...state,
         status: false,
@@ -94,7 +98,7 @@ export default function authReducer(state = initialState, action) {
         ...initialState,
         status: 'failed',
         error: payload
-      }
+      };
     case UPLOAD_AVATAR:
       return {
         ...state,
@@ -102,9 +106,20 @@ export default function authReducer(state = initialState, action) {
           ...state.user,
           avatar: payload
         }
-      }
+      };
+    case DELETE_AVATAR:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          avatar: ''
+        }
+      };
+    case FAIL_DELETE_AVATAR:
     case UPDATE_USER:
     case FAIL_UPDATE_USER:
+    case UPDATE_PASSWORD:
+    case FAIL_UPDATE_PASSWORD:
     default:
       return state;
   }

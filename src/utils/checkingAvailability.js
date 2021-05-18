@@ -11,7 +11,7 @@ export async function checkUsernameAvailability(username) {
   try {
     const result = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/availability/username`,
       reqBody, config);
-    return result.data;
+    return result.data; // returns 0
   } catch (error) {
     console.error(error);
     return -2;

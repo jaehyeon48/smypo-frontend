@@ -1,0 +1,214 @@
+.profile-main {
+  @include main-page();
+  margin: 3em auto;
+}
+
+.profile-avatar-container {
+  background-color: $avatar-container;
+  border-radius: 4px;
+  padding: 2em 3em;
+  margin-bottom: 1em;
+
+  & .avatar-container {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+  }
+}
+
+.profile-avatar-container__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+@mixin btn-profile-avatar {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+
+  & > svg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.btn-profile-avatar-edit {
+  @include btn-profile-avatar();
+  margin-right: 0.8em;
+
+  &:hover {
+    color: #dc8042;
+  }
+}
+
+.btn-profile-avatar-delete {
+  @include btn-profile-avatar();
+  margin-left: 0.8em;
+
+  &:hover {
+    color: #d03e4b;
+  }
+}
+
+@mixin profile-form {
+  background-color: $avatar-container;
+  border: 1px solid transparent;
+  width: 60vw;
+  padding: 0.8em 1.5em;
+  max-width: $max-width * 0.45;
+
+  @media screen and (max-width: 768px) {
+    width: 83vw;
+  }
+
+  & > header {
+    font-size: 1.4rem;
+    text-align: center;
+    margin-bottom: 2em;
+  }
+
+  & > button {
+    margin-top: 1.5em;
+  }
+}
+
+.profile-form-user-info {
+  @include profile-form();
+}
+
+.profile-form-password {
+  @include profile-form();
+  margin-top: 3.3em;
+}
+
+.title-edit-avatar-modal {
+  font-size: 2rem;
+  text-align: center;
+  margin: 1em;
+}
+
+.profile-form-names {
+  display: flex;
+  justify-content: space-between;
+
+  & > label {
+    width: 49%;
+  }
+}
+
+@mixin profile-form-label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 1em;
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.profile-form-label {
+  @include profile-form-label();
+}
+
+.profile-form-label--error {
+  @include profile-form-label();
+  color: $danger;
+}
+
+.profile-form-field {
+  font-size: 1.1rem;
+  padding: 0.5em;
+  width: 100%;
+  border: 1px solid #cccccc;
+  outline: none;
+  border-radius: 0.15em;
+  transition: all 0.2s ease;
+
+  &:focus {
+    box-shadow: 0 0 0 2px #081ff5;
+    background-color: #f4f9ff;
+    border: 1px solid transparent;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.profile-password-condition {
+  font-size: 0.9rem;
+  margin: 0.5em 0 2em;
+}
+
+.profile-nav {
+  margin: 2em 0;
+}
+
+.btn-profile-nav {
+  cursor: pointer;
+  background: none;
+  outline: none;
+  border: none;
+}
+
+.profile-nav--selected {
+  border-bottom: 1px solid $main-color;
+}
+
+/* Upload Avatar Component*/
+.image-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.edit-avatar-header {
+  font-size: 1.7rem;
+  text-align: center;
+  margin: 1em 0;
+}
+
+@mixin image-upload-preview {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2em;
+  cursor: pointer;
+  border-radius: 50%;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .image-upload-preview {
+      width: 170px;
+      height: 170px;
+    }
+  }
+}
+
+.image-upload-preview {
+  @include image-upload-preview();
+}
+
+.image-upload-preview--error {
+  @include image-upload-preview();
+  border: 1px solid $danger;
+}
+
+.notice-choose-avatar {
+  color: $danger;
+  margin-bottom: 1em;
+}

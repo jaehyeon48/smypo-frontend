@@ -1,136 +1,110 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
+import { deleteAvatar } from '../../actions/userAction';
+import { showAlert } from '../../actions/alertAction';
 import AvatarImage from '../avatar/AvatarImage';
 import Modal from '../modal/Modal';
+import ConfirmModal from '../modal/ConfirmModal';
+import EditIcon from '../icons/EditIcon';
+import DeleteIcon from '../icons/DeleteIcon';
 import UploadAvatar from '../avatar/UploadAvatar';
-import { loadUser } from '../../actions/authAction';
-import { updateProfile } from '../../actions/userAction';
-import './profile.css';
-import { showAlert } from '../../actions/alertAction';
+import ProfileUserInfo from './ProfileUserInfo';
 
 const Profile = ({
-  user,
-  updateProfile,
-  loadUser,
+  deleteAvatar,
   showAlert
 }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [isAvatarEditModalOpen, setIsEditAvatarEditModalOpen] = useState(false);
+  const [isDeleteAvatarModalOpen, setIsDeleteAvatarModalOpen] = useState(false);
+  // indicates which part of the profile page is currently opened
+  const [currentOpenPage, setCurrentOpenPage] = useState('userInfo');
 
-  useEffect(() => {
-    if (user) {
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
+  const openAvatarEditModal = () => {
+    document.body.style.overflow = 'hidden';
+    setIsEditAvatarEditModalOpen(true);
+  }
+
+  const closeAvatarEditModal = () => {
+    document.body.style.overflow = 'visible';
+    setIsEditAvatarEditModalOpen(false);
+  }
+
+  const openDeleteAvatarModal = () => {
+    document.body.style.overflow = 'hidden';
+    setIsDeleteAvatarModalOpen(true);
+  }
+
+  const closeDeleteAvatarModal = () => {
+    setIsDeleteAvatarModalOpen(false);
+  }
+
+  const handleDeleteAvatar = async () => {
+    try {
+      await deleteAvatar();
+      showAlert('Successfully deleted your avatar.', 'success');
+      closeDeleteAvatarModal();
+    } catch (error) {
+      showAlert('Something went wrong. Please try again.', 'error');
     }
-  }, [user]);
-
-  const openAvatarModal = () => {
-    setIsAvatarModalOpen(true);
   }
 
-  const closeAvatarModal = () => {
-    setIsAvatarModalOpen(false);
-  }
-
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  }
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
-  }
-
-  const handleCurrentPWChange = (e) => {
-    setCurrentPassword(e.target.value);
-  }
-
-  const handleNewPWChange = (e) => {
-    setNewPassword(e.target.value);
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const updateProfileResult = await updateProfile({ firstName, lastName, currentPassword, newPassword });
-
-    if (updateProfileResult === 0) {
-      loadUser();
-      showAlert('The profile was successfully edited!', 'success');
-      setCurrentPassword('');
-      setNewPassword('');
-    }
-    else if (updateProfileResult === -1) {
-      showAlert('Current password does not match. Please try again.', 'fail');
-    }
+  const setCurrentPageToUserInfo = () => {
+    setCurrentOpenPage('userInfo');
   }
 
   return (
     <React.Fragment>
-      <div className="profile-container">
-        <div className="profile-side">
-          <div className="profile-avatar-container">
-            <AvatarImage />
+      <main className="profile-main">
+        <div className="profile-avatar-container">
+          <AvatarImage />
+          <div className="profile-avatar-container__actions">
+            <button
+              type="button"
+              className="btn-profile-avatar-edit"
+              onClick={openAvatarEditModal}
+              title="Edit Avatar"
+            >
+              <EditIcon />
+            </button>
+            <button
+              type="button"
+              className="btn-profile-avatar-delete"
+              title="Delete Avatar"
+              onClick={openDeleteAvatarModal}
+            >
+              <DeleteIcon />
+            </button>
           </div>
-          <button className="btn btn-edit-avatar" onClick={openAvatarModal}>EDIT AVATAR</button>
         </div>
-        <div className="profile-user-info">
-          <form className="profile-form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="First Name"
-              name="firstName"
-              value={firstName}
-              onChange={handleFirstNameChange}
-              className="profile-form-field"
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              name="firstName"
-              value={lastName}
-              onChange={handleLastNameChange}
-              className="profile-form-field"
-            />
-            <input
-              type="password"
-              placeholder="Current Password (optional)"
-              name="currentPassword"
-              value={currentPassword}
-              onChange={handleCurrentPWChange}
-              className="profile-form-field"
-            />
-            <input
-              type="password"
-              placeholder="New Password (optional)"
-              name="newPassword"
-              value={newPassword}
-              onChange={handleNewPWChange}
-              className="profile-form-field"
-            />
-            <button type="submit" className="btn btn-edit-profile">EDIT PROFILE</button>
-          </form>
+        <div className="profile-nav">
+          <button
+            type="button"
+            className={`${currentOpenPage === 'userInfo' && 'profile-nav--selected'} btn-profile-nav`}
+            onClick={setCurrentPageToUserInfo}
+          >User Profile
+          </button>
         </div>
-      </div>
-      {isAvatarModalOpen && (
-        <Modal closeModalFunc={closeAvatarModal}>
-          <div className="title-edit-avatar-modal">EDIT YOUR AVATAR!</div>
-          <UploadAvatar closeModalFunc={closeAvatarModal} />
+        {currentOpenPage === 'userInfo' && <ProfileUserInfo />}
+      </main>
+      {isAvatarEditModalOpen && (
+        <Modal closeModalFunc={closeAvatarEditModal}>
+          <header className="edit-avatar-header">Edit Your Avatar</header>
+          <UploadAvatar closeModalFunc={closeAvatarEditModal} />
         </Modal>
+      )}
+      {isDeleteAvatarModalOpen && (
+        <ConfirmModal
+          confirmMsg="Do you really want to delete the avatar?"
+          confirmAction={handleDeleteAvatar}
+          closeModalFunc={closeDeleteAvatarModal}
+        />
       )}
     </React.Fragment>
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user
-})
-
-export default connect(mapStateToProps, {
-  updateProfile,
-  loadUser,
+export default connect(null, {
+  deleteAvatar,
   showAlert
 })(Profile);

@@ -8,6 +8,7 @@ import mainLogo from '../../images/main-logo.png';
 /* Import SVG Icon Components */
 import SignUpIcon from '../icons/SignUpIcon';
 import LoginIcon from '../icons/LoginIcon';
+import UserIcon from '../icons/UserIcon';
 import AnalyticsIcon from '../icons/AnalyticsIcon';
 import ListIcon from '../icons/ListIcon';
 import FolderIcon from '../icons/FolderIcon';
@@ -68,16 +69,16 @@ const Navbar = ({
   }
 
   const closeProfileDropdown = (e) => {
-    if (e.target.classList.contains('navbar__avatar-container') ||
-      e.target.classList.contains('avatar-container') ||
-      e.target.classList.contains('avatar-image')) return;
+    if (e.target?.classList.contains('navbar__avatar-container') ||
+      e.target?.classList.contains('avatar-container') ||
+      e.target?.classList.contains('avatar-image')) return;
     setIsProfileDropdownOpen(false);
   }
 
   const closeMobileNav = (e) => {
-    if (e.target.classList.contains('navbar-menu') ||
-      e.target.classList.contains('navbar__bars-icon') ||
-      e.target.parentNode.classList.contains('navbar__bars-icon')) return;
+    if (e.target?.classList.contains('navbar-menu') ||
+      e.target?.classList.contains('navbar__bars-icon') ||
+      e.target?.parentNode?.classList.contains('navbar__bars-icon')) return;
     setIsMobileNavOpen(false);
   }
 
@@ -128,6 +129,12 @@ const Navbar = ({
             <li className="navbar__user-name-mobile">
               <p className="navbar__user-name-welcome">Welcome!</p>
               <p className="navbar__user-name-content">{user?.username}</p>
+            </li>
+            <li>
+              <Link to="/profile">
+                <UserIcon />
+                <span>Profile</span>
+              </Link>
             </li>
             <li>
               <Link to="/dashboard">
