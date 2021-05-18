@@ -77,10 +77,12 @@ const SignUp = ({
 
 
   useEffect(() => {
-    if (!isFirstSubmit && !validator.isLength(password, { min: 8 })) {
+    if (!isFirstSubmit && (password.match(/[-#!$@%^&*()_+|~=`{}[\]:";'<>?,./]/g) === null
+      || password.length < 8)) {
       setPasswordErr(true);
     }
-    else if (!isFirstSubmit && validator.isLength(password, { min: 8 })) {
+    else if (!isFirstSubmit && password.match(/[-#!$@%^&*()_+|~=`{}[\]:";'<>?,./]/g) !== null
+      && password.length >= 8) {
       setPasswordErr(false);
     }
   }, [isFirstSubmit, passwordErr, password]);
@@ -122,7 +124,8 @@ const SignUp = ({
       if (username.trim() === '') {
         setUsernameErr(true);
       }
-      if (!validator.isLength(password, { min: 4 })) {
+      if (password.match(/[-#!$@%^&*()_+|~=`{}[\]:";'<>?,./]/g) === null
+        || password.length < 8) {
         setPasswordErr(true);
       }
       else {
@@ -237,7 +240,10 @@ const SignUp = ({
               placeholder="Password"
               onChange={handleChange}
             />
-            <small>Password must be at least 8 characters long. </small>
+            <small
+              className={`auth-password-notice${passwordErr ? '--error' : ''}`}
+            >Password must be at least 8 characters long and must contain at least one special character.
+            </small>
           </div>
           <label className="auth__checkbox-container">Show password
             <input type="checkbox" onClick={handleShowPassword} />
