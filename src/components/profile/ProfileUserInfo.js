@@ -81,6 +81,10 @@ const ProfileUserInfo = ({
   }
 
   const handleEditProfileData = async () => {
+    if (initialUsername.match(/.*admin.*/gi) === null && username.match(/.*admin.*/gi) !== null) {
+      setUsernameDupErr(true);
+      return;
+    }
     const updateProfileResult = await updateProfileData(profileFormData, username !== initialUsername);
     if (updateProfileResult === -2) {
       setUsernameDupErr(true);

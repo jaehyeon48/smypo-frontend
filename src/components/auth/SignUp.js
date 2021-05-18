@@ -67,7 +67,7 @@ const SignUp = ({
 
 
   useEffect(() => {
-    if (!isFirstSubmit && username.trim() === '') {
+    if (!isFirstSubmit && (username.trim() === '')) {
       setUsernameErr(true);
     }
     else if (!isFirstSubmit && username.trim() !== '') {
@@ -155,6 +155,10 @@ const SignUp = ({
   }
 
   async function handleUsernameAvailability() {
+    if (username.match(/.*admin.*/gi) !== null) {
+      setUsernameDupErr(true);
+      return;
+    }
     const checkRes = await checkUsernameAvailability(username.trim());
     if (checkRes === 0 || username.trim() === '') { // if the username does not exist
       setUsernameDupErr(false);
