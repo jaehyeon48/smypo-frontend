@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, useHistory, Link } from 'react-router-dom';
+import { withRouter, useHistory, Link, NavLink } from 'react-router-dom';
 
 import AvatarImage from '../avatar/AvatarImage';
 import mainLogo from '../../images/main-logo.png';
@@ -131,40 +131,40 @@ const Navbar = ({
               <p className="navbar__user-name-content">{user?.username}</p>
             </li>
             <li>
-              <Link to="/profile">
+              <NavLink exact to="/profile" activeClassName="nav--selected">
                 <UserIcon />
                 <span>Profile</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/dashboard">
+              <NavLink exact to="/dashboard" activeClassName="nav--selected">
                 <AnalyticsIcon />
                 <span>Dashboard</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/stocks">
+              <NavLink exact to="/stocks" activeClassName="nav--selected">
                 <ListIcon />
                 <span>Stock List</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/stocks/realized">
+              <NavLink exact to="/stocks/realized" activeClassName="nav--selected">
                 <PiggyBankIcon />
                 <span>Realized Stocks</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/portfolios">
+              <NavLink exact to="/portfolios" activeClassName="nav--selected">
                 <FolderIcon />
                 <span>My Portfolios</span>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/cash">
+              <NavLink exact to="/cash" activeClassName="nav--selected">
                 <CoinIcon />
                 <span>Cash</span>
-              </Link>
+              </NavLink>
             </li>
             <li
               className="navbar__sign-out"
