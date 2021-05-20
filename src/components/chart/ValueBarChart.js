@@ -306,7 +306,7 @@ const Rect = ({
         y={y(data.ratio)}
         fill={data.ticker === 'cash' ? '#f7bd26' : colors[idx]}
         width={x.bandwidth()}
-        height={height - y(data.ratio)}
+        height={y(data.ratio) ? height - y(data.ratio) : height}
       >
       </rect>
     );
@@ -354,7 +354,7 @@ const Text = ({
       <text
         className="value-bar-text"
         x={x(data.ticker) + x.bandwidth() / 2}
-        y={y(data.ratio) - 2}
+        y={y(data.ratio) ? y(data.ratio) - 2 : 0}
       >
         {(data.ratio * 100).toFixed(2)}%
       </text>
