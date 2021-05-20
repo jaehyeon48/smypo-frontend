@@ -18,6 +18,7 @@ import { getCompanyInfo } from '../../utils/getCompanyInfo';
 import EditTransaction from './EditTransaction';
 import { closeModalWrapper } from '../../utils/closeModalWrapper';
 import CompanyInfo from './CompanyInfo';
+import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
 import StockGroupLoadingSpinner from '../spinners/StockGroupLoadingSpinner';
 
 const Position = ({
@@ -57,19 +58,18 @@ const Position = ({
 
   useEffect(() => {
     if (PORTFOLIO_ID && TICKER) {
+      if (stock.stockStatus === 'initial' ||
+        stock.stockStatus === 'idle') {
+        getStocks(PORTFOLIO_ID);
+      }
+
       if (!(TICKER in stock.stockGroup) ||
         stock.stockGroupStatus === 'initial' ||
         stock.stockGroupStatus === 'idle') {
         getStocksByTickerGroup(PORTFOLIO_ID, TICKER);
       }
     }
-  }, [
-    stock.stockGroup,
-    stock.stockGroupStatus,
-    PORTFOLIO_ID,
-    TICKER,
-    getStocksByTickerGroup
-  ]);
+  }, [stock, PORTFOLIO_ID, TICKER, getStocks, getStocksByTickerGroup]);
 
   useEffect(() => {
     setCurrentPrice(stock.stockList[TICKER]?.price);
@@ -166,85 +166,91 @@ const Position = ({
 
   return (
     <main className="position-main">
-      <header className="position-header">
-        <div className="position-header__logo-container">
-          <StockLogo ticker={TICKER.toUpperCase()} />
-        </div>
-        <span
-          className="position-header__ticker"
-          onClick={openInfoModal}
-        >
-          {TICKER.toUpperCase()}
-        </span>
-        <span
-          className="position-header__company-name"
-        >
-          {companyInfo && companyInfo.companyName}
-        </span>
-      </header>
-      <div className="position-price-container">
-        <span className="position-price-text">Current Price: </span>
-        <span
-          className={`position-price ${colorPrice(currentPriceChg)}`}
-          data-ischgpositive={currentPriceChg >= 0}
-        >
-          {currentPrice}
-        </span>
-        <span className={`position-price-percent ${colorPrice(currentPriceChg)}`}>
-          ({dailyReturnPercent}%)
-        </span>
-      </div>
-      <ModalButton
-        btnType={'button'}
-        btnText={'Delete quote'}
-        btnColor={'danger'}
-        openModalFunc={openCPConfirmModal}
-      />
-      {stock && stock.stockGroupStatus !== 'loading' ? (
-        <div className="stock-group-container">
-          <header className="stock-group__header">
-            Transaction History
+      {stock?.stockStatus !== 'loading' ? (
+        <React.Fragment>
+          <header className="position-header">
+            <div className="position-header__logo-container">
+              <StockLogo ticker={TICKER.toUpperCase()} />
+            </div>
+            <span
+              className="position-header__ticker"
+              onClick={openInfoModal}
+            >
+              {TICKER.toUpperCase()}
+            </span>
+            <span
+              className="position-header__company-name"
+            >
+              {companyInfo && companyInfo.companyName}
+            </span>
           </header>
-          {stock && stock.stockGroup[TICKER] && Object.keys(stock.stockGroup[TICKER]).length > 0 ? (
-            <div className="stock-group-table-wrapper">
-              <table className="stock-group-table">
-                <thead>
-                  <tr>
-                    <th className="stock-group-item__type-header">Type</th>
-                    <th className="stock-group-item__amount-header">price</th>
-                    <th className="stock-group-item__quantity-header">Quantity</th>
-                    <th className="stock-group-item__date-header">Date</th>
-                    <th className="stock-group-item__memo-header">Memo</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stock && Object.values(stock.stockGroup[TICKER]).map(stockItem => (
-                    <StockGroupItem
-                      key={stockItem.stockId}
-                      stockId={stockItem.stockId}
-                      price={stockItem.price}
-                      quantity={stockItem.quantity}
-                      stockMemo={stockItem.memo}
-                      transactionType={stockItem.transactionType}
-                      transactionDate={new Date(stockItem.transactionDate).toJSON().slice(0, 10)}
-                      formData={formData}
-                      openEditModal={openEditModal}
-                      openMemoModal={openMemoModal}
-                      openConfirmModal={openDTConfirmModal}
-                      setFormData={setFormData}
-                      setToDeleteStockId={setToDeleteStockId}
-                    />))}
-                </tbody>
-              </table>
+          <div className="position-price-container">
+            <span className="position-price-text">Current Price: </span>
+            <span
+              className={`position-price ${colorPrice(currentPriceChg)}`}
+              data-ischgpositive={currentPriceChg >= 0}
+            >
+              {currentPrice}
+            </span>
+            <span className={`position-price-percent ${colorPrice(currentPriceChg)}`}>
+              ({dailyReturnPercent}%)
+            </span>
+          </div>
+          <ModalButton
+            btnType={'button'}
+            btnText={'Delete quote'}
+            btnColor={'danger'}
+            openModalFunc={openCPConfirmModal}
+          />
+          {stock && stock.stockGroupStatus !== 'loading' ? (
+            <div className="stock-group-container">
+              <header className="stock-group__header">
+                Transaction History
+               </header>
+              {stock && stock.stockGroup[TICKER] && Object.keys(stock.stockGroup[TICKER]).length > 0 ? (
+                <div className="stock-group-table-wrapper">
+                  <table className="stock-group-table">
+                    <thead>
+                      <tr>
+                        <th className="stock-group-item__type-header">Type</th>
+                        <th className="stock-group-item__amount-header">price</th>
+                        <th className="stock-group-item__quantity-header">Quantity</th>
+                        <th className="stock-group-item__date-header">Date</th>
+                        <th className="stock-group-item__memo-header">Memo</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {stock && Object.values(stock.stockGroup[TICKER]).map(stockItem => (
+                        <StockGroupItem
+                          key={stockItem.stockId}
+                          stockId={stockItem.stockId}
+                          price={stockItem.price}
+                          quantity={stockItem.quantity}
+                          stockMemo={stockItem.memo}
+                          transactionType={stockItem.transactionType}
+                          transactionDate={new Date(stockItem.transactionDate).toJSON().slice(0, 10)}
+                          formData={formData}
+                          openEditModal={openEditModal}
+                          openMemoModal={openMemoModal}
+                          openConfirmModal={openDTConfirmModal}
+                          setFormData={setFormData}
+                          setToDeleteStockId={setToDeleteStockId}
+                        />))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div>Transaction list is empty.</div>
+              )}
             </div>
           ) : (
-            <div>Transaction list is empty.</div>
+            <StockGroupLoadingSpinner />
           )}
-        </div>
+        </React.Fragment>
       ) : (
-        <StockGroupLoadingSpinner />
+        <StockLoadingSpinner />
       )}
       {isEditModalOpen && (
         <Modal closeModalFunc={closeEditModal}>

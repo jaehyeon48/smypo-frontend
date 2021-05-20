@@ -27,14 +27,15 @@ const EditTransaction = ({
   const { ticker, price, quantity, stockMemo, transactionType, transactionDate } = formData;
 
   useEffect(() => {
-    if (stockList && stockList.length > 0 && ticker.trim() !== '' && transactionType === 'sell') {
-      const stockItem = stockList.filter(stock => stock.ticker === ticker.toLowerCase());
-      if (stockItem[0]) {
-        const avgCostOfStock = stockItem[0].avgCost;
+    if (Object.keys(stockList).length > 0 && ticker.trim() !== '' && transactionType === 'sell') {
+      const item = Object.values(stockList).filter((stock) => stock.ticker === ticker.toLowerCase());
+      if (item[0]) {
+        const avgCostOfStock = ((item[0].avgCost * item[0].quantity - price * quantity)
+          / (item[0].quantity - quantity)).toFixed(2);
         setCurrentAvgCost(avgCostOfStock);
       }
     }
-  }, [stockList, ticker, transactionType]);
+  }, [stockList, ticker, transactionType, price, quantity]);
 
   // form validation
   useEffect(() => {
@@ -62,10 +63,10 @@ const EditTransaction = ({
   const handleEditStock = async (e) => {
     e.preventDefault();
     setIsFirstSubmit(true);
-    if (ticker.trim() === '' ||
-      price === '' ||
-      quantity === '') return;
+    if (ticker.trim() === '' || price === '' || quantity === '') return;
 
+    // let editResult = 0;
+    // console.log(currentAvgCost);
     const editResult = await editStock(formData, currentAvgCost);
     if (editResult === 0) {
       showAlert('Successfully edited a transaction record.', 'success');
