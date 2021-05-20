@@ -3,8 +3,13 @@
   margin: 3em auto;
 }
 
+@mixin profile-box {
+  box-shadow: 2px 3px 4px 2px $light-gray;
+  border: 1px solid $blue-white;
+}
+
 .profile-avatar-container {
-  background-color: $avatar-container;
+  @include profile-box();
   border-radius: 4px;
   padding: 2em 3em;
   margin-bottom: 1em;
@@ -38,23 +43,24 @@
 .btn-profile-avatar-edit {
   @include btn-profile-avatar();
   margin-right: 0.8em;
+  color: #dc8042;
 
   &:hover {
-    color: #dc8042;
+    color: darken(#dc8042, 12%);
   }
 }
 
 .btn-profile-avatar-delete {
   @include btn-profile-avatar();
+  color: #d03e4b;
   margin-left: 0.8em;
 
   &:hover {
-    color: #d03e4b;
+    color: darken(#d03e4b, 12%);
   }
 }
 
 @mixin profile-form {
-  background-color: $avatar-container;
   border: 1px solid transparent;
   width: 60vw;
   padding: 0.8em 1.5em;
@@ -66,6 +72,7 @@
 
   & > header {
     font-size: 1.4rem;
+    font-weight: 700;
     text-align: center;
     margin-bottom: 2em;
   }
@@ -77,10 +84,12 @@
 
 .profile-form-user-info {
   @include profile-form();
+  @include profile-box();
 }
 
 .profile-form-password {
   @include profile-form();
+  @include profile-box();
   margin-top: 3.3em;
 }
 
@@ -120,6 +129,7 @@
 
 .profile-form-field {
   font-size: 1.1rem;
+  margin-top: 0.3em;
   padding: 0.5em;
   width: 100%;
   border: 1px solid #cccccc;
@@ -156,6 +166,47 @@
 
 .profile-nav--selected {
   border-bottom: 1px solid $main-color;
+}
+
+.profile-delete-account {
+  @include profile-form();
+  @include profile-box();
+  margin-top: 3em;
+
+  & > header {
+    color: #da1f2e;
+  }
+
+  & > button {
+    // delete account btn
+    width: 200px;
+  }
+
+  @media screen and (max-width: 768px) {
+    & > button {
+      width: 180px;
+    }
+  }
+}
+
+.delete-account-actions {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5em 0;
+  width: 300px;
+
+  & > button {
+    width: 140px;
+  }
+
+  @media screen and (max-width: 450px) {
+    width: 220px;
+
+    & > button {
+      font-size: 0.9rem;
+      width: 100px;
+    }
+  }
 }
 
 /* Upload Avatar Component*/

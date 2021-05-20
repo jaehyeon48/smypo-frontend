@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import validator from 'validator';
+import axios from 'axios';
 
 import Button from '../button/Button';
+import ConfirmModal from '../modal/ConfirmModal';
 import { loadUser } from '../../actions/authAction';
 import {
   updateProfileData,
-  updateUserPassword
+  updateUserPassword,
+  deleteAccount
 } from '../../actions/userAction';
 import { showAlert } from '../../actions/alertAction';
 
@@ -14,6 +16,7 @@ const ProfileUserInfo = ({
   user,
   updateProfileData,
   updateUserPassword,
+  deleteAccount,
   loadUser,
   showAlert
 }) => {
@@ -32,6 +35,11 @@ const ProfileUserInfo = ({
   const [currentPWErr, setCurrentPWErr] = useState(false);
   const [newPWErr, setNewPWErr] = useState(false);
   const [confirmPWErr, setConfirmPWErr] = useState(false);
+  // delete account field means password confirmation field for deleting the account
+  const [isDeleteAccountFieldOpen, setIsDeleteAccountFieldOpen] = useState(false);
+  const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
+  const [deleteAccountConfirmPW, setDeleteAccountConfirmPW] = useState('');
+  const [deleteAccountConfirmPWErr, setDeleteAccountConfirmPwErr] = useState(false);
 
   const { firstName, lastName, username } = profileFormData;
   const { currentPassword, newPassword, confirmPassword } = pwFormData;
@@ -66,6 +74,52 @@ const ProfileUserInfo = ({
     }
   }
 
+  const disableDeleteAccountConfirmPWErr = () => {
+    if (deleteAccountConfirmPWErr) {
+      setDeleteAccountConfirmPwErr(false);
+    }
+  }
+
+  const openDeleteAccountField = () => {
+    setIsDeleteAccountFieldOpen(true);
+  }
+
+  const closeDeleteAccountField = () => {
+    setIsDeleteAccountFieldOpen(false);
+    setDeleteAccountConfirmPW('');
+  }
+
+  const confirmDeleteAccountPW = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    };
+
+    try {
+      const confirmRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/confirm-password`,
+        JSON.stringify({ confirmPassword: deleteAccountConfirmPW }), config);
+
+      if (confirmRes.data === -2) {
+        setDeleteAccountConfirmPwErr(true);
+        return;
+      }
+      openDeleteAccountModal();
+    } catch (error) {
+      showAlert('Something went wrong. Please try again.', 'error');
+    }
+  }
+
+  const openDeleteAccountModal = () => {
+    document.body.style.overflow = 'hidden';
+    setIsDeleteAccountModalOpen(true);
+  }
+
+  const closeDeleteAccountModal = () => {
+    setIsDeleteAccountModalOpen(false);
+  }
+
   const handleFormDataChange = (e) => {
     setProfileFormData({
       ...profileFormData,
@@ -78,6 +132,10 @@ const ProfileUserInfo = ({
       ...pwFormData,
       [e.target.name]: e.target.value
     });
+  }
+
+  const handleDeleteConfirmPWChange = (e) => {
+    setDeleteAccountConfirmPW(e.target.value);
   }
 
   const handleEditProfileData = async () => {
@@ -122,6 +180,19 @@ const ProfileUserInfo = ({
       });
     } catch (error) {
       showAlert('Something went wrong. Please try again.', 'error');
+    }
+  }
+
+  const handleDeleteAccount = async () => {
+    try {
+      const deleteRes = await deleteAccount();
+      if (deleteRes !== 0) {
+        showAlert('Something went wrong while deleting your account. Please try again.', 'error');
+        setIsDeleteAccountModalOpen(false);
+      }
+    } catch (error) {
+      showAlert('Something went wrong while deleting your account. Please try again.', 'error');
+      setIsDeleteAccountModalOpen(false);
     }
   }
 
@@ -222,6 +293,57 @@ const ProfileUserInfo = ({
           onClickFunc={handleEditPassword}
         />
       </div>
+      <div className="profile-delete-account">
+        <header>Delete Account</header>
+        <p>There is no going back, so please be certain to delete your account!</p>
+        {!isDeleteAccountFieldOpen ? (
+          <Button
+            btnType="button"
+            btnText="Delete Account"
+            btnColor="danger"
+            onClickFunc={openDeleteAccountField}
+          />
+        ) : (
+          <div className="delete-account-actions">
+            <Button
+              btnType="button"
+              btnText="Delete"
+              btnColor="danger"
+              className="test"
+              onClickFunc={confirmDeleteAccountPW}
+            />
+            <Button
+              btnType="button"
+              btnText="Cancel"
+              btnColor="lightGray"
+              onClickFunc={closeDeleteAccountField}
+            />
+          </div>
+        )}
+        {isDeleteAccountFieldOpen && (
+          <div className="delete-account-field-container">
+            <label className={`profile-form-label${deleteAccountConfirmPWErr ? '--error' : ''}`}>
+              Confirm Password
+              <input
+                type="password"
+                placeholder="Enter Password To Delete"
+                value={deleteAccountConfirmPW}
+                onChange={handleDeleteConfirmPWChange}
+                onKeyUp={disableDeleteAccountConfirmPWErr}
+                className="profile-form-field"
+              />
+              {deleteAccountConfirmPWErr && <small>Password does not correct.</small>}
+            </label>
+          </div>
+        )}
+      </div>
+      {isDeleteAccountModalOpen && (
+        <ConfirmModal
+          confirmMsg="We will immediately delete all of your account information. Once you delete your account, you cannot restore your deleted account. Do you really want to delete all of your account information?"
+          confirmAction={handleDeleteAccount}
+          closeModalFunc={closeDeleteAccountModal}
+        />
+      )}
     </React.Fragment>
   );
 }
@@ -233,6 +355,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   updateProfileData,
   updateUserPassword,
+  deleteAccount,
   loadUser,
   showAlert
 })(ProfileUserInfo);

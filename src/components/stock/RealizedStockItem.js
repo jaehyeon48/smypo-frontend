@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const RealizedStockItem = ({
-  realizedStockItem,
-  setTotalRealizedReturn
+  realizedStockItem
 }) => {
-  const [realizedReturn, setRealizedReturn] = useState(parseFloat(((realizedStockItem.price - realizedStockItem.avgCost) * realizedStockItem.quantity).toFixed(2)));
+  const realizedReturn = ((realizedStockItem.price - realizedStockItem.avgCost) * realizedStockItem.quantity).toFixed(2);
 
-  useEffect(() => {
-    setTotalRealizedReturn(prev => prev + realizedReturn)
-  }, [realizedReturn, setTotalRealizedReturn]);
 
   const colorRealizedReturn = () => {
     if (realizedReturn > 0) return 'stock-item--return-positive';

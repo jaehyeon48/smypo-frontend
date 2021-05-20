@@ -8,8 +8,12 @@ import {
   UPDATE_PASSWORD,
   FAIL_UPDATE_PASSWORD,
   DELETE_AVATAR,
-  FAIL_DELETE_AVATAR
+  FAIL_DELETE_AVATAR,
+  DELETE_ACCOUNT,
+  FAIL_DELETE_ACCOUNT
 } from './actionTypes';
+import { logout } from './authAction';
+import { showAlert } from './alertAction';
 import { checkUsernameAvailability } from '../utils/checkingAvailability';
 
 import { loadUser } from './authAction';
@@ -101,5 +105,28 @@ export const deleteAvatar = () => async (dispatch) => {
     dispatch({ type: DELETE_AVATAR });
   } catch (error) {
     dispatch({ type: FAIL_DELETE_AVATAR });
+  }
+}
+
+export const deleteAccount = () => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true
+  };
+
+  try {
+    const deleteRes = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/user`, config);
+    if (deleteRes.data === 0) {
+      dispatch({ type: DELETE_ACCOUNT });
+      dispatch(logout());
+      return 0;
+    }
+    dispatch({ type: FAIL_DELETE_ACCOUNT });
+    return -1;
+  } catch (error) {
+    dispatch({ type: FAIL_DELETE_ACCOUNT });
+    return -1;
   }
 }

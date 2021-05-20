@@ -15,7 +15,9 @@ import {
   UPDATE_USER,
   FAIL_UPDATE_USER,
   UPDATE_PASSWORD,
-  FAIL_UPDATE_PASSWORD
+  FAIL_UPDATE_PASSWORD,
+  DELETE_ACCOUNT,
+  FAIL_DELETE_ACCOUNT
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -92,6 +94,7 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: false
       };
     case LOGOUT_SUCCESS:
+    case DELETE_ACCOUNT:
       return { ...initialState };
     case LOGOUT_FAIL:
       return {
@@ -116,6 +119,7 @@ export default function authReducer(state = initialState, action) {
         }
       };
     case FAIL_DELETE_AVATAR:
+    case FAIL_DELETE_ACCOUNT:
     case UPDATE_USER:
     case FAIL_UPDATE_USER:
     case UPDATE_PASSWORD:

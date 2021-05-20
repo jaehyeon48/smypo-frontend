@@ -16,6 +16,14 @@ const RealizedStocks = ({
   const [totalRealizedReturn, setTotalRealizedReturn] = useState(0);
 
   useEffect(() => {
+    if (realizedStocks?.length > 0) {
+      setTotalRealizedReturn((realizedStocks.reduce((acc, cur) => acc + ((cur.price - cur.avgCost) * cur.quantity), 0)));
+    } else {
+      setTotalRealizedReturn(0);
+    }
+  }, [realizedStocks]);
+
+  useEffect(() => {
     if (portfolio && portfolio.defaultPortfolio) {
       getRealizedStocks(portfolio.defaultPortfolio);
     }
@@ -67,7 +75,6 @@ const RealizedStocks = ({
                       <RealizedStockItem
                         key={realizedOne.stockId}
                         realizedStockItem={realizedOne}
-                        setTotalRealizedReturn={setTotalRealizedReturn}
                       />
                     ))}
                   </tbody>
