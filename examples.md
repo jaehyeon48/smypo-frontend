@@ -8,6 +8,13 @@
 <img src="./examples/signup_page.png" alt="signup page example."/>
 <p align="center">Signup Page</p>
 
+# Profile Page
+
+<img src="./examples/profile_page_1.png" alt="profile page example 1."/>
+<p align="center">Profile Page 1 - Editing user's avatar and bio info feature</p>
+<img src="./examples/profile_page_2.png" alt="profile page example 2."/>
+<p align="center">Profile Page 2 - Editing password and delete account feature</p>
+
 # Dashboard Page
 
 <img src="./examples/dashboard_page_1.png" alt="dashboard page example 1."/>
