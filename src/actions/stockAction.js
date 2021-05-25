@@ -54,7 +54,7 @@ export const checkMarketStatus = (autoCheck = false) => async (dispatch, getStat
     }
 
     // if the market is closed && SSE is currently connected
-    if (autoCheck && !res.data && !getState().stock.isSSEDisconnected &&) {
+    if (autoCheck && !res.data && !getState().stock.isSSEDisconnected) {
       dispatch({ type: DISCONNECT_SSE });
     }
   } catch (error) {
