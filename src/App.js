@@ -24,7 +24,7 @@ import './app.css';
 import './styles/index.scss';
 
 import { loadUser } from './actions/authAction';
-import { getRealTimeStockPrice } from './actions/stockAction';
+import { checkMarketStatus } from './actions/stockAction';
 
 export default function App() {
   useEffect(() => {
@@ -33,14 +33,28 @@ export default function App() {
     }
   }, []);
 
+  // fire checking current stock market status
   useEffect(() => {
-    const stockState = store.getState().stock;
-    if (!stockState.isSSEDisconnected) {
-      store.dispatch(getRealTimeStockPrice(Object.keys(stockState.stockList)));
-    }
-  }, []);
+    const dateObj = new Date();
+    const now = new Date(dateObj.getUTCFullYear(), dateObj.getUTCMonth(), dateObj.getUTCDate(), dateObj.getUTCHours(), dateObj.getUTCMinutes(), dateObj.getUTCSeconds(), dateObj.getUTCMilliseconds());
+    // +2 seconds for the latency
+    let millisTillOpen = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 14, 30, 2, 0) - now;
+    let millisTillClose = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 21, 0, 2, 0) - now;
 
-  useEffect(() => {
+    if (millisTillOpen < 0) millisTillOpen += 86400000; // if it's after open time, try tomorrow.
+    if (millisTillClose < 0) millisTillClose += 86400000; // if it's after close time, try tomorrow.
+
+    setTimeout(() => {
+      if (store.getState().auth.isAuthenticated) {
+        store.dispatch(checkMarketStatus(true));
+      }
+    }, millisTillOpen);
+
+    setTimeout(() => {
+      if (store.getState().auth.isAuthenticated) {
+        store.dispatch(checkMarketStatus(true));
+      }
+    }, millisTillClose);
   }, []);
 
   return (

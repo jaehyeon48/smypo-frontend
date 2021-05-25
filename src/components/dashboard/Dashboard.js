@@ -20,6 +20,7 @@ import SectorPieChart from '../chart/SectorPieChart';
 import HistoryLineChart from '../chart/HistoryLineChart';
 import MainLoadingSpinner from '../spinners/MainLoadingSpinner';
 import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
+import MarketStatusIndicator from '../MarketStatusIndicator';
 
 const Dashboard = ({
   stock,
@@ -225,6 +226,7 @@ const Dashboard = ({
                       </div>
                     </div>
                   </div>
+                  <MarketStatusIndicator />
                   {stock && Object.values(stock.stockList).length > 0 && (
                     <React.Fragment>
                       <ValueBarChart

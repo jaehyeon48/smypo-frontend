@@ -10,6 +10,7 @@ import ModalButton from '../modal/ModalButton';
 import Modal from '../modal/Modal';
 import AddTransaction from './AddTransaction';
 import StockLoadingSpinner from '../spinners/StockLoadingSpinner';
+import MarketStatusIndicator from '../MarketStatusIndicator';
 import { getTotalCash } from '../../actions/cashAction';
 import {
   getStocks,
@@ -131,6 +132,7 @@ const Stock = ({
               onClickFunc={redirectToRealizedStocks}
             />
           </div>
+          <MarketStatusIndicator />
           <div className="holdings-container">
             <header className="holdings-container__header">
               Holdings

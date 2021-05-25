@@ -1,0 +1,59 @@
+.market-status-indicator {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@mixin marketStatus {
+  & > svg {
+    margin-right: 0.2em;
+  }
+}
+
+.market-status--opened {
+  @include marketStatus();
+  & > svg circle {
+    animation: statusColor 3s ease-in-out infinite;
+    -webkit-animation: statusColor 3s ease-in-out infinite;
+  }
+}
+
+.market-status--closed {
+  @include marketStatus();
+}
+
+@keyframes statusColor {
+  0% {
+    fill: #f4f9ff;
+  }
+  10% {
+    fill: #daebff;
+  }
+  20% {
+    fill: #b9d9ff;
+  }
+  30% {
+    fill: #91c3ff;
+  }
+  40% {
+    fill: #70b1ff;
+  }
+  50% {
+    fill: #59a4fe;
+  }
+  60% {
+    fill: #70b1ff;
+  }
+  70% {
+    fill: #91c3ff;
+  }
+  80% {
+    fill: #b9d9ff;
+  }
+  90% {
+    fill: #daebff;
+  }
+  100% {
+    fill: #f4f9ff;
+  }
+}

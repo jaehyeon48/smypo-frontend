@@ -22,11 +22,12 @@ import {
   UPDATE_PROGRESS,
   DONE_PROGRESS,
   FAIL_PROGRESS,
-  GET_REALTIME_PRICE
+  GET_REALTIME_PRICE,
+  DISCONNECT_SSE
 } from './actionTypes';
 
 import axios from 'axios';
-import {sessionOut} from './authAction';
+import { sessionOut } from './authAction';
 import { sortStocks } from '../utils/sortStocks';
 
 // check if the market is currently open
@@ -50,6 +51,11 @@ export const checkMarketStatus = (autoCheck = false) => async (dispatch, getStat
       getState().stock.isSSEDisconnected &&
       getState().stock.stockStatus === 'succeeded') {
       dispatch(getRealTimeStockPrice(Object.keys(getState().stock.stockList)));
+    }
+
+    // if the market is closed && SSE is currently connected
+    if (autoCheck && !res.data && !getState().stock.isSSEDisconnected &&) {
+      dispatch({ type: DISCONNECT_SSE });
     }
   } catch (error) {
     console.error(error);
