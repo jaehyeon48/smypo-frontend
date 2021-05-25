@@ -12,8 +12,7 @@ import {
   DELETE_ACCOUNT,
   FAIL_DELETE_ACCOUNT
 } from './actionTypes';
-import { logout } from './authAction';
-import { showAlert } from './alertAction';
+import { sessionOut, logout } from './authAction';
 import { checkUsernameAvailability } from '../utils/checkingAvailability';
 
 import { loadUser } from './authAction';
@@ -29,12 +28,16 @@ export const uploadAvatar = (avatarImage) => async (dispatch) => {
     const avatarFile = new FormData();
     avatarFile.append('avatar', avatarImage);
 
-    const uploadResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/avatar`, avatarFile, config);
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/avatar`, avatarFile, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
     /* wait for 1s to retrieve image */
     await new Promise(resolve => setTimeout(resolve, 1000));
     dispatch({
       type: UPLOAD_AVATAR,
-      payload: uploadResponse.data.avatar
+      payload: res.data.avatar
     });
     return 0;
   } catch (error) {
@@ -60,7 +63,11 @@ export const updateProfileData = (formData, shouldCheckUsername) => async (dispa
   };
   try {
     const reqBody = JSON.stringify(formData);
-    await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/profile`, reqBody, config);
+    const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/profile`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
     dispatch(loadUser());
     dispatch({ type: UPDATE_USER });
     return 0;
@@ -80,8 +87,12 @@ export const updateUserPassword = (formData) => async (dispatch) => {
   };
   try {
     const reqBody = JSON.stringify(formData);
-    const updateRes = await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/password`, reqBody, config);
-    if (updateRes.data === -2) { // current password does not match
+    const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/password`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+    if (res.data === -2) { // current password does not match
       return -2;
     }
     dispatch({ type: UPDATE_PASSWORD });
@@ -101,7 +112,11 @@ export const deleteAvatar = () => async (dispatch) => {
   };
 
   try {
-    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/user/avatar`, config);
+    const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/user/avatar`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
     dispatch({ type: DELETE_AVATAR });
   } catch (error) {
     dispatch({ type: FAIL_DELETE_AVATAR });
@@ -117,8 +132,12 @@ export const deleteAccount = () => async (dispatch) => {
   };
 
   try {
-    const deleteRes = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/user`, config);
-    if (deleteRes.data === 0) {
+    const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/user`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+    if (res.data === 0) {
       dispatch({ type: DELETE_ACCOUNT });
       dispatch(logout());
       return 0;

@@ -17,6 +17,7 @@ import {
   EMPTY_PORTFOLIO_LIST,
   DISCONNECT_SSE
 } from './actionTypes';
+import {sessionOut} from './authAction';
 import {
   getStocks,
   getRealizedStocks
@@ -32,11 +33,15 @@ import axios from 'axios';
 export const loadPortfolios = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOAD_PORTFOLIO_LIST });
-    const portfolioResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio`, { withCredentials: true });
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio`, { withCredentials: true });
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
 
     dispatch({
       type: SUCCESS_LOAD_PORTFOLIO_LIST,
-      payload: portfolioResponse.data
+      payload: res.data
     });
   } catch (error) {
     console.error(error);
@@ -53,10 +58,14 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
   };
   try {
     const reqBody = JSON.stringify({ portfolioId });
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, reqBody, config);
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
     dispatch({
       type: CHOOSE_DEFAULT_PORTFOLIO,
-      payload: response.data.defaultPortfolioId
+      payload: res.data.defaultPortfolioId
     });
     // disconnect previous SSE connection when changing portfolio
     dispatch({ type: DISCONNECT_SSE });
@@ -74,11 +83,15 @@ export const chooseDefaultPortfolio = (portfolioId) => async (dispatch) => {
 export const getDefaultPortfolio = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOAD_DEFAULT_PORTFOLIO });
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, { withCredentials: true });
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default`, { withCredentials: true });
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
 
     dispatch({
       type: SUCCESS_LOAD_DEFAULT_PORTFOLIO,
-      payload: response.data.defaultPortfolioId
+      payload: res.data.defaultPortfolioId
     });
     dispatch(getDefaultPortfolioName());
   } catch (error) {
@@ -97,6 +110,10 @@ export const getDefaultPortfolioName = () => async (dispatch, getState) => {
 
   try {
     const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/default/name/${defaultPortfolioId}`);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
 
     dispatch({
       type: SUCCESS_GET_DEFAULT_PORTFOLIO_NAME,
@@ -119,7 +136,11 @@ export const createPortfolio = (portfolioName, privacy) => async (dispatch) => {
   const reqBody = JSON.stringify({ portfolioName, privacy });
 
   try {
-    await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio`, reqBody, config);
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/portfolio`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
 
     dispatch({ type: CREATE_PORTFOLIO });
   } catch (error) {
@@ -142,7 +163,11 @@ export const editPortfolio = ({
 
   const reqBody = JSON.stringify({ newPortfolioName, newPortfolioPrivacy });
   try {
-    await axios.put(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, reqBody, config);
+    const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
 
     dispatch({ type: EDIT_PORTFOLIO });
   } catch (error) {
@@ -153,10 +178,14 @@ export const editPortfolio = ({
 
 export const deletePortfolio = (portfolioId) => async (dispatch) => {
   try {
-    // 'deleteRes' contains newly chosen portfolioId
-    const deleteRes = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, { withCredentials: true });
+    // 'res' contains newly chosen portfolioId
+    const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/portfolio/${portfolioId}`, { withCredentials: true });
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
     dispatch({ type: DELETE_PORTFOLIO });
-    return [0, deleteRes.data];
+    return [0, res.data];
   } catch (error) {
     dispatch({ type: PORTFOLIO_DELETE_ERROR });
     console.error(error.response);

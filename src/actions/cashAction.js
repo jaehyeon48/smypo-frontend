@@ -14,7 +14,7 @@ import {
 } from './actionTypes';
 
 import axios from 'axios';
-
+import { sessionOut } from './authAction';
 import { calculateTotalCashAmount } from '../utils/calculateTotalCash';
 
 // retrieve user's cash list
@@ -23,10 +23,15 @@ export const getCash = (portfolioId) => async (dispatch) => {
 
   try {
     dispatch({ type: START_GET_CASH_LIST });
-    const cashResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
     dispatch({
       type: SUCCESS_GET_CASH_LIST,
-      payload: cashResponse.data
+      payload: res.data
     });
   } catch (error) {
     console.error(error);
@@ -39,9 +44,13 @@ export const getTotalCash = (portfolioId) => async (dispatch) => {
 
   try {
     dispatch({ type: START_GET_TOTAL_CASH })
-    const cashResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
-    if (cashResponse.data.length > 0) {
-      const totalCash = calculateTotalCashAmount(cashResponse.data);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/cash/${portfolioId}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+    if (res.data.length > 0) {
+      const totalCash = calculateTotalCashAmount(res.data);
       dispatch({
         type: SUCCESS_GET_TOTAL_CASH,
         payload: totalCash
@@ -68,7 +77,12 @@ export const addCash = (portfolioId, formData) => async (dispatch) => {
 
   try {
     const reqBody = JSON.stringify({ portfolioId, ...formData });
-    await axios.post(`${process.env.REACT_APP_SERVER_URL}/cash`, reqBody, config);
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/cash`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
     dispatch({ type: ADD_CASH });
     return 0;
   } catch (error) {
@@ -89,7 +103,12 @@ export const editCash = (formData) => async (dispatch) => {
     const { cashId } = formData;
     const reqBody = JSON.stringify(formData);
 
-    await axios.put(`${process.env.REACT_APP_SERVER_URL}/cash/${cashId}`, reqBody, config);
+    const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/cash/${cashId}`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
     dispatch({ type: EDIT_CASH });
     return 0;
   } catch (error) {
@@ -99,11 +118,16 @@ export const editCash = (formData) => async (dispatch) => {
   }
 }
 
-export const deleteCash = (cashId, portfolioId) => async (dispatch) => {
+export const deleteCash = (cashId) => async (dispatch) => {
   const config = { withCredentials: true };
 
   try {
-    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/cash/${cashId}`, config);
+    const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/cash/${cashId}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
     dispatch({ type: DELETE_CASH });
     return 0;
   } catch (error) {

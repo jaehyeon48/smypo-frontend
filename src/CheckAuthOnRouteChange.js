@@ -3,30 +3,26 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { logout } from './actions/authAction';
-import { showAlert } from './actions/alertAction';
+import { sessionOut } from './actions/authAction';
 
 // Check the user's auth status every time the user changes route
 const CheckAuthOnRouteChange = ({
   children,
   auth,
-  logout,
-  showAlert
+  sessionOut
 }) => {
   const location = useLocation();
 
   useEffect(() => {
     if (auth.isAuthenticated) {
       (async () => {
-        try {
-          await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/route-change`, { withCredentials: true });
-        } catch (error) { // if the cookie has expired, force logout the user.
-          logout();
-          showAlert('Session has timed out. Please login again.', 'error');
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/route-change`, { withCredentials: true });
+        if (res.data === -999) { // if the cookie has expired, force logout the user.
+          sessionOut();
         }
       })();
     }
-  }, [auth, logout, showAlert, location]);
+  }, [auth, sessionOut, location]);
 
   return (
     <React.Fragment>
@@ -39,7 +35,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, {
-  logout,
-  showAlert
-})(CheckAuthOnRouteChange);
+export default connect(mapStateToProps, { sessionOut })(CheckAuthOnRouteChange);

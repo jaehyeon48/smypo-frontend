@@ -26,17 +26,31 @@ import {
 } from './actionTypes';
 
 import axios from 'axios';
+import {sessionOut} from './authAction';
 import { sortStocks } from '../utils/sortStocks';
 
 // check if the market is currently open
-export const checkMarketStatus = () => async (dispatch) => {
+export const checkMarketStatus = (autoCheck = false) => async (dispatch, getState) => {
   const config = { withCredentials: true };
+
   try {
-    const marketStatusResponse = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/marketStatus`, config);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/stock/marketStatus`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
     dispatch({
       type: CHECK_MARKET_STATUS,
-      payload: marketStatusResponse.data
+      payload: res.data
     });
+
+    // if market is opened && SSE is currently disconnected
+    if (autoCheck && res.data &&
+      getState().stock.isSSEDisconnected &&
+      getState().stock.stockStatus === 'succeeded') {
+      dispatch(getRealTimeStockPrice(Object.keys(getState().stock.stockList)));
+    }
   } catch (error) {
     console.error(error);
     dispatch({ type: CHECK_MARKET_STATUS_ERROR });
@@ -51,8 +65,13 @@ export const getStocks = (portfolioId) => async (dispatch, getState) => {
       type: UPDATE_PROGRESS,
       payload: 0
     });
-    const stocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/stocks/${portfolioId}`, config);
-    const sortedStocks = await sortStocks(stocksResult.data);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/stocks/${portfolioId}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
+    const sortedStocks = await sortStocks(res.data);
 
     const [calcResCode, calcResult] = await calculateReturnLogic(sortedStocks, getState(), dispatch);
     dispatch({
@@ -83,7 +102,12 @@ export const addStock = (portfolioId, formData, currentAvgCost) => async (dispat
 
   try {
     const reqBody = JSON.stringify({ portfolioId, ...formData, currentAvgCost });
-    await axios.post(`${process.env.REACT_APP_SERVER_URL}/stock`, reqBody, config);
+    const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/stock`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
     dispatch({ type: SUCCESS_ADD_STOCK });
     if (formData.transactionType === 'sell') {
       dispatch(getRealizedStocks(portfolioId));
@@ -106,7 +130,12 @@ export const editStock = (formData, currentAvgCost) => async (dispatch) => {
   const { stockId, price, quantity, stockMemo, transactionDate, transactionType } = formData;
   try {
     const reqBody = JSON.stringify({ price, quantity, stockMemo, transactionDate, transactionType, currentAvgCost });
-    await axios.put(`${process.env.REACT_APP_SERVER_URL}/stock/${stockId}`, reqBody, config);
+    const res = await axios.put(`${process.env.REACT_APP_SERVER_URL}/stock/${stockId}`, reqBody, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
+
     dispatch({ type: SUCCESS_EDIT_STOCK });
     return 0;
   } catch (error) {
@@ -119,9 +148,13 @@ export const editStock = (formData, currentAvgCost) => async (dispatch) => {
 export const deleteStock = (stockId) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/stock/${stockId}`, config);
-    dispatch({ type: DELETE_STOCK });
+    const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/stock/${stockId}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
 
+    dispatch({ type: DELETE_STOCK });
     return 0;
   } catch (error) {
     console.error(error);
@@ -147,10 +180,14 @@ export const getStocksByTickerGroup = (portfolioId, ticker) => async (dispatch) 
   const config = { withCredentials: true };
   try {
     dispatch({ type: START_GET_STOCK_GROUP });
-    const tickerGroupResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/group/${portfolioId}/${ticker}`, config);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/group/${portfolioId}/${ticker}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
     dispatch({
       type: SUCCESS_GET_STOCK_GROUP,
-      payload: { ticker, data: tickerGroupResult.data }
+      payload: { ticker, data: res.data }
     });
   } catch (error) {
     console.error(error);
@@ -162,11 +199,15 @@ export const getRealizedStocks = (portfolioId) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
     dispatch({ type: START_GET_REALIZED_STOCKS });
-    const realizedStocksResult = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/realized/${portfolioId}`, config);
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/portfolio/realized/${portfolioId}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
 
     dispatch({
       type: SUCCESS_GET_REALIZED_STOCKS,
-      payload: realizedStocksResult.data
+      payload: res.data
     });
   } catch (error) {
     console.error(error);
@@ -200,7 +241,11 @@ export const getRealTimeStockPrice = (tickers) => async (dispatch, getState) => 
 export const deleteQuote = (portfolioId, ticker) => async (dispatch) => {
   const config = { withCredentials: true };
   try {
-    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/stock/${portfolioId}/${ticker}`, config);
+    const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/stock/${portfolioId}/${ticker}`, config);
+    if (res.data === -999) {
+      dispatch(sessionOut());
+      return;
+    }
     dispatch({ type: DELETE_QUOTE });
     return 0;
   } catch (error) {

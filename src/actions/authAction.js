@@ -10,6 +10,7 @@ import {
   LOGOUT_FAIL,
   DISCONNECT_SSE
 } from './actionTypes';
+import { showAlert } from './alertAction';
 import axios from 'axios';
 
 export const loadUser = () => async dispatch => {
@@ -88,4 +89,9 @@ export const logout = () => async (dispatch) => {
       payload: error.message
     });
   }
+}
+
+export const sessionOut = () => async (dispatch) => {
+  await dispatch(logout());
+  dispatch(showAlert('Session has timed out. Please login again.', 'error'));
 }
