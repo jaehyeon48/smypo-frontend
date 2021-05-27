@@ -85,28 +85,36 @@ const Navbar = ({
   const navGuest = (
     <ul className="navbar-menu">
       <li>
-        <Link to="/signup" className="navbar-menu__signup">
+        <NavLink to="/signup" className="navbar-menu__signup" activeClassName="nav--selected">
           <SignUpIcon />Sign Up
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link to="/login" className="navbar-menu__login">
+        <NavLink to="/login" className="navbar-menu__login" activeClassName="nav--selected">
           <LoginIcon />Login
-        </Link>
+        </NavLink>
       </li>
       <BarsIcon onClickFunc={toggleMobileNav} isMobileNavOpen={isMobileNavOpen} />
       {isMobileNavOpen && (
         <div className="navbar__mobile">
           <ul>
             <li>
-              <Link to="/signup" className="navbar-mobile__signup" onClick={toggleMobileNav}>
+              <NavLink
+                to="/signup"
+                className="navbar-mobile__signup"
+                activeClassName="nav--selected"
+                onClick={toggleMobileNav}>
                 <SignUpIcon />Sign Up
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/login" className="navbar-mobile__login" onClick={toggleMobileNav}>
+              <NavLink
+                to="/login"
+                className="navbar-mobile__login"
+                activeClassName="nav--selected"
+                onClick={toggleMobileNav}>
                 <LoginIcon />Login
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
