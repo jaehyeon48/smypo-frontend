@@ -109,6 +109,7 @@
 }
 
 @mixin profile-form-label {
+  position: relative;
   display: block;
   font-size: 1.2rem;
   margin-bottom: 1em;
@@ -262,4 +263,17 @@
 .notice-choose-avatar {
   color: $danger;
   margin-bottom: 1em;
+}
+
+.profile-show-pw-icon-container {
+  position: absolute;
+  top: 34px;
+  right: 13px;
+  cursor: pointer;
+
+  & > svg {
+    width: 26px;
+    height: 26px;
+    fill: $dark-gray;
+  }
 }

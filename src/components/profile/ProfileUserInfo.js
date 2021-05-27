@@ -11,6 +11,8 @@ import {
   deleteAccount
 } from '../../actions/userAction';
 import { showAlert } from '../../actions/alertAction';
+import EyeOpenIcon from '../icons/EyeOpenIcon';
+import EyeCloseIcon from '../icons/EyeCloseIcon';
 
 const ProfileUserInfo = ({
   user,
@@ -40,6 +42,10 @@ const ProfileUserInfo = ({
   const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false);
   const [deleteAccountConfirmPW, setDeleteAccountConfirmPW] = useState('');
   const [deleteAccountConfirmPWErr, setDeleteAccountConfirmPwErr] = useState(false);
+  const [showCurrentPW, setShowCurrentPW] = useState(false);
+  const [showNewPW, setShowNewPW] = useState(false);
+  const [showConfirmPW, setShowConfirmPW] = useState(false);
+  const [showDeleteConfirmPW, setShowDeleteConfirmPW] = useState(false);
 
   const { firstName, lastName, username } = profileFormData;
   const { currentPassword, newPassword, confirmPassword } = pwFormData;
@@ -196,6 +202,22 @@ const ProfileUserInfo = ({
     }
   }
 
+  const handleShowCurrentPW = () => {
+    setShowCurrentPW(!showCurrentPW);
+  }
+
+  const handleShowNewPW = () => {
+    setShowNewPW(!showNewPW);
+  }
+
+  const handleShowConfirmPW = () => {
+    setShowConfirmPW(!showConfirmPW);
+  }
+
+  const handleShowDeleteConfirmPW = () => {
+    setShowDeleteConfirmPW(!showDeleteConfirmPW);
+  }
+
   return (
     <React.Fragment>
       <div className="profile-form-user-info">
@@ -250,7 +272,7 @@ const ProfileUserInfo = ({
         <label className={`profile-form-label${currentPWErr ? '--error' : ''}`}>
           Current Password
           <input
-            type="password"
+            type={showCurrentPW ? "text" : "password"}
             placeholder="Current Password"
             name="currentPassword"
             value={currentPassword}
@@ -258,12 +280,17 @@ const ProfileUserInfo = ({
             onKeyUp={disableCurrentPWErr}
             className="profile-form-field"
           />
+          <span
+            className="profile-show-pw-icon-container"
+            onClick={handleShowCurrentPW}>
+            {showCurrentPW ? <EyeOpenIcon /> : <EyeCloseIcon />}
+          </span>
           {currentPWErr && <small>Current password does not correct.</small>}
         </label>
         <label className={`profile-form-label${newPWErr ? '--error' : ''}`}>
           New Password
             <input
-            type="password"
+            type={showNewPW ? "text" : "password"}
             placeholder="New Password"
             name="newPassword"
             value={newPassword}
@@ -271,12 +298,17 @@ const ProfileUserInfo = ({
             onKeyUp={disableNewPWErr}
             className="profile-form-field"
           />
+          <span
+            className="profile-show-pw-icon-container"
+            onClick={handleShowNewPW}>
+            {showNewPW ? <EyeOpenIcon /> : <EyeCloseIcon />}
+          </span>
           <p className="profile-password-condition">Password must be at least 8 characters long and must contain at least one special character.</p>
         </label>
         <label className={`profile-form-label${confirmPWErr ? '--error' : ''}`}>
           Confirm New Password
             <input
-            type="password"
+            type={showConfirmPW ? "text" : "password"}
             placeholder="New Password"
             name="confirmPassword"
             value={confirmPassword}
@@ -284,6 +316,11 @@ const ProfileUserInfo = ({
             onKeyUp={disableConfirmErr}
             className="profile-form-field"
           />
+          <span
+            className="profile-show-pw-icon-container"
+            onClick={handleShowConfirmPW}>
+            {showConfirmPW ? <EyeOpenIcon /> : <EyeCloseIcon />}
+          </span>
           {confirmPWErr && <small>Please enter identical passwords.</small>}
         </label>
         <Button
@@ -325,13 +362,18 @@ const ProfileUserInfo = ({
             <label className={`profile-form-label${deleteAccountConfirmPWErr ? '--error' : ''}`}>
               Confirm Password
               <input
-                type="password"
+                type={showDeleteConfirmPW ? "text" : "password"}
                 placeholder="Enter Password To Delete"
                 value={deleteAccountConfirmPW}
                 onChange={handleDeleteConfirmPWChange}
                 onKeyUp={disableDeleteAccountConfirmPWErr}
                 className="profile-form-field"
               />
+              <span
+                className="profile-show-pw-icon-container"
+                onClick={handleShowDeleteConfirmPW}>
+                {showDeleteConfirmPW ? <EyeOpenIcon /> : <EyeCloseIcon />}
+              </span>
               {deleteAccountConfirmPWErr && <small>Password does not correct.</small>}
             </label>
           </div>

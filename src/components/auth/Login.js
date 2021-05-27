@@ -7,6 +7,8 @@ import Button from '../button/Button';
 
 import { login } from '../../actions/authAction';
 import { showAlert } from '../../actions/alertAction';
+import EyeOpenIcon from '../icons/EyeOpenIcon';
+import EyeCloseIcon from '../icons/EyeCloseIcon';
 
 const Login = ({
   login,
@@ -120,11 +122,13 @@ const Login = ({
               placeholder="Password"
               onChange={handleChange}
             />
+            <span
+              className="auth-show-pw-icon-container"
+              onClick={handleShowPassword}>
+              {showPassword ? <EyeOpenIcon /> : <EyeCloseIcon />}
+            </span>
             <small className="auth-form-text">Password must be at least 8 characters long and must contain at least one special character.</small>
           </div>
-          <label className="auth__checkbox-container">Show password
-            <input type="checkbox" onClick={handleShowPassword} />
-          </label>
           <div className="auth__form-group">
             <Button
               btnType={'submit'}
