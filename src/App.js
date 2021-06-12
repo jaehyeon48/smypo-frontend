@@ -20,6 +20,7 @@ import Profile from './components/profile/Profile';
 import Alert from './components/alert/Alert';
 import Position from './components/position/Position';
 import Footer from './components/footer/Footer';
+import Test from './Test';
 import './app.css';
 import './styles/index.scss';
 
@@ -66,6 +67,7 @@ export default function App() {
               <Route path="/" component={LandingPage} exact={true} />
               <Navbar>
                 <Alert />
+                <PublicRoute path="/test" component={Test} exact={true} />
                 <PublicRoute path="/signup" component={SignUp} exact={true} />
                 <PublicRoute path="/login" component={Login} exact={true} />
                 <PrivateRoute path="/dashboard" component={Dashboard} exact={true} />
