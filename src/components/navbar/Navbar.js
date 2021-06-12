@@ -69,16 +69,16 @@ const Navbar = ({
   }
 
   const closeProfileDropdown = (e) => {
-    if (e.target?.classList.contains('navbar__avatar-container') ||
-      e.target?.classList.contains('avatar-container') ||
-      e.target?.classList.contains('avatar-image')) return;
+    if (e.target?.classList?.contains('navbar__avatar-container') ||
+      e.target?.classList?.contains('avatar-container') ||
+      e.target?.classList?.contains('avatar-image')) return;
     setIsProfileDropdownOpen(false);
   }
 
   const closeMobileNav = (e) => {
-    if (e.target?.classList.contains('navbar-menu') ||
-      e.target?.classList.contains('navbar__bars-icon') ||
-      e.target?.parentNode?.classList.contains('navbar__bars-icon')) return;
+    if (e.target?.classList?.contains('navbar-menu') ||
+      e.target?.classList?.contains('navbar__bars-icon') ||
+      e.target?.parentNode?.classList?.contains('navbar__bars-icon')) return;
     setIsMobileNavOpen(false);
   }
 
